@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi import APIRouter, Depends, HTTPException, status, Request, Header
 from sqlalchemy import text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy.future import select
 from datetime import date, timedelta, datetime
 import uuid
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import pytz
 
 # Impor semua model dan skema yang dibutuhkan
@@ -16,7 +16,10 @@ from ..models.paket_layanan import PaketLayanan as PaketLayananModel
 from ..models.harga_layanan import HargaLayanan as HargaLayananModel
 from ..schemas.invoice import Invoice as InvoiceSchema, InvoiceGenerate, InvoiceUpdate
 from ..database import get_db
-from ..services import xendit_service
+from ..config import settings
+
+# Impor layanan Xendit dan Mikrotik
+from ..services import xendit_service, mikrotik_service
 
 router = APIRouter(
     prefix="/invoices",
@@ -87,7 +90,7 @@ async def generate_invoice_for_subscription(
 
     except Exception as e:
         print(f"Gagal mengintegrasikan dengan Xendit: {e}")
-        await db.rollback()  # Roll back sesi jika ada error
+        await db.rollback()
         raise HTTPException(status_code=500, detail=f"Gagal mengintegrasikan dengan Xendit: {str(e)}")
 
     return db_invoice
@@ -97,182 +100,136 @@ def parse_xendit_datetime(iso_datetime_str: str) -> str:
     Fungsi untuk mengkonversi format datetime ISO 8601 dari Xendit ke format yang kompatibel dengan MySQL
     """
     try:
-        # Parse string datetime ISO yang berformat: 2025-07-17T07:51:12.000Z
         if iso_datetime_str.endswith('Z'):
             iso_datetime_str = iso_datetime_str[:-1] + '+00:00'
-        
-        # Parse ke objek datetime
         dt = datetime.fromisoformat(iso_datetime_str)
-        
-        # Konversi ke zona waktu lokal (WIB/Jakarta)
         jakarta_tz = pytz.timezone('Asia/Jakarta')
         if dt.tzinfo is None:
             dt = pytz.utc.localize(dt)
-        
         dt_jakarta = dt.astimezone(jakarta_tz)
-        
-        # Format ke string yang kompatibel dengan MySQL
         return dt_jakarta.strftime('%Y-%m-%d %H:%M:%S')
-    
     except Exception as e:
         print(f"Error parsing datetime: {e}")
         return datetime.now(pytz.timezone('Asia/Jakarta')).strftime('%Y-%m-%d %H:%M:%S')
 
 @router.post("/xendit-callback", status_code=status.HTTP_200_OK)
-async def handle_xendit_callback(request: Request, db: AsyncSession = Depends(get_db)):
+async def handle_xendit_callback(
+    request: Request, 
+    x_callback_token: Optional[str] = Header(None),
+    db: AsyncSession = Depends(get_db)
+):
     """
-    Endpoint untuk menangani callback dari Xendit ketika invoice dibayar
+    Endpoint untuk menangani callback dari Xendit ketika invoice dibayar atau kadaluarsa.
     """
+    # 1. Verifikasi Callback Token
+    if x_callback_token != settings.XENDIT_CALLBACK_TOKEN:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid callback token")
+
     try:
-        # Parse request body sebagai JSON
         payload = await request.json()
-        
-        # Log payload untuk debugging
         print(f"Xendit callback payload: {payload}")
         
-        # Ambil data yang diperlukan dari payload
         external_id = payload.get("external_id")
-        paid_amount = payload.get("paid_amount")
-        paid_at = payload.get("paid_at")
-        status = payload.get("status")
+        xendit_status = payload.get("status")
         
         if not external_id:
-            raise HTTPException(
-                status_code=400, 
-                detail="External ID tidak ditemukan dalam payload"
-            )
+            raise HTTPException(status_code=400, detail="External ID tidak ditemukan")
         
-        # Cari invoice berdasarkan external_id (yang seharusnya sama dengan invoice_number)
-        stmt = select(InvoiceModel).where(InvoiceModel.invoice_number == external_id)
-        result = await db.execute(stmt)
-        invoice = result.scalar_one_or_none()
+        # 2. REVISI: Query untuk mengambil invoice beserta relasi yang dibutuhkan untuk trigger
+        stmt = (
+            select(InvoiceModel)
+            .where(InvoiceModel.invoice_number == external_id)
+            .options(
+                selectinload(InvoiceModel.pelanggan)
+                .selectinload(PelangganModel.langganan),
+                selectinload(InvoiceModel.pelanggan)
+                .selectinload(PelangganModel.data_teknis)
+            )
+        )
+        invoice = (await db.execute(stmt)).scalar_one_or_none()
         
         if not invoice:
-            raise HTTPException(
-                status_code=404, 
-                detail=f"Invoice dengan external_id {external_id} tidak ditemukan"
-            )
+            raise HTTPException(status_code=404, detail=f"Invoice dengan external_id {external_id} tidak ditemukan")
         
-        # Update invoice berdasarkan status dari Xendit
-        if status == "PAID":
-            # Parse datetime dari format ISO 8601 ke format MySQL
-            parsed_paid_at = None
-            if paid_at:
-                parsed_paid_at = parse_xendit_datetime(paid_at)
-            
-            # Update menggunakan SQLAlchemy ORM (lebih aman dari raw SQL)
+        langganan_terkait = invoice.pelanggan.langganan[0] if invoice.pelanggan and invoice.pelanggan.langganan else None
+
+        # 3. Update invoice berdasarkan status dari Xendit
+        if xendit_status == "PAID":
             invoice.status_invoice = "Lunas"
-            invoice.paid_amount = float(paid_amount) if paid_amount else None
-            invoice.paid_at = parsed_paid_at
-            invoice.updated_at = datetime.now(pytz.timezone('Asia/Jakarta'))
+            invoice.paid_amount = float(payload.get("paid_amount", 0))
+            invoice.paid_at = parse_xendit_datetime(payload.get("paid_at")) if payload.get("paid_at") else datetime.now()
             
-            # Commit changes
-            await db.commit()
-            await db.refresh(invoice)
+            if langganan_terkait:
+                langganan_terkait.status = "Aktif"
+                db.add(langganan_terkait)
+                
+                # **PEMICU KE MIKROTIK**
+                print(f"TRIGGER: Pembayaran lunas, mengaktifkan layanan untuk langganan ID {langganan_terkait.id}")
+                await mikrotik_service.trigger_mikrotik_update(db, langganan_terkait)
+
+        elif xendit_status == "EXPIRED":
+            invoice.status_invoice = "Kadaluarsa"
             
-            print(f"Invoice {external_id} berhasil diupdate menjadi Lunas")
+            if langganan_terkait:
+                langganan_terkait.status = "Suspended"
+                db.add(langganan_terkait)
+
+                # **PEMICU KE MIKROTIK**
+                print(f"TRIGGER: Invoice kadaluarsa, menonaktifkan layanan untuk langganan ID {langganan_terkait.id}")
+                await mikrotik_service.trigger_mikrotik_update(db, langganan_terkait)
+
+        invoice.updated_at = datetime.now(pytz.timezone('Asia/Jakarta'))
+        await db.commit()
+        await db.refresh(invoice)
             
-        elif status == "EXPIRED":
-            invoice.status_invoice = "Expired"
-            invoice.updated_at = datetime.now(pytz.timezone('Asia/Jakarta'))
-            await db.commit()
-            await db.refresh(invoice)
-            
-            print(f"Invoice {external_id} berhasil diupdate menjadi Expired")
-            
-        else:
-            print(f"Status {status} tidak dikenali untuk invoice {external_id}")
-            
-        return {
-            "message": "Callback processed successfully",
-            "invoice_number": external_id,
-            "status": status
-        }
+        return {"message": "Callback processed successfully"}
         
     except Exception as e:
         print(f"Error processing Xendit callback: {str(e)}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error processing callback: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Error processing callback: {str(e)}")
 
+# ... (Endpoint GET, PUT, DELETE, dan test-callback lainnya tetap sama) ...
 @router.get("/", response_model=List[InvoiceSchema])
 async def get_all_invoices(db: AsyncSession = Depends(get_db)):
-    """
-    Mengambil semua data invoice.
-    """
     result = await db.execute(select(InvoiceModel))
     return result.scalars().all()
 
 @router.get("/{invoice_id}", response_model=InvoiceSchema)
 async def get_invoice_by_id(invoice_id: int, db: AsyncSession = Depends(get_db)):
-    """
-    Mengambil detail satu invoice berdasarkan ID.
-    """
     invoice = await db.get(InvoiceModel, invoice_id)
     if not invoice:
         raise HTTPException(status_code=404, detail="Invoice tidak ditemukan")
     return invoice
 
 @router.put("/{invoice_id}", response_model=InvoiceSchema)
-async def update_invoice(
-    invoice_id: int, 
-    invoice_update: InvoiceUpdate, 
-    db: AsyncSession = Depends(get_db)
-):
-    """
-    Update invoice manually (untuk testing atau admin purposes)
-    """
-    # Cari invoice
+async def update_invoice(invoice_id: int, invoice_update: InvoiceUpdate, db: AsyncSession = Depends(get_db)):
     invoice = await db.get(InvoiceModel, invoice_id)
     if not invoice:
         raise HTTPException(status_code=404, detail="Invoice tidak ditemukan")
-    
-    # Update field yang diberikan
     update_data = invoice_update.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(invoice, field, value)
-    
-    # Set updated_at
     invoice.updated_at = datetime.now(pytz.timezone('Asia/Jakarta'))
-    
     await db.commit()
     await db.refresh(invoice)
-    
     return invoice
 
 @router.delete("/{invoice_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_invoice(invoice_id: int, db: AsyncSession = Depends(get_db)):
-    """
-    Menghapus invoice. Sebaiknya digunakan dengan hati-hati.
-    """
     db_invoice = await db.get(InvoiceModel, invoice_id)
     if not db_invoice:
         raise HTTPException(status_code=404, detail="Invoice tidak ditemukan")
-        
     await db.delete(db_invoice)
     await db.commit()
     return None
 
-# Endpoint untuk testing callback secara manual
 @router.post("/test-callback", status_code=status.HTTP_200_OK)
 async def test_xendit_callback(payload: Dict[Any, Any], db: AsyncSession = Depends(get_db)):
-    """
-    Endpoint untuk testing callback Xendit secara manual
-    """
-    # Simulasikan callback dengan data yang diberikan
-    external_id = payload.get("external_id")
-    paid_amount = payload.get("paid_amount", 0)
-    paid_at = payload.get("paid_at", datetime.now().isoformat() + "Z")
-    status = payload.get("status", "PAID")
-    
-    # Panggil fungsi handle_xendit_callback
-    fake_request = type('Request', (), {
-        'json': lambda: payload
-    })()
-    
+    fake_request = type('Request', (), {'json': lambda: payload})()
     try:
-        result = await handle_xendit_callback(fake_request, db)
+        # Panggil handle_xendit_callback dengan header palsu untuk token
+        fake_header = settings.XENDIT_CALLBACK_TOKEN
+        result = await handle_xendit_callback(fake_request, fake_header, db)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
