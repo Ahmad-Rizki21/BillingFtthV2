@@ -1,7 +1,7 @@
 # app/main.py
 from fastapi import FastAPI
 from .database import Base, engine
-from .routers import pelanggan, user, role, data_teknis, harga_layanan, paket_layanan, langganan, invoice
+from .routers import pelanggan, user, role, data_teknis, harga_layanan, paket_layanan, langganan, invoice, mikrotik_server
 
 # Fungsi untuk membuat tabel di database saat aplikasi pertama kali dijalankan
 async def create_tables():
@@ -28,6 +28,7 @@ app.include_router(harga_layanan.router)
 app.include_router(langganan.router)
 app.include_router(paket_layanan.router)
 app.include_router(invoice.router)
+app.include_router(mikrotik_server.router)
 
 @app.get("/")
 def read_root():
