@@ -3,18 +3,26 @@ from typing import Optional
 from datetime import date
 
 class LanggananBase(BaseModel):
+    id: int
     pelanggan_id: int
-    paket_layanan_id: int 
-    tanggal_mulai: date
-    status: str = 'aktif'
+    paket_layanan_id: int
+
+    status: str
+    tgl_jatuh_tempo: date | None = None
+    tgl_invoice_terakhir: date | None = None
+
 
 class LanggananCreate(BaseModel):
     pelanggan_id: int
     paket_layanan_id: int
+    status: str
+    tgl_jatuh_tempo: Optional[date] = None
+    tgl_invoice_terakhir: Optional[date] = None
 
 class LanggananUpdate(BaseModel):
     paket_layanan_id: Optional[int] = None
     status: Optional[str] = None
+    tgl_jatuh_tempo: Optional[date] = None #
 
 class Langganan(LanggananBase):
     id: int

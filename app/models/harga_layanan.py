@@ -14,6 +14,8 @@ class HargaLayanan(Base):
     id_brand: Mapped[str] = mapped_column(String(191), primary_key=True)
     brand: Mapped[str] = mapped_column(String(191), nullable=False)
     pajak: Mapped[float] = mapped_column(Numeric(5, 2), default=11.00)
+
+    xendit_key_name: Mapped[str] = mapped_column(String(50), nullable=False, server_default="JAKINET")
     
     pelanggan: Mapped[List["Pelanggan"]] = relationship(back_populates="harga_layanan")
     paket_layanan: Mapped[List["PaketLayanan"]] = relationship(

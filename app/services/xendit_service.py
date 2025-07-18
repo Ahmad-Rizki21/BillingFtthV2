@@ -9,15 +9,19 @@ async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan) -> dict:
     """
     Mengirim request ke Xendit untuk membuat invoice baru.
     """
-    # Tentukan kunci API mana yang akan digunakan berdasarkan brand invoice
-    api_key = settings.XENDIT_API_KEYS.get(invoice.brand)
-    if not api_key:
-        raise ValueError(f"Kunci API Xendit untuk brand '{invoice.brand}' tidak ditemukan.")
+    # 1. Ambil nama target API key dari brand pelanggan
+    target_key_name = pelanggan.harga_layanan.xendit_key_name
 
-    # Siapkan header dengan autentikasi Basic Auth (username adalah kunci API, password kosong)
+    # 2. Ambil API key yang sebenarnya dari dictionary di settings
+    api_key = settings.XENDIT_API_KEYS.get(target_key_name)
+    if not api_key:
+        raise ValueError(f"Kunci API Xendit untuk '{target_key_name}' tidak ditemukan.")
+
+    # 3. Siapkan header dengan autentikasi Basic Auth yang benar
+    encoded_key = base64.b64encode(f"{api_key}:".encode('utf-8')).decode('utf-8')
     headers = {
         "Content-Type": "application/json",
-        "Authorization": api_key
+        "Authorization": f"Basic {encoded_key}"
     }
 
     # Siapkan data payload sesuai dokumentasi Xendit
