@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from typing import List
+from sqlalchemy import update
 
 # Impor model dan skema secara langsung dari filenya, bukan melalui paket
 from ..models.pelanggan import Pelanggan as PelangganModel

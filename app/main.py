@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import logging
 
 from .database import Base, engine
 from .routers import (
@@ -9,6 +10,7 @@ from .routers import (
     paket_layanan, langganan, invoice, mikrotik_server
 )
 from .jobs import job_generate_invoices, job_suspend_services
+from .logging_config import setup_logging
 
 # Fungsi untuk membuat tabel di database saat aplikasi pertama kali dijalankan
 async def create_tables():
@@ -29,12 +31,16 @@ scheduler = AsyncIOScheduler()
 # Event handler untuk startup aplikasi
 @app.on_event("startup")
 async def startup_event():
+    setup_logging() # <-- Panggil fungsi setup
+    logger = logging.getLogger('app.main')
+
     # 1. Buat tabel di database
     await create_tables()
     print("Tabel telah diperiksa/dibuat.")
 
     # 2. Tambahkan tugas-tugas ke scheduler untuk berjalan setiap hari
     #    (Ganti 'hour' dan 'minute' sesuai kebutuhan Anda)
+    
     # scheduler.add_job(job_generate_invoices, 'cron', hour=1, minute=0, timezone='Asia/Jakarta') #Real
     scheduler.add_job(job_generate_invoices, 'interval', minutes=1) 
     # scheduler.add_job(job_suspend_services, 'cron', hour=2, minute=0, timezone='Asia/Jakarta') #Real
