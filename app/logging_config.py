@@ -5,7 +5,7 @@ import logging.config
 import sys
 from pathlib import Path
 
-# --- Fungsi Bantuan untuk Logging Terstruktur ---
+# --- Helper Functions for Structured Logging (NO EMOJIS) ---
 
 def log_scheduler_event(logger, job_name: str, status: str, details: str = ""):
     status_map = {"started": "[START]", "completed": "[DONE]", "failed": "[FAIL]"}
@@ -16,44 +16,39 @@ def log_scheduler_event(logger, job_name: str, status: str, details: str = ""):
         logger.info(message)
 
 def log_mikrotik_operation(logger, operation: str, customer_id: str, status: str):
-    icon_map = {"success": "✅", "failed": "❌", "info": "🛜"}
-    message = f"{icon_map.get(status, '⚙️')} Mikrotik | {operation} untuk '{customer_id}'"
+    status_map = {"success": "[OK]", "failed": "[FAIL]", "info": "[INFO]"}
+    message = f"{status_map.get(status, '[OP]')} Mikrotik | {operation} for '{customer_id}'"
     if status == "failed":
         logger.error(message)
     else:
         logger.info(message)
 
 def log_payment_event(logger, event: str, invoice_id: str, details: str = ""):
-    message = f"💳 Pembayaran {event} untuk Invoice ID: {invoice_id}. {details}".strip()
+    message = f"[PAYMENT] {event} for Invoice ID: {invoice_id}. {details}".strip()
     logger.info(message)
 
 
-# --- Konfigurasi Inti Logging ---
+# --- Core Logging Setup ---
 
 class ColoredFormatter(logging.Formatter):
-    """Formatter khusus dengan warna untuk terminal."""
     COLORS = {
-        'DEBUG': '\033[94m',    # Biru
-        'INFO': '\033[92m',     # Hijau
-        'WARNING': '\033[93m',  # Kuning
-        'ERROR': '\033[91m',    # Merah
-        'CRITICAL': '\033[95m', # Ungu
+        'DEBUG': '\033[94m',
+        'INFO': '\033[92m',
+        'WARNING': '\033[93m',
+        'ERROR': '\033[91m',
+        'CRITICAL': '\033[95m',
         'RESET': '\033[0m'
     }
-
     def format(self, record):
         color = self.COLORS.get(record.levelname, self.COLORS['RESET'])
         reset = self.COLORS['RESET']
         record.levelname = f"{color}{record.levelname:<8}{reset}"
-        # Membuat nama modul lebih pendek dan mudah dibaca
         record.name = record.name.replace('app.', '').upper()
         return super().format(record)
 
 def setup_logging():
-    """Mengatur konfigurasi logging untuk seluruh aplikasi."""
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
-
     logging_config = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -80,7 +75,7 @@ def setup_logging():
                 'level': 'DEBUG',
                 'formatter': 'detailed',
                 'filename': log_dir / 'app.log',
-                'maxBytes': 5 * 1024 * 1024, # 5 MB
+                'maxBytes': 5 * 1024 * 1024,
                 'backupCount': 3
             },
             'file_error': {
@@ -88,41 +83,21 @@ def setup_logging():
                 'level': 'ERROR',
                 'formatter': 'detailed',
                 'filename': log_dir / 'errors.log',
-                'maxBytes': 5 * 1024 * 1024, # 5 MB
+                'maxBytes': 5 * 1024 * 1024,
                 'backupCount': 3
             }
         },
         'loggers': {
-            'app': {
-                'handlers': ['console', 'file_app', 'file_error'],
-                'level': 'INFO',
-                'propagate': False
-            },
-            # --- Perubahan Kunci: Mengurangi log yang berisik ---
-            'sqlalchemy.engine': {
-                'handlers': ['console', 'file_app'],
-                'level': 'WARNING', # Hanya tampilkan warning dan error
-                'propagate': False
-            },
-            'apscheduler': {
-                'handlers': ['console', 'file_app'],
-                'level': 'WARNING', # Hanya tampilkan warning dan error
-                'propagate': False
-            },
-            'uvicorn': {
-                'handlers': ['console', 'file_app'],
-                'level': 'INFO',
-                'propagate': False,
-            }
+            'app': {'handlers': ['console', 'file_app', 'file_error'], 'level': 'INFO', 'propagate': False},
+            'sqlalchemy.engine': {'handlers': ['file_app'], 'level': 'ERROR', 'propagate': False},
+            'apscheduler': {'handlers': ['console', 'file_app'], 'level': 'WARNING', 'propagate': False},
+            'uvicorn': {'handlers': ['console', 'file_app'], 'level': 'INFO', 'propagate': False}
         },
-        'root': {
-            'level': 'INFO',
-            'handlers': ['console', 'file_app', 'file_error']
-        }
+        'root': {'level': 'INFO', 'handlers': ['console', 'file_app', 'file_error']}
     }
     logging.config.dictConfig(logging_config)
     logger = logging.getLogger('app.main')
-    logger.info("=" * 40)
-    logger.info("🚀 Sistem logging berhasil diinisialisasi!")
+    logger.info("========================================")
+    logger.info("Sistem logging berhasil diinisialisasi!")
     logger.info(f"File log disimpan di: {log_dir.absolute()}")
-    logger.info("=" * 40)
+    logger.info("========================================")
