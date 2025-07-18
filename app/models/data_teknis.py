@@ -9,6 +9,7 @@ from ..database import Base
 
 if TYPE_CHECKING:
     from .pelanggan import Pelanggan
+    from .mikrotik_server import MikrotikServer
 
 class DataTeknis(Base):
     __tablename__ = 'data_teknis'
@@ -28,6 +29,9 @@ class DataTeknis(Base):
     odp: Mapped[int] = mapped_column(Integer)
     speedtest_proof: Mapped[str | None] = mapped_column(String(191), nullable=True)
     onu_power: Mapped[int] = mapped_column(Integer)
+
+    mikrotik_server_id: Mapped[int | None] = mapped_column(ForeignKey('mikrotik_servers.id'))
+    mikrotik_server: Mapped["MikrotikServer"] = relationship(back_populates="data_teknis_pelanggan")
     
     # Hapus tanda kutip dari 'Pelanggan'
     pelanggan: Mapped[Pelanggan] = relationship(back_populates="data_teknis")

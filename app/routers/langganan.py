@@ -11,7 +11,7 @@ router = APIRouter(prefix="/langganan", tags=["Langganan"])
 
 @router.post("/", response_model=LanggananSchema, status_code=status.HTTP_201_CREATED)
 async def create_langganan(langganan: LanggananCreate, db: AsyncSession = Depends(get_db)):
-    db_langganan = LanggananModel(**langganan.model_dump(), tanggal_mulai=date.today())
+    db_langganan = LanggananModel(**langganan.model_dump())
     db.add(db_langganan)
     await db.commit()
     await db.refresh(db_langganan)

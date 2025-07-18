@@ -1,3 +1,5 @@
+# app/models/langganan.py
+
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import date, datetime
@@ -14,8 +16,13 @@ class Langganan(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     pelanggan_id: Mapped[int] = mapped_column(ForeignKey('pelanggan.id'))
     paket_layanan_id: Mapped[int] = mapped_column(ForeignKey('paket_layanan.id'))
-    tanggal_mulai: Mapped[date] = mapped_column(Date)
-    status: Mapped[str] = mapped_column(String(50), default='aktif')
+    
+    # Hapus baris duplikat, hanya sisakan satu definisi tanggal_mulai
+    status: Mapped[str] = mapped_column(String(50), default='Aktif', nullable=False)
+
+    tgl_jatuh_tempo: Mapped[date | None] = mapped_column(Date, nullable=True)
+    tgl_invoice_terakhir: Mapped[date | None] = mapped_column(Date, nullable=True)
+
     created_at: Mapped[datetime | None] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime | None] = mapped_column(server_default=func.now(), onupdate=func.now())
     

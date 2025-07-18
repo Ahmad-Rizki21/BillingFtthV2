@@ -1,7 +1,14 @@
 # app/main.py
+
 from fastapi import FastAPI
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 from .database import Base, engine
-from .routers import pelanggan, user, role, data_teknis, harga_layanan, paket_layanan, langganan, invoice, mikrotik_server
+from .routers import (
+    pelanggan, user, role, data_teknis, harga_layanan, 
+    paket_layanan, langganan, invoice, mikrotik_server
+)
+from .jobs import job_generate_invoices, job_suspend_services
 
 # Fungsi untuk membuat tabel di database saat aplikasi pertama kali dijalankan
 async def create_tables():
@@ -9,17 +16,41 @@ async def create_tables():
         # await conn.run_sync(Base.metadata.drop_all) # Hati-hati, ini akan menghapus semua tabel
         await conn.run_sync(Base.metadata.create_all)
 
+# Inisialisasi aplikasi FastAPI
 app = FastAPI(
     title="Billing System API",
     description="API untuk sistem billing terintegrasi Xendit.",
     version="1.0.0"
 )
 
-@app.on_event("startup")
-async def on_startup():
-    await create_tables()
+# Inisialisasi scheduler
+scheduler = AsyncIOScheduler()
 
-# Meng-include router pelanggan
+# Event handler untuk startup aplikasi
+@app.on_event("startup")
+async def startup_event():
+    # 1. Buat tabel di database
+    await create_tables()
+    print("Tabel telah diperiksa/dibuat.")
+
+    # 2. Tambahkan tugas-tugas ke scheduler untuk berjalan setiap hari
+    #    (Ganti 'hour' dan 'minute' sesuai kebutuhan Anda)
+    # scheduler.add_job(job_generate_invoices, 'cron', hour=1, minute=0, timezone='Asia/Jakarta') #Real
+    scheduler.add_job(job_generate_invoices, 'interval', minutes=1) 
+    # scheduler.add_job(job_suspend_services, 'cron', hour=2, minute=0, timezone='Asia/Jakarta') #Real
+    scheduler.add_job(job_suspend_services, 'interval', minutes=1)
+    
+    # 3. Mulai scheduler
+    scheduler.start()
+    print("Scheduler telah dimulai...")
+
+# Event handler untuk shutdown aplikasi
+@app.on_event("shutdown")
+async def shutdown_event():
+    scheduler.shutdown()
+    print("Scheduler telah dimatikan.")
+
+# Meng-include semua router
 app.include_router(pelanggan.router)
 app.include_router(user.router)
 app.include_router(role.router)
@@ -30,6 +61,7 @@ app.include_router(paket_layanan.router)
 app.include_router(invoice.router)
 app.include_router(mikrotik_server.router)
 
+# Endpoint root untuk verifikasi
 @app.get("/")
 def read_root():
     return {"message": "Selamat datang di API Billing System"}
