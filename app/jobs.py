@@ -4,31 +4,25 @@ import logging
 from datetime import date, timedelta
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
+import uuid
 
-# --- PERBAIKAN IMPORT DI SINI ---
-# Kita impor 'AsyncSessionLocal' dan memberinya alias 'SessionLocal' agar sisa kode tidak perlu diubah.
+# --- Impor komponen yang diperlukan ---
 from .database import AsyncSessionLocal as SessionLocal
-
-# Impor model yang dibutuhkan
 from .models.langganan import Langganan as LanggananModel
 from .models.invoice import Invoice as InvoiceModel
 from .models.pelanggan import Pelanggan as PelangganModel
 from .models.data_teknis import DataTeknis as DataTeknisModel
+from .services import mikrotik_service, xendit_service
 
-# Impor service
-from .services import mikrotik_service
+# --- Impor helper log yang baru ---
+from .logging_config import log_scheduler_event
 
-# Karena kita tidak bisa memanggil endpoint, kita perlu duplikasi/refaktor sedikit logika generate invoice
-from .services import xendit_service
-import uuid
-
-# Setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# --- Atur logger khusus untuk modul ini ---
+logger = logging.getLogger('app.jobs')
 
 
 async def generate_single_invoice(db, langganan: LanggananModel):
-    """Fungsi helper untuk membuat satu invoice. Direfaktor dari router."""
+    """Fungsi bantuan untuk membuat satu invoice. Direfaktor dari router."""
     try:
         pelanggan = langganan.pelanggan
         paket = langganan.paket_layanan
@@ -51,33 +45,32 @@ async def generate_single_invoice(db, langganan: LanggananModel):
             "email": pelanggan.email,
             "tgl_invoice": date.today(),
             "tgl_jatuh_tempo": langganan.tgl_jatuh_tempo,
+            "status_invoice": "Belum Dibayar",
         }
-        
+
         db_invoice = InvoiceModel(**new_invoice_data)
         db.add(db_invoice)
         await db.flush()  # Gunakan flush untuk mendapatkan ID sebelum commit
 
         xendit_response = await xendit_service.create_xendit_invoice(db_invoice, pelanggan)
-        
+
         db_invoice.payment_link = xendit_response.get("invoice_url")
         db_invoice.xendit_id = xendit_response.get("id")
         db_invoice.xendit_external_id = xendit_response.get("external_id")
-        
-        # Perlu fungsi parse_xendit_datetime atau penanganan serupa
-        # Untuk sementara, kita biarkan None jika tidak ada
-        
+
         db.add(db_invoice)
-        logger.info(f"Invoice {db_invoice.invoice_number} berhasil dibuat untuk langganan ID {langganan.id}")
+        logger.info(f"✅ Invoice {db_invoice.invoice_number} berhasil dibuat untuk Langganan ID {langganan.id}")
 
     except Exception as e:
-        logger.error(f"Gagal membuat invoice untuk langganan ID {langganan.id}: {e}")
+        logger.error(f"❌ Gagal membuat invoice untuk Langganan ID {langganan.id}: {e}")
         # Jangan re-raise error agar job lain bisa lanjut
-        
+
 
 async def job_generate_invoices():
     """Tugas untuk membuat invoice bagi langganan yang akan jatuh tempo 5 hari lagi."""
-    logger.info("Scheduler: Menjalankan tugas generate invoice...")
+    log_scheduler_event(logger, 'job_generate_invoices', 'started')
     target_due_date = date.today() + timedelta(days=5)
+    invoices_created = 0
 
     async with SessionLocal() as db:
         try:
@@ -94,6 +87,10 @@ async def job_generate_invoices():
             )
             subscriptions_to_invoice = (await db.execute(stmt)).scalars().all()
 
+            if not subscriptions_to_invoice:
+                log_scheduler_event(logger, 'job_generate_invoices', 'completed', "Tidak ada invoice untuk dibuat hari ini.")
+                return
+
             for langganan in subscriptions_to_invoice:
                 existing_invoice_stmt = (
                     select(InvoiceModel.id).where(
@@ -105,19 +102,22 @@ async def job_generate_invoices():
 
                 if not existing_invoice:
                     await generate_single_invoice(db, langganan)
+                    invoices_created += 1
                 else:
-                    logger.info(f"Invoice untuk langganan ID {langganan.id} sudah ada, skip.")
-            
+                    logger.debug(f"Invoice untuk langganan ID {langganan.id} sudah ada, dilewati.")
+
             await db.commit()
+            log_scheduler_event(logger, 'job_generate_invoices', 'completed', f"Berhasil membuat {invoices_created} invoice baru.")
         except Exception as e:
             await db.rollback()
-            logger.error(f"Scheduler Error (generate_invoices): {e}")
+            log_scheduler_event(logger, 'job_generate_invoices', 'failed', str(e))
 
 
 async def job_suspend_services():
     """Tugas untuk menonaktifkan layanan yang telah melewati jatuh tempo."""
-    logger.info("Scheduler: Menjalankan tugas suspend layanan...")
-    
+    log_scheduler_event(logger, 'job_suspend_services', 'started')
+    services_suspended = 0
+
     async with SessionLocal() as db:
         try:
             stmt = (
@@ -131,15 +131,22 @@ async def job_suspend_services():
             )
             overdue_subscriptions = (await db.execute(stmt)).scalars().all()
 
+            if not overdue_subscriptions:
+                log_scheduler_event(logger, 'job_suspend_services', 'completed', "Tidak ada layanan untuk di-suspend.")
+                return
+
             for langganan in overdue_subscriptions:
-                logger.warning(f"Menonaktifkan langganan ID: {langganan.id} karena terlambat.")
-                
+                logger.warning(f"Melakukan suspend layanan untuk Langganan ID: {langganan.id} karena terlambat.")
+
                 langganan.status = "Suspended"
                 db.add(langganan)
-                
+
+                # Panggil service Mikrotik untuk update status pelanggan
                 await mikrotik_service.trigger_mikrotik_update(db, langganan)
+                services_suspended += 1
 
             await db.commit()
+            log_scheduler_event(logger, 'job_suspend_services', 'completed', f"Berhasil suspend {services_suspended} layanan.")
         except Exception as e:
             await db.rollback()
-            logger.error(f"Scheduler Error (suspend_services): {e}")
+            log_scheduler_event(logger, 'job_suspend_services', 'failed', str(e))

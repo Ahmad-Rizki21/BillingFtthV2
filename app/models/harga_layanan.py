@@ -1,23 +1,28 @@
 from __future__ import annotations
 from typing import List, TYPE_CHECKING
-from sqlalchemy import String, Numeric, func, DateTime
+from sqlalchemy import String, Numeric
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from ..database import Base
 
 if TYPE_CHECKING:
     from .pelanggan import Pelanggan
-    from .paket_layanan import PaketLayanan
+    from .paket_layanan import PaketLayanan # <-- Tambahkan impor ini
 
 class HargaLayanan(Base):
     __tablename__ = 'harga_layanan'
-
     id_brand: Mapped[str] = mapped_column(String(191), primary_key=True)
     brand: Mapped[str] = mapped_column(String(191), nullable=False)
-    pajak: Mapped[float] = mapped_column(Numeric(5, 2), default=11.00)
+    pajak: Mapped[float] = mapped_column(Numeric(5, 2), nullable=False)
+    xendit_key_name: Mapped[str] = mapped_column(String(50), default='JAKINET', nullable=False)
 
-    xendit_key_name: Mapped[str] = mapped_column(String(50), nullable=False, server_default="JAKINET")
+    # Relasi ke Pelanggan yang sudah kita perbaiki
+    pelanggan: Mapped[List["Pelanggan"]] = relationship(
+        back_populates="harga_layanan",
+        foreign_keys="[Pelanggan.id_brand]"
+    )
     
-    pelanggan: Mapped[List["Pelanggan"]] = relationship(back_populates="harga_layanan")
+    # --- TAMBAHKAN RELASI BARU INI ---
+    # Satu brand (HargaLayanan) memiliki banyak PaketLayanan
     paket_layanan: Mapped[List["PaketLayanan"]] = relationship(
-        back_populates="brand", cascade="all, delete-orphan"
+        back_populates="harga_layanan"
     )

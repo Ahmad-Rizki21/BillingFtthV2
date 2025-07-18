@@ -17,9 +17,16 @@ async def create_langganan(langganan: LanggananCreate, db: AsyncSession = Depend
     await db.refresh(db_langganan)
     return db_langganan
 
+# @router.get("/", response_model=List[LanggananSchema])
+# async def get_all_langganan(db: AsyncSession = Depends(get_db)):
+#     result = await db.execute(select(LanggananModel))
+#     return result.scalars().all()
+
+#Penyempurnaan
 @router.get("/", response_model=List[LanggananSchema])
-async def get_all_langganan(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(LanggananModel))
+async def get_all_langganan(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(get_db)):
+    query = select(LanggananModel).offset(skip).limit(limit)
+    result = await db.execute(query)
     return result.scalars().all()
 
 @router.get("/{langganan_id}", response_model=LanggananSchema)

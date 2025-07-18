@@ -1,0 +1,535 @@
+2025-07-18 22:49:15 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00059s] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:49:15 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT paket_layanan.id AS paket_layanan_id, paket_layanan.id_brand AS paket_layanan_id_brand, paket_layanan.nama_paket AS paket_layanan_nama_paket, paket_layanan.kecepatan AS paket_layanan_kecepatan, paket_layanan.harga AS paket_layanan_harga 
+FROM paket_layanan 
+WHERE paket_layanan.id IN (%s)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00089s] (3,)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT pelanggan.id AS pelanggan_id, pelanggan.no_ktp AS pelanggan_no_ktp, pelanggan.nama AS pelanggan_nama, pelanggan.alamat AS pelanggan_alamat, pelanggan.alamat_custom AS pelanggan_alamat_custom, pelanggan.alamat_2 AS pelanggan_alamat_2, pelanggan.tgl_instalasi AS pelanggan_tgl_instalasi, pelanggan.blok AS pelanggan_blok, pelanggan.unit AS pelanggan_unit, pelanggan.no_telp AS pelanggan_no_telp, pelanggan.email AS pelanggan_email, pelanggan.id_brand AS pelanggan_id_brand, pelanggan.layanan AS pelanggan_layanan, pelanggan.brand_default AS pelanggan_brand_default 
+FROM pelanggan 
+WHERE pelanggan.id IN (%s)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00068s] (1,)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT data_teknis.pelanggan_id AS data_teknis_pelanggan_id, data_teknis.id AS data_teknis_id, data_teknis.id_vlan AS data_teknis_id_vlan, data_teknis.id_pelanggan AS data_teknis_id_pelanggan, data_teknis.password_pppoe AS data_teknis_password_pppoe, data_teknis.ip_pelanggan AS data_teknis_ip_pelanggan, data_teknis.profile_pppoe AS data_teknis_profile_pppoe, data_teknis.olt AS data_teknis_olt, data_teknis.olt_custom AS data_teknis_olt_custom, data_teknis.pon AS data_teknis_pon, data_teknis.otb AS data_teknis_otb, data_teknis.odc AS data_teknis_odc, data_teknis.odp AS data_teknis_odp, data_teknis.speedtest_proof AS data_teknis_speedtest_proof, data_teknis.onu_power AS data_teknis_onu_power, data_teknis.mikrotik_server_id AS data_teknis_mikrotik_server_id 
+FROM data_teknis 
+WHERE data_teknis.pelanggan_id IN (%s)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00058s] (1,)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT harga_layanan.id_brand AS harga_layanan_id_brand, harga_layanan.brand AS harga_layanan_brand, harga_layanan.pajak AS harga_layanan_pajak, harga_layanan.xendit_key_name AS harga_layanan_xendit_key_name 
+FROM harga_layanan 
+WHERE harga_layanan.id_brand IN (%s)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00050s] ('ajn-01',)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00045s] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT invoices.id 
+FROM invoices 
+WHERE invoices.pelanggan_id = %s AND invoices.tgl_jatuh_tempo = %s
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00044s] (1, datetime.date(2025, 7, 23))
+2025-07-18 22:49:15 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | INSERT INTO invoices (invoice_number, pelanggan_id, id_pelanggan, brand, total_harga, no_telp, email, tgl_invoice, tgl_jatuh_tempo, status_invoice, payment_link, expiry_date, xendit_id, xendit_external_id, paid_amount, paid_at, is_processing, deleted_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00098s] ('INV-20250718-78EACF', 1, 'ART-001', 'Jakinet', 388500.0, '08986937819', 'budi@test.com', datetime.date(2025, 7, 18), datetime.date(2025, 7, 23), None, None, None, None, None, None, None, 0, None)
+2025-07-18 22:49:15 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:49:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (pymysql.err.IntegrityError) (1048, "Column 'status_invoice' cannot be null")
+[SQL: INSERT INTO invoices (invoice_number, pelanggan_id, id_pelanggan, brand, total_harga, no_telp, email, tgl_invoice, tgl_jatuh_tempo, status_invoice, payment_link, expiry_date, xendit_id, xendit_external_id, paid_amount, paid_at, is_processing, deleted_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('INV-20250718-78EACF', 1, 'ART-001', 'Jakinet', 388500.0, '08986937819', 'budi@test.com', datetime.date(2025, 7, 18), datetime.date(2025, 7, 23), None, None, None, None, None, None, None, 0, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+2025-07-18 22:49:41 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-18 22:49:41 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-18 22:49:41 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-18 22:49:41 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [26848]
+2025-07-18 22:51:35 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-18 22:51:35 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-18 22:51:35 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT DATABASE()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT @@sql_mode
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT @@lower_case_table_names
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`pelanggan`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`data_teknis`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`harga_layanan`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`langganan`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`users`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`role_has_permissions`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`permissions`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`roles`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`invoices`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`mikrotik_servers`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`paket_layanan`
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 22:51:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 22:51:36 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-18 22:52:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00054s] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:52:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT paket_layanan.id AS paket_layanan_id, paket_layanan.id_brand AS paket_layanan_id_brand, paket_layanan.nama_paket AS paket_layanan_nama_paket, paket_layanan.kecepatan AS paket_layanan_kecepatan, paket_layanan.harga AS paket_layanan_harga 
+FROM paket_layanan 
+WHERE paket_layanan.id IN (%s)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00055s] (3,)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT pelanggan.id AS pelanggan_id, pelanggan.no_ktp AS pelanggan_no_ktp, pelanggan.nama AS pelanggan_nama, pelanggan.alamat AS pelanggan_alamat, pelanggan.alamat_custom AS pelanggan_alamat_custom, pelanggan.alamat_2 AS pelanggan_alamat_2, pelanggan.tgl_instalasi AS pelanggan_tgl_instalasi, pelanggan.blok AS pelanggan_blok, pelanggan.unit AS pelanggan_unit, pelanggan.no_telp AS pelanggan_no_telp, pelanggan.email AS pelanggan_email, pelanggan.id_brand AS pelanggan_id_brand, pelanggan.layanan AS pelanggan_layanan, pelanggan.brand_default AS pelanggan_brand_default 
+FROM pelanggan 
+WHERE pelanggan.id IN (%s)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00065s] (1,)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT data_teknis.pelanggan_id AS data_teknis_pelanggan_id, data_teknis.id AS data_teknis_id, data_teknis.id_vlan AS data_teknis_id_vlan, data_teknis.id_pelanggan AS data_teknis_id_pelanggan, data_teknis.password_pppoe AS data_teknis_password_pppoe, data_teknis.ip_pelanggan AS data_teknis_ip_pelanggan, data_teknis.profile_pppoe AS data_teknis_profile_pppoe, data_teknis.olt AS data_teknis_olt, data_teknis.olt_custom AS data_teknis_olt_custom, data_teknis.pon AS data_teknis_pon, data_teknis.otb AS data_teknis_otb, data_teknis.odc AS data_teknis_odc, data_teknis.odp AS data_teknis_odp, data_teknis.speedtest_proof AS data_teknis_speedtest_proof, data_teknis.onu_power AS data_teknis_onu_power, data_teknis.mikrotik_server_id AS data_teknis_mikrotik_server_id 
+FROM data_teknis 
+WHERE data_teknis.pelanggan_id IN (%s)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00065s] (1,)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT harga_layanan.id_brand AS harga_layanan_id_brand, harga_layanan.brand AS harga_layanan_brand, harga_layanan.pajak AS harga_layanan_pajak, harga_layanan.xendit_key_name AS harga_layanan_xendit_key_name 
+FROM harga_layanan 
+WHERE harga_layanan.id_brand IN (%s)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00063s] ('ajn-01',)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00067s] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT invoices.id 
+FROM invoices 
+WHERE invoices.pelanggan_id = %s AND invoices.tgl_jatuh_tempo = %s
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00047s] (1, datetime.date(2025, 7, 23))
+2025-07-18 22:52:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | INSERT INTO invoices (invoice_number, pelanggan_id, id_pelanggan, brand, total_harga, no_telp, email, tgl_invoice, tgl_jatuh_tempo, status_invoice, payment_link, expiry_date, xendit_id, xendit_external_id, paid_amount, paid_at, is_processing, deleted_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+2025-07-18 22:52:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00092s] ('INV-20250718-D68021', 1, 'ART-001', 'Jakinet', 388500.0, '08986937819', 'budi@test.com', datetime.date(2025, 7, 18), datetime.date(2025, 7, 23), 'Belum Dibayar', None, None, None, None, None, None, 0, None)
+2025-07-18 22:52:37 | HTTPX                | [92mINFO    [0m | HTTP Request: POST https://api.xendit.co/v2/invoices "HTTP/1.1 200 OK"
+2025-07-18 22:52:37 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | UPDATE invoices SET payment_link=%s, xendit_id=%s, xendit_external_id=%s, updated_at=now() WHERE invoices.id = %s
+2025-07-18 22:52:37 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00058s] ('https://checkout-staging.xendit.co/web/687a6dc4a59bfcd85c731074', '687a6dc4a59bfcd85c731074', 'INV-20250718-D68021', 14)
+2025-07-18 22:52:37 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 22:52:37 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Berhasil membuat 1 invoice baru.
+2025-07-18 22:53:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 59.95s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:53:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 59.92s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:53:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT pelanggan.id AS pelanggan_id, pelanggan.no_ktp AS pelanggan_no_ktp, pelanggan.nama AS pelanggan_nama, pelanggan.alamat AS pelanggan_alamat, pelanggan.alamat_custom AS pelanggan_alamat_custom, pelanggan.alamat_2 AS pelanggan_alamat_2, pelanggan.tgl_instalasi AS pelanggan_tgl_instalasi, pelanggan.blok AS pelanggan_blok, pelanggan.unit AS pelanggan_unit, pelanggan.no_telp AS pelanggan_no_telp, pelanggan.email AS pelanggan_email, pelanggan.id_brand AS pelanggan_id_brand, pelanggan.layanan AS pelanggan_layanan, pelanggan.brand_default AS pelanggan_brand_default 
+FROM pelanggan 
+WHERE pelanggan.id IN (%s)
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00054s] (1,)
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT data_teknis.pelanggan_id AS data_teknis_pelanggan_id, data_teknis.id AS data_teknis_id, data_teknis.id_vlan AS data_teknis_id_vlan, data_teknis.id_pelanggan AS data_teknis_id_pelanggan, data_teknis.password_pppoe AS data_teknis_password_pppoe, data_teknis.ip_pelanggan AS data_teknis_ip_pelanggan, data_teknis.profile_pppoe AS data_teknis_profile_pppoe, data_teknis.olt AS data_teknis_olt, data_teknis.olt_custom AS data_teknis_olt_custom, data_teknis.pon AS data_teknis_pon, data_teknis.otb AS data_teknis_otb, data_teknis.odc AS data_teknis_odc, data_teknis.odp AS data_teknis_odp, data_teknis.speedtest_proof AS data_teknis_speedtest_proof, data_teknis.onu_power AS data_teknis_onu_power, data_teknis.mikrotik_server_id AS data_teknis_mikrotik_server_id 
+FROM data_teknis 
+WHERE data_teknis.pelanggan_id IN (%s)
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00059s] (1,)
+2025-07-18 22:53:36 | JOBS                 | [93mWARNING [0m | Melakukan suspend layanan untuk Langganan ID: 1 karena terlambat.
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | UPDATE langganan SET status=%s, updated_at=now() WHERE langganan.id = %s
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00105s] ('Suspended', 1)
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT mikrotik_servers.id AS mikrotik_servers_id, mikrotik_servers.name AS mikrotik_servers_name, mikrotik_servers.host_ip AS mikrotik_servers_host_ip, mikrotik_servers.username AS mikrotik_servers_username, mikrotik_servers.password AS mikrotik_servers_password, mikrotik_servers.port AS mikrotik_servers_port, mikrotik_servers.ros_version AS mikrotik_servers_ros_version, mikrotik_servers.is_active AS mikrotik_servers_is_active, mikrotik_servers.last_connection_status AS mikrotik_servers_last_connection_status, mikrotik_servers.last_connected_at AS mikrotik_servers_last_connected_at, mikrotik_servers.created_at AS mikrotik_servers_created_at, mikrotik_servers.updated_at AS mikrotik_servers_updated_at 
+FROM mikrotik_servers 
+WHERE mikrotik_servers.id = %s
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00076s] (1,)
+2025-07-18 22:53:36 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-18 22:53:36 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Menonaktifkan 'ART-001', profil diubah ke 'SUSPENDED'
+2025-07-18 22:53:36 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Update PPPoE secret untuk 'ART-001' berhasil.
+2025-07-18 22:53:36 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Menutup koneksi Mikrotik.
+2025-07-18 22:53:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 22:53:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Berhasil suspend 1 layanan.
+2025-07-18 22:54:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 120s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:54:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 119.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:54:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:54:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:54:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:55:25 | ROUTERS.INVOICE      | [92mINFO    [0m | Xendit callback payload: {
+  "id": "687a6dc4a59bfcd85c731074",
+  "external_id": "INV-20250718-D68021",
+  "user_id": "646b2edbd8bd47a22176e25d",
+  "payment_method": "BANK_TRANSFER",
+  "status": "PAID",
+  "merchant_name": "Artacomindo Jejaring Nusa",
+  "amount": 388500,
+  "paid_amount": 388500,
+  "bank_code": "PERMATA",
+  "paid_at": "2025-07-18T15:55:22.000Z",
+  "description": "Tagihan Internet untuk Budi - Invoice INV-20250718-D68021",
+  "is_high": false,
+  "created": "2025-07-18T15:52:36.891Z",
+  "updated": "2025-07-18T15:55:22.947Z",
+  "currency": "IDR",
+  "payment_channel": "PERMATA",
+  "payment_destination": "729338849157",
+  "payment_id": "bb8fdd19-e5e4-4e9b-a830-535fa0ecc686"
+}
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT invoices.id, invoices.invoice_number, invoices.pelanggan_id, invoices.id_pelanggan, invoices.brand, invoices.total_harga, invoices.no_telp, invoices.email, invoices.tgl_invoice, invoices.tgl_jatuh_tempo, invoices.status_invoice, invoices.payment_link, invoices.expiry_date, invoices.xendit_id, invoices.xendit_external_id, invoices.paid_amount, invoices.paid_at, invoices.is_processing, invoices.created_at, invoices.updated_at, invoices.deleted_at 
+FROM invoices 
+WHERE invoices.xendit_external_id = %s
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00081s] ('INV-20250718-D68021',)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT pelanggan.id AS pelanggan_id, pelanggan.no_ktp AS pelanggan_no_ktp, pelanggan.nama AS pelanggan_nama, pelanggan.alamat AS pelanggan_alamat, pelanggan.alamat_custom AS pelanggan_alamat_custom, pelanggan.alamat_2 AS pelanggan_alamat_2, pelanggan.tgl_instalasi AS pelanggan_tgl_instalasi, pelanggan.blok AS pelanggan_blok, pelanggan.unit AS pelanggan_unit, pelanggan.no_telp AS pelanggan_no_telp, pelanggan.email AS pelanggan_email, pelanggan.id_brand AS pelanggan_id_brand, pelanggan.layanan AS pelanggan_layanan, pelanggan.brand_default AS pelanggan_brand_default 
+FROM pelanggan 
+WHERE pelanggan.id IN (%s)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00078s] (1,)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT data_teknis.pelanggan_id AS data_teknis_pelanggan_id, data_teknis.id AS data_teknis_id, data_teknis.id_vlan AS data_teknis_id_vlan, data_teknis.id_pelanggan AS data_teknis_id_pelanggan, data_teknis.password_pppoe AS data_teknis_password_pppoe, data_teknis.ip_pelanggan AS data_teknis_ip_pelanggan, data_teknis.profile_pppoe AS data_teknis_profile_pppoe, data_teknis.olt AS data_teknis_olt, data_teknis.olt_custom AS data_teknis_olt_custom, data_teknis.pon AS data_teknis_pon, data_teknis.otb AS data_teknis_otb, data_teknis.odc AS data_teknis_odc, data_teknis.odp AS data_teknis_odp, data_teknis.speedtest_proof AS data_teknis_speedtest_proof, data_teknis.onu_power AS data_teknis_onu_power, data_teknis.mikrotik_server_id AS data_teknis_mikrotik_server_id 
+FROM data_teknis 
+WHERE data_teknis.pelanggan_id IN (%s)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00081s] (1,)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.pelanggan_id AS langganan_pelanggan_id, langganan.id AS langganan_id, langganan.paket_layanan_id AS langganan_paket_layanan_id, langganan.tgl_jatuh_tempo AS langganan_tgl_jatuh_tempo, langganan.tgl_invoice_terakhir AS langganan_tgl_invoice_terakhir, langganan.status AS langganan_status, langganan.created_at AS langganan_created_at, langganan.updated_at AS langganan_updated_at 
+FROM langganan 
+WHERE langganan.pelanggan_id IN (%s)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00080s] (1,)
+2025-07-18 22:55:25 | ROUTERS.INVOICE      | [92mINFO    [0m | Processing PAID status for invoice INV-20250718-D68021
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | UPDATE langganan SET tgl_jatuh_tempo=%s, status=%s, updated_at=now() WHERE langganan.id = %s
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00085s] (datetime.date(2025, 8, 17), 'Aktif', 1)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | UPDATE invoices SET status_invoice=%s, paid_amount=%s, paid_at=%s, updated_at=now() WHERE invoices.id = %s
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00044s] ('Lunas', 388500.0, datetime.datetime(2025, 7, 18, 15, 55, 22, tzinfo=datetime.timezone.utc), 14)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 22:55:25 | ROUTERS.INVOICE      | [92mINFO    [0m | Payment processed successfully for invoice INV-20250718-D68021
+2025-07-18 22:55:25 | ROUTERS.INVOICE      | [92mINFO    [0m | Subscription status changed from Suspended to Aktif
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT mikrotik_servers.id AS mikrotik_servers_id, mikrotik_servers.name AS mikrotik_servers_name, mikrotik_servers.host_ip AS mikrotik_servers_host_ip, mikrotik_servers.username AS mikrotik_servers_username, mikrotik_servers.password AS mikrotik_servers_password, mikrotik_servers.port AS mikrotik_servers_port, mikrotik_servers.ros_version AS mikrotik_servers_ros_version, mikrotik_servers.is_active AS mikrotik_servers_is_active, mikrotik_servers.last_connection_status AS mikrotik_servers_last_connection_status, mikrotik_servers.last_connected_at AS mikrotik_servers_last_connected_at, mikrotik_servers.created_at AS mikrotik_servers_created_at, mikrotik_servers.updated_at AS mikrotik_servers_updated_at 
+FROM mikrotik_servers 
+WHERE mikrotik_servers.id = %s
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 109.2s ago] (1,)
+2025-07-18 22:55:25 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-18 22:55:25 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Mengaktifkan 'ART-001', profil diubah ke '30Mbps-a'
+2025-07-18 22:55:25 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Update PPPoE secret untuk 'ART-001' berhasil.
+2025-07-18 22:55:25 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Menutup koneksi Mikrotik.
+2025-07-18 22:55:25 | ROUTERS.INVOICE      | [92mINFO    [0m | Mikrotik update triggered successfully for subscription 1
+2025-07-18 22:55:25 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:55:25 | UVICORN.ACCESS       | [92mINFO    [0m | 52.89.130.89:0 - "POST /invoices/xendit-callback HTTP/1.1" 200
+2025-07-18 22:55:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 179.9s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:55:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 179.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:55:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:55:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:55:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:56:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 240s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:56:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 239.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:56:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:56:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:56:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:57:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 299.9s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:57:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 299.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:57:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:57:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:57:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:58:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 359.9s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:58:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 359.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:58:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:58:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:58:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:59:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 419.9s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 22:59:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 419.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 22:59:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 22:59:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 22:59:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:00:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 480s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 23:00:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 479.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 23:00:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:00:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 23:00:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:01:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 540.2s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 23:01:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 540.2s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 23:01:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:01:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 23:01:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:02:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 599.9s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 23:02:36 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 599.9s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 23:02:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:02:36 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 23:02:36 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:02:44 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-18 23:02:44 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-18 23:02:44 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-18 23:02:44 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [26056]
+2025-07-18 23:03:31 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-18 23:03:31 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-18 23:03:31 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT DATABASE()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT @@sql_mode
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT @@lower_case_table_names
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`pelanggan`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`data_teknis`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`harga_layanan`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`langganan`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`users`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`role_has_permissions`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`permissions`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`roles`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`invoices`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`mikrotik_servers`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | DESCRIBE `react_billing`.`paket_layanan`
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [raw sql] ()
+2025-07-18 23:03:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 23:03:31 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-18 23:04:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00049s] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 23:04:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 23:04:31 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00063s] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 23:04:31 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 23:04:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:04:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60845 - "POST /pelanggan HTTP/1.1" 307
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | INSERT INTO pelanggan (no_ktp, nama, alamat, alamat_custom, alamat_2, tgl_instalasi, blok, unit, no_telp, email, id_brand, layanan, brand_default) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00093s] ('456789121314', 'Budi Arie', 'Tambun', None, 'Jl. Pegangsaan Timur', datetime.date(2025, 2, 22), 'B', '2', '087843975540', 'budei@test.com', 'ajn-03', '20 Mbps', None)
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT pelanggan.id, pelanggan.no_ktp, pelanggan.nama, pelanggan.alamat, pelanggan.alamat_custom, pelanggan.alamat_2, pelanggan.tgl_instalasi, pelanggan.blok, pelanggan.unit, pelanggan.no_telp, pelanggan.email, pelanggan.id_brand, pelanggan.layanan, pelanggan.brand_default 
+FROM pelanggan 
+WHERE pelanggan.id = %s
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00056s] (2,)
+2025-07-18 23:04:55 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:04:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60845 - "POST /pelanggan/ HTTP/1.1" 201
+2025-07-18 23:05:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 59.97s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 23:05:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 59.97s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 23:05:31 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:05:31 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 23:05:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:05:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61475 - "POST /langganan HTTP/1.1" 307
+2025-07-18 23:05:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61475 - "POST /langganan/ HTTP/1.1" 422
+2025-07-18 23:06:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61703 - "POST /langganan HTTP/1.1" 307
+2025-07-18 23:06:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61703 - "POST /langganan/ HTTP/1.1" 422
+2025-07-18 23:06:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 120s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 23:06:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 120s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 23:06:31 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:06:31 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 23:06:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:06:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61983 - "POST /langganan HTTP/1.1" 307
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | INSERT INTO langganan (pelanggan_id, paket_layanan_id, tgl_jatuh_tempo, tgl_invoice_terakhir, status) VALUES (%s, %s, %s, %s, %s)
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00048s] (2, 5, datetime.date(2025, 7, 23), datetime.date(2025, 1, 21), 'Aktif')
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.id = %s
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00051s] (2,)
+2025-07-18 23:06:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:06:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61983 - "POST /langganan/ HTTP/1.1" 201
+2025-07-18 23:07:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62593 - "POST /data_teknis HTTP/1.1" 307
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT pelanggan.id AS pelanggan_id, pelanggan.no_ktp AS pelanggan_no_ktp, pelanggan.nama AS pelanggan_nama, pelanggan.alamat AS pelanggan_alamat, pelanggan.alamat_custom AS pelanggan_alamat_custom, pelanggan.alamat_2 AS pelanggan_alamat_2, pelanggan.tgl_instalasi AS pelanggan_tgl_instalasi, pelanggan.blok AS pelanggan_blok, pelanggan.unit AS pelanggan_unit, pelanggan.no_telp AS pelanggan_no_telp, pelanggan.email AS pelanggan_email, pelanggan.id_brand AS pelanggan_id_brand, pelanggan.layanan AS pelanggan_layanan, pelanggan.brand_default AS pelanggan_brand_default 
+FROM pelanggan 
+WHERE pelanggan.id = %s
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00061s] (2,)
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT data_teknis.id, data_teknis.pelanggan_id, data_teknis.id_vlan, data_teknis.id_pelanggan, data_teknis.password_pppoe, data_teknis.ip_pelanggan, data_teknis.profile_pppoe, data_teknis.olt, data_teknis.olt_custom, data_teknis.pon, data_teknis.otb, data_teknis.odc, data_teknis.odp, data_teknis.speedtest_proof, data_teknis.onu_power, data_teknis.mikrotik_server_id 
+FROM data_teknis 
+WHERE data_teknis.pelanggan_id = %s
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00088s] (2,)
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | INSERT INTO data_teknis (pelanggan_id, id_vlan, id_pelanggan, password_pppoe, ip_pelanggan, profile_pppoe, olt, olt_custom, pon, otb, odc, odp, speedtest_proof, onu_power, mikrotik_server_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00069s] (2, '101', 'ART-002', 'pass123', '10.10.10.2', '20Mbps-a', 'Tambun', 'N/A', 0, 0, 0, 0, 'N/A', -20, None)
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT data_teknis.id, data_teknis.pelanggan_id, data_teknis.id_vlan, data_teknis.id_pelanggan, data_teknis.password_pppoe, data_teknis.ip_pelanggan, data_teknis.profile_pppoe, data_teknis.olt, data_teknis.olt_custom, data_teknis.pon, data_teknis.otb, data_teknis.odc, data_teknis.odp, data_teknis.speedtest_proof, data_teknis.onu_power, data_teknis.mikrotik_server_id 
+FROM data_teknis 
+WHERE data_teknis.id = %s
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00047s] (2,)
+2025-07-18 23:07:22 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:07:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62593 - "POST /data_teknis/ HTTP/1.1" 201
+2025-07-18 23:07:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 180s ago] (datetime.date(2025, 7, 23), 'Aktif')
+2025-07-18 23:07:31 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | BEGIN (implicit)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [cached since 180s ago] (datetime.date(2025, 7, 18), 'Aktif')
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT paket_layanan.id AS paket_layanan_id, paket_layanan.id_brand AS paket_layanan_id_brand, paket_layanan.nama_paket AS paket_layanan_nama_paket, paket_layanan.kecepatan AS paket_layanan_kecepatan, paket_layanan.harga AS paket_layanan_harga 
+FROM paket_layanan 
+WHERE paket_layanan.id IN (%s)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00052s] (5,)
+2025-07-18 23:07:31 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | ROLLBACK
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT pelanggan.id AS pelanggan_id, pelanggan.no_ktp AS pelanggan_no_ktp, pelanggan.nama AS pelanggan_nama, pelanggan.alamat AS pelanggan_alamat, pelanggan.alamat_custom AS pelanggan_alamat_custom, pelanggan.alamat_2 AS pelanggan_alamat_2, pelanggan.tgl_instalasi AS pelanggan_tgl_instalasi, pelanggan.blok AS pelanggan_blok, pelanggan.unit AS pelanggan_unit, pelanggan.no_telp AS pelanggan_no_telp, pelanggan.email AS pelanggan_email, pelanggan.id_brand AS pelanggan_id_brand, pelanggan.layanan AS pelanggan_layanan, pelanggan.brand_default AS pelanggan_brand_default 
+FROM pelanggan 
+WHERE pelanggan.id IN (%s)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00060s] (2,)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT data_teknis.pelanggan_id AS data_teknis_pelanggan_id, data_teknis.id AS data_teknis_id, data_teknis.id_vlan AS data_teknis_id_vlan, data_teknis.id_pelanggan AS data_teknis_id_pelanggan, data_teknis.password_pppoe AS data_teknis_password_pppoe, data_teknis.ip_pelanggan AS data_teknis_ip_pelanggan, data_teknis.profile_pppoe AS data_teknis_profile_pppoe, data_teknis.olt AS data_teknis_olt, data_teknis.olt_custom AS data_teknis_olt_custom, data_teknis.pon AS data_teknis_pon, data_teknis.otb AS data_teknis_otb, data_teknis.odc AS data_teknis_odc, data_teknis.odp AS data_teknis_odp, data_teknis.speedtest_proof AS data_teknis_speedtest_proof, data_teknis.onu_power AS data_teknis_onu_power, data_teknis.mikrotik_server_id AS data_teknis_mikrotik_server_id 
+FROM data_teknis 
+WHERE data_teknis.pelanggan_id IN (%s)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00057s] (2,)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT harga_layanan.id_brand AS harga_layanan_id_brand, harga_layanan.brand AS harga_layanan_brand, harga_layanan.pajak AS harga_layanan_pajak, harga_layanan.xendit_key_name AS harga_layanan_xendit_key_name 
+FROM harga_layanan 
+WHERE harga_layanan.id_brand IN (%s)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00054s] ('ajn-03',)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | SELECT invoices.id 
+FROM invoices 
+WHERE invoices.pelanggan_id = %s AND invoices.tgl_jatuh_tempo = %s
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00038s] (2, datetime.date(2025, 7, 23))
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | INSERT INTO invoices (invoice_number, pelanggan_id, id_pelanggan, brand, total_harga, no_telp, email, tgl_invoice, tgl_jatuh_tempo, status_invoice, payment_link, expiry_date, xendit_id, xendit_external_id, paid_amount, paid_at, is_processing, deleted_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+2025-07-18 23:07:31 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00068s] ('INV-20250718-0BE69C', 2, 'ART-002', 'Jakinet Nagrak', 359640.0, '087843975540', 'budei@test.com', datetime.date(2025, 7, 18), datetime.date(2025, 7, 23), 'Belum Dibayar', None, None, None, None, None, None, 0, None)
+2025-07-18 23:07:32 | HTTPX                | [92mINFO    [0m | HTTP Request: POST https://api.xendit.co/v2/invoices "HTTP/1.1 200 OK"
+2025-07-18 23:07:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | UPDATE invoices SET payment_link=%s, xendit_id=%s, xendit_external_id=%s, updated_at=now() WHERE invoices.id = %s
+2025-07-18 23:07:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | [generated in 0.00083s] ('https://checkout-staging.xendit.co/web/687a7143a59bfcd85c73161f', '687a7143a59bfcd85c73161f', 'INV-20250718-0BE69C', 15)
+2025-07-18 23:07:32 | SQLALCHEMY.ENGINE.ENGINE | [92mINFO    [0m | COMMIT
+2025-07-18 23:07:32 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Berhasil membuat 1 invoice baru.
+2025-07-18 23:07:35 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-18 23:07:35 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-18 23:07:35 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-18 23:07:35 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [21116]
