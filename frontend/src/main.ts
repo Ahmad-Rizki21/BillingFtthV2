@@ -13,10 +13,43 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 
-// 2. Buat instance Vuetify TERLEBIH DAHULU
+// 2. Buat instance Vuetify dengan tema light dan dark yang kontras
 const vuetify = createVuetify({
   components,
   directives,
+  theme: {
+    defaultTheme: 'light',
+    themes: {
+      light: {
+        dark: false,
+        colors: {
+          primary: '#6366f1',
+          secondary: '#8b5cf6',
+          accent: '#ec4899',
+          error: '#ef4444',
+          warning: '#f59e0b',
+          info: '#3b82f6',
+          success: '#10b981',
+          background: '#ffffff',
+          surface: '#f8fafc',
+        },
+      },
+      dark: {
+        dark: true,
+        colors: {
+          primary: '#818cf8',
+          secondary: '#a78bfa',
+          accent: '#f472b6',
+          error: '#f87171',
+          warning: '#fbbf24',
+          info: '#60a5fa',
+          success: '#34d399',
+          background: '#0f172a',
+          surface: '#1e293b',
+        },
+      },
+    },
+  },
 })
 
 // 3. Buat aplikasi Vue
@@ -25,7 +58,7 @@ const app = createApp(App)
 // 4. Pasang semua plugin (Pinia, Router, dan Vuetify)
 app.use(createPinia())
 app.use(router)
-app.use(vuetify) // Sekarang variabel 'vuetify' sudah ada
+app.use(vuetify)
 
 // 5. Mount aplikasi
 app.mount('#app')

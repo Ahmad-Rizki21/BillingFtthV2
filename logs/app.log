@@ -7248,3 +7248,1249 @@ WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
 2025-07-19 19:31:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
 2025-07-19 19:31:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
 2025-07-19 19:31:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:32:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.05e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:32:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.05e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:32:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:32:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:32:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:33:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.056e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:33:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.056e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:33:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:33:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:33:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:34:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.062e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:34:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.062e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:34:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:34:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:34:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:35:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.068e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:35:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.068e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:35:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:35:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:35:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:36:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.074e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:36:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.074e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:36:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:36:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:36:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:37:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.08e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:37:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.08e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:37:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:37:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:37:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:38:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.086e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:38:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.086e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:38:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:38:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:38:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:39:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.092e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:39:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.092e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:39:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:39:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:39:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:40:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.098e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:40:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.098e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:40:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:40:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:40:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:41:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.104e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:41:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.104e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:41:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:41:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:41:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:42:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.11e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:42:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.11e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:42:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:42:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:42:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:43:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.116e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:43:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.116e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:43:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:43:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:43:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:44:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.122e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:44:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.122e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:44:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:44:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:44:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:45:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.128e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:45:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.128e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:45:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:45:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:45:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:46:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.134e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:46:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.134e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:46:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:46:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:46:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:47:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.14e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:47:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.14e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:47:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:47:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:47:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:48:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.146e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:48:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.146e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:48:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:48:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:48:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:49:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.152e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:49:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.152e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:49:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:49:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:49:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:50:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.158e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:50:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.158e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:50:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:50:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:50:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:51:26 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:51:26 | sqlalchemy.engine.Engine | INFO     | SELECT users.id, users.name, users.email, users.email_verified_at, users.password, users.remember_token, users.created_at, users.updated_at, users.role_id 
+FROM users 
+WHERE users.email = %s
+2025-07-19 19:51:26 | sqlalchemy.engine.Engine | INFO     | [cached since 1.167e+04s ago] ('admin@admin.com',)
+2025-07-19 19:51:27 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:51:27 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:55116 - "POST /users/token HTTP/1.1" 200
+2025-07-19 19:51:27 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:55116 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-19 19:51:27 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:51:27 | sqlalchemy.engine.Engine | INFO     | SELECT users.id AS users_id, users.name AS users_name, users.email AS users_email, users.email_verified_at AS users_email_verified_at, users.password AS users_password, users.remember_token AS users_remember_token, users.created_at AS users_created_at, users.updated_at AS users_updated_at, users.role_id AS users_role_id 
+FROM users 
+WHERE users.id = %s
+2025-07-19 19:51:27 | sqlalchemy.engine.Engine | INFO     | [cached since 1.167e+04s ago] (3,)
+2025-07-19 19:51:27 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:51:27 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:55116 - "GET /users/me HTTP/1.1" 200
+2025-07-19 19:51:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.164e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:51:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.164e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:51:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:51:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:51:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:52:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.17e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:52:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.17e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:52:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:52:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:52:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:53:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.176e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:53:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.176e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:53:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:53:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:53:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:54:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.182e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:54:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.182e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:54:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:54:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:54:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:55:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.188e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:55:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.188e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:55:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:55:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:55:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:56:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.194e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:56:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.194e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:56:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:56:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:56:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:57:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.2e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:57:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.2e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:57:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:57:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:57:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:58:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.206e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:58:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.206e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:58:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:58:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:58:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:59:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.212e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 19:59:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.212e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 19:59:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 19:59:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 19:59:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:00:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.218e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:00:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.218e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:00:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:00:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:00:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:01:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.224e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:01:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.224e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:01:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:01:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:01:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:02:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.23e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:02:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.23e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:02:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:02:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:02:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:03:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.236e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:03:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.236e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:03:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:03:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:03:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:04:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.242e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:04:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.242e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:04:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:04:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:04:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:05:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.248e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:05:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.248e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:05:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:05:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:05:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:06:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.254e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:06:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.254e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:06:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:06:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:06:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:07:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.26e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:07:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.26e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:07:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:07:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:07:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:08:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.266e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:08:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.266e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:08:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:08:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:08:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:09:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.272e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:09:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.272e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:09:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:09:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:09:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:10:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.278e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:10:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.278e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:10:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:10:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:10:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:11:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.284e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:11:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.284e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:11:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:11:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:11:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:12:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.29e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:12:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.29e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:12:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:12:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:12:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:13:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.296e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:13:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.296e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:13:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:13:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:13:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:14:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.302e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:14:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.302e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:14:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:14:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:14:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:15:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.308e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:15:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.308e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:15:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:15:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:15:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:16:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.314e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:16:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.314e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:16:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:16:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:16:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:17:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.32e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:17:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.32e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:17:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:17:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:17:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:18:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.326e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:18:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.326e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:18:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:18:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:18:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:19:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.332e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:19:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.332e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:19:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:19:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:19:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:20:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.338e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:20:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.338e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:20:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:20:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:20:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:21:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.344e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:21:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.344e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:21:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:21:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:21:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:22:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.35e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:22:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.35e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:22:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:22:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:22:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:23:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.356e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:23:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.356e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:23:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:23:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:23:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:24:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.362e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:24:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.362e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:24:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:24:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:24:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:25:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.368e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:25:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.368e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:25:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:25:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:25:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:26:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.374e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:26:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.374e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:26:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:26:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:26:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:27:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.38e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:27:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.38e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:27:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:27:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:27:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:28:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.386e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:28:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.386e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:28:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:28:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:28:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:29:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.392e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:29:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.392e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:29:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:29:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:29:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:30:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.398e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:30:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.398e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:30:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:30:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:30:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:31:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.404e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:31:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.404e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:31:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:31:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:31:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:32:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.41e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:32:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.41e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:32:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:32:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:32:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:33:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.416e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:33:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.416e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:33:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:33:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:33:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:34:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.422e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:34:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.422e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:34:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:34:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:34:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:35:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.428e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:35:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.428e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:35:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:35:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:35:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:36:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.434e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:36:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.434e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:36:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:36:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:36:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:37:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.44e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:37:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.44e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:37:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:37:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:37:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:38:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.446e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:38:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.446e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:38:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:38:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:38:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:39:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.452e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:39:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.452e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:39:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:39:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:39:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:40:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.458e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:40:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.458e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:40:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:40:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:40:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:41:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.464e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:41:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.464e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:41:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:41:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:41:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:42:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.47e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:42:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.47e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:42:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:42:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:42:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:43:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.476e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:43:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.476e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:43:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:43:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:43:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:44:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_generate_invoices' started.
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.482e+04s ago] (datetime.date(2025, 7, 24), 'Aktif')
+2025-07-19 20:44:46 | JOBS                 | [92mINFO    [0m | [START] Scheduler 'job_suspend_services' started.
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | [cached since 1.482e+04s ago] (datetime.date(2025, 7, 19), 'Aktif')
+2025-07-19 20:44:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_generate_invoices' completed. Tidak ada invoice untuk dibuat hari ini.
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:44:46 | JOBS                 | [92mINFO    [0m | [DONE] Scheduler 'job_suspend_services' completed. Tidak ada layanan untuk di-suspend.
+2025-07-19 20:44:46 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:45:42 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-19 20:45:42 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [22776]
+2025-07-19 20:45:42 | UVICORN.ERROR        | [92mINFO    [0m | ASGI 'lifespan' protocol appears unsupported.
+2025-07-19 20:51:44 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-19 20:51:44 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-19 20:51:44 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-19 20:51:44 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | SELECT DATABASE()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | SELECT @@sql_mode
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | SELECT @@lower_case_table_names
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`pelanggan`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`data_teknis`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`harga_layanan`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`langganan`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`users`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`role_has_permissions`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`permissions`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`roles`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`invoices`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`mikrotik_servers`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | DESCRIBE `react_billing`.`paket_layanan`
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | [raw sql] ()
+2025-07-19 20:51:44 | sqlalchemy.engine.Engine | INFO     | COMMIT
+2025-07-19 20:51:44 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-19 20:51:52 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:51:52 | sqlalchemy.engine.Engine | INFO     | SELECT users.id, users.name, users.email, users.email_verified_at, users.password, users.remember_token, users.created_at, users.updated_at, users.role_id 
+FROM users 
+WHERE users.email = %s
+2025-07-19 20:51:52 | sqlalchemy.engine.Engine | INFO     | [generated in 0.00109s] ('admin@admin.com',)
+2025-07-19 20:51:52 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-19 20:51:52 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:51:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57178 - "POST /users/token HTTP/1.1" 200
+2025-07-19 20:51:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57178 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-19 20:51:53 | sqlalchemy.engine.Engine | INFO     | BEGIN (implicit)
+2025-07-19 20:51:53 | sqlalchemy.engine.Engine | INFO     | SELECT users.id AS users_id, users.name AS users_name, users.email AS users_email, users.email_verified_at AS users_email_verified_at, users.password AS users_password, users.remember_token AS users_remember_token, users.created_at AS users_created_at, users.updated_at AS users_updated_at, users.role_id AS users_role_id 
+FROM users 
+WHERE users.id = %s
+2025-07-19 20:51:53 | sqlalchemy.engine.Engine | INFO     | [generated in 0.00115s] (3,)
+2025-07-19 20:51:53 | sqlalchemy.engine.Engine | INFO     | ROLLBACK
+2025-07-19 20:51:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57178 - "GET /users/me HTTP/1.1" 200
+2025-07-19 20:52:09 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-19 20:52:09 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-19 20:52:09 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-19 20:52:09 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [13664]

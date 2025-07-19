@@ -48,34 +48,6 @@ async function handleLogin() {
   }
 }
 
-// async function handleForgotPassword() {
-//   if (!resetEmail.value) {
-//     error.value = 'Email harus diisi';
-//     return;
-//   }
-
-//   error.value = '';
-//   successMessage.value = '';
-//   loading.value = true;
-
-//   try {
-//     console.log('Requesting reset token for:', resetEmail.value);
-//     const response = await axios.post<{ token: string; message?: string }>('http://127.0.0.1:8000/users/forgot-password', {
-//       email: resetEmail.value,
-//     }, {
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-//     resetToken.value = response.data.token; // Simpan token dari respons
-//     successMessage.value = response.data.message || 'Silakan masukkan password baru dengan token yang diberikan.';
-//   } catch (err) {
-//     const errorResponse = err as AxiosError<ErrorResponse>;
-//     console.error('Forgot password error:', errorResponse.response?.data || errorResponse.message);
-//     error.value = errorResponse.response?.data?.detail || errorResponse.response?.data?.message || 'Terjadi kesalahan saat meminta token reset';
-//   } finally {
-//     loading.value = false;
-//   }
-// }
-
 async function handleResetPassword() {
   if (!resetEmail.value || !newPassword.value || !resetToken.value) {
     error.value = 'Email, password baru, dan token harus diisi';
@@ -138,13 +110,9 @@ function backToLogin() {
       <!-- Left Panel - Branding -->
       <div class="branding-panel">
         <div class="brand-content">
-          <div class="logo-container">
+         <div class="logo-container">
             <div class="logo-icon">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
+              <img src="@/assets/images/Jelantik 1.webp" alt="Logo" style="width: 200px; height: 110px; bottom: 100px; border-radius: 10px;" />
             </div>
             <h1 class="brand-name">Artacom Billing V1</h1>
           </div>
