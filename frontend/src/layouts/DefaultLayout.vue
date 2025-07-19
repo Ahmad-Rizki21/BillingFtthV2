@@ -1,46 +1,326 @@
-<script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
-
-const authStore = useAuthStore();
-</script>
-
 <template>
-  <div class="app-layout">
-    <aside class="sidebar">
-      <h2>Billing System</h2>
-      <nav>
-        <RouterLink to="/dashboard">Dashboard</RouterLink>
-        <!-- <RouterLink to="/pelanggan">Pelanggan</RouterLink>
-        <RouterLink to="/invoices">Invoices</RouterLink> -->
-        <button @click="authStore.logout" class="logout-btn">Logout</button>
-      </nav>
-    </aside>
-    <main class="main-content">
-      <RouterView />
-    </main>
+  <v-app class="modern-app">
+    <v-navigation-drawer
+      v-model="drawer"
+      :rail="rail"
+      permanent
+      class="modern-drawer"
+      width="280"
+    >
+    <v-list-item class="sidebar-header" :class="{'px-0': rail}" :ripple="false">
+  <div class="header-flex-container">
+    <img v-if="!rail" :src="logoJelantik" alt="Jelantik Logo" class="sidebar-logo-full"/>
+    <v-icon v-if="rail" color="primary" size="large">mdi-alpha-j</v-icon>
+
+    <div v-if="!rail" class="sidebar-title-wrapper">
+      <h1 class="sidebar-title">Artacom</h1>
+      <span class="sidebar-subtitle">BILLING SYSTEM</span>
+    </div>
+
+    <v-spacer v-if="!rail"></v-spacer>
+
+    <v-btn
+      v-if="!rail"
+      icon="mdi-chevron-left"
+      variant="text"
+      size="small"
+      @click.stop="rail = !rail"
+    ></v-btn>
   </div>
+</v-list-item>
+
+      <v-divider></v-divider>
+
+      <div class="navigation-wrapper">
+        <v-list nav class="navigation-menu">
+          <template v-for="group in menuGroups" :key="group.title">
+            <v-list-subheader v-if="!rail" class="menu-subheader">{{ group.title }}</v-list-subheader>
+            <v-list-item
+              v-for="item in group.items"
+              :key="item.title"
+              :prepend-icon="item.icon"
+              :title="item.title"
+              :value="item.value"
+              :to="item.to"
+              class="nav-item"
+              :active-class="'v-list-item--active'"
+            >
+              <template v-slot:append v-if="item.badge !== undefined && !rail">
+                <v-chip size="small" class="badge-chip" :color="item.badgeColor">
+                  {{ item.badge }}
+                </v-chip>
+              </template>
+            </v-list-item>
+          </template>
+        </v-list>
+      </div>
+
+      <template v-slot:append>
+        <div class="logout-section pa-4">
+          <v-btn
+            :block="!rail"
+            variant="tonal"
+            color="grey-darken-1"
+            class="logout-btn"
+            :icon="rail"
+            @click="handleLogout"
+          >
+            <v-icon v-if="rail">mdi-logout</v-icon>
+            <span v-if="!rail" class="d-flex align-center"><v-icon left>mdi-logout</v-icon>Logout</span>
+          </v-btn>
+        </div>
+      </template>
+    </v-navigation-drawer>
+
+    <v-app-bar elevation="0" class="modern-app-bar">
+      <v-btn
+        icon="mdi-menu"
+        variant="text"
+        @click.stop="rail = !rail"
+      ></v-btn>
+      <v-spacer></v-spacer>
+      <v-btn icon variant="text" class="header-action-btn">
+        <v-icon>mdi-bell-outline</v-icon>
+      </v-btn>
+      <v-btn icon variant="text" class="header-action-btn">
+        <v-icon>mdi-cog-outline</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-main class="modern-main">
+  <router-view></router-view>
+</v-main>
+  </v-app>
 </template>
 
+<script setup lang="ts">
+import { useRouter } from 'vue-router'; // 1. Import useRouter
+import { ref } from 'vue';
+import logoJelantik from '@/assets/images/Jelantik.webp';
+
+const drawer = ref(true);
+const rail = ref(false);
+const router = useRouter(); // Inisialisasi router
+
+const menuGroups = ref([
+  { title: 'DASHBOARD', items: [{ title: 'Dashboard', icon: 'mdi-home-variant', value: 'dashboard', to: '/dashboard' }] },
+  { title: 'FTTH', items: [
+      { title: 'Data Pelanggan', icon: 'mdi-account-group-outline', value: 'pelanggan', to: '/pelanggan' },
+      { title: 'Langganan / Paket', icon: 'mdi-wifi', value: 'paket', to: '/paket', badge: 1, badgeColor: 'orange' },
+      { title: 'Data Teknis', icon: 'mdi-database-cog-outline', value: 'teknis', to: '/teknis' },
+      { title: 'Harga Layanan', icon: 'mdi-cash', value: 'harga', to: '/harga' },
+  ]},
+  { title: 'BILLING', items: [{ title: 'Invoices', icon: 'mdi-file-document-outline', value: 'invoices', to: '/invoices', badge: 0, badgeColor: 'grey-darken-1' }] },
+  { title: 'SETTINGS', items: [
+      { title: 'Logs System', icon: 'mdi-math-log', value: 'logs', to: '/logs' },
+      { title: 'Activity Log', icon: 'mdi-timeline-text-outline', value: 'activity', to: '/activity' },
+  ]},
+  { title: 'NETWORK MANAGEMENT', items: [{ title: 'Mikrotik Servers', icon: 'mdi-server', value: 'mikrotik', to: '/mikrotik' }] },
+  { title: 'MANAGEMENT', items: [{ title: 'Users', icon: 'mdi-account-cog-outline', value: 'users', to: '/users' }] },
+  { title: 'FILAMENT SHIELD', items: [{ title: 'Roles', icon: 'mdi-shield-account-outline', value: 'roles', to: '/roles', badge: 3, badgeColor: 'primary' }] },
+]);
+
+function handleLogout() {
+  // 2. Implementasikan logika logout
+  // Hapus token dari localStorage (sesuaikan jika Anda menyimpannya di tempat lain)
+  localStorage.removeItem('access_token');
+  
+  // Arahkan ke halaman login
+  router.push('/login');
+}
+</script>
+
 <style scoped>
-.app-layout {
+.modern-app {
+  background-color: #f8fafc;
+}
+
+.modern-drawer {
+  border-right: none;
+  background: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden !important;
+}
+
+.modern-drawer :deep(.v-navigation-drawer__content) {
+  overflow: hidden !important;
   display: flex;
+  flex-direction: column;
+  height: 100%;
 }
-.sidebar {
-  width: 250px;
-  background: #f4f4f4;
-  padding: 1rem;
+
+.sidebar-header {
+  height: 75px; /* Sedikit lebih tinggi untuk ruang napas */
+  padding: 0 16px !important;
+  border-bottom: 1px solid #f1f5f9;
+  flex-shrink: 0;
 }
-.logout-btn {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background: #ff4444;
-  color: white;
-  border: none;
-  cursor: pointer;
+
+.header-flex-container {
+  display: flex;
+  align-items: center; /* KUNCI UTAMA: menyejajarkan semua item secara vertikal */
+  width: 100%;
 }
-.main-content {
+
+.sidebar-logo-full {
+  height: 45px; /* Sesuaikan ukurannya */
+  margin-right: 12px; /* Jarak antara logo dan teks */
+  flex-shrink: 0; /* Mencegah logo gepeng */
+}
+
+.sidebar-title-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #334155;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.sidebar-subtitle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.navigation-wrapper {
   flex: 1;
-  padding: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 0;
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.navigation-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.navigation-menu {
+  padding: 0 16px;
+}
+
+.menu-subheader {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  padding: 0 16px;
+}
+
+.nav-item {
+  border-radius: 10px;
+  margin-bottom: 4px;
+  color: #64748b;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.nav-item .v-list-item-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.nav-item:not(.v-list-item--active):hover {
+  background-color: #f1f5ff;
+  color: #6366f1;
+  transform: translateX(2px);
+}
+
+.v-list-item--active {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.v-list-item--active .v-list-item-title {
+  font-weight: 600;
+}
+
+.badge-chip {
+  font-size: 0.7rem;
+  height: 20px;
+  font-weight: 600;
+  border-radius: 10px;
+  color: white;
+}
+
+.logout-section {
+  flex-shrink: 0;
+  border-top: 1px solid #f1f5f9;
+  background: #fafbfc;
+}
+
+.logout-btn {
+  border-radius: 10px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ef4444;
+  color: white;
+}
+
+.modern-app-bar {
+  background: white !important;
+  border-bottom: 1px solid #f1f5f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.header-action-btn {
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.header-action-btn:hover {
+  background-color: #f1f5f9;
+  color: #6366f1;
+}
+
+.modern-main {
+  background-color: #f8fafc;
+}
+/* 
+.main-content {
+  min-height: 100vh;
+  padding: 0;
+} */
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .modern-drawer {
+    width: 260px !important;
+  }
+  
+  .sidebar-title {
+    font-size: 1.1rem;
+  }
+  
+  .nav-item {
+    min-height: 48px;
+  }
+  
+  .nav-item .v-list-item-title {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-drawer {
+    width: 240px !important;
+  }
 }
 </style>
