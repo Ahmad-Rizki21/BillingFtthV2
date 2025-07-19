@@ -1,55 +1,55 @@
+// src/router/index.ts
+
 import { createRouter, createWebHistory } from 'vue-router';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import DashboardView from '../views/DashboardView.vue';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      redirect: '/dashboard'
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/LoginView.vue'),
-      meta: { guest: true }
-    },
+    // Rute untuk halaman yang memerlukan login (DIBUNGKUS OLEH DefaultLayout)
     {
       path: '/',
       component: DefaultLayout,
       meta: { requiresAuth: true },
       children: [
+        // TAMBAHKAN INI: Jika user ke path '/', langsung arahkan ke dashboard
+        { path: '', redirect: '/dashboard' },
+        
+        // Definisikan semua halaman di sini
         {
           path: 'dashboard',
           name: 'dashboard',
-          component: () => import('@/views/DashboardView.vue'),
+          component: DashboardView
         },
+        // Contoh jika ada halaman lain
         // {
         //   path: 'pelanggan',
         //   name: 'pelanggan',
-        //   component: () => import('@/views/PelangganView.vue'), // Buat view ini nanti
+        //   component: () => import('../views/PelangganView.vue')
         // },
-        // {
-        //   path: 'invoices',
-        //   name: 'invoices', 
-        //   component: () => import('@/views/InvoicesView.vue'), // Buat view ini nanti
-        // }
       ],
+    },
+
+    // Rute untuk halaman login (TIDAK ADA LAYOUT)
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/LoginView.vue'),
+      meta: { guest: true }
     },
   ],
 });
 
-// Navigation guard
+// Navigation guard Anda sudah benar, biarkan seperti ini.
 router.beforeEach(async (to, _from, next) => {
   const token = localStorage.getItem('access_token');
   const isAuthenticated = !!token;
   
-  // Jika route memerlukan autentikasi tapi user belum login
   if (to.meta.requiresAuth && !isAuthenticated) {
     return next('/login');
   }
   
-  // Jika user sudah login tapi mengakses halaman guest (login)
   if (to.meta.guest && isAuthenticated) {
     return next('/dashboard');
   }
