@@ -79,13 +79,18 @@
         @click.stop="rail = !rail"
       ></v-btn>
       <v-spacer></v-spacer>
+      
+      <v-btn icon variant="text" @click="toggleTheme" class="header-action-btn theme-toggle-btn">
+        <v-icon>{{ theme.global.current.value.dark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+      </v-btn>
+      
       <v-btn icon variant="text" class="header-action-btn">
         <v-icon>mdi-bell-outline</v-icon>
       </v-btn>
       <v-btn icon variant="text" class="header-action-btn">
         <v-icon>mdi-cog-outline</v-icon>
       </v-btn>
-    </v-app-bar>
+  </v-app-bar>
 
     <v-main class="modern-main">
   <router-view></router-view>
@@ -94,13 +99,30 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'; // 1. Import useRouter
-import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
 import logoJelantik from '@/assets/images/Jelantik.webp';
+import { useTheme } from 'vuetify';
 
+const theme = useTheme();
 const drawer = ref(true);
 const rail = ref(false);
-const router = useRouter(); // Inisialisasi router
+const router = useRouter();
+
+// SOLUSI YANG BENAR: Gunakan metode yang tidak deprecated
+function toggleTheme() {
+  const newTheme = theme.global.current.value.dark ? 'light' : 'dark';
+  theme.global.name.value = newTheme;
+  localStorage.setItem('theme', newTheme);
+}
+
+// Saat komponen pertama kali dimuat, cek localStorage
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+    theme.global.name.value = savedTheme;
+  }
+});
 
 const menuGroups = ref([
   { title: 'DASHBOARD', items: [{ title: 'Dashboard', icon: 'mdi-home-variant', value: 'dashboard', to: '/dashboard' }] },
@@ -121,25 +143,24 @@ const menuGroups = ref([
 ]);
 
 function handleLogout() {
-  // 2. Implementasikan logika logout
-  // Hapus token dari localStorage (sesuaikan jika Anda menyimpannya di tempat lain)
   localStorage.removeItem('access_token');
-  
-  // Arahkan ke halaman login
   router.push('/login');
 }
 </script>
 
 <style scoped>
+/* LIGHT THEME */
 .modern-app {
-  background-color: #f8fafc;
+  background-color: rgb(var(--v-theme-background));
+  transition: background-color 0.3s ease;
 }
 
 .modern-drawer {
   border-right: none;
-  background: white;
+  background: rgb(var(--v-theme-surface));
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
   overflow: hidden !important;
+  transition: all 0.3s ease;
 }
 
 .modern-drawer :deep(.v-navigation-drawer__content) {
@@ -150,22 +171,30 @@ function handleLogout() {
 }
 
 .sidebar-header {
-  height: 75px; /* Sedikit lebih tinggi untuk ruang napas */
+  height: 75px;
   padding: 0 16px !important;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   flex-shrink: 0;
+  transition: border-color 0.3s ease;
 }
 
 .header-flex-container {
   display: flex;
-  align-items: center; /* KUNCI UTAMA: menyejajarkan semua item secara vertikal */
+  align-items: center;
   width: 100%;
 }
 
 .sidebar-logo-full {
-  height: 45px; /* Sesuaikan ukurannya */
-  margin-right: 12px; /* Jarak antara logo dan teks */
-  flex-shrink: 0; /* Mencegah logo gepeng */
+  height: 45px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  filter: brightness(1);
+  transition: filter 0.3s ease;
+}
+
+/* Dark mode logo adjustment */
+.v-theme--dark .sidebar-logo-full {
+  filter: brightness(1.2) contrast(1.1);
 }
 
 .sidebar-title-wrapper {
@@ -176,17 +205,19 @@ function handleLogout() {
 .sidebar-title {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #334155;
+  color: rgb(var(--v-theme-on-surface));
   line-height: 1.2;
   margin-bottom: 2px;
+  transition: color 0.3s ease;
 }
 
 .sidebar-subtitle {
   font-size: 0.75rem;
   font-weight: 500;
-  color: #64748b;
+  color: rgba(var(--v-theme-on-surface), 0.7);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: color 0.3s ease;
 }
 
 .navigation-wrapper {
@@ -194,13 +225,12 @@ function handleLogout() {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 8px 0;
-  /* Hide scrollbar */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .navigation-wrapper::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
 }
 
 .navigation-menu {
@@ -210,20 +240,21 @@ function handleLogout() {
 .menu-subheader {
   font-size: 0.7rem;
   font-weight: 700;
-  color: #94a3b8;
+  color: rgba(var(--v-theme-on-surface), 0.6) !important;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   margin-top: 20px;
   margin-bottom: 8px;
   padding: 0 16px;
+  transition: color 0.3s ease;
 }
 
 .nav-item {
   border-radius: 10px;
   margin-bottom: 4px;
-  color: #64748b;
+  color: rgba(var(--v-theme-on-surface), 0.8);
   min-height: 44px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .nav-item .v-list-item-title {
@@ -232,15 +263,15 @@ function handleLogout() {
 }
 
 .nav-item:not(.v-list-item--active):hover {
-  background-color: #f1f5ff;
-  color: #6366f1;
+  background-color: rgba(var(--v-theme-primary), 0.1);
+  color: rgb(var(--v-theme-primary));
   transform: translateX(2px);
 }
 
 .v-list-item--active {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
   color: white !important;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3);
 }
 
 .v-list-item--active .v-list-item-title {
@@ -257,8 +288,9 @@ function handleLogout() {
 
 .logout-section {
   flex-shrink: 0;
-  border-top: 1px solid #f1f5f9;
-  background: #fafbfc;
+  border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  background: rgba(var(--v-theme-surface), 0.5);
+  transition: all 0.3s ease;
 }
 
 .logout-btn {
@@ -266,38 +298,69 @@ function handleLogout() {
   font-weight: 500;
   text-transform: none;
   letter-spacing: normal;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .logout-btn:hover {
-  background-color: #ef4444;
-  color: white;
+  background-color: #ef4444 !important;
+  color: white !important;
 }
 
 .modern-app-bar {
-  background: white !important;
-  border-bottom: 1px solid #f1f5f9;
+  background: rgb(var(--v-theme-surface)) !important;
+  border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
 .header-action-btn {
-  color: #64748b;
-  transition: all 0.2s ease;
+  color: rgba(var(--v-theme-on-surface), 0.8);
+  transition: all 0.3s ease;
 }
 
 .header-action-btn:hover {
-  background-color: #f1f5f9;
-  color: #6366f1;
+  background-color: rgba(var(--v-theme-primary), 0.1);
+  color: rgb(var(--v-theme-primary));
+}
+
+.theme-toggle-btn:hover {
+  background-color: rgba(var(--v-theme-warning), 0.1) !important;
+  color: rgb(var(--v-theme-warning)) !important;
 }
 
 .modern-main {
-  background-color: #f8fafc;
+  background-color: rgb(var(--v-theme-background));
+  transition: background-color 0.3s ease;
 }
-/* 
-.main-content {
-  min-height: 100vh;
-  padding: 0;
-} */
+
+/* DARK THEME SPECIFIC STYLES */
+.v-theme--dark .modern-app {
+  background-color: #0f172a;
+}
+
+.v-theme--dark .modern-drawer {
+  background: #1e293b;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.v-theme--dark .sidebar-header {
+  border-bottom: 1px solid #334155;
+}
+
+.v-theme--dark .modern-app-bar {
+  background: #1e293b !important;
+  border-bottom: 1px solid #334155;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.v-theme--dark .logout-section {
+  background: #0f1629;
+  border-top: 1px solid #334155;
+}
+
+.v-theme--dark .nav-item:not(.v-list-item--active):hover {
+  background-color: rgba(129, 140, 248, 0.15);
+}
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
