@@ -12,6 +12,11 @@ class Settings(BaseSettings):
     XENDIT_CALLBACK_TOKEN: str
     # --------------------------------
 
+    # Variabel Keamanan untuk JWT
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
+
     # Deklarasi yang sudah ada
     XENDIT_API_KEY_JAKINET: str
     XENDIT_API_KEY_JELANTIK: str

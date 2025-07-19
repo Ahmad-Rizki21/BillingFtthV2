@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import logging
+from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
 from .routers import (
@@ -24,6 +25,22 @@ app = FastAPI(
     description="API untuk sistem billing terintegrasi Xendit.",
     version="1.0.0"
 )
+
+# ==========================================================
+# --- Middleware Backend to FrontEnd ---
+# ==========================================================
+origins = [
+    "http://localhost:5173", # Alamat server development Vue Anda
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# ==========================================================
 
 # Inisialisasi scheduler
 scheduler = AsyncIOScheduler()
@@ -47,7 +64,9 @@ async def startup_event():
     scheduler.add_job(job_suspend_services, 'interval', minutes=1)
     # Jalankan job verifikasi setiap jam, di menit ke-15
     # scheduler.add_job(job_verify_payments, 'cron', hour='*', minute=15, timezone='Asia/Jakarta', id="verify_payments_job") #Cek pembayaran setiap jam menit ke-15.
-    scheduler.add_job(job_verify_payments, 'interval', minutes=1, id="verify_payments_job")
+    
+    
+    #scheduler.add_job(job_verify_payments, 'interval', minutes=1, id="verify_payments_job")
 
     
     # 3. Mulai scheduler

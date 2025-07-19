@@ -3,6 +3,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from typing import List
 
+from fastapi.security import OAuth2PasswordRequestForm
+from datetime import timedelta
+
 # Impor model dan skema secara langsung
 from ..models.user import User as UserModel
 from ..models.role import Role as RoleModel
@@ -11,6 +14,9 @@ from ..database import get_db
 
 # passlib adalah library standar untuk hashing password
 from passlib.context import CryptContext
+
+from .. import auth
+from ..config import settings
 
 # Konfigurasi untuk hashing password
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -24,6 +30,36 @@ router = APIRouter(
 def get_password_hash(password: str) -> str:
     """Fungsi untuk men-hash password."""
     return pwd_context.hash(password)
+
+
+
+# ==========================================================
+# --- ENDPOINT BARU UNTUK LOGIN ---
+# ==========================================================
+@router.post("/token", summary="Create access token for user")
+async def login_for_access_token(
+    form_data: OAuth2PasswordRequestForm = Depends(), 
+    db: AsyncSession = Depends(get_db)
+):
+    query = select(UserModel).where(UserModel.email == form_data.username)
+    user = (await db.execute(query)).scalar_one_or_none()
+
+    if not user or not auth.verify_password(form_data.password, user.password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Email atau password salah",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth.create_access_token(
+        data={"sub": user.email, "user_id": user.id}, # Menambahkan user_id ke token
+        expires_delta=access_token_expires
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+# ==========================================================
+
 
 @router.post("/", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
