@@ -30,7 +30,7 @@ app = FastAPI(
 # --- Middleware Backend to FrontEnd ---
 # ==========================================================
 origins = [
-    "http://localhost:5173", # Alamat server development Vue Anda
+    "http://localhost:3000", # Alamat server development Vue Anda
 ]
 
 app.add_middleware(
