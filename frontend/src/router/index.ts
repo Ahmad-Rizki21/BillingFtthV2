@@ -22,12 +22,42 @@ const router = createRouter({
           name: 'dashboard',
           component: DashboardView
         },
-        // Contoh jika ada halaman lain
-        // {
-        //   path: 'pelanggan',
-        //   name: 'pelanggan',
-        //   component: () => import('../views/PelangganView.vue')
-        // },
+        {
+          path: 'users',
+          name: 'users',
+          // Gunakan lazy loading untuk performa yang lebih baik
+          component: () => import('../views/UsersView.vue')
+        },
+        {
+          path: 'roles',
+          name: 'roles',
+          component: () => import('../views/RolesView.vue')
+        },
+        {
+          path: 'mikrotik',
+          name: 'mikrotik',
+          component: () => import('../views/MikrotikView.vue')
+        },
+        {
+          path: 'pelanggan',
+          name: 'pelanggan',
+          component: () => import('../views/PelangganView.vue')
+        },
+        {
+          path: 'langganan',
+          name: 'langganan',
+          component: () => import('../views/LanggananView.vue')
+        },
+        {
+          path: 'harga-layanan',
+          name: 'harga-layanan',
+          component: () => import('../views/HargaLayananView.vue')
+        },
+        {
+          path: 'data-teknis',
+          name: 'data-teknis',
+          component: () => import('../views/DataTeknisView.vue')
+        },
       ],
     },
 

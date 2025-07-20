@@ -114,7 +114,7 @@ function backToLogin() {
             <div class="logo-icon">
               <img src="@/assets/images/Jelantik 1.webp" alt="Logo" style="width: 200px; height: 110px; bottom: 100px; border-radius: 10px;" />
             </div>
-            <h1 class="brand-name">Artacom Billing V1</h1>
+            <h1 class="brand-name">Artacom Billing V2.0</h1>
           </div>
           
           <div class="brand-description">
