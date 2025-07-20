@@ -1,6 +1,7 @@
 # app/main.py
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import logging
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,7 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from .database import Base, engine
 from .routers import (
     pelanggan, user, role, data_teknis, harga_layanan, 
-    paket_layanan, langganan, invoice, mikrotik_server
+    paket_layanan, langganan, invoice, mikrotik_server,
+    uploads
 )
 from .jobs import job_generate_invoices, job_suspend_services, job_verify_payments
 from .logging_config import setup_logging
@@ -25,6 +27,8 @@ app = FastAPI(
     description="API untuk sistem billing terintegrasi Xendit.",
     version="1.0.0"
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # ==========================================================
 # --- Middleware Backend to FrontEnd ---
@@ -89,6 +93,7 @@ app.include_router(langganan.router)
 app.include_router(paket_layanan.router)
 app.include_router(invoice.router)
 app.include_router(mikrotik_server.router)
+app.include_router(uploads.router)
 
 # Endpoint root untuk verifikasi
 @app.get("/")

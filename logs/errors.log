@@ -29,3 +29,557 @@
 2025-07-19 00:20:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
 2025-07-19 00:21:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
 2025-07-19 00:22:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
+2025-07-20 16:38:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-20 16:41:29 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-20 17:53:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:53:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:54:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:54:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:55:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:55:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:57:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:57:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:58:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:58:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:59:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:59:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:00:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:00:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:01:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:01:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:02:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:02:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:03:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:03:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:04:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:04:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:05:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:05:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:06:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:06:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:07:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:07:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:08:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:08:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:09:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:09:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:10:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:10:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:11:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:11:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:12:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:12:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:13:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:13:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:14:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:14:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:15:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:15:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:16:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:16:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:17:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:17:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:18:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:18:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:19:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:19:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:20:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:20:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:21:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:21:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:22:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:22:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:23:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:23:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:24:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:24:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:25:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:25:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:26:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:26:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:27:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:27:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:28:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:28:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:29:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:29:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:30:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:30:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:31:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:31:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:32:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:32:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:33:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:33:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:34:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:34:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:35:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:35:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:36:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:36:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:37:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:37:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:38:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:38:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:39:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:39:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)

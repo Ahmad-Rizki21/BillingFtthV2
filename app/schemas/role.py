@@ -1,21 +1,26 @@
 from pydantic import BaseModel
-from typing import Optional, List
-from .user import User as UserSchema # Impor skema User untuk relasi
+from typing import List, Optional
+
+# Impor skema Permission yang sudah Anda buat
+from .permission import Permission
 
 class RoleBase(BaseModel):
     name: str
 
+# Skema untuk membuat Role baru, sekarang menerima list permission_ids
 class RoleCreate(RoleBase):
-    pass
+    permission_ids: Optional[List[int]] = []
 
+# Skema untuk update Role, juga menerima list permission_ids
 class RoleUpdate(BaseModel):
     name: Optional[str] = None
+    permission_ids: Optional[List[int]] = None
 
+# Skema untuk response, akan menampilkan daftar permission yang terhubung
 class Role(RoleBase):
     id: int
-    class Config:
-        from_attributes = True
+    permissions: List[Permission] = [] # Tampilkan list permission yang terhubung
 
-# Skema tambahan untuk menampilkan role beserta user di dalamnya
-class RoleWithUsers(Role):
-    users: List[UserSchema] = []
+    class Config:
+        # Ganti orm_mode dengan from_attributes untuk Pydantic v2
+        from_attributes = True

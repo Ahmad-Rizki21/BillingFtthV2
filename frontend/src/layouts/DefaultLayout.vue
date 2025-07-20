@@ -103,6 +103,7 @@ import { useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import logoJelantik from '@/assets/images/Jelantik.webp';
 import { useTheme } from 'vuetify';
+import apiClient from '@/services/api';
 
 const theme = useTheme();
 const drawer = ref(true);
@@ -115,6 +116,7 @@ function toggleTheme() {
   theme.global.name.value = newTheme;
   localStorage.setItem('theme', newTheme);
 }
+const suspendedCount = ref(0);
 
 // Saat komponen pertama kali dimuat, cek localStorage
 onMounted(() => {
@@ -128,9 +130,9 @@ const menuGroups = ref([
   { title: 'DASHBOARD', items: [{ title: 'Dashboard', icon: 'mdi-home-variant', value: 'dashboard', to: '/dashboard' }] },
   { title: 'FTTH', items: [
       { title: 'Data Pelanggan', icon: 'mdi-account-group-outline', value: 'pelanggan', to: '/pelanggan' },
-      { title: 'Langganan / Paket', icon: 'mdi-wifi', value: 'paket', to: '/paket', badge: 1, badgeColor: 'orange' },
-      { title: 'Data Teknis', icon: 'mdi-database-cog-outline', value: 'teknis', to: '/teknis' },
-      { title: 'Harga Layanan', icon: 'mdi-cash', value: 'harga', to: '/harga' },
+      { title: 'Langganan', icon: 'mdi-wifi-star', value: 'langganan', to: '/langganan', badge: suspendedCount, badgeColor: 'orange' },
+      { title: 'Data Teknis', icon: 'mdi-database-cog-outline', value: 'teknis', to: '/data-teknis' },
+      { title: 'Brand & Paket', icon: 'mdi-tag-multiple-outline', value: 'harga', to: '/harga-layanan' },
   ]},
   { title: 'BILLING', items: [{ title: 'Invoices', icon: 'mdi-file-document-outline', value: 'invoices', to: '/invoices', badge: 0, badgeColor: 'grey-darken-1' }] },
   { title: 'SETTINGS', items: [
@@ -138,9 +140,79 @@ const menuGroups = ref([
       { title: 'Activity Log', icon: 'mdi-timeline-text-outline', value: 'activity', to: '/activity' },
   ]},
   { title: 'NETWORK MANAGEMENT', items: [{ title: 'Mikrotik Servers', icon: 'mdi-server', value: 'mikrotik', to: '/mikrotik' }] },
-  { title: 'MANAGEMENT', items: [{ title: 'Users', icon: 'mdi-account-cog-outline', value: 'users', to: '/users' }] },
-  { title: 'FILAMENT SHIELD', items: [{ title: 'Roles', icon: 'mdi-shield-account-outline', value: 'roles', to: '/roles', badge: 3, badgeColor: 'primary' }] },
+  { title: 'MANAGEMENT', items: [
+     { title: 'Users', icon: 'mdi-account-cog-outline', value: 'users', to: '/users', badge: 0, badgeColor: 'primary' },
+      { title: 'Roles', icon: 'mdi-shield-account-outline', value: 'roles', to: '/roles', badge: 0, badgeColor: 'primary' }]},
+
 ]);
+
+async function fetchSuspendedCount() {
+  try {
+    // Gunakan filter status yang sudah dibuat di backend
+    const response = await apiClient.get('/langganan?status=Ditangguhkan');
+    suspendedCount.value = response.data.length;
+  } catch (error) {
+    console.error("Gagal mengambil jumlah langganan yang ditangguhkan:", error);
+    suspendedCount.value = 0;
+  }
+}
+
+
+async function fetchRoleCount() {
+  try {
+    const response = await apiClient.get('/roles/');
+    const roleCount = response.data.length; // Hitung jumlah data
+
+    // Cari grup 'MANAGEMENT' dan item 'Roles' untuk memperbarui badge
+    const managementGroup = menuGroups.value.find(g => g.title === 'MANAGEMENT');
+    if (managementGroup) {
+      const rolesItem = managementGroup.items.find(i => i.value === 'roles');
+      if (rolesItem) {
+        rolesItem.badge = roleCount;
+      }
+    }
+  } catch (error) {
+    console.error("Gagal mengambil jumlah roles:", error);
+    // Jika gagal, badge tidak akan ditampilkan atau tetap 0
+  }
+}
+
+async function fetchUserCount() {
+  try {
+    const response = await apiClient.get('/users/');
+    const userCount = response.data.length;
+
+    const managementGroup = menuGroups.value.find(g => g.title === 'MANAGEMENT');
+    if (managementGroup) {
+      const usersItem = managementGroup.items.find(i => i.value === 'users');
+      if (usersItem) {
+        usersItem.badge = userCount;
+      }
+    }
+  } catch (error) {
+    console.error("Gagal mengambil jumlah users:", error);
+  }
+}
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+    theme.global.name.value = savedTheme;
+  }
+  fetchRoleCount();
+  fetchUserCount();
+  fetchSuspendedCount(); // Panggil fungsi baru di sini
+});
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+    theme.global.name.value = savedTheme;
+  }
+  // Panggil fungsi untuk mengambil data saat komponen dimuat
+  fetchRoleCount();
+});
+
 
 function handleLogout() {
   localStorage.removeItem('access_token');
@@ -283,7 +355,12 @@ function handleLogout() {
   height: 20px;
   font-weight: 600;
   border-radius: 10px;
-  color: white;
+  /* Hapus 'color: white;' dari sini agar warna default Vuetify berlaku */
+}
+
+/* Tambahkan aturan baru ini */
+.v-list-item--active .badge-chip {
+  color: white !important; /* Jadikan warna teks putih HANYA saat item aktif */
 }
 
 .logout-section {

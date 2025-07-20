@@ -7,6 +7,9 @@ class LanggananBase(BaseModel):
     pelanggan_id: int
     paket_layanan_id: int
 
+    metode_pembayaran: str
+    harga_awal: float | None
+
     status: str
     tgl_jatuh_tempo: date | None = None
     tgl_invoice_terakhir: date | None = None
@@ -16,6 +19,8 @@ class LanggananCreate(BaseModel):
     pelanggan_id: int
     paket_layanan_id: int
     status: str
+    metode_pembayaran: str
+    harga_awal: Optional[float] = None
     tgl_jatuh_tempo: Optional[date] = None
     tgl_invoice_terakhir: Optional[date] = None
 
