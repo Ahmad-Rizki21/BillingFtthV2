@@ -1,6 +1,5 @@
 <template>
   <v-container fluid class="pa-6">
-    <!-- Header Section with Enhanced Design -->
     <div class="d-flex align-center mb-8">
       <div class="d-flex align-center">
         <v-avatar 
@@ -24,7 +23,6 @@
       </div>
       <v-spacer></v-spacer>
       
-      <!-- Enhanced Add Button -->
       <v-btn 
         color="primary" 
         size="large"
@@ -47,7 +45,6 @@
       </v-btn>
     </div>
 
-    <!-- Stats Cards -->
     <v-row class="mb-6" no-gutters>
       <v-col cols="12" sm="6" md="3" class="pa-2">
         <v-card 
@@ -138,7 +135,6 @@
       </v-col>
     </v-row>
 
-    <!-- Enhanced Data Table -->
     <v-card 
       elevation="8" 
       class="modern-card overflow-hidden"
@@ -164,7 +160,6 @@
         <span class="text-h5 font-weight-bold">Daftar Infrastruktur Pelanggan</span>
         <v-spacer></v-spacer>
         
-        <!-- Search Field -->
         <v-text-field
           v-model="searchQuery"
           prepend-inner-icon="mdi-magnify"
@@ -178,17 +173,6 @@
         ></v-text-field>
       </v-card-title>
 
-      <v-file-input
-  ref="fileInputComponent"
-  label="Unggah Bukti Speedtest"
-  variant="outlined"
-  prepend-icon=""
-  prepend-inner-icon="mdi-camera"
-  accept="image/png, image/jpeg, image/webp"
-  clearable
-  hint="Ganti gambar yang ada dengan unggah yang baru"
-></v-file-input>
-
       <v-data-table
         :headers="headers"
         :items="filteredDataTeknisList"
@@ -197,520 +181,461 @@
         class="elevation-0 modern-table"
         :items-per-page="10"
         :loading-text="'Memuat data...'"
+        v-model:expanded="expanded"
+        show-expand
       >
-        <!-- Loading slot -->
         <template v-slot:loading>
           <div class="text-center pa-8">
-            <v-progress-circular
-              indeterminate
-              color="primary"
-              size="64"
-              width="6"
-            ></v-progress-circular>
+            <v-progress-circular indeterminate color="primary" size="64" width="6"></v-progress-circular>
             <div class="mt-4 text-h6">Memuat data...</div>
           </div>
         </template>
 
-        <!-- Custom pelanggan name with avatar -->
         <template v-slot:item.pelanggan_id="{ item }">
           <div class="d-flex align-center py-2">
-            <v-avatar 
-              :color="getAvatarColor(item.pelanggan_id)" 
-              size="40" 
-              class="me-3"
-              :style="{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }"
-            >
-              <span class="text-white font-weight-bold">
-                {{ getPelangganInitials(item.pelanggan_id) }}
-              </span>
+            <v-avatar :color="getAvatarColor(item.pelanggan_id)" size="40" class="me-3" :style="{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }">
+              <span class="text-white font-weight-bold">{{ getPelangganInitials(item.pelanggan_id) }}</span>
             </v-avatar>
             <div>
-              <div class="font-weight-bold text-body-1">
-                {{ getPelangganName(item.pelanggan_id) }}
-              </div>
-              <div class="text-caption text-medium-emphasis">
-                ID: {{ item.id_pelanggan }}
-              </div>
+              <div class="font-weight-bold text-body-1">{{ getPelangganName(item.pelanggan_id) }}</div>
+              <div class="text-caption text-medium-emphasis">ID: {{ item.id_pelanggan }}</div>
             </div>
           </div>
         </template>
 
-        <!-- Enhanced IP address display -->
         <template v-slot:item.ip_pelanggan="{ item }">
-          <v-chip
-            size="small"
-            variant="tonal"
-            color="primary"
-            class="font-mono"
-            :style="{ fontFamily: 'monospace' }"
-          >
+          <v-chip size="small" variant="tonal" color="primary" class="font-mono" :style="{ fontFamily: 'monospace' }">
             <v-icon start size="16">mdi-ip-network</v-icon>
             {{ item.ip_pelanggan }}
           </v-chip>
         </template>
 
-        <!-- Enhanced OLT display -->
         <template v-slot:item.olt="{ item }">
           <div class="d-flex align-center">
             <v-icon class="me-2 text-primary">mdi-router-network</v-icon>
             <div>
               <div class="font-weight-medium">{{ item.olt }}</div>
-              <div v-if="item.olt_custom" class="text-caption text-medium-emphasis">
-                {{ item.olt_custom }}
-              </div>
+              <div v-if="item.olt_custom" class="text-caption text-medium-emphasis">{{ item.olt_custom }}</div>
             </div>
           </div>
         </template>
 
-        <!-- Enhanced ONU Power with better styling -->
         <template v-slot:item.onu_power="{ item }">
           <div class="text-center">
-            <v-chip 
-              :color="getOnuPowerColor(item.onu_power)" 
-              size="small"
-              variant="flat"
-              class="font-weight-bold px-3"
-              :style="{ 
-                minWidth: '80px',
-                borderRadius: '12px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
-              }"
-            >
-              <v-icon 
-                :icon="getOnuPowerIcon(item.onu_power)"
-                start
-                size="16"
-              ></v-icon>
+            <v-chip :color="getOnuPowerColor(item.onu_power)" size="small" variant="flat" class="font-weight-bold px-3" :style="{ minWidth: '80px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }">
+              <v-icon :icon="getOnuPowerIcon(item.onu_power)" start size="16"></v-icon>
               {{ item.onu_power }} dBm
             </v-chip>
-            <div class="text-caption mt-1 text-medium-emphasis">
-              {{ getOnuPowerStatus(item.onu_power) }}
-            </div>
+            <div class="text-caption mt-1 text-medium-emphasis">{{ getOnuPowerStatus(item.onu_power) }}</div>
           </div>
         </template>
 
-        <!-- Enhanced action buttons -->
         <template v-slot:item.actions="{ item }">
-          <div class="d-flex gap-2">
-            <v-btn 
-              size="small" 
-              variant="tonal" 
-              color="primary" 
-              @click="openDialog(item)"
-              class="action-btn"
-              :style="{ borderRadius: '8px' }"
-            >
-              <v-icon size="16" class="me-1">mdi-pencil</v-icon>
-              Edit
-            </v-btn>
-            <v-btn 
-              size="small" 
-              variant="tonal" 
-              color="error" 
-              @click="openDeleteDialog(item)"
-              class="action-btn"
-              :style="{ borderRadius: '8px' }"
-            >
-              <v-icon size="16" class="me-1">mdi-delete</v-icon>
-              Hapus
-            </v-btn>
-          </div>
-        </template>
-
-        <!-- No data slot -->
-        <template v-slot:no-data>
-          <div class="text-center pa-8">
-            <v-icon size="64" color="grey-lighten-1" class="mb-4">mdi-database-off</v-icon>
-            <div class="text-h6 text-medium-emphasis mb-2">Tidak ada data</div>
-            <div class="text-body-2 text-medium-emphasis">
-              Belum ada data teknis yang tersedia
-            </div>
-          </div>
-        </template>
-      </v-data-table>
-    </v-card>
-
-    <!-- Enhanced Dialog with Better Stepper -->
-    <v-dialog 
-      v-model="dialog" 
-      max-width="900px" 
-      persistent 
-      scrollable
-      :style="{ zIndex: 2000 }"
-    >
-      <v-card 
-        class="modern-dialog overflow-hidden"
-        :style="{ 
-          borderRadius: '24px',
-          backdropFilter: 'blur(20px)'
-        }"
-        elevation="24"
-      >
-        <v-card-title 
-          class="pa-0"
-          :style="{
-            background: 'linear-gradient(135deg, #00ACC1 0%, #006064 100%)',
-            color: 'white'
-          }"
-        >
-          <div class="pa-6 d-flex align-center">
-            <v-icon class="me-3" size="28">mdi-plus-network-outline</v-icon>
-            <div>
-              <div class="text-h4 font-weight-bold">{{ formTitle }}</div>
-              <div class="text-body-2 opacity-90 mt-1">
-                Lengkapi informasi teknis pelanggan
-              </div>
-            </div>
-          </div>
-        </v-card-title>
-
-        <!-- Enhanced Stepper -->
-        <v-stepper 
-          v-model="currentStep" 
-          class="elevation-0"
-          :style="{
-            background: 'transparent'
-          }"
-        >
-          <v-stepper-header class="px-6 pt-6">
-            <v-stepper-item 
-              title="Info Jaringan" 
-              value="1" 
-              editable
-              :color="currentStep >= 1 ? 'primary' : 'grey'"
-              :complete="currentStep > 1"
-              class="stepper-item"
-            >
-              <template v-slot:icon>
-                <v-icon>{{ currentStep > 1 ? 'mdi-check' : 'mdi-network' }}</v-icon>
-              </template>
-            </v-stepper-item>
-            
-            <v-divider class="mx-4"></v-divider>
-            
-            <v-stepper-item 
-              title="Infrastruktur" 
-              value="2" 
-              editable
-              :color="currentStep >= 2 ? 'primary' : 'grey'"
-              :complete="currentStep > 2"
-              class="stepper-item"
-            >
-              <template v-slot:icon>
-                <v-icon>{{ currentStep > 2 ? 'mdi-check' : 'mdi-router-network' }}</v-icon>
-              </template>
-            </v-stepper-item>
-            
-            <v-divider class="mx-4"></v-divider>
-            
-            <v-stepper-item 
-              title="Detail ONU" 
-              value="3" 
-              editable
-              :color="currentStep >= 3 ? 'primary' : 'grey'"
-              class="stepper-item"
-            >
-              <template v-slot:icon>
-                <v-icon>mdi-signal</v-icon>
-              </template>
-            </v-stepper-item>
-          </v-stepper-header>
-
-          <v-stepper-window class="stepper-content">
-            <!-- Step 1: Network Info -->
-            <v-stepper-window-item value="1">
-              <v-card-text class="pa-6">
-                <div class="mb-6">
-                  <h3 class="text-h6 font-weight-bold mb-2 d-flex align-center">
-                    <v-icon class="me-2 text-primary">mdi-account-network</v-icon>
-                    Informasi Pelanggan
-                  </h3>
-                  <p class="text-body-2 text-medium-emphasis">
-                    Pilih pelanggan dan atur konfigurasi jaringan
-                  </p>
-                </div>
-
-                <v-select
-                  v-model="editedItem.pelanggan_id"
-                  :items="pelangganForSelect"
-                  item-title="nama"
-                  item-value="id"
-                  label="Pilih Pelanggan"
-                  :disabled="isEditMode"
-                  hint="Hanya pelanggan yang belum memiliki data teknis"
-                  persistent-hint
-                  variant="outlined"
-                  prepend-inner-icon="mdi-account"
-                  class="mb-6"
-                  :style="{ borderRadius: '12px' }"
+            <div class="d-flex justify-center gap-2">
+                <v-btn 
+                size="small" 
+                variant="tonal" 
+                color="primary" 
+                @click="openDialog(item)"
+                class="action-btn"
+                :style="{ borderRadius: '8px' }"
                 >
-                  <template v-slot:item="{ props, item }">
-                    <v-list-item v-bind="props" class="pa-3">
-                      <template v-slot:prepend>
-                        <v-avatar :color="getAvatarColor(item.raw.id)" size="40">
-                          <span class="text-white font-weight-bold">
-                            {{ item.raw.nama.charAt(0).toUpperCase() }}
-                          </span>
-                        </v-avatar>
-                      </template>
-                    </v-list-item>
-                  </template>
-                </v-select>
+                <v-icon size="16" class="me-1">mdi-pencil</v-icon>
+                Edit
+                </v-btn>
+                <v-btn 
+                size="small" 
+                variant="tonal" 
+                color="error" 
+                @click="openDeleteDialog(item)"
+                class="action-btn"
+                :style="{ borderRadius: '8px' }"
+                >
+                <v-icon size="16" class="me-1">mdi-delete</v-icon>
+                Hapus
+                </v-btn>
+            </div>
+            </template>
 
-                <v-row>
-                  <v-col cols="12" sm="6">
-                    <v-text-field 
-                      v-model="editedItem.id_pelanggan" 
-                      label="ID Pelanggan (PPPoE Username)"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-account-key"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field 
-                      v-model="editedItem.password_pppoe" 
-                      label="Password PPPoE"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-key"
-                      type="password"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field 
-                      v-model="editedItem.ip_pelanggan" 
-                      label="IP Pelanggan"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-ip"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field 
-                      v-model="editedItem.profile_pppoe" 
-                      label="Profile PPPoE"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-account-settings"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field 
-                      v-model="editedItem.id_vlan" 
-                      label="ID VLAN"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-lan"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-stepper-window-item>
-
-            <!-- Step 2: Infrastructure -->
-            <v-stepper-window-item value="2">
-              <v-card-text class="pa-6">
-                <div class="mb-6">
-                  <h3 class="text-h6 font-weight-bold mb-2 d-flex align-center">
-                    <v-icon class="me-2 text-primary">mdi-router-network</v-icon>
-                    Konfigurasi Infrastruktur
-                  </h3>
-                  <p class="text-body-2 text-medium-emphasis">
-                    Atur komponen infrastruktur jaringan
-                  </p>
+        <template v-slot:expanded-row="{ columns, item }">
+          <tr>
+            <td :colspan="columns.length">
+              <v-card flat class="pa-4 my-2" color="rgba(0, 172, 193, 0.05)">
+                <div class="d-flex justify-space-between align-center mb-4">
+                  <h4 class="text-h6 font-weight-bold text-cyan-darken-2">Detail Lengkap Infrastruktur</h4>
+                  <v-chip size="small" variant="tonal" color="cyan-darken-2">
+                    ID Pelanggan (PPPoE): {{ item.id_pelanggan }}
+                  </v-chip>
                 </div>
-
                 <v-row>
-                  <v-col cols="12" sm="6">
-                    <v-text-field 
-                      v-model="editedItem.olt" 
-                      label="OLT"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-router"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
+                  <v-col cols="12" md="4">
+                    <v-list-item-title class="font-weight-bold mb-2">Info Jaringan</v-list-item-title>
+                    <v-list density="compact">
+                      <v-list-item prepend-icon="mdi-key-variant">
+                        <v-list-item-title>Password: {{ item.password_pppoe }}</v-list-item-title>
+                      </v-list-item>
+                      <v-list-item prepend-icon="mdi-account-details">
+                        <v-list-item-title>Profile: {{ item.profile_pppoe }}</v-list-item-title>
+                      </v-list-item>
+                      <v-list-item prepend-icon="mdi-lan">
+                        <v-list-item-title>VLAN: {{ item.id_vlan }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
                   </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field 
-                      v-model="editedItem.olt_custom" 
-                      label="OLT Custom (Opsional)"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-router-plus"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
+                  <v-col cols="12" md="4">
+                    <v-list-item-title class="font-weight-bold mb-2">Info Infrastruktur</v-list-item-title>
+                    <v-list density="compact">
+                      <v-list-item prepend-icon="mdi-timeline">
+                        <v-list-item-title>PON: {{ item.pon }}</v-list-item-title>
+                      </v-list-item>
+                      <v-list-item prepend-icon="mdi-cable-data">
+                        <v-list-item-title>OTB: {{ item.otb }}</v-list-item-title>
+                      </v-list-item>
+                      <v-list-item prepend-icon="mdi-access-point-network">
+                        <v-list-item-title>ODC: {{ item.odc }}</v-list-item-title>
+                      </v-list-item>
+                      <v-list-item prepend-icon="mdi-distribution-point">
+                        <v-list-item-title>ODP: {{ item.odp }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
                   </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-text-field 
-                      v-model.number="editedItem.pon" 
-                      label="PON" 
-                      type="number"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-timeline"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-text-field 
-                      v-model.number="editedItem.otb" 
-                      label="OTB" 
-                      type="number"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-cable-data"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-text-field 
-                      v-model.number="editedItem.odc" 
-                      label="ODC" 
-                      type="number"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-access-point-network"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-text-field 
-                      v-model.number="editedItem.odp" 
-                      label="ODP" 
-                      type="number"
-                      variant="outlined"
-                      prepend-inner-icon="mdi-distribution-point"
-                      :style="{ borderRadius: '12px' }"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-stepper-window-item>
-
-            <!-- Step 3: ONU Details -->
-            <v-stepper-window-item value="3">
-            <v-card-text class="pa-6">
-              <div class="mb-6">
-                <h3 class="text-h6 font-weight-bold mb-2 d-flex align-center">
-                  <v-icon class="me-2 text-primary">mdi-signal</v-icon>
-                  Detail ONU & Performance
-                </h3>
-              </div>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field 
-                    v-model.number="editedItem.onu_power" 
-                    label="ONU Power" 
-                    type="number" 
-                    suffix="dBm"
-                    variant="outlined"
-                    persistent-hint
-                  ></v-text-field>
-                </v-col>
-                
-                <v-file-input
-                    ref="fileInputComponent"
-                    label="Unggah Bukti Speedtest"
-                    variant="outlined"
-                    prepend-icon=""
-                    prepend-inner-icon="mdi-camera"
-                    accept="image/png, image/jpeg, image/webp"
-                    clearable
-                    hint="Ganti gambar yang ada dengan unggah yang baru"
-                    ></v-file-input>
-
-                <v-col cols="12">
-                   <v-img
-                      v-if="imagePreviewUrl"
-                      :src="imagePreviewUrl"
-                      height="200"
-                      class="rounded-lg elevation-2"
-                      cover
-                    >
+                  <v-col cols="12" md="4">
+                    <v-list-item-title class="font-weight-bold mb-2">Bukti Speedtest</v-list-item-title>
+                    <v-img v-if="item.speedtest_proof" :src="`${apiClient.defaults.baseURL}${item.speedtest_proof}`" height="150" class="rounded-lg elevation-2" cover>
                       <template v-slot:placeholder>
                         <div class="d-flex align-center justify-center fill-height">
                           <v-progress-circular indeterminate color="grey-lighten-4"></v-progress-circular>
                         </div>
                       </template>
-                   </v-img>
-                   <div v-else class="text-center text-medium-emphasis pa-8 border rounded-lg">
-                      Tidak ada gambar bukti speedtest.
-                   </div>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-stepper-window-item>
-        </v-stepper-window>
-        </v-stepper>
+                    </v-img>
+                    <div v-else class="text-medium-emphasis mt-2">
+                      Tidak ada gambar.
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </td>
+          </tr>
+        </template>
 
-        <!-- Enhanced Dialog Actions -->
-        <v-card-actions 
-          class="pa-6 pt-0"
-          :style="{
-            background: 'rgba(0, 0, 0, 0.02)'
-          }"
+        <template v-slot:no-data>
+          <div class="text-center pa-8">
+            <v-icon size="64" color="grey-lighten-1" class="mb-4">mdi-database-off</v-icon>
+            <div class="text-h6 text-medium-emphasis mb-2">Tidak ada data</div>
+            <div class="text-body-2 text-medium-emphasis">Belum ada data teknis yang tersedia</div>
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
+
+    <v-dialog v-model="dialog" max-width="900px" persistent scrollable :style="{ zIndex: 2000 }">
+      <v-card class="modern-dialog overflow-hidden" :style="{ borderRadius: '24px', backdropFilter: 'blur(20px)' }" elevation="24">
+        <v-card-title class="pa-0" :style="{ background: 'linear-gradient(135deg, #00ACC1 0%, #006064 100%)', color: 'white' }">
+          <div class="pa-6 d-flex align-center">
+            <v-icon class="me-3" size="28">mdi-plus-network-outline</v-icon>
+            <div>
+              <div class="text-h4 font-weight-bold">{{ formTitle }}</div>
+              <div class="text-body-2 opacity-90 mt-1">Lengkapi informasi teknis pelanggan</div>
+            </div>
+          </div>
+        </v-card-title>
+
+        <v-stepper 
+  v-model="currentStep" 
+  class="elevation-0"
+  :style="{
+    background: 'transparent'
+  }"
+>
+  <v-stepper-header class="px-6 pt-6">
+    <v-stepper-item 
+      title="Info Jaringan" 
+      :value="1" 
+      editable
+      :color="currentStep >= 1 ? 'primary' : 'grey'"
+      :complete="currentStep > 1"
+      class="stepper-item"
+    >
+      <template v-slot:icon>
+        <v-icon>{{ currentStep > 1 ? 'mdi-check' : 'mdi-network' }}</v-icon>
+      </template>
+    </v-stepper-item>
+    
+    <v-divider class="mx-4"></v-divider>
+    
+    <v-stepper-item 
+      title="Infrastruktur" 
+      :value="2" 
+      editable
+      :color="currentStep >= 2 ? 'primary' : 'grey'"
+      :complete="currentStep > 2"
+      class="stepper-item"
+    >
+      <template v-slot:icon>
+        <v-icon>{{ currentStep > 2 ? 'mdi-check' : 'mdi-router-network' }}</v-icon>
+      </template>
+    </v-stepper-item>
+    
+        <v-divider class="mx-4"></v-divider>
+        
+        <v-stepper-item 
+        title="Detail ONU" 
+        :value="3" 
+        editable
+        :color="currentStep >= 3 ? 'primary' : 'grey'"
+        class="stepper-item"
         >
-          <v-btn
-            v-if="currentStep > 1"
-            color="grey"
+        <template v-slot:icon>
+            <v-icon>mdi-signal</v-icon>
+        </template>
+        </v-stepper-item>
+    </v-stepper-header>
+
+    <v-stepper-window class="stepper-content">
+        <v-stepper-window-item :value="1">
+        <v-card-text class="pa-6">
+            <div class="mb-6">
+            <h3 class="text-h6 font-weight-bold mb-2 d-flex align-center">
+                <v-icon class="me-2 text-primary">mdi-account-network</v-icon>
+                Informasi Pelanggan
+            </h3>
+            <p class="text-body-2 text-medium-emphasis">
+                Pilih pelanggan dan atur konfigurasi jaringan
+            </p>
+            </div>
+            <v-select
+            v-model="editedItem.pelanggan_id"
+            :items="pelangganForSelect"
+            item-title="nama"
+            item-value="id"
+            label="Pilih Pelanggan"
+            :disabled="isEditMode"
+            hint="Hanya pelanggan yang belum memiliki data teknis"
+            persistent-hint
             variant="outlined"
-            @click="currentStep--"
-            prepend-icon="mdi-chevron-left"
-            class="me-2"
+            prepend-inner-icon="mdi-account"
+            class="mb-6"
             :style="{ borderRadius: '12px' }"
-          >
+            >
+            <template v-slot:item="{ props, item }">
+                <v-list-item v-bind="props" class="pa-3">
+                <template v-slot:prepend>
+                    <v-avatar :color="getAvatarColor(item.raw.id)" size="40">
+                    <span class="text-white font-weight-bold">
+                        {{ item.raw.nama.charAt(0).toUpperCase() }}
+                    </span>
+                    </v-avatar>
+                </template>
+                </v-list-item>
+            </template>
+            </v-select>
+            <v-row>
+            <v-col cols="12" sm="6">
+                <v-text-field 
+                v-model="editedItem.id_pelanggan" 
+                label="ID Pelanggan (PPPoE Username)"
+                variant="outlined"
+                prepend-inner-icon="mdi-account-key"
+                :style="{ borderRadius: '12px' }"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <v-text-field 
+                v-model="editedItem.password_pppoe" 
+                label="Password PPPoE"
+                variant="outlined"
+                prepend-inner-icon="mdi-key"
+                type="password"
+                :style="{ borderRadius: '12px' }"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <v-text-field 
+                v-model="editedItem.ip_pelanggan" 
+                label="IP Pelanggan"
+                variant="outlined"
+                prepend-inner-icon="mdi-ip"
+                :style="{ borderRadius: '12px' }"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+            <v-combobox
+                v-model="editedItem.profile_pppoe"
+                :items="pppoeProfiles"
+                label="Profile PPPoE"
+                variant="outlined"
+                prepend-inner-icon="mdi-account-settings"
+                placeholder="Ketik atau pilih profil"
+                :style="{ borderRadius: '12px' }"
+            ></v-combobox>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <v-text-field 
+                v-model="editedItem.id_vlan" 
+                label="ID VLAN"
+                variant="outlined"
+                prepend-inner-icon="mdi-lan"
+                :style="{ borderRadius: '12px' }"
+                ></v-text-field>
+            </v-col>
+            </v-row>
+        </v-card-text>
+        </v-stepper-window-item>
+
+        <v-stepper-window-item :value="2">
+    <v-card-text class="pa-6">
+        <div class="mb-6">
+        <h3 class="text-h6 font-weight-bold mb-2 d-flex align-center">
+            <v-icon class="me-2 text-primary">mdi-router-network</v-icon>
+            Konfigurasi Infrastruktur
+        </h3>
+        <p class="text-body-2 text-medium-emphasis">
+            Atur komponen infrastruktur jaringan
+        </p>
+        </div>
+        <v-row>
+        <v-col cols="12" sm="6">
+            <v-select
+                v-model="editedItem.olt"
+                :items="mikrotikServers"
+                item-title="name"
+                item-value="name"
+                label="OLT"
+                variant="outlined"
+                prepend-inner-icon="mdi-router"
+                placeholder="Pilih server OLT"
+                :style="{ borderRadius: '12px' }"
+            ></v-select>
+            </v-col>
+        <v-col cols="12" sm="6">
+            <v-text-field 
+            v-model="editedItem.olt_custom" 
+            label="OLT Custom (Opsional)"
+            variant="outlined"
+            prepend-inner-icon="mdi-router-plus"
+            :style="{ borderRadius: '12px' }"
+            ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="3">
+            <v-text-field 
+            v-model.number="editedItem.pon" 
+            label="PON" 
+            type="number"
+            variant="outlined"
+            prepend-inner-icon="mdi-timeline"
+            :style="{ borderRadius: '12px' }"
+            ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="3">
+            <v-text-field 
+            v-model.number="editedItem.otb" 
+            label="OTB" 
+            type="number"
+            variant="outlined"
+            prepend-inner-icon="mdi-cable-data"
+            :style="{ borderRadius: '12px' }"
+            ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="3">
+            <v-text-field 
+            v-model.number="editedItem.odc" 
+            label="ODC" 
+            type="number"
+            variant="outlined"
+            prepend-inner-icon="mdi-access-point-network"
+            :style="{ borderRadius: '12px' }"
+            ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="3">
+            <v-text-field 
+            v-model.number="editedItem.odp" 
+            label="ODP" 
+            type="number"
+            variant="outlined"
+            prepend-inner-icon="mdi-distribution-point"
+            :style="{ borderRadius: '12px' }"
+            ></v-text-field>
+        </v-col>
+        </v-row>
+    </v-card-text>
+    </v-stepper-window-item>
+
+        <v-stepper-window-item :value="3">
+        <v-card-text class="pa-6">
+            <div class="mb-6">
+            <h3 class="text-h6 font-weight-bold mb-2 d-flex align-center">
+                <v-icon class="me-2 text-primary">mdi-signal</v-icon>
+                Detail ONU & Performance
+            </h3>
+            </div>
+            <v-row>
+            <v-col cols="12" sm="6">
+                <v-text-field 
+                v-model.number="editedItem.onu_power" 
+                label="ONU Power" 
+                type="number" 
+                suffix="dBm" 
+                variant="outlined" 
+                persistent-hint
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <v-file-input 
+                ref="fileInputComponent" 
+                label="Unggah Bukti Speedtest" 
+                variant="outlined" 
+                prepend-icon="" 
+                prepend-inner-icon="mdi-camera" 
+                accept="image/png, image/jpeg, image/webp" 
+                clearable 
+                hint="Ganti gambar yang ada dengan unggah yang baru"
+                ></v-file-input>
+            </v-col>
+            <v-col cols="12">
+                <v-img 
+                v-if="imagePreviewUrl" 
+                :src="imagePreviewUrl" 
+                height="200" 
+                class="rounded-lg elevation-2" 
+                cover
+                >
+                <template v-slot:placeholder>
+                    <div class="d-flex align-center justify-center fill-height">
+                    <v-progress-circular indeterminate color="grey-lighten-4"></v-progress-circular>
+                    </div>
+                </template>
+                </v-img>
+                <div v-else class="text-center text-medium-emphasis pa-8 border rounded-lg">
+                Tidak ada gambar bukti speedtest.
+                </div>
+            </v-col>
+            </v-row>
+        </v-card-text>
+        </v-stepper-window-item>
+    </v-stepper-window>
+    </v-stepper>
+
+        <v-card-actions class="pa-6 pt-0" :style="{ background: 'rgba(0, 0, 0, 0.02)' }">
+          <v-btn v-if="currentStep > 1" color="grey" variant="outlined" @click="currentStep--" prepend-icon="mdi-chevron-left" class="me-2" :style="{ borderRadius: '12px' }">
             Sebelumnya
           </v-btn>
-          
           <v-spacer></v-spacer>
-          
-          <v-btn 
-            color="grey" 
-            variant="outlined" 
-            @click="closeDialog"
-            class="me-3"
-            :style="{ borderRadius: '12px' }"
-          >
+          <v-btn color="grey" variant="outlined" @click="closeDialog" class="me-3" :style="{ borderRadius: '12px' }">
             Batal
           </v-btn>
-          
-          <v-btn
-            v-if="currentStep < 3"
-            color="primary"
-            variant="flat"
-            @click="currentStep++"
-            append-icon="mdi-chevron-right"
-            :style="{ borderRadius: '12px' }"
-          >
+          <v-btn v-if="currentStep < 3" color="primary" variant="flat" @click="currentStep++" append-icon="mdi-chevron-right" :style="{ borderRadius: '12px' }">
             Lanjut
           </v-btn>
-          
-          <v-btn
-            v-else
-            color="primary"
-            variant="flat"
-            @click="saveDataTeknis"
-            prepend-icon="mdi-content-save"
-            :style="{ borderRadius: '12px' }"
-            :loading="saving"
-          >
+          <v-btn v-else color="primary" variant="flat" @click="saveDataTeknis" prepend-icon="mdi-content-save" :style="{ borderRadius: '12px' }" :loading="saving">
             Simpan
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <!-- Enhanced Delete Dialog -->
     <v-dialog v-model="dialogDelete" max-width="500px">
-      <v-card 
-        class="modern-dialog"
-        :style="{ borderRadius: '20px' }"
-        elevation="16"
-      >
-        <v-card-title 
-          class="pa-6 d-flex align-center"
-          :style="{
-            background: 'linear-gradient(135deg, rgba(244, 67, 54, 0.1) 0%, rgba(244, 67, 54, 0.05) 100%)',
-            borderBottom: '1px solid rgba(244, 67, 54, 0.2)'
-          }"
-        >
+      <v-card class="modern-dialog" :style="{ borderRadius: '20px' }" elevation="16">
+        <v-card-title class="pa-6 d-flex align-center" :style="{ background: 'linear-gradient(135deg, rgba(244, 67, 54, 0.1) 0%, rgba(244, 67, 54, 0.05) 100%)', borderBottom: '1px solid rgba(244, 67, 54, 0.2)' }">
           <v-avatar color="error" size="48" class="me-4">
             <v-icon color="white">mdi-alert</v-icon>
           </v-avatar>
@@ -719,14 +644,9 @@
             <div class="text-body-2 opacity-80">Tindakan ini tidak dapat dibatalkan</div>
           </div>
         </v-card-title>
-        
         <v-card-text class="pa-6">
           <div class="text-center">
-            <v-icon 
-              size="64" 
-              color="error" 
-              class="mb-4 opacity-60"
-            >
+            <v-icon size="64" color="error" class="mb-4 opacity-60">
               mdi-delete-alert
             </v-icon>
             <p class="text-body-1 mb-2">
@@ -737,31 +657,17 @@
             </p>
           </div>
         </v-card-text>
-        
         <v-card-actions class="pa-6 pt-0">
           <v-spacer></v-spacer>
-          <v-btn 
-            variant="outlined" 
-            @click="closeDeleteDialog"
-            class="me-3"
-            :style="{ borderRadius: '12px' }"
-          >
+          <v-btn variant="outlined" @click="closeDeleteDialog" class="me-3" :style="{ borderRadius: '12px' }">
             Batal
           </v-btn>
-          <v-btn 
-            color="error" 
-            variant="flat"
-            @click="confirmDelete"
-            prepend-icon="mdi-delete"
-            :style="{ borderRadius: '12px' }"
-            :loading="deleting"
-          >
+          <v-btn color="error" variant="flat" @click="confirmDelete" prepend-icon="mdi-delete" :style="{ borderRadius: '12px' }" :loading="deleting">
             Ya, Hapus
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-
   </v-container>
 </template>
 
@@ -793,6 +699,11 @@ interface Pelanggan {
   nama: string;
 }
 
+interface MikrotikServer {
+  id: number;
+  name: string;
+}
+
 // --- State ---
 const dataTeknisList = ref<DataTeknis[]>([]);
 const pelangganList = ref<Pelanggan[]>([]);
@@ -805,9 +716,11 @@ const currentStep = ref(1);
 const editedItem = ref<Partial<DataTeknis>>({});
 const itemToDeleteId = ref<number | null>(null);
 const searchQuery = ref('');
+const mikrotikServers = ref<MikrotikServer[]>([]);
 
 // Ref untuk komponen file input
 const fileInputComponent = ref<any>(null);
+const expanded = ref<readonly any[]>([]);
 
 // --- Computed Properties ---
 const isEditMode = computed(() => !!editedItem.value.id);
@@ -854,10 +767,24 @@ const headers = [
   { title: 'Actions', key: 'actions', sortable: false, align: 'center' as const },
 ];
 
+const pppoeProfiles = (() => {
+  const speeds = ['10Mbps', '20Mbps', '30Mbps', '50Mbps'];
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const profiles: string[] = [];
+
+  for (const speed of speeds) {
+    for (const letter of alphabet) {
+      profiles.push(`${speed}-${letter}`);
+    }
+  }
+  return profiles;
+})();
+
 // --- Methods ---
 onMounted(() => {
   fetchDataTeknis();
   fetchPelanggan();
+  fetchMikrotikServers();
 });
 
 async function fetchDataTeknis() {
@@ -867,6 +794,16 @@ async function fetchDataTeknis() {
     dataTeknisList.value = response.data;
   } finally {
     loading.value = false;
+  }
+}
+
+async function fetchMikrotikServers() {
+  try {
+    // Asumsi endpoint Anda adalah /mikrotik_server/
+    const response = await apiClient.get('/mikrotik_server/');
+    mikrotikServers.value = response.data;
+  } catch (error) {
+    console.error("Gagal mengambil daftar server Mikrotik:", error);
   }
 }
 
