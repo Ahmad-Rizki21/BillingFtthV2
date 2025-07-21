@@ -256,7 +256,7 @@
                             v-model="editedItem.status"
                             :items="[
                               { title: 'Aktif', value: 'Aktif' },
-                              { title: 'Ditangguhkan', value: 'Ditangguhkan' },
+                              { title: 'Suspended', value: 'Suspended' },
                               { title: 'Berhenti', value: 'Berhenti' }
                             ]"
                             label="Status Langganan"
