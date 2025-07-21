@@ -2,11 +2,17 @@ from datetime import datetime, timedelta
 from typing import Union
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 from .config import settings
+from .models.user import User
+from .database import get_db
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 ALGORITHM = "HS256"
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # Sesuaikan dengan endpoint login Anda
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verifikasi password."""
@@ -35,3 +41,29 @@ def verify_access_token(token: str) -> dict:
         return payload
     except JWTError:
         raise JWTError("Invalid token")
+
+async def get_current_active_user(
+    token: str = Depends(oauth2_scheme),
+    db: AsyncSession = Depends(get_db)
+) -> User:
+    """Mengambil pengguna aktif berdasarkan token JWT."""
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = verify_access_token(token)
+        user_id: str = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+
+    query = select(User).where(User.id == user_id)
+    result = await db.execute(query)
+    user = result.scalar_one_or_none()
+
+    if user is None:
+        raise credentials_exception
+    return user

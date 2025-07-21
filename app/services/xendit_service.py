@@ -2,16 +2,17 @@
 
 import httpx
 from ..config import settings
-from ..models import Invoice, Pelanggan
+from ..models import Invoice, Pelanggan, PaketLayanan
 import os
 import base64
 import logging
 import urllib.parse
+import json
 from datetime import datetime, timedelta, timezone
 
 logger = logging.getLogger('app.services.xendit')
 
-async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan) -> dict:
+async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan, paket: PaketLayanan) -> dict:
     """Mengirim request ke Xendit untuk membuat invoice baru."""
     target_key_name = pelanggan.harga_layanan.xendit_key_name
     api_key = settings.XENDIT_API_KEYS.get(target_key_name)
@@ -24,11 +25,20 @@ async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan) -> dict:
         "Authorization": f"Basic {encoded_key}"
     }
 
+    # ==========================================================
+    # --- MULAI LOGIKA BARU YANG SUDAH DISEMPURNAKAN ---
+    # ==========================================================
+    
+    brand_info = pelanggan.harga_layanan
+    jatuh_tempo_str = invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
+    deskripsi_xendit = f"Biaya berlangganan internet up to {paket.kecepatan} Mbps jatuh tempo pembayaran tanggal {jatuh_tempo_str}"
+
+    # Langkah 1: Siapkan payload dasar, SELALU sertakan 'amount' di awal
     payload = {
         "external_id": invoice.invoice_number,
         "amount": float(invoice.total_harga),
-        "description": f"Tagihan Internet untuk {pelanggan.nama} - Invoice {invoice.invoice_number}",
-        "invoice_duration": 86400 * 7, # Durasi 7 hari
+        "description": deskripsi_xendit,
+        "invoice_duration": 86400 * 7,
         "customer": {
             "given_names": pelanggan.nama,
             "email": pelanggan.email,
@@ -36,6 +46,34 @@ async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan) -> dict:
         },
         "currency": "IDR",
     }
+    
+    # Langkah 2: Logika Kustom jika brand adalah "Jakinet"
+    if brand_info.brand.lower() == "jakinet":
+        # Buat Referensi ID kustom
+        nama_user = pelanggan.nama.replace(' ', '')
+        lokasi = pelanggan.alamat.split(' ')[0]
+        payload["external_id"] = f"Jakinet/ftth/{nama_user}/{lokasi}/{invoice.invoice_number}"
+
+        # Hitung harga dasar dan pajak untuk rincian item
+        harga_dasar = float(paket.harga)
+        pajak = harga_dasar * (float(brand_info.pajak) / 100)
+        
+        periode = f"Periode Tgl {invoice.tgl_invoice.day}-{invoice.tgl_jatuh_tempo.day} {invoice.tgl_jatuh_tempo.strftime('%B %Y')}"
+
+        # Tambahkan 'items' dan 'fees'
+        payload["items"] = [
+            {
+                "name": f"Biaya berlangganan internet up to {paket.kecepatan} Mbps",
+                "price": harga_dasar,
+                "quantity": 1,
+                "description": periode
+            }
+        ]
+        payload["fees"] = [{"type": "Tax", "value": pajak}]
+
+    # ==========================================================
+    # --- AKHIR LOGIKA BARU ---
+    # ==========================================================
 
     async with httpx.AsyncClient() as client:
         try:
@@ -43,8 +81,10 @@ async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan) -> dict:
             response.raise_for_status()
             return response.json()
         except httpx.HTTPStatusError as e:
-            logger.error(f"Error saat membuat invoice Xendit: {e.response.text}")
-            raise
+            logger.error(f"Error saat membuat invoice Xendit. Payload yang dikirim: {json.dumps(payload, indent=2)}")
+            logger.error(f"Respons Error dari Xendit: {e.response.text}")
+            raise e
+
 
 async def get_paid_invoice_ids_since(days: int) -> list[str]:
     """

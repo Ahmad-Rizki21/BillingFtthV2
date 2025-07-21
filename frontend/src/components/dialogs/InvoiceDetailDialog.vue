@@ -84,7 +84,7 @@
                 
                 <div class="card-content">
                   <div class="info-row">
-                    <span class="info-label">ID PPPoE</span>
+                    <span class="info-label">ID PPPoE / ID Pelanggan</span>
                     <span class="info-value">{{ invoice.id_pelanggan }}</span>
                   </div>
                   

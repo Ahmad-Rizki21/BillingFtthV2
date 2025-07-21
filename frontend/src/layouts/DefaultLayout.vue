@@ -80,16 +80,55 @@
       ></v-btn>
       <v-spacer></v-spacer>
       
+      <!-- NOTIFIKASI -->
       <v-btn icon variant="text" @click="toggleTheme" class="header-action-btn theme-toggle-btn">
-        <v-icon>{{ theme.global.current.value.dark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
-      </v-btn>
-      
-      <v-btn icon variant="text" class="header-action-btn">
-        <v-icon>mdi-bell-outline</v-icon>
-      </v-btn>
-      <v-btn icon variant="text" class="header-action-btn">
+            <v-icon>{{ theme.global.current.value.dark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+        </v-btn>
+
+        <v-menu offset-y>
+          <template v-slot:activator="{ props }">
+            <v-btn icon variant="text" class="header-action-btn" v-bind="props">
+              <v-badge :content="notifications.length" color="error" :model-value="notifications.length > 0">
+                <v-icon>mdi-bell-outline</v-icon>
+              </v-badge>
+            </v-btn>
+          </template>
+
+          <v-list class="pa-0" width="300">
+            <v-list-item class="font-weight-bold bg-grey-lighten-4">
+                Notifikasi
+                <template v-slot:append v-if="notifications.length > 0">
+                    <v-btn variant="text" size="small" @click="notifications = []">Bersihkan</v-btn>
+                </template>
+            </v-list-item>
+            <v-divider></v-divider>
+            <div v-if="notifications.length === 0" class="text-center text-medium-emphasis pa-4">
+                Tidak ada notifikasi baru.
+            </div>
+            <v-list-item
+              v-for="(notif, index) in notifications"
+              :key="index"
+              class="py-2"
+            >
+              <template v-slot:prepend>
+                <v-avatar color="success" size="32" class="me-3">
+                    <v-icon size="18">mdi-cash-check</v-icon>
+                </v-avatar>
+              </template>
+              <v-list-item-title class="font-weight-medium text-body-2">Pembayaran Diterima</v-list-item-title>
+                <v-list-item-subtitle class="text-caption">
+                  <strong>{{ notif.data.invoice_number }}</strong> dari <strong>{{ notif.data.pelanggan_nama }}</strong> ({{ notif.data.id_pelanggan }}) telah lunas.
+                </v-list-item-subtitle>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      <!-- NOTIFIKASI -->
+
+
+
+      <!-- <v-btn icon variant="text" class="header-action-btn">
         <v-icon>mdi-cog-outline</v-icon>
-      </v-btn>
+      </v-btn> -->
   </v-app-bar>
 
     <v-main class="modern-main">
@@ -109,6 +148,7 @@ const theme = useTheme();
 const drawer = ref(true);
 const rail = ref(false);
 const router = useRouter();
+const notifications = ref<any[]>([]);
 
 // SOLUSI YANG BENAR: Gunakan metode yang tidak deprecated
 function toggleTheme() {
@@ -126,6 +166,43 @@ onMounted(() => {
   }
 });
 
+
+//Notifikasi
+function setupWebSocket() {
+    // Gunakan wss:// jika production Anda menggunakan HTTPS
+    const ws = new WebSocket("ws://127.0.0.1:8000/ws/notifications");
+
+    ws.onmessage = (event) => {
+        console.log("Menerima notifikasi:", event.data);
+        const message = JSON.parse(event.data);
+
+        // Tambahkan notifikasi baru ke awal daftar
+        if (message.type === 'new_payment') {
+            notifications.value.unshift(message);
+            
+            // (Opsional) Batasi jumlah notifikasi yang ditampilkan
+            if (notifications.value.length > 10) {
+                notifications.value.pop();
+            }
+        }
+    };
+
+    ws.onopen = () => {
+        console.log("WebSocket terhubung.");
+    };
+
+    ws.onclose = () => {
+        console.log("WebSocket terputus. Mencoba menghubungkan kembali dalam 5 detik...");
+        setTimeout(setupWebSocket, 5000); // Coba hubungkan kembali
+    };
+
+    ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        ws.close();
+    };
+}
+
+
 const menuGroups = ref([
   { title: 'DASHBOARD', items: [{ title: 'Dashboard', icon: 'mdi-home-variant', value: 'dashboard', to: '/dashboard' }] },
   { title: 'FTTH', items: [
@@ -135,14 +212,11 @@ const menuGroups = ref([
       { title: 'Brand & Paket', icon: 'mdi-tag-multiple-outline', value: 'harga', to: '/harga-layanan' },
   ]},
   { title: 'BILLING', items: [{ title: 'Invoices', icon: 'mdi-file-document-outline', value: 'invoices', to: '/invoices', badge: 0, badgeColor: 'grey-darken-1' }] },
-  { title: 'SETTINGS', items: [
-      { title: 'Logs System', icon: 'mdi-math-log', value: 'logs', to: '/logs' },
-      { title: 'Activity Log', icon: 'mdi-timeline-text-outline', value: 'activity', to: '/activity' },
-  ]},
   { title: 'NETWORK MANAGEMENT', items: [{ title: 'Mikrotik Servers', icon: 'mdi-server', value: 'mikrotik', to: '/mikrotik' }] },
   { title: 'MANAGEMENT', items: [
      { title: 'Users', icon: 'mdi-account-cog-outline', value: 'users', to: '/users', badge: 0, badgeColor: 'primary' },
       { title: 'Roles', icon: 'mdi-shield-account-outline', value: 'roles', to: '/roles', badge: 0, badgeColor: 'primary' }]},
+      
 
 ]);
 
@@ -202,6 +276,7 @@ onMounted(() => {
   fetchRoleCount();
   fetchUserCount();
   fetchSuspendedCount(); // Panggil fungsi baru di sini
+  setupWebSocket();
 });
 
 onMounted(() => {

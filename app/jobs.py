@@ -47,7 +47,7 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         db.add(db_invoice)
         await db.flush()
 
-        xendit_response = await xendit_service.create_xendit_invoice(db_invoice, pelanggan)
+        xendit_response = await xendit_service.create_xendit_invoice(db_invoice, pelanggan, paket)
 
         db_invoice.payment_link = xendit_response.get("invoice_url")
         db_invoice.xendit_id = xendit_response.get("id")
