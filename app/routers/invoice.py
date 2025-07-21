@@ -11,6 +11,9 @@ from typing import List, Optional
 import json
 import logging
 import pytz
+from ..websocket_manager import manager
+
+
 
 # Impor semua model dan skema yang dibutuhkan
 from ..models.invoice import Invoice as InvoiceModel
@@ -28,6 +31,7 @@ router = APIRouter(
     tags=["Invoices"],
     responses={404: {"description": "Not found"}},
 )
+
 
 
 
@@ -81,6 +85,19 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
     db.add(langganan)
 
     logger.info(f"Payment processed successfully for invoice {invoice.invoice_number}")
+
+    # Kirim notifikasi ke semua admin yang terhubung
+    notification_message = {
+        "type": "new_payment",
+        "data": {
+            "invoice_number": invoice.invoice_number,
+            "pelanggan_nama": pelanggan.nama,
+            "total_harga": float(invoice.total_harga),
+            "id_pelanggan": invoice.id_pelanggan
+        }
+    }
+    
+    await manager.broadcast(json.dumps(notification_message))
 
     if old_status == "Suspended":
         await mikrotik_service.trigger_mikrotik_update(db, langganan)
@@ -160,8 +177,14 @@ async def generate_manual_invoice(
 
     total_harga = float(paket.harga) * (1 + (float(brand.pajak) / 100))
 
+    jatuh_tempo_str = langganan.tgl_jatuh_tempo.strftime('%d/%m/%Y')
+    deskripsi = f"Biaya berlangganan internet up to {paket.kecepatan} Mbps jatuh tempo pembayaran tanggal {jatuh_tempo_str}"
+    nomor_invoice = f"INV-{pelanggan.nama.replace(' ', '')}-{langganan.tgl_jatuh_tempo.strftime('%Y%m')}-{uuid.uuid4().hex[:4].upper()}"
+
+
+
     new_invoice_data = {
-        "invoice_number": f"INV-{date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}",
+        "invoice_number": nomor_invoice,
         "pelanggan_id": pelanggan.id,
         "id_pelanggan": data_teknis.id_pelanggan,
         "brand": brand.brand,
@@ -171,6 +194,8 @@ async def generate_manual_invoice(
         "tgl_invoice": date.today(),
         "tgl_jatuh_tempo": langganan.tgl_jatuh_tempo,
         "status_invoice": "Belum Dibayar",
+        # TAMBAHKAN DESKRIPSI DI SINI JIKA MODEL INVOICE ANDA MEMILIKINYA
+        # "deskripsi": deskripsi 
     }
 
     db_invoice = InvoiceModel(**new_invoice_data)
@@ -178,7 +203,7 @@ async def generate_manual_invoice(
     await db.flush()
 
     try:
-        xendit_response = await xendit_service.create_xendit_invoice(db_invoice, pelanggan)
+        xendit_response = await xendit_service.create_xendit_invoice(db_invoice, pelanggan, paket)
         db_invoice.payment_link = xendit_response.get("invoice_url")
         db_invoice.xendit_id = xendit_response.get("id")
         db_invoice.xendit_external_id = xendit_response.get("external_id")

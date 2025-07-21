@@ -583,3 +583,85 @@ FROM langganan
 WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
 [parameters: (datetime.date(2025, 7, 20), 'Aktif')]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-21 19:00:07 | ROUTERS.INVOICE      | [91mERROR   [0m | Unexpected error processing Xendit callback: Object of type Decimal is not JSON serializable
+2025-07-21 19:46:34 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:49:12 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:52:37 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:56:30 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit. Payload yang dikirim: {
+  "external_id": "Jakinet/ftth/Budi/Tambun/INV-Budi-202508-50A7",
+  "description": "Biaya berlangganan internet up to 50 Mbps jatuh tempo pembayaran tanggal 01/08/2025",
+  "invoice_duration": 604800,
+  "customer": {
+    "given_names": "Budi",
+    "email": "budi@test.com",
+    "mobile_number": "08986937819"
+  },
+  "currency": "IDR",
+  "items": [
+    {
+      "name": "Biaya berlangganan internet up to 50 Mbps",
+      "price": 254000.0,
+      "quantity": 1,
+      "description": "Periode Tgl 21-1 August 2025"
+    }
+  ],
+  "fees": [
+    {
+      "type": "Tax",
+      "value": 27940.0
+    }
+  ]
+}
+2025-07-21 19:56:30 | SERVICES.XENDIT      | [91mERROR   [0m | Respons Error dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:59:03 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit. Payload yang dikirim: {
+  "external_id": "Jakinet/ftth/Budi/Tambun/INV-Budi-202508-2109",
+  "description": "Biaya berlangganan internet up to 50 Mbps jatuh tempo pembayaran tanggal 01/08/2025",
+  "invoice_duration": 604800,
+  "customer": {
+    "given_names": "Budi",
+    "email": "budi@test.com",
+    "mobile_number": "08986937819"
+  },
+  "currency": "IDR",
+  "items": [
+    {
+      "name": "Biaya berlangganan internet up to 50 Mbps",
+      "price": 254000.0,
+      "quantity": 1,
+      "description": "Periode Tgl 21-1 August 2025"
+    }
+  ],
+  "fees": [
+    {
+      "type": "Tax",
+      "value": 27940.0
+    }
+  ]
+}
+2025-07-21 19:59:03 | SERVICES.XENDIT      | [91mERROR   [0m | Respons Error dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 20:01:58 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit. Payload yang dikirim: {
+  "external_id": "Jakinet/ftth/Budi/Tambun/INV-Budi-202508-F575",
+  "description": "Biaya berlangganan internet up to 50 Mbps jatuh tempo pembayaran tanggal 01/08/2025",
+  "invoice_duration": 604800,
+  "customer": {
+    "given_names": "Budi",
+    "email": "budi@test.com",
+    "mobile_number": "08986937819"
+  },
+  "currency": "IDR",
+  "items": [
+    {
+      "name": "Biaya berlangganan internet up to 50 Mbps",
+      "price": 254000.0,
+      "quantity": 1,
+      "description": "Periode Tgl 21-1 August 2025"
+    }
+  ],
+  "fees": [
+    {
+      "type": "Tax",
+      "value": 27940.0
+    }
+  ]
+}
+2025-07-21 20:01:58 | SERVICES.XENDIT      | [91mERROR   [0m | Respons Error dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}

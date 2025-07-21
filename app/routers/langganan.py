@@ -26,34 +26,49 @@ async def create_langganan(langganan: LanggananCreate, db: AsyncSession = Depend
 #Penyempurnaan
 @router.get("/", response_model=List[LanggananSchema])
 async def get_all_langganan(
-    status: Optional[str] = None, 
+    status: Optional[str] = None,
     skip: int = 0, 
     limit: int = 100, 
     db: AsyncSession = Depends(get_db)
 ):
     query = (
         select(LanggananModel)
-        # 1. Tambahkan selectinload untuk mengambil detail paket
+        # --- KUNCI PERBAIKAN ADA DI SINI ---
         .options(selectinload(LanggananModel.paket_layanan))
     )
     
-    # 2. Tambahkan filter WHERE jika parameter status diberikan
     if status:
         query = query.where(LanggananModel.status == status)
         
-    # Terapkan paginasi
     query = query.offset(skip).limit(limit)
-    
     result = await db.execute(query)
     return result.scalars().all()
 
-@router.get("/{langganan_id}", response_model=LanggananSchema)
-async def get_langganan_by_id(langganan_id: int, db: AsyncSession = Depends(get_db)):
-    langganan = await db.get(LanggananModel, langganan_id)
-    if not langganan:
+@router.patch("/{langganan_id}", response_model=LanggananSchema)
+async def update_langganan(langganan_id: int, langganan_update: LanggananUpdate, db: AsyncSession = Depends(get_db)):
+    db_langganan = await db.get(LanggananModel, langganan_id)
+    if not db_langganan:
         raise HTTPException(status_code=404, detail="Langganan tidak ditemukan")
-    return langganan
 
+    update_data = langganan_update.model_dump(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_langganan, key, value)
+        
+    db.add(db_langganan)
+    await db.commit()
+    
+    # --- KUNCI PERBAIKAN ADA DI SINI ---
+    # Setelah commit, kita ambil ulang datanya dengan eager loading
+    # sebelum dikembalikan sebagai respons.
+    query = (
+        select(LanggananModel)
+        .where(LanggananModel.id == langganan_id)
+        .options(selectinload(LanggananModel.paket_layanan))
+    )
+    result = await db.execute(query)
+    updated_langganan = result.scalar_one_or_none()
+    
+    return updated_langganan
 @router.patch("/{langganan_id}", response_model=LanggananSchema)
 async def update_langganan(langganan_id: int, langganan_update: LanggananUpdate, db: AsyncSession = Depends(get_db)):
     db_langganan = await db.get(LanggananModel, langganan_id)

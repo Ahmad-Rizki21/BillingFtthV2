@@ -243,47 +243,49 @@
             </v-tooltip>
 
             <v-tooltip location="top">
-  <template v-slot:activator="{ props }">
-    <v-btn 
-      v-if="item.status_invoice !== 'Lunas'"
-      icon="mdi-check-decagram" 
-      v-bind="props"
-      variant="text" 
-      size="small" 
-      color="success" 
-      @click="openMarkAsPaidDialog(item)"
-    ></v-btn>
-  </template>
-  <span>Tandai Lunas</span>
-</v-tooltip>
+                <template v-slot:activator="{ props }">
+                  <v-btn 
+                    v-if="item.status_invoice !== 'Lunas'"
+                    icon="mdi-check-decagram" 
+                    v-bind="props"
+                    variant="text" 
+                    size="small" 
+                    color="success" 
+                    @click="openMarkAsPaidDialog(item)"
+                  ></v-btn>
+                </template>
+                <span>Tandai Lunas</span>
+              </v-tooltip>
 
-<v-dialog v-model="dialogMarkAsPaid" max-width="500px" persistent>
-  <v-card>
-    <v-card-title class="text-h5">Tandai Lunas?</v-card-title>
-    <v-card-text>
-      <p>Anda akan menandai invoice <strong>{{ itemToMark?.invoice_number }}</strong> sebagai lunas.</p>
-      <v-select
-        v-model="paymentMethod"
-        :items="['Cash', 'Bank Transfer', 'Lainnya']"
-        label="Metode Pembayaran"
-        variant="outlined"
-        density="compact"
-        class="mt-4"
-      ></v-select>
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn text @click="closeMarkAsPaidDialog">Batal</v-btn>
-      <v-btn 
-        color="success" 
-        @click="confirmMarkAsPaid"
-        :loading="markingAsPaid"
-      >
-        Konfirmasi
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
+              <v-dialog v-model="dialogMarkAsPaid" max-width="500px" persistent>
+                <v-card>
+                  <v-card-title class="text-h5">Tandai Lunas?</v-card-title>
+                  <v-card-text>
+                    <p>Anda akan menandai invoice <strong>{{ itemToMark?.invoice_number }}</strong> sebagai lunas.</p>
+                    <v-select
+                      v-model="paymentMethod"
+                      :items="['Cash', 'Bank Transfer', 'Lainnya']"
+                      label="Metode Pembayaran"
+                      variant="outlined"
+                      density="compact"
+                      class="mt-4"
+                    ></v-select>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="closeMarkAsPaidDialog">Batal</v-btn>
+                    <v-btn 
+                      color="success" 
+                      @click="confirmMarkAsPaid"
+                      :loading="markingAsPaid"
+                    >
+                      Konfirmasi
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
+              
             
           </div>
         </template>
