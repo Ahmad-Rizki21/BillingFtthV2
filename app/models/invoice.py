@@ -18,6 +18,7 @@ class Invoice(Base):
     tgl_jatuh_tempo: Mapped[Date] = mapped_column(Date, index=True) # Ditambahkan index untuk performa
     status_invoice: Mapped[str] = mapped_column(String(50), index=True) # Ditambahkan index untuk performa
     payment_link: Mapped[str | None] = mapped_column(Text)
+    metode_pembayaran: Mapped[str | None] = mapped_column(String(50))
     expiry_date: Mapped[datetime | None] = mapped_column(DateTime)
     xendit_id: Mapped[str | None] = mapped_column(String(191))
     xendit_external_id: Mapped[str | None] = mapped_column(String(191), index=True) # Ditambahkan index untuk performa
