@@ -10,7 +10,7 @@ from .database import Base, engine
 from .routers import (
     pelanggan, user, role, data_teknis, harga_layanan, 
     paket_layanan, langganan, invoice, mikrotik_server,
-    uploads, notifications
+    uploads, notifications, dashboard
 )
 from .jobs import job_generate_invoices, job_suspend_services, job_verify_payments
 from .logging_config import setup_logging
@@ -97,6 +97,7 @@ app.include_router(uploads.router)
 # app.include_router(system_log.router)
 # app.include_router(activity_log.router)
 app.include_router(notifications.router)
+app.include_router(dashboard.router)
 
 # Endpoint root untuk verifikasi
 @app.get("/")
