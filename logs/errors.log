@@ -665,3 +665,31 @@ WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
   ]
 }
 2025-07-21 20:01:58 | SERVICES.XENDIT      | [91mERROR   [0m | Respons Error dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 20:24:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:30:11 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:33:56 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:44:52 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:45:07 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:45:22 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:49:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:50:32 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:50:48 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:54:21 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:54:43 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:54:58 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:57:19 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:02:16 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:03:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:04:46 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:12:13 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:16:46 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:19:00 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:28:11 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:47:02 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:47:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:52:38 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:54:21 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:54:53 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:57:37 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 22:16:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 22:20:22 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out

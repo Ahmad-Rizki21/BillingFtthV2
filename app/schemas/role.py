@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
+from .permission import Permission
 
 # Impor skema Permission yang sudah Anda buat
 from .permission import Permission
@@ -24,3 +25,4 @@ class Role(RoleBase):
     class Config:
         # Ganti orm_mode dengan from_attributes untuk Pydantic v2
         from_attributes = True
+

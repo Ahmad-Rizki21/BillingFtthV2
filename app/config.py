@@ -4,6 +4,18 @@ from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
 # Memuat variabel dari .env secara eksplisit
+MENUS = [
+    "Pelanggan",
+    "Langganan",
+    "Data Teknis",
+    "Brand & Paket",
+    "Invoices",
+    "Mikrotik Servers",
+    "Users",
+    "Roles",
+    "Permissions"
+]
+
 load_dotenv()
 
 class Settings(BaseSettings):

@@ -10,7 +10,7 @@ from .database import Base, engine
 from .routers import (
     pelanggan, user, role, data_teknis, harga_layanan, 
     paket_layanan, langganan, invoice, mikrotik_server,
-    uploads, notifications, dashboard
+    uploads, notifications, dashboard, permission
 )
 from .jobs import job_generate_invoices, job_suspend_services, job_verify_payments
 from .logging_config import setup_logging
@@ -63,9 +63,18 @@ async def startup_event():
     #    (Ganti 'hour' dan 'minute' sesuai kebutuhan Anda)
     
     # scheduler.add_job(job_generate_invoices, 'cron', hour=1, minute=0, timezone='Asia/Jakarta') #Real
-    scheduler.add_job(job_generate_invoices, 'interval', minutes=1) 
+    
+    # ======================================================== INI UNTUK TEST========================================================
+    #scheduler.add_job(job_generate_invoices, 'interval', minutes=1) 
+    # ======================================================== INI UNTUK TEST========================================================
+
+
     # scheduler.add_job(job_suspend_services, 'cron', hour=2, minute=0, timezone='Asia/Jakarta') #Real
-    scheduler.add_job(job_suspend_services, 'interval', minutes=1)
+    
+    # ======================================================== INI UNTUK TEST========================================================
+    #scheduler.add_job(job_suspend_services, 'interval', minutes=1)
+    # ======================================================== INI UNTUK TEST========================================================
+    
     # Jalankan job verifikasi setiap jam, di menit ke-15
     # scheduler.add_job(job_verify_payments, 'cron', hour='*', minute=15, timezone='Asia/Jakarta', id="verify_payments_job") #Cek pembayaran setiap jam menit ke-15.
     
@@ -98,6 +107,7 @@ app.include_router(uploads.router)
 # app.include_router(activity_log.router)
 app.include_router(notifications.router)
 app.include_router(dashboard.router)
+app.include_router(permission.router)
 
 # Endpoint root untuk verifikasi
 @app.get("/")

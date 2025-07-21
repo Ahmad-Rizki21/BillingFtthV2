@@ -17,24 +17,44 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=RoleSchema, status_code=status.HTTP_201_CREATED)
-async def create_role(role: RoleCreate, db: AsyncSession = Depends(get_db)):
-    # Cek apakah nama role sudah ada
-    existing_role_query = await db.execute(select(RoleModel).where(RoleModel.name == role.name))
+async def create_role(role_data: RoleCreate, db: AsyncSession = Depends(get_db)):
+    
+    # --- TAMBAHKAN BLOK PENGECEKAN INI ---
+    # Cek apakah role dengan nama yang sama sudah ada
+    existing_role_query = await db.execute(
+        select(RoleModel).where(RoleModel.name == role_data.name)
+    )
     if existing_role_query.scalar_one_or_none():
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Role dengan nama '{role.name}' sudah ada.")
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Role dengan nama '{role_data.name}' sudah ada."
+        )
+    # ------------------------------------
 
-    db_role = RoleModel(name=role.name)
-
-    # Jika ada permission_ids yang dikirim, hubungkan dengan role
-    if role.permission_ids:
-        query = select(PermissionModel).where(PermissionModel.id.in_(role.permission_ids))
-        permissions = (await db.execute(query)).scalars().all()
-        db_role.permissions.extend(permissions)
-
+    db_role = RoleModel(name=role_data.name)
+    
+    if role_data.permission_ids:
+        permissions = await db.execute(
+            select(PermissionModel).where(PermissionModel.id.in_(role_data.permission_ids))
+        )
+        db_role.permissions.extend(permissions.scalars().all())
+    
     db.add(db_role)
     await db.commit()
-    await db.refresh(db_role)
-    return db_role
+    role_id = db_role.id
+
+    # --- KUNCI PERBAIKAN ADA DI SINI ---
+    # Setelah commit, ambil ulang datanya dengan eager loading
+    # sebelum dikembalikan sebagai respons.
+    query = (
+        select(RoleModel)
+        .where(RoleModel.id == role_id)
+        .options(selectinload(RoleModel.permissions))
+    )
+    result = await db.execute(query)
+    created_role = result.scalar_one_or_none()
+    
+    return created_role
 
 @router.get("/", response_model=List[RoleSchema])
 async def get_all_roles(db: AsyncSession = Depends(get_db)):

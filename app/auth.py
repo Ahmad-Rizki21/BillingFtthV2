@@ -8,7 +8,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from .config import settings
 from .models.user import User
+from sqlalchemy.orm import selectinload
 from .database import get_db
+from .models.role import Role
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
@@ -60,7 +62,13 @@ async def get_current_active_user(
     except JWTError:
         raise credentials_exception
 
-    query = select(User).where(User.id == user_id)
+    query = (
+        select(User)
+        .where(User.id == int(user_id))
+        .options(
+            selectinload(User.role).selectinload(Role.permissions)
+        )
+    )
     result = await db.execute(query)
     user = result.scalar_one_or_none()
 
