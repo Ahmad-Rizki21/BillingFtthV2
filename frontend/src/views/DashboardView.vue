@@ -22,8 +22,7 @@
     <!-- Stats Cards Section -->
     <div v-if="loading" class="stats-grid mb-6">
       <v-skeleton-loader 
-        v-for="n in 6" 
-        :key="n" 
+        v-for="n in 3" :key="n" 
         type="list-item-avatar-two-line" 
         class="stat-card-skeleton"
       ></v-skeleton-loader>
@@ -151,7 +150,7 @@ import {
   PointElement, 
   LineElement, 
   ChartData,
-  ChartOptions
+  ChartOptions // <-- 1. Impor ChartOptions yang hilang
 } from 'chart.js';
 import { useTheme } from 'vuetify';
 import apiClient from '@/services/api';
@@ -161,32 +160,49 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 const theme = useTheme();
 const loading = ref(true);
 
-// --- State untuk data dinamis ---
 const stats = ref<any[]>([]);
 const lokasiChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
 const paketChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
 const invoiceChartData = ref<any>({ labels: [], datasets: [] });
 
-// Handle card hover untuk interaktivitas ringan
+// 2. Tambahkan fungsi handleCardHover yang hilang
 const handleCardHover = (_index: number, _isHover: boolean) => {
-  // Bisa digunakan untuk efek hover tambahan jika diperlukan
-  // Misalnya mengubah state atau trigger animasi
+  // Fungsi ini bisa dikosongkan jika tidak ada efek hover yang diinginkan
 };
 
-// --- Panggil API saat komponen dimuat ---
+async function fetchMikrotikStats() {
+  try {
+    const response = await apiClient.get('/dashboard/mikrotik-status');
+    const { online, offline } = response.data;
+
+    // Find and update the corresponding stat cards
+    const onlineStat = stats.value.find(s => s.title === "Online Servers");
+    if (onlineStat) onlineStat.value = online;
+
+    const offlineStat = stats.value.find(s => s.title === "Offline Servers");
+    if (offlineStat) offlineStat.value = offline;
+
+  } catch (error) {
+    console.error("Failed to fetch Mikrotik server status:", error);
+    // Optionally handle the error in the UI
+    const onlineStat = stats.value.find(s => s.title === "Online Servers");
+    if (onlineStat) onlineStat.value = 'Error';
+    const offlineStat = stats.value.find(s => s.title === "Offline Servers");
+    if (offlineStat) offlineStat.value = 'Error';
+  }
+}
+
 onMounted(async () => {
   try {
     const response = await apiClient.get('/dashboard/');
     const data = response.data;
 
-    // Isi stat cards
     stats.value = data.stat_cards.map((card: any) => ({
       ...card,
       icon: getIconForStat(card.title),
       color: getColorForStat(card.title)
     }));
 
-    // Isi chart lokasi
     lokasiChartData.value = {
       labels: data.lokasi_chart.labels,
       datasets: [{
@@ -200,7 +216,6 @@ onMounted(async () => {
       }],
     };
 
-    // Isi chart paket
     paketChartData.value = {
       labels: data.paket_chart.labels,
       datasets: [{
@@ -224,7 +239,6 @@ onMounted(async () => {
       }],
     };
     
-    // Isi chart invoice
     invoiceChartData.value = {
       labels: data.invoice_summary_chart.labels,
       datasets: [
@@ -275,14 +289,15 @@ onMounted(async () => {
       ],
     };
 
-  } catch (error) {
-    console.error("Gagal mengambil data dashboard:", error);
+ } catch (error) {
+    console.error("Failed to fetch dashboard data:", error);
   } finally {
     loading.value = false;
+    // 2. After the main data is loaded, fetch the Mikrotik status
+    fetchMikrotikStats();
   }
 });
 
-// --- Helper functions untuk ikon dan warna ---
 function getIconForStat(title: string) {
   if (title.toLowerCase().includes('jakinet')) return 'mdi-account-network';
   if (title.toLowerCase().includes('jelantik')) return 'mdi-account-group';
@@ -303,7 +318,6 @@ function getColorForStat(title: string) {
   return 'primary';
 }
 
-// --- Chart options ---
 const chartAxisColor = computed(() => theme.global.current.value.dark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)');
 const chartGridColor = computed(() => theme.global.current.value.dark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)');
 

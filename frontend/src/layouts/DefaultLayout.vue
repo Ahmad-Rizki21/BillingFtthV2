@@ -33,7 +33,7 @@
 
       <div class="navigation-wrapper">
         <v-list nav class="navigation-menu">
-          <template v-for="group in menuGroups" :key="group.title">
+          <template v-for="group in filteredMenuGroups" :key="group.title">
             <v-list-subheader v-if="!rail" class="menu-subheader">{{ group.title }}</v-list-subheader>
             <v-list-item
               v-for="item in group.items"
@@ -45,23 +45,7 @@
               class="nav-item"
               :active-class="'v-list-item--active'"
             >
-              <template v-slot:append v-if="item.badge !== undefined && !rail">
-                <v-tooltip location="end" :disabled="item.badge === 0">
-                  <template v-slot:activator="{ props }">
-                    <v-chip 
-                      v-bind="props"
-                      v-if="item.badge > 0"
-                      size="small" 
-                      class="badge-chip" 
-                      :color="item.badgeColor"
-                    >
-                      {{ item.badge }}
-                    </v-chip>
-                  </template>
-                  <span v-if="item.value === 'langganan'">{{ item.badge }} langganan ditangguhkan</span>
-                </v-tooltip>
-              </template>
-            </v-list-item>
+              </v-list-item>
           </template>
         </v-list>
       </div>
@@ -156,7 +140,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue'; // <-- Tambahkan computed
 import logoJelantik from '@/assets/images/Jelantik.webp';
 import { useTheme } from 'vuetify';
 import apiClient from '@/services/api';
@@ -166,148 +150,140 @@ const drawer = ref(true);
 const rail = ref(false);
 const router = useRouter();
 const notifications = ref<any[]>([]);
-
-// SOLUSI YANG BENAR: Gunakan metode yang tidak deprecated
-function toggleTheme() {
-  const newTheme = theme.global.current.value.dark ? 'light' : 'dark';
-  theme.global.name.value = newTheme;
-  localStorage.setItem('theme', newTheme);
-}
 const suspendedCount = ref(0);
+const userCount = ref(0); // Tambahkan state untuk user count
+const roleCount = ref(0); // Tambahkan state untuk role count
 
-// Saat komponen pertama kali dimuat, cek localStorage
+// --- State baru untuk permission ---
+const userPermissions = ref<string[]>([]);
+
+// --- Daftar menu statis (sebagai master) ---
+// Tambahkan properti 'permission' pada setiap item menu yang ingin dilindungi
+const menuGroups = ref([
+  { title: 'DASHBOARD', items: [{ title: 'Dashboard', icon: 'mdi-home-variant', value: 'dashboard', to: '/dashboard', permission: 'view_dashboard' }] },
+  { title: 'FTTH', items: [
+      { title: 'Data Pelanggan', icon: 'mdi-account-group-outline', value: 'pelanggan', to: '/pelanggan', permission: 'view_pelanggan' },
+      { title: 'Langganan', icon: 'mdi-wifi-star', value: 'langganan', to: '/langganan', badge: suspendedCount, badgeColor: 'orange', permission: 'view_langganan' },
+      { title: 'Data Teknis', icon: 'mdi-database-cog-outline', value: 'teknis', to: '/data-teknis', permission: 'view_data_teknis' },
+      { title: 'Brand & Paket', icon: 'mdi-tag-multiple-outline', value: 'harga', to: '/harga-layanan', permission: 'view_brand_&_paket' },
+  ]},
+  { title: 'BILLING', items: [{ title: 'Invoices', icon: 'mdi-file-document-outline', value: 'invoices', to: '/invoices', badge: 0, badgeColor: 'grey-darken-1', permission: 'view_invoices' }] },
+  { title: 'NETWORK MANAGEMENT', items: [{ title: 'Mikrotik Servers', icon: 'mdi-server', value: 'mikrotik', to: '/mikrotik', permission: 'view_mikrotik_servers' }] },
+  { title: 'MANAGEMENT', items: [
+      { title: 'Users', icon: 'mdi-account-cog-outline', value: 'users', to: '/users', badge: userCount, badgeColor: 'primary', permission: 'view_users' },
+      { title: 'Roles', icon: 'mdi-shield-account-outline', value: 'roles', to: '/roles', badge: roleCount, badgeColor: 'primary', permission: 'view_roles' },
+      { title: 'Permissions', icon: 'mdi-shield-key-outline', value: 'permissions', to: '/permissions', permission: 'view_permissions' }
+  ]},
+]);
+
+// --- Computed property untuk menyaring menu ---
+const filteredMenuGroups = computed(() => {
+  // Jika user super-admin ('admin'), tampilkan semua menu.
+  // Ganti 'admin' dengan nama role super-admin Anda jika berbeda.
+  if (userPermissions.value.includes('*')) { // Misal super-admin punya permission '*'
+    return menuGroups.value;
+  }
+  
+  const filtered = menuGroups.value.map(group => {
+    const items = group.items.filter(item => 
+      !item.permission || userPermissions.value.includes(item.permission)
+    );
+    return { ...group, items };
+  }).filter(group => group.items.length > 0);
+
+  return filtered;
+});
+
+// --- Panggil API saat komponen dimuat ---
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
     theme.global.name.value = savedTheme;
   }
+  
+  fetchCurrentUser();
+  fetchRoleCount();
+  fetchUserCount();
+  fetchSuspendedCount();
+  setupWebSocket();
 });
 
+// --- Methods ---
+async function fetchCurrentUser() {
+  try {
+    const response = await apiClient.get('/users/me');
+    const roleName = response.data.role?.name.toLowerCase();
+    
+    if (roleName === 'admin') { // Anggap 'admin' adalah super-admin
+      userPermissions.value = ['*']; // Beri akses ke semua
+    } else {
+      const permissions = response.data.role?.permissions.map((p: any) => p.name) || [];
+      userPermissions.value = permissions;
+    }
+  } catch (error) {
+    console.error("Gagal mengambil data pengguna:", error);
+    handleLogout();
+  }
+}
 
-//Notifikasi
+function toggleTheme() {
+  const newTheme = theme.global.current.value.dark ? 'light' : 'dark';
+  theme.global.name.value = newTheme;
+  localStorage.setItem('theme', newTheme);
+}
+
 function setupWebSocket() {
-    // Gunakan wss:// jika production Anda menggunakan HTTPS
     const ws = new WebSocket("ws://127.0.0.1:8000/ws/notifications");
-
     ws.onmessage = (event) => {
-        console.log("Menerima notifikasi:", event.data);
         const message = JSON.parse(event.data);
-
-        // Tambahkan notifikasi baru ke awal daftar
         if (message.type === 'new_payment') {
             notifications.value.unshift(message);
-            
-            // (Opsional) Batasi jumlah notifikasi yang ditampilkan
             if (notifications.value.length > 10) {
                 notifications.value.pop();
             }
         }
     };
-
-    ws.onopen = () => {
-        console.log("WebSocket terhubung.");
-    };
-
+    ws.onopen = () => console.log("WebSocket terhubung.");
     ws.onclose = () => {
         console.log("WebSocket terputus. Mencoba menghubungkan kembali dalam 5 detik...");
-        setTimeout(setupWebSocket, 5000); // Coba hubungkan kembali
+        setTimeout(setupWebSocket, 5000);
     };
-
     ws.onerror = (error) => {
         console.error("WebSocket error:", error);
         ws.close();
     };
 }
 
-
-const menuGroups = ref([
-  { title: 'DASHBOARD', items: [{ title: 'Dashboard', icon: 'mdi-home-variant', value: 'dashboard', to: '/dashboard' }] },
-  { title: 'FTTH', items: [
-      { title: 'Data Pelanggan', icon: 'mdi-account-group-outline', value: 'pelanggan', to: '/pelanggan' },
-      { title: 'Langganan', icon: 'mdi-wifi-star', value: 'langganan', to: '/langganan', badge: suspendedCount, badgeColor: 'orange' },
-      { title: 'Data Teknis', icon: 'mdi-database-cog-outline', value: 'teknis', to: '/data-teknis' },
-      { title: 'Brand & Paket', icon: 'mdi-tag-multiple-outline', value: 'harga', to: '/harga-layanan' },
-  ]},
-  { title: 'BILLING', items: [{ title: 'Invoices', icon: 'mdi-file-document-outline', value: 'invoices', to: '/invoices', badge: 0, badgeColor: 'grey-darken-1' }] },
-  { title: 'NETWORK MANAGEMENT', items: [{ title: 'Mikrotik Servers', icon: 'mdi-server', value: 'mikrotik', to: '/mikrotik' }] },
-  { title: 'MANAGEMENT', items: [
-     { title: 'Users', icon: 'mdi-account-cog-outline', value: 'users', to: '/users', badge: 0, badgeColor: 'primary' },
-      { title: 'Roles', icon: 'mdi-shield-account-outline', value: 'roles', to: '/roles', badge: 0, badgeColor: 'primary' }]},
-      
-
-]);
-
 async function fetchSuspendedCount() {
   try {
-    // Gunakan filter status yang sudah dibuat di backend
     const response = await apiClient.get('/langganan?status=Ditangguhkan');
     suspendedCount.value = response.data.length;
   } catch (error) {
     console.error("Gagal mengambil jumlah langganan yang ditangguhkan:", error);
-    suspendedCount.value = 0;
   }
 }
-
 
 async function fetchRoleCount() {
   try {
     const response = await apiClient.get('/roles/');
-    const roleCount = response.data.length; // Hitung jumlah data
-
-    // Cari grup 'MANAGEMENT' dan item 'Roles' untuk memperbarui badge
-    const managementGroup = menuGroups.value.find(g => g.title === 'MANAGEMENT');
-    if (managementGroup) {
-      const rolesItem = managementGroup.items.find(i => i.value === 'roles');
-      if (rolesItem) {
-        rolesItem.badge = roleCount;
-      }
-    }
+    roleCount.value = response.data.length;
   } catch (error) {
     console.error("Gagal mengambil jumlah roles:", error);
-    // Jika gagal, badge tidak akan ditampilkan atau tetap 0
   }
 }
 
 async function fetchUserCount() {
   try {
     const response = await apiClient.get('/users/');
-    const userCount = response.data.length;
-
-    const managementGroup = menuGroups.value.find(g => g.title === 'MANAGEMENT');
-    if (managementGroup) {
-      const usersItem = managementGroup.items.find(i => i.value === 'users');
-      if (usersItem) {
-        usersItem.badge = userCount;
-      }
-    }
+    userCount.value = response.data.length;
   } catch (error) {
     console.error("Gagal mengambil jumlah users:", error);
   }
 }
 
-onMounted(() => {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-    theme.global.name.value = savedTheme;
-  }
-  fetchRoleCount();
-  fetchUserCount();
-  fetchSuspendedCount(); // Panggil fungsi baru di sini
-  setupWebSocket();
-});
-
-onMounted(() => {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-    theme.global.name.value = savedTheme;
-  }
-  // Panggil fungsi untuk mengambil data saat komponen dimuat
-  fetchRoleCount();
-});
-
-
 function handleLogout() {
   localStorage.removeItem('access_token');
+  userPermissions.value = [];
   router.push('/login');
 }
 </script>

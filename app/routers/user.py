@@ -1,28 +1,21 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload # <-- Pastikan diimpor
 from typing import List
 import uuid
 from datetime import datetime, timedelta
 
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-security = HTTPBearer()
 
 # Impor model dan skema secara langsung
 from ..models.user import User as UserModel
 from ..models.role import Role as RoleModel
 from ..schemas.user import User as UserSchema, UserCreate, UserUpdate
 from ..database import get_db
-
-# passlib untuk hashing password
-from passlib.context import CryptContext
-
+from ..auth import get_current_active_user, get_password_hash # <-- Impor get_password_hash dari auth
 from .. import auth
 from ..config import settings
-
-# Konfigurasi untuk hashing password
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 router = APIRouter(
     prefix="/users",
@@ -30,41 +23,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-def get_password_hash(password: str) -> str:
-    """Fungsi untuk men-hash password."""
-    return pwd_context.hash(password)
-
-# Fungsi untuk mendapatkan current user dari token
-async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
-    db: AsyncSession = Depends(get_db)
-):
-    try:
-        payload = auth.verify_access_token(credentials.credentials)
-        user_id = payload.get("user_id")
-        if user_id is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid authentication credentials",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
-        
-        user = await db.get(UserModel, user_id)
-        if user is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="User not found",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
-        return user
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-# Endpoint yang sudah ada (tidak diubah)
+# Endpoint /token tidak perlu diubah karena hanya untuk otentikasi
 @router.post("/token", summary="Create access token for user")
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(), 
@@ -82,15 +41,19 @@ async def login_for_access_token(
         
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = auth.create_access_token(
-        data={"sub": user.email, "user_id": user.id},
+        # Pastikan user.id dikonversi ke string untuk payload JWT
+        data={"sub": str(user.id)},
         expires_delta=access_token_expires
     )
     
     return {"access_token": access_token, "token_type": "bearer"}
 
+
+# Endpoint /me sekarang menggunakan dependency yang sudah eager loading
 @router.get("/me", response_model=UserSchema)
-async def get_current_user_info(current_user: UserModel = Depends(get_current_user)):
+async def get_current_user_info(current_user: UserModel = Depends(get_current_active_user)):
     return current_user
+
 
 @router.post("/", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
@@ -116,20 +79,32 @@ async def create_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
     db_user = UserModel(**user_data)
     db.add(db_user)
     await db.commit()
-    await db.refresh(db_user)
-    return db_user
+    
+    # Ambil ulang data dengan relasi untuk respons
+    query = select(UserModel).where(UserModel.id == db_user.id).options(selectinload(UserModel.role).selectinload(RoleModel.permissions))
+    created_user = (await db.execute(query)).scalar_one_or_none()
+    
+    return created_user
+
 
 @router.get("/", response_model=List[UserSchema])
 async def get_all_users(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(UserModel))
+    # Gunakan eager loading untuk mengambil semua user beserta role-nya
+    query = select(UserModel).options(selectinload(UserModel.role).selectinload(RoleModel.permissions))
+    result = await db.execute(query)
     return result.scalars().all()
+
 
 @router.get("/{user_id}", response_model=UserSchema)
 async def get_user_by_id(user_id: int, db: AsyncSession = Depends(get_db)):
-    user = await db.get(UserModel, user_id)
+    # Gunakan eager loading untuk mengambil satu user
+    query = select(UserModel).where(UserModel.id == user_id).options(selectinload(UserModel.role).selectinload(RoleModel.permissions))
+    user = (await db.execute(query)).scalar_one_or_none()
+    
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
+
 
 @router.patch("/{user_id}", response_model=UserSchema)
 async def update_user(user_id: int, user_update: UserUpdate, db: AsyncSession = Depends(get_db)):
@@ -138,16 +113,23 @@ async def update_user(user_id: int, user_update: UserUpdate, db: AsyncSession = 
         raise HTTPException(status_code=404, detail="User not found")
 
     update_data = user_update.model_dump(exclude_unset=True)
-    if "password" in update_data:
+    if "password" in update_data and update_data["password"]:
         update_data["password"] = get_password_hash(update_data["password"])
+    elif "password" in update_data:
+        del update_data["password"] # Jangan update password jika kosong
 
     for key, value in update_data.items():
         setattr(db_user, key, value)
 
     db.add(db_user)
     await db.commit()
-    await db.refresh(db_user)
-    return db_user
+    
+    # Ambil ulang data dengan relasi untuk respons
+    query = select(UserModel).where(UserModel.id == user_id).options(selectinload(UserModel.role).selectinload(RoleModel.permissions))
+    updated_user = (await db.execute(query)).scalar_one_or_none()
+
+    return updated_user
+
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user(user_id: int, db: AsyncSession = Depends(get_db)):

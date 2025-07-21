@@ -63,6 +63,11 @@ const router = createRouter({
           name: 'invoices',
           component: () => import('../views/InvoicesView.vue')
         },
+        {
+          path: 'permissions',
+          name: 'permissions',
+          component: () => import('../views/PermissionsView.vue')
+        },
       ],
     },
 
