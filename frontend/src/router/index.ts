@@ -58,6 +58,11 @@ const router = createRouter({
           name: 'data-teknis',
           component: () => import('../views/DataTeknisView.vue')
         },
+        {
+          path: 'invoices',
+          name: 'invoices',
+          component: () => import('../views/InvoicesView.vue')
+        },
       ],
     },
 

@@ -42,6 +42,7 @@ class InvoiceBase(BaseModel):
     tgl_invoice: date
     tgl_jatuh_tempo: date
     status_invoice: str
+    metode_pembayaran: Optional[str] = None
 
 
 class Invoice(InvoiceBase):
@@ -66,3 +67,6 @@ class Invoice(InvoiceBase):
     class Config:
         from_attributes = True
 
+class MarkAsPaidRequest(BaseModel):
+    """Skema input untuk menandai lunas secara manual."""
+    metode_pembayaran: str = "Cash"

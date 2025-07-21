@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
 from datetime import date
 from typing import List, Optional
 from ..models.langganan import Langganan as LanggananModel
@@ -25,18 +26,24 @@ async def create_langganan(langganan: LanggananCreate, db: AsyncSession = Depend
 #Penyempurnaan
 @router.get("/", response_model=List[LanggananSchema])
 async def get_all_langganan(
-    status: Optional[str] = None, # Tambahkan parameter query untuk status
+    status: Optional[str] = None, 
     skip: int = 0, 
     limit: int = 100, 
     db: AsyncSession = Depends(get_db)
 ):
-    query = select(LanggananModel)
+    query = (
+        select(LanggananModel)
+        # 1. Tambahkan selectinload untuk mengambil detail paket
+        .options(selectinload(LanggananModel.paket_layanan))
+    )
     
-    # Tambahkan filter WHERE jika parameter status diberikan
+    # 2. Tambahkan filter WHERE jika parameter status diberikan
     if status:
         query = query.where(LanggananModel.status == status)
         
+    # Terapkan paginasi
     query = query.offset(skip).limit(limit)
+    
     result = await db.execute(query)
     return result.scalars().all()
 

@@ -16,7 +16,7 @@ import pytz
 from ..models.invoice import Invoice as InvoiceModel
 from ..models.langganan import Langganan as LanggananModel
 from ..models.pelanggan import Pelanggan as PelangganModel
-from ..schemas.invoice import Invoice as InvoiceSchema, InvoiceGenerate
+from ..schemas.invoice import Invoice as InvoiceSchema, InvoiceGenerate, MarkAsPaidRequest
 from ..database import get_db
 from ..config import settings
 from ..services import xendit_service, mikrotik_service
@@ -28,6 +28,15 @@ router = APIRouter(
     tags=["Invoices"],
     responses={404: {"description": "Not found"}},
 )
+
+
+
+@router.get("/", response_model=List[InvoiceSchema])
+async def get_all_invoices(db: AsyncSession = Depends(get_db)):
+    """Mengambil semua data invoice."""
+    result = await db.execute(select(InvoiceModel))
+    return result.scalars().all()
+
 
 def parse_xendit_datetime(iso_datetime_str: str) -> datetime:
     """Fungsi untuk mengkonversi format datetime ISO 8601 dari Xendit."""
@@ -114,3 +123,120 @@ async def handle_xendit_callback(request: Request, x_callback_token: Optional[st
         raise HTTPException(status_code=500, detail=f"Error processing callback: {str(e)}")
 
     return {"message": "Callback processed successfully"}
+
+@router.post("/generate", response_model=InvoiceSchema, status_code=status.HTTP_201_CREATED)
+async def generate_manual_invoice(
+    invoice_data: InvoiceGenerate,
+    db: AsyncSession = Depends(get_db)
+):
+    """Membuat satu invoice secara manual berdasarkan langganan_id."""
+    langganan = await db.get(
+        LanggananModel, 
+        invoice_data.langganan_id,
+        options=[
+            selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.harga_layanan),
+            selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.data_teknis),
+            selectinload(LanggananModel.paket_layanan)
+        ]
+    )
+    if not langganan:
+        raise HTTPException(status_code=404, detail="Langganan tidak ditemukan")
+
+    pelanggan = langganan.pelanggan
+    paket = langganan.paket_layanan
+    brand = pelanggan.harga_layanan
+    data_teknis = pelanggan.data_teknis
+
+    if not all([pelanggan, paket, brand, data_teknis]):
+        raise HTTPException(status_code=400, detail=f"Data pendukung tidak lengkap untuk langganan ID {langganan.id}.")
+
+    existing_invoice_stmt = select(InvoiceModel.id).where(
+        InvoiceModel.pelanggan_id == langganan.pelanggan_id,
+        InvoiceModel.tgl_jatuh_tempo == langganan.tgl_jatuh_tempo
+    )
+    existing_invoice = (await db.execute(existing_invoice_stmt)).scalar_one_or_none()
+    if existing_invoice:
+        raise HTTPException(status_code=409, detail="Invoice untuk periode ini sudah ada.")
+
+    total_harga = float(paket.harga) * (1 + (float(brand.pajak) / 100))
+
+    new_invoice_data = {
+        "invoice_number": f"INV-{date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}",
+        "pelanggan_id": pelanggan.id,
+        "id_pelanggan": data_teknis.id_pelanggan,
+        "brand": brand.brand,
+        "total_harga": round(total_harga, 2),
+        "no_telp": pelanggan.no_telp,
+        "email": pelanggan.email,
+        "tgl_invoice": date.today(),
+        "tgl_jatuh_tempo": langganan.tgl_jatuh_tempo,
+        "status_invoice": "Belum Dibayar",
+    }
+
+    db_invoice = InvoiceModel(**new_invoice_data)
+    db.add(db_invoice)
+    await db.flush()
+
+    try:
+        xendit_response = await xendit_service.create_xendit_invoice(db_invoice, pelanggan)
+        db_invoice.payment_link = xendit_response.get("invoice_url")
+        db_invoice.xendit_id = xendit_response.get("id")
+        db_invoice.xendit_external_id = xendit_response.get("external_id")
+        db.add(db_invoice)
+        await db.commit()
+        await db.refresh(db_invoice)
+    except Exception as e:
+        await db.rollback()
+        raise HTTPException(status_code=500, detail=f"Gagal membuat invoice di Xendit: {str(e)}")
+
+    return db_invoice
+
+
+@router.post("/{invoice_id}/mark-as-paid", response_model=InvoiceSchema)
+async def mark_invoice_as_paid(
+    invoice_id: int,
+    payload: MarkAsPaidRequest,
+    db: AsyncSession = Depends(get_db)
+):
+    """Menandai sebuah invoice sebagai lunas secara manual."""
+    stmt = select(InvoiceModel).where(InvoiceModel.id == invoice_id)
+    invoice = (await db.execute(stmt)).scalar_one_or_none()
+
+    if not invoice:
+        raise HTTPException(status_code=404, detail="Invoice tidak ditemukan")
+
+    if invoice.status_invoice == "Lunas":
+        raise HTTPException(status_code=400, detail="Invoice ini sudah lunas.")
+
+    # Set metode pembayaran dari input
+    invoice.metode_pembayaran = payload.metode_pembayaran
+    
+    # Panggil fungsi logika pembayaran yang sudah ada
+    # Kita tidak mengirim payload Xendit, jadi fungsi akan menggunakan waktu saat ini
+    await _process_successful_payment(db, invoice)
+    
+    await db.commit()
+    await db.refresh(invoice)
+    
+    logger.info(f"Invoice {invoice.invoice_number} ditandai lunas secara manual via {payload.metode_pembayaran}")
+    
+    return invoice
+
+
+
+@router.delete("/{invoice_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_invoice(invoice_id: int, db: AsyncSession = Depends(get_db)):
+    """Menghapus satu invoice berdasarkan ID-nya."""
+    
+    # Cari invoice di database
+    db_invoice = await db.get(InvoiceModel, invoice_id)
+    
+    # Jika tidak ditemukan, kirim error 404
+    if not db_invoice:
+        raise HTTPException(status_code=404, detail="Invoice tidak ditemukan")
+    
+    # Jika ditemukan, hapus dari database
+    await db.delete(db_invoice)
+    await db.commit()
+    
+    return None

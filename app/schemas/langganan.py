@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
-
+from .paket_layanan import PaketLayanan
 class LanggananBase(BaseModel):
     id: int
     pelanggan_id: int
@@ -31,5 +31,6 @@ class LanggananUpdate(BaseModel):
 
 class Langganan(LanggananBase):
     id: int
+    paket_layanan: PaketLayanan
     class Config:
         from_attributes = True
