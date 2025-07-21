@@ -7,27 +7,27 @@
       class="modern-drawer"
       width="280"
     >
-    <v-list-item class="sidebar-header" :class="{'px-0': rail}" :ripple="false">
-  <div class="header-flex-container">
-    <img v-if="!rail" :src="logoJelantik" alt="Jelantik Logo" class="sidebar-logo-full"/>
-    <v-icon v-if="rail" color="primary" size="large">mdi-alpha-j</v-icon>
+      <v-list-item class="sidebar-header" :class="{'px-0': rail}" :ripple="false">
+        <div class="header-flex-container">
+          <img v-if="!rail" :src="logoJelantik" alt="Jelantik Logo" class="sidebar-logo-full"/>
+          <v-icon v-if="rail" color="primary" size="large">mdi-alpha-j</v-icon>
 
-    <div v-if="!rail" class="sidebar-title-wrapper">
-      <h1 class="sidebar-title">Artacom</h1>
-      <span class="sidebar-subtitle">BILLING SYSTEM</span>
-    </div>
+          <div v-if="!rail" class="sidebar-title-wrapper">
+            <h1 class="sidebar-title">Artacom</h1>
+            <span class="sidebar-subtitle">BILLING SYSTEM</span>
+          </div>
 
-    <v-spacer v-if="!rail"></v-spacer>
+          <v-spacer v-if="!rail"></v-spacer>
 
-    <v-btn
-      v-if="!rail"
-      icon="mdi-chevron-left"
-      variant="text"
-      size="small"
-      @click.stop="rail = !rail"
-    ></v-btn>
-  </div>
-</v-list-item>
+          <v-btn
+            v-if="!rail"
+            icon="mdi-chevron-left"
+            variant="text"
+            size="small"
+            @click.stop="rail = !rail"
+          ></v-btn>
+        </div>
+      </v-list-item>
 
       <v-divider></v-divider>
 
@@ -46,9 +46,20 @@
               :active-class="'v-list-item--active'"
             >
               <template v-slot:append v-if="item.badge !== undefined && !rail">
-                <v-chip size="small" class="badge-chip" :color="item.badgeColor">
-                  {{ item.badge }}
-                </v-chip>
+                <v-tooltip location="end" :disabled="item.badge === 0">
+                  <template v-slot:activator="{ props }">
+                    <v-chip 
+                      v-bind="props"
+                      v-if="item.badge > 0"
+                      size="small" 
+                      class="badge-chip" 
+                      :color="item.badgeColor"
+                    >
+                      {{ item.badge }}
+                    </v-chip>
+                  </template>
+                  <span v-if="item.value === 'langganan'">{{ item.badge }} langganan ditangguhkan</span>
+                </v-tooltip>
               </template>
             </v-list-item>
           </template>
@@ -80,60 +91,66 @@
       ></v-btn>
       <v-spacer></v-spacer>
       
-      <!-- NOTIFIKASI -->
       <v-btn icon variant="text" @click="toggleTheme" class="header-action-btn theme-toggle-btn">
-            <v-icon>{{ theme.global.current.value.dark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
-        </v-btn>
+        <v-icon>{{ theme.global.current.value.dark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+      </v-btn>
 
-        <v-menu offset-y>
-          <template v-slot:activator="{ props }">
-            <v-btn icon variant="text" class="header-action-btn" v-bind="props">
-              <v-badge :content="notifications.length" color="error" :model-value="notifications.length > 0">
-                <v-icon>mdi-bell-outline</v-icon>
-              </v-badge>
-            </v-btn>
-          </template>
-
-          <v-list class="pa-0" width="300">
-            <v-list-item class="font-weight-bold bg-grey-lighten-4">
-                Notifikasi
-                <template v-slot:append v-if="notifications.length > 0">
-                    <v-btn variant="text" size="small" @click="notifications = []">Bersihkan</v-btn>
-                </template>
-            </v-list-item>
-            <v-divider></v-divider>
-            <div v-if="notifications.length === 0" class="text-center text-medium-emphasis pa-4">
-                Tidak ada notifikasi baru.
-            </div>
-            <v-list-item
-              v-for="(notif, index) in notifications"
-              :key="index"
-              class="py-2"
-            >
-              <template v-slot:prepend>
-                <v-avatar color="success" size="32" class="me-3">
-                    <v-icon size="18">mdi-cash-check</v-icon>
-                </v-avatar>
+      <v-menu offset-y>
+        <template v-slot:activator="{ props }">
+          <v-btn icon variant="text" class="header-action-btn" v-bind="props">
+            <v-badge :content="notifications.length" color="error" :model-value="notifications.length > 0">
+              <v-icon>mdi-bell-outline</v-icon>
+            </v-badge>
+          </v-btn>
+        </template>
+        <v-list class="pa-0" width="300">
+          <v-list-item class="font-weight-bold bg-grey-lighten-4">
+              Notifikasi
+              <template v-slot:append v-if="notifications.length > 0">
+                  <v-btn variant="text" size="small" @click="notifications = []">Bersihkan</v-btn>
               </template>
-              <v-list-item-title class="font-weight-medium text-body-2">Pembayaran Diterima</v-list-item-title>
-                <v-list-item-subtitle class="text-caption">
-                  <strong>{{ notif.data.invoice_number }}</strong> dari <strong>{{ notif.data.pelanggan_nama }}</strong> ({{ notif.data.id_pelanggan }}) telah lunas.
-                </v-list-item-subtitle>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      <!-- NOTIFIKASI -->
-
-
-
-      <!-- <v-btn icon variant="text" class="header-action-btn">
-        <v-icon>mdi-cog-outline</v-icon>
-      </v-btn> -->
-  </v-app-bar>
+          </v-list-item>
+          <v-divider></v-divider>
+          <div v-if="notifications.length === 0" class="text-center text-medium-emphasis pa-4">
+              Tidak ada notifikasi baru.
+          </div>
+          <v-list-item
+            v-for="(notif, index) in notifications"
+            :key="index"
+            class="py-2"
+          >
+            <template v-slot:prepend>
+              <v-avatar color="success" size="32" class="me-3">
+                  <v-icon size="18">mdi-cash-check</v-icon>
+              </v-avatar>
+            </template>
+            <v-list-item-title class="font-weight-medium text-body-2">Pembayaran Diterima</v-list-item-title>
+            <v-list-item-subtitle class="text-caption">
+              <strong>{{ notif.data.invoice_number }}</strong> dari <strong>{{ notif.data.pelanggan_nama }}</strong> ({{ notif.data.id_pelanggan }}) telah lunas.
+            </v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
 
     <v-main class="modern-main">
-  <router-view></router-view>
-</v-main>
+      <router-view></router-view>
+    </v-main>
+    
+    <v-footer app height="60" class="d-flex align-center justify-center text-medium-emphasis" style="border-top: 1px solid rgba(0,0,0,0.08);">
+      <div>
+        &copy; {{ new Date().getFullYear() }} <strong>Artacom Billing System</strong>. All Rights Reserved by 
+        <a 
+          href="https://www.instagram.com/amad.dyk/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="text-decoration-none text-primary"
+        >
+          amad.dyk
+        </a>
+      </div>
+    </v-footer>
+
   </v-app>
 </template>
 
