@@ -194,8 +194,6 @@ async def generate_manual_invoice(
         "tgl_invoice": date.today(),
         "tgl_jatuh_tempo": langganan.tgl_jatuh_tempo,
         "status_invoice": "Belum Dibayar",
-        # TAMBAHKAN DESKRIPSI DI SINI JIKA MODEL INVOICE ANDA MEMILIKINYA
-        # "deskripsi": deskripsi 
     }
 
     db_invoice = InvoiceModel(**new_invoice_data)
