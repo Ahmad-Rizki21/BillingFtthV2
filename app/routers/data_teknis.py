@@ -3,7 +3,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import select, func 
 from typing import List
-import polars as pl
+import csv
+import io
+from datetime import datetime
+import chardet
+from pydantic import ValidationError
+from sqlalchemy.orm import selectinload
 import logging
 from io import BytesIO
 from fastapi.responses import StreamingResponse
@@ -127,151 +132,176 @@ async def delete_data_teknis(data_teknis_id: int, db: AsyncSession = Depends(get
 
 # routers/data_teknis.py
 
-@router.get("/export/excel", response_class=StreamingResponse)
-async def export_teknis_to_excel(db: AsyncSession = Depends(get_db)):
-    """Mengekspor semua data teknis sebagai file Excel menggunakan Polars."""
-    query = select(DataTeknisModel)
+# ==========================================================
+# FUNGSI DOWNLOAD DAN IMPORT, EXPORT CSV FILE
+# ==========================================================
+
+@router.get("/template/csv", response_class=StreamingResponse)
+async def download_csv_template_teknis():
+    """
+    Men-download template CSV untuk import data teknis, lengkap dengan contoh.
+    """
+    output = io.StringIO()
+    output.write('\ufeff') # BOM untuk kompatibilitas dengan Excel
+
+    # Header disesuaikan untuk data teknis, dengan email sebagai kunci
+    headers = [
+        "email_pelanggan", "id_vlan", "id_pelanggan", "password_pppoe", "ip_pelanggan",
+        "profile_pppoe", "olt", "olt_custom", "pon", "otb", "odc", "odp",
+        "onu_power", "mikrotik_server_id"
+    ]
+
+    # Data contoh untuk mempermudah pengisian
+    sample_data = [
+        {
+            "email_pelanggan": "budi.s@example.com", "id_vlan": "101", "id_pelanggan": "budi-santoso",
+            "password_pppoe": "pass123", "ip_pelanggan": "10.10.1.25", "profile_pppoe": "50mbps-profile",
+            "olt": "OLT-Utama-1", "olt_custom": "", "pon": 1, "otb": 1, "odc": 3, "odp": 5,
+            "onu_power": -22, "mikrotik_server_id": 1
+        }
+    ]
+
+    writer = csv.DictWriter(output, fieldnames=headers)
+    writer.writeheader()
+    writer.writerows(sample_data)
+
+    output.seek(0)
+    
+    response_headers = {'Content-Disposition': 'attachment; filename="template_import_teknis.csv"'}
+    return StreamingResponse(
+        io.BytesIO(output.getvalue().encode('utf-8')), 
+        headers=response_headers, 
+        media_type='text/csv; charset=utf-8'
+    )
+
+@router.get("/export/csv", response_class=StreamingResponse)
+async def export_to_csv_teknis(db: AsyncSession = Depends(get_db)):
+    """
+    Mengekspor semua data teknis ke dalam file CSV.
+    """
+    query = select(DataTeknisModel).options(selectinload(DataTeknisModel.pelanggan))
     result = await db.execute(query)
-    data_list = result.scalars().all()
+    data_list = result.scalars().unique().all()
 
     if not data_list:
         raise HTTPException(status_code=404, detail="Tidak ada data teknis untuk diekspor.")
 
-    # Persiapan data tetap sama
-    data_for_df = [
-        {
-            "pelanggan_id": d.pelanggan_id,
-            "id_vlan": d.id_vlan,
-            "id_pelanggan": d.id_pelanggan,
-            "password_pppoe": d.password_pppoe,
-            "ip_pelanggan": d.ip_pelanggan,
-            "profile_pppoe": d.profile_pppoe,
-            "olt": d.olt,
-            "olt_custom": d.olt_custom,
-            "pon": d.pon,
-            "otb": d.otb,
-            "odc": d.odc,
-            "odp": d.odp,
-            "onu_power": d.onu_power,
-            "mikrotik_server_id": d.mikrotik_server_id
-        }
-        for d in data_list
-    ]
+    output = io.StringIO()
+    output.write('\ufeff')
+
+    # Siapkan data untuk ditulis ke CSV
+    rows_to_write = []
+    for d in data_list:
+        rows_to_write.append({
+            "Nama Pelanggan": d.pelanggan.nama if d.pelanggan else "N/A",
+            "Email Pelanggan": d.pelanggan.email if d.pelanggan else "N/A",
+            "ID Pelanggan (PPPoE)": d.id_pelanggan, "Password PPPoE": d.password_pppoe,
+            "IP Pelanggan": d.ip_pelanggan, "Profile PPPoE": d.profile_pppoe, "VLAN": d.id_vlan,
+            "OLT": d.olt, "OLT Custom": d.olt_custom, "PON": d.pon, "OTB": d.otb,
+            "ODC": d.odc, "ODP": d.odp, "ONU Power (dBm)": d.onu_power,
+            "ID Server Mikrotik": d.mikrotik_server_id
+        })
     
-    # --- PERUBAHAN DARI PANDAS KE POLARS ---
-    # Membuat DataFrame menggunakan Polars
-    df = pl.DataFrame(data_for_df)
-    
-    output = BytesIO()
-    # Menulis ke buffer menggunakan metode Polars
-    df.write_excel(output, worksheet='Data Teknis')
+    # Tulis ke CSV menggunakan DictWriter
+    writer = csv.DictWriter(output, fieldnames=rows_to_write[0].keys())
+    writer.writeheader()
+    writer.writerows(rows_to_write)
+
     output.seek(0)
-    # ----------------------------------------
-
-    headers = {'Content-Disposition': 'attachment; filename="data_teknis.xlsx"'}
-    return StreamingResponse(output, headers=headers, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-
-# routers/data_teknis.py
-
-@router.get("/import/template", response_class=StreamingResponse)
-async def download_import_template():
-    """Menyediakan file template Excel kosong menggunakan Polars."""
-    headers = [
-        "email_pelanggan",
-        "id_vlan", "id_pelanggan", "password_pppoe", "ip_pelanggan", "profile_pppoe", "olt",
-        "olt_custom", "pon", "otb", "odc", "odp", "onu_power", "mikrotik_server_id"
-    ]
     
-    # --- PERUBAHAN DARI PANDAS KE POLARS ---
-    # Membuat DataFrame kosong dengan skema kolom yang ditentukan
-    df = pl.DataFrame(schema=headers)
+    filename = f"export_data_teknis_{datetime.now().strftime('%Y%m%d')}.csv"
+    response_headers = {'Content-Disposition': f'attachment; filename="{filename}"'}
+    return StreamingResponse(
+        io.BytesIO(output.getvalue().encode('utf-8')), 
+        headers=response_headers, 
+        media_type='text/csv; charset=utf-8'
+    )
 
-    output = BytesIO()
-    # Menulis ke buffer menggunakan metode Polars
-    df.write_excel(output, worksheet='Template Import Teknis')
-    output.seek(0)
-    # ----------------------------------------
-
-    response_headers = {'Content-Disposition': 'attachment; filename="template_import_teknis.xlsx"'}
-    return StreamingResponse(output, headers=response_headers, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-
-@router.post("/import/excel")
-async def import_teknis_from_excel(file: UploadFile = File(...)):
+# Mengubah nama fungsi dan path dari /import/excel menjadi /import/csv
+@router.post("/import/csv")
+async def import_from_csv_teknis(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
     """
-    Mengimpor data teknis menggunakan Polars.
+    Mengimpor data teknis dari file CSV dengan validasi mendalam.
     """
-    filename = file.filename.lower()
-    
-    # --- TAHAP 1: BACA FILE MENGGUNAKAN POLARS ---
+    if not file.filename or not file.filename.lower().endswith('.csv'):
+        raise HTTPException(status_code=400, detail="File harus berformat .csv")
+
+    contents = await file.read()
+    if not contents:
+        raise HTTPException(status_code=400, detail="File kosong.")
+
     try:
-        # Baca konten file ke dalam bytes agar bisa diproses Polars
-        file_content = file.file.read()
+        encoding = chardet.detect(contents)['encoding'] or 'utf-8'
+        content_str = contents.decode(encoding)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Tidak dapat membaca file. Pastikan encoding adalah UTF-8.")
 
-        if filename.endswith('.xlsx'):
-            # Polars membaca file Excel dari bytes, dan kita minta agar tidak menebak tipe data
-            df = pl.read_excel(file_content, read_options={"infer_schema_length": 0})
-        elif filename.endswith('.csv'):
-            # Polars membaca file CSV, null_values='' akan mengubah sel kosong menjadi null
-            df = pl.read_csv(file_content, infer_schema_length=0, null_values="")
-        else:
-            raise HTTPException(status_code=400, detail="Format file tidak valid. Harap unggah file .xlsx atau .csv")
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Gagal membaca file dengan Polars: {e}")
-
+    reader = csv.DictReader(io.StringIO(content_str))
+    
     errors = []
     data_to_create = []
-    processed_pelanggan_ids = set()
+    processed_emails = set()
 
-    # Sesi DB sementara untuk validasi
-    async with AsyncSessionLocal() as db:
-        # --- TAHAP 2: ITERASI MENGGUNAKAN to_dicts() ---
-        # Polars mengubah seluruh data menjadi list of dictionary, lebih efisien
-        for row_dict in df.to_dicts():
-            try:
-                # Bersihkan spasi dari setiap value
-                cleaned_row = {k: v.strip() if isinstance(v, str) else v for k, v in row_dict.items()}
-                
-                # Sisa logika validasi sama persis seperti sebelumnya
-                data_import = DataTeknisImport(**cleaned_row)
+    for row_num, row in enumerate(reader, start=2):
+        try:
+            # Validasi Pydantic menggunakan skema DataTeknisImport
+            data_import = DataTeknisImport(**row)
+            email = data_import.email_pelanggan.lower().strip()
 
-                pelanggan = await db.execute(select(PelangganModel).where(func.lower(func.trim(PelangganModel.email)) == data_import.email_pelanggan.lower()))
-                pelanggan = pelanggan.scalar_one_or_none()
+            if not email:
+                errors.append(f"Baris {row_num}: Kolom 'email_pelanggan' wajib diisi.")
+                continue
 
-                if not pelanggan:
-                    errors.append(f"Baris data: {cleaned_row} -> Pelanggan '{data_import.email_pelanggan}' tidak ditemukan.")
-                    continue
+            # Cek duplikat di dalam file
+            if email in processed_emails:
+                errors.append(f"Baris {row_num}: Email '{email}' muncul lebih dari sekali di file.")
+                continue
 
-                if pelanggan.id in processed_pelanggan_ids:
-                    errors.append(f"Baris data: {cleaned_row} -> Pelanggan '{pelanggan.nama}' muncul lebih dari sekali di file.")
-                    continue
+            # Cari pelanggan berdasarkan email
+            pelanggan_result = await db.execute(select(PelangganModel).where(func.lower(PelangganModel.email) == email))
+            pelanggan = pelanggan_result.scalar_one_or_none()
+            if not pelanggan:
+                errors.append(f"Baris {row_num}: Pelanggan dengan email '{email}' tidak ditemukan.")
+                continue
 
-                existing_teknis = await db.execute(select(DataTeknisModel).where(DataTeknisModel.pelanggan_id == pelanggan.id))
-                if existing_teknis.scalar_one_or_none():
-                    errors.append(f"Baris data: {cleaned_row} -> Pelanggan '{pelanggan.nama}' sudah punya data teknis.")
-                    continue
-                
-                teknis_data_dict = data_import.model_dump()
-                teknis_data_dict['pelanggan_id'] = pelanggan.id
-                del teknis_data_dict['email_pelanggan']
-                data_to_create.append(teknis_data_dict)
-                processed_pelanggan_ids.add(pelanggan.id)
+            # Cek apakah pelanggan sudah punya data teknis
+            existing_teknis_result = await db.execute(select(DataTeknisModel).where(DataTeknisModel.pelanggan_id == pelanggan.id))
+            if existing_teknis_result.scalar_one_or_none():
+                errors.append(f"Baris {row_num}: Pelanggan '{pelanggan.nama}' sudah memiliki data teknis.")
+                continue
+            
+            # Siapkan data untuk disimpan
+            teknis_data_dict = data_import.model_dump()
+            teknis_data_dict['pelanggan_id'] = pelanggan.id
+            del teknis_data_dict['email_pelanggan']
+            
+            data_to_create.append(DataTeknisModel(**teknis_data_dict))
+            processed_emails.add(email)
 
-            except Exception as e:
-                errors.append(f"Baris data: {row_dict} -> Error: {e}")
+        except ValidationError as e:
+            error_details = "; ".join([f"{err['loc'][0]}: {err['msg']}" for err in e.errors()])
+            errors.append(f"Baris {row_num}: {error_details}")
+        except Exception as e:
+            errors.append(f"Baris {row_num}: Terjadi error tidak terduga - {str(e)}")
 
-    # ... (sisa kode untuk menyimpan ke database sama persis seperti sebelumnya) ...
     if errors:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail={"message": "Ditemukan error, tidak ada data diimpor.", "errors": errors}
+            detail={"message": f"Ditemukan {len(errors)} kesalahan.", "errors": errors}
         )
     
     if not data_to_create:
         raise HTTPException(status_code=400, detail="Tidak ada data valid untuk diimpor.")
 
-    async with AsyncSessionLocal() as db:
-        async with db.begin():
-            for data in data_to_create:
-                db.add(DataTeknisModel(**data))
-    
-    return {"status": "Sukses", "message": f"Berhasil mengimpor {len(data_to_create)} data teknis baru."}
+    try:
+        db.add_all(data_to_create)
+        await db.commit()
+    except Exception as e:
+        await db.rollback()
+        raise HTTPException(status_code=500, detail=f"Gagal menyimpan ke database: {str(e)}")
+
+    return {"message": f"Berhasil mengimpor {len(data_to_create)} data teknis baru."}
+
+# ==========================================================
+# FUNGSI DOWNLOAD DAN IMPORT, EXPORT CSV FILE
+# ==========================================================
