@@ -22,7 +22,82 @@
         </div>
       </div>
       <v-spacer></v-spacer>
-      
+        <v-btn 
+          variant="outlined" 
+          color="green" 
+          @click="dialogImport = true"
+          prepend-icon="mdi-file-upload"
+          class="me-3 text-none"
+        >
+          Import
+        </v-btn>
+
+        <v-dialog v-model="dialogImport" max-width="600px" persistent>
+          <v-card class="rounded-xl">
+            <v-card-title class="bg-green text-white">Import Data Teknis</v-card-title>
+            
+            <v-card-text class="pa-6">
+              <v-alert
+                variant="tonal" color="info" icon="mdi-information-outline" class="mb-6" border="start"
+              >
+                <p class="font-weight-bold mb-2">Petunjuk Import:</p>
+                <p class="mb-2">Gunakan <strong>Email Pelanggan</strong> sebagai kunci untuk mencocokkan data teknis dengan pelanggan yang ada.</p>
+                <v-list density="compact" class="bg-transparent">
+                  <v-list-item class="pa-0">1. Unduh <a :href="`${apiClient.defaults.baseURL}/data_teknis/import/template`" download>template import</a>.</v-list-item>
+                  <v-list-item class="pa-0">2. Isi data teknis sesuai kolom, pastikan <strong>'email_pelanggan'</strong> sudah terdaftar di Data Pelanggan.</v-list-item>
+                  <v-list-item class="pa-0">3. Unggah file di bawah ini.</v-list-item>
+                </v-list>
+              </v-alert>
+
+              <v-alert
+                v-if="importErrors.length > 0"
+                type="error"
+                variant="tonal"
+                class="mb-6"
+                border="start"
+                closable
+                @update:modelValue="importErrors = []"
+              >
+                <p class="font-weight-bold mb-2">Detail Error:</p>
+                <ul class="pl-4">
+                  <li v-for="(err, i) in importErrors" :key="i" class="mb-1">{{ err }}</li>
+                </ul>
+              </v-alert>
+
+              <v-file-input
+                ref="fileInput"
+                v-model="fileToImport"
+                label="Pilih file Excel"
+                accept=".xlsx, .xls, .csv"
+                variant="outlined"
+                clearable
+              ></v-file-input>
+
+            </v-card-text>
+            
+            <v-card-actions class="pa-4 bg-grey-lighten-5">
+              <v-spacer></v-spacer>
+              <v-btn text @click="dialogImport = false">Batal</v-btn>
+              <v-btn 
+                color="green" 
+                @click="importData"
+                :loading="importing"
+                :disabled="!fileToImport || fileToImport.length === 0">
+                Unggah & Proses
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-btn 
+          variant="outlined" 
+          color="cyan-darken-1"
+          @click="exportData"
+          prepend-icon="mdi-file-excel"
+          class="me-3 text-none"
+        >
+        Export
+      </v-btn>
       <v-btn 
         color="primary" 
         size="large"
@@ -718,6 +793,13 @@ const itemToDeleteId = ref<number | null>(null);
 const searchQuery = ref('');
 const mikrotikServers = ref<MikrotikServer[]>([]);
 
+const fileToImport = ref<File[]>([]);
+const dialogImport = ref(false);
+const importing = ref(false);
+const snackbar = ref({ show: false, text: '', color: 'success' });
+const importErrors = ref<string[]>([]);
+
+
 // Ref untuk komponen file input
 const fileInputComponent = ref<any>(null);
 const expanded = ref<readonly any[]>([]);
@@ -942,6 +1024,82 @@ function getUniqueOLTCount() {
   const uniqueOLTs = new Set(dataTeknisList.value.map(item => item.olt));
   return uniqueOLTs.size;
 }
+
+async function exportData() {
+  try {
+    const response = await apiClient.get('/data_teknis/export/excel', {
+      responseType: 'blob',
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'data_teknis.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Gagal mengunduh file:", error);
+  }
+}
+
+async function importData() {
+  if (fileToImport.value.length === 0) return;
+  importing.value = true;
+  importErrors.value = [];
+  const formData = new FormData();
+  formData.append('file', fileToImport.value[0]);
+
+  try {
+    const response = await apiClient.post('/data_teknis/import/excel', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    showSnackbar(response.data.message, 'success');
+    if (response.data.status === 'Sukses') {
+      // --- TAMBAHKAN BARIS INI ---
+      fetchDataTeknis(); // Memuat ulang data untuk tabel
+      
+      dialogImport.value = false;
+      fileToImport.value = [];
+    }
+ } catch (error: any) {
+  console.error("Gagal mengimpor data:", error);
+  
+  // Siapkan pesan error default
+  let errorMessages: string[] = ["Terjadi kesalahan yang tidak diketahui saat impor."]; 
+  let snackbarMessage = errorMessages[0];
+
+  // Cek detail error dari respons API
+  const detail = error.response?.data?.detail;
+
+  if (typeof detail === 'object' && detail !== null && Array.isArray(detail.errors)) {
+    // Kasus 1: Error terstruktur dari validasi impor kita
+    // Format: {"detail": {"message": "...", "errors": [...]}}
+    errorMessages = detail.errors;
+    snackbarMessage = detail.message || "Ditemukan error validasi.";
+
+  } else if (typeof detail === 'string') {
+    // Kasus 2: Error sederhana dengan pesan string
+    // Format: {"detail": "Pesan error..."}
+    errorMessages = [detail];
+    snackbarMessage = detail;
+  }
+  
+  // Tampilkan error di UI
+  importErrors.value = errorMessages;
+  showSnackbar(snackbarMessage, "error");
+
+} finally {
+  importing.value = false;
+}
+}
+// Fungsi untuk notifikasi
+function showSnackbar(text: string, color: string) {
+  snackbar.value.text = text;
+  snackbar.value.color = color;
+  snackbar.value.show = true;
+}
+
 </script>
 
 <style scoped>

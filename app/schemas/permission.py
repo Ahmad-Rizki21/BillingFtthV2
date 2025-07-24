@@ -11,3 +11,10 @@ class Permission(PermissionCreate):
 
     class Config:
         from_attributes = True
+
+class Permission(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True

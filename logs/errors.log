@@ -693,3 +693,24 @@ WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
 2025-07-21 21:57:37 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
 2025-07-21 22:16:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
 2025-07-21 22:20:22 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 13:54:09 | ROUTERS.PELANGGAN    | [91mERROR   [0m | Validation error on row 2: Field wajib kosong: Nama
+2025-07-22 19:00:14 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 20:23:58 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 20:54:12 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 21:25:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 21:57:41 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 13:06:17 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 2: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:06:17 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 3: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:06:17 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 4: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:12:41 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 2: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:12:41 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 3: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:12:41 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 4: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 19:17:42 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 19:48:00 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 20:21:27 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 21:04:17 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 21:40:24 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 22:27:15 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 22:56:12 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 23:02:39 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 23:41:39 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
