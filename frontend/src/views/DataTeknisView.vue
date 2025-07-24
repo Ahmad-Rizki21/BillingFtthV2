@@ -43,7 +43,7 @@
                 <p class="font-weight-bold mb-2">Petunjuk Import:</p>
                 <p class="mb-2">Gunakan <strong>Email Pelanggan</strong> sebagai kunci untuk mencocokkan data teknis dengan pelanggan yang ada.</p>
                 <v-list density="compact" class="bg-transparent">
-                  <v-list-item class="pa-0">1. Unduh <a :href="`${apiClient.defaults.baseURL}/data_teknis/import/template`" download>template import</a>.</v-list-item>
+                  <v-list-item class="pa-0">1. Unduh <a :href="`${apiClient.defaults.baseURL}/data_teknis/template/csv`" download>template import</a>.</v-list-item>
                   <v-list-item class="pa-0">2. Isi data teknis sesuai kolom, pastikan <strong>'email_pelanggan'</strong> sudah terdaftar di Data Pelanggan.</v-list-item>
                   <v-list-item class="pa-0">3. Unggah file di bawah ini.</v-list-item>
                 </v-list>
@@ -65,10 +65,10 @@
               </v-alert>
 
               <v-file-input
-                ref="fileInput"
-                v-model="fileToImport"
-                label="Pilih file Excel"
-                accept=".xlsx, .xls, .csv"
+                :model-value="fileToImport"
+                @update:model-value="handleFileSelection"
+                label="Pilih file CSV"
+                accept=".csv"
                 variant="outlined"
                 clearable
               ></v-file-input>
@@ -881,8 +881,8 @@ async function fetchDataTeknis() {
 
 async function fetchMikrotikServers() {
   try {
-    // Asumsi endpoint Anda adalah /mikrotik_server/
-    const response = await apiClient.get('/mikrotik_server/');
+    // Tambahkan 's' untuk mencocokkan dengan prefix di backend
+    const response = await apiClient.get('/mikrotik_servers/'); // <-- URL benar
     mikrotikServers.value = response.data;
   } catch (error) {
     console.error("Gagal mengambil daftar server Mikrotik:", error);
@@ -1027,13 +1027,15 @@ function getUniqueOLTCount() {
 
 async function exportData() {
   try {
-    const response = await apiClient.get('/data_teknis/export/excel', {
+    // Pastikan URL sudah benar ke .../export/csv
+    const response = await apiClient.get('/data_teknis/export/csv', {
       responseType: 'blob',
     });
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'data_teknis.xlsx');
+    // GANTI .xlsx menjadi .csv di baris ini
+    link.setAttribute('download', 'data_teknis.csv'); // <-- PERBAIKAN DI SINI
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1042,57 +1044,65 @@ async function exportData() {
     console.error("Gagal mengunduh file:", error);
   }
 }
-
 async function importData() {
-  if (fileToImport.value.length === 0) return;
+  const file = fileToImport.value[0];
+
+  // Pengecekan keamanan untuk memastikan file benar-benar ada
+  if (!file) {
+    showSnackbar("Silakan pilih file CSV terlebih dahulu.", "error");
+    return;
+  }
+
   importing.value = true;
   importErrors.value = [];
   const formData = new FormData();
-  formData.append('file', fileToImport.value[0]);
+  formData.append('file', file);
 
   try {
-    const response = await apiClient.post('/data_teknis/import/excel', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-    showSnackbar(response.data.message, 'success');
-    if (response.data.status === 'Sukses') {
-      // --- TAMBAHKAN BARIS INI ---
-      fetchDataTeknis(); // Memuat ulang data untuk tabel
-      
-      dialogImport.value = false;
-      fileToImport.value = [];
+    // PENTING: Hapus objek 'headers' dari sini
+    const response = await apiClient.post('/data_teknis/import/csv', formData);
+    
+    showSnackbar(response.data.message || 'Impor berhasil!', 'success');
+    fetchDataTeknis(); // Muat ulang data tabel
+    dialogImport.value = false;
+    fileToImport.value = [];
+    
+  } catch (error: any) {
+    console.error("Gagal mengimpor data:", error);
+    
+    const detail = error.response?.data?.detail;
+    let snackbarMessage = "Gagal mengimpor data.";
+    let errorList: string[] = ["Terjadi kesalahan yang tidak diketahui."];
+
+    if (typeof detail === 'object' && detail !== null && Array.isArray(detail.errors)) {
+      snackbarMessage = detail.message || snackbarMessage;
+      errorList = detail.errors;
+    } else if (typeof detail === 'string') {
+      snackbarMessage = detail;
+      errorList = [detail];
     }
- } catch (error: any) {
-  console.error("Gagal mengimpor data:", error);
-  
-  // Siapkan pesan error default
-  let errorMessages: string[] = ["Terjadi kesalahan yang tidak diketahui saat impor."]; 
-  let snackbarMessage = errorMessages[0];
+    
+    importErrors.value = errorList;
+    showSnackbar(snackbarMessage, "error");
 
-  // Cek detail error dari respons API
-  const detail = error.response?.data?.detail;
-
-  if (typeof detail === 'object' && detail !== null && Array.isArray(detail.errors)) {
-    // Kasus 1: Error terstruktur dari validasi impor kita
-    // Format: {"detail": {"message": "...", "errors": [...]}}
-    errorMessages = detail.errors;
-    snackbarMessage = detail.message || "Ditemukan error validasi.";
-
-  } else if (typeof detail === 'string') {
-    // Kasus 2: Error sederhana dengan pesan string
-    // Format: {"detail": "Pesan error..."}
-    errorMessages = [detail];
-    snackbarMessage = detail;
+  } finally {
+    importing.value = false;
   }
-  
-  // Tampilkan error di UI
-  importErrors.value = errorMessages;
-  showSnackbar(snackbarMessage, "error");
+}
 
-} finally {
-  importing.value = false;
+
+function handleFileSelection(newFiles: File | File[]) {
+  importErrors.value = [];
+
+  if (Array.isArray(newFiles)) {
+    fileToImport.value = newFiles;
+  } else if (newFiles) {
+    fileToImport.value = [newFiles];
+  } else {
+    fileToImport.value = [];
+  }
 }
-}
+
 // Fungsi untuk notifikasi
 function showSnackbar(text: string, color: string) {
   snackbar.value.text = text;

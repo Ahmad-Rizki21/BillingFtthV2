@@ -11730,3 +11730,54 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-24 10:33:42 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
 2025-07-24 10:33:42 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
 2025-07-24 10:33:42 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [24484]
+2025-07-24 10:33:49 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-24 10:33:49 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-24 10:33:49 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-24 10:33:49 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-24 10:33:49 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64221 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64217 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-24 10:33:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64215 - "WebSocket /ws/notifications" [accepted]
+2025-07-24 10:33:49 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64218 - "GET /users/me HTTP/1.1" 200
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64217 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64219 - "GET /roles/ HTTP/1.1" 200
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64221 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64216 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-24 10:33:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64220 - "GET /users/ HTTP/1.1" 200
+2025-07-24 10:33:51 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64220 - "OPTIONS /pelanggan/template/csv HTTP/1.1" 200
+2025-07-24 10:33:51 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64220 - "GET /pelanggan/template/csv HTTP/1.1" 200
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Received file: template_import_pelanggan (1).csv, content_type: text/csv
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | File content size: 382 bytes
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Detected encoding: UTF-8-SIG
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Header found at row: 0
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Processing row 2: ['Nama', 'No KTP', 'Email', 'No Telepon', 'Layanan', 'Alamat', 'Alamat 2', 'Blok', 'Unit', 'Tanggal Instalasi (YYYY-MM-DD)', 'ID Brand']
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Valid customer added from row 2: John Doe
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Processing row 3: ['Nama', 'No KTP', 'Email', 'No Telepon', 'Layanan', 'Alamat', 'Alamat 2', 'Blok', 'Unit', 'Tanggal Instalasi (YYYY-MM-DD)', 'ID Brand']
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Valid customer added from row 3: Jane Smith
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Processing complete. Processed rows: 2, Valid customers: 2, Errors: 0
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Successfully saved 2 customers to database
+2025-07-24 10:35:22 | ROUTERS.PELANGGAN    | [92mINFO    [0m | Sukses! Berhasil mengimpor 2 pelanggan baru.
+2025-07-24 10:35:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65381 - "POST /pelanggan/import HTTP/1.1" 200
+2025-07-24 10:35:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65381 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-24 10:35:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65381 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-24 10:35:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49428 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-24 10:35:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49429 - "OPTIONS /mikrotik_server/ HTTP/1.1" 200
+2025-07-24 10:35:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49429 - "GET /mikrotik_server/ HTTP/1.1" 404
+2025-07-24 10:35:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49428 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-24 10:35:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49430 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-24 10:35:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49430 - "OPTIONS /harga_layanan HTTP/1.1" 200
+2025-07-24 10:35:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49430 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-24 10:35:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49428 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-24 10:35:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49428 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-24 10:35:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49428 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-24 10:36:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49921 - "OPTIONS /pelanggan/export/csv HTTP/1.1" 200
+2025-07-24 10:36:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49921 - "GET /pelanggan/export/csv HTTP/1.1" 200
+2025-07-24 10:41:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53821 - "GET /mikrotik_server/ HTTP/1.1" 404
+2025-07-24 10:41:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53819 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-24 10:41:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53820 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-24 10:51:23 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-24 10:51:23 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-24 10:51:23 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-24 10:51:23 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-24 10:51:23 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [27428]
