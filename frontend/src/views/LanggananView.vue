@@ -11,17 +11,46 @@
         </div>
       </div>
       <v-spacer></v-spacer>
-      <v-btn 
-        color="primary" 
-        size="large"
-        elevation="2"
-        @click="openDialog()"
-        prepend-icon="mdi-plus-circle"
-        class="text-none"
-      >
-        Tambah Langganan
-      </v-btn>
-    </div>
+      <v-btn variant="outlined" color="green" @click="dialogImport = true" prepend-icon="mdi-file-upload-outline" class="text-none me-3">Import</v-btn>
+        <v-btn variant="outlined" color="blue" @click="exportLangganan" prepend-icon="mdi-file-download-outline" class="text-none me-3">Export</v-btn>
+        <v-btn 
+          color="primary" 
+          size="large"
+          elevation="2"
+          @click="openDialog()"
+          prepend-icon="mdi-plus-circle"
+          class="text-none"
+        >
+          Tambah Langganan
+        </v-btn>
+
+        </div> <v-dialog v-model="dialogImport" max-width="600px" persistent>
+          <v-card>
+            <v-card-title class="bg-green text-white">Import Langganan</v-card-title>
+            <v-card-text class="pa-6">
+              <v-alert type="info" variant="tonal" class="mb-4">
+                Gunakan <strong>Email Pelanggan</strong> dan <strong>Nama Paket Layanan</strong> sebagai kunci pencocokan.
+                <a :href="`${apiClient.defaults.baseURL}/langganan/template/csv`" download>Unduh template di sini</a>.
+              </v-alert>
+              <v-alert v-if="importErrors.length" type="error" closable @update:model-value="importErrors = []">
+                <ul><li v-for="(err, i) in importErrors" :key="i">{{ err }}</li></ul>
+              </v-alert>
+              <v-file-input
+                :model-value="fileToImport"
+                @update:model-value="handleFileSelection"
+                label="Pilih file CSV"
+                accept=".csv"
+                variant="outlined"
+                class="mt-4"
+              ></v-file-input>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="closeImportDialog">Batal</v-btn>
+              <v-btn color="green" @click="importFromCsv" :loading="importing" :disabled="!fileToImport.length">Unggah</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
     <v-card elevation="3" class="rounded-lg">
       <v-card-title class="d-flex align-center pa-6 bg-grey-lighten-5">
@@ -414,6 +443,29 @@ const dialogDelete = ref(false);
 const editedIndex = ref(-1);
 const formValid = ref(false);
 
+const dialogImport = ref(false);
+const importing = ref(false);
+const fileToImport = ref<File[]>([]);
+const importErrors = ref<string[]>([]);
+
+
+function handleFileSelection(newFiles: File | File[]) {
+  importErrors.value = [];
+  if (Array.isArray(newFiles)) {
+    fileToImport.value = newFiles;
+  } else if (newFiles) {
+    fileToImport.value = [newFiles];
+  } else {
+    fileToImport.value = [];
+  }
+}
+
+function closeImportDialog() {
+  dialogImport.value = false;
+  fileToImport.value = [];
+  importErrors.value = [];
+}
+
 const defaultItem: Partial<Langganan> = {
   pelanggan_id: undefined,
   paket_layanan_id: undefined,
@@ -632,6 +684,55 @@ function formatDate(dateString: string | Date | null | undefined): string {
     year: 'numeric', month: 'long', day: 'numeric'
   });
 }
+
+
+
+async function exportLangganan() {
+  try {
+    const response = await apiClient.get('/langganan/export/csv', { responseType: 'blob' });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `export_langganan_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error("Gagal mengekspor data langganan:", error);
+  }
+}
+
+async function importFromCsv() {
+  const file = fileToImport.value[0];
+  if (!file) return;
+
+  importing.value = true;
+  importErrors.value = [];
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await apiClient.post('/langganan/import/csv', formData);
+    // Tampilkan notifikasi sukses
+    console.log(response.data.message);
+    fetchLangganan(); // Muat ulang data
+    closeImportDialog();
+  } catch (error: any) {
+    const detail = error.response?.data?.detail;
+    if (detail && detail.errors) {
+      importErrors.value = detail.errors;
+    } else {
+      importErrors.value = [detail || "Terjadi kesalahan."];
+    }
+  } finally {
+    importing.value = false;
+  }
+}
+
+
+
+
+
 </script>
 
 <style scoped>
