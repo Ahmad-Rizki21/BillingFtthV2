@@ -34,3 +34,11 @@ class Langganan(LanggananBase):
     paket_layanan: PaketLayanan
     class Config:
         from_attributes = True
+
+class LanggananImport(BaseModel):
+    email_pelanggan: str
+    id_brand: str
+    nama_paket_layanan: str
+    status: str = 'Aktif'
+    metode_pembayaran: str = 'Otomatis'
+    tgl_jatuh_tempo: Optional[date] = None
