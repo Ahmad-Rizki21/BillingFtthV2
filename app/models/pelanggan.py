@@ -26,3 +26,5 @@ class Pelanggan(Base):
     invoices = relationship("Invoice", back_populates="pelanggan")
     harga_layanan = relationship("HargaLayanan", foreign_keys=[id_brand], primaryjoin="Pelanggan.id_brand == HargaLayanan.id_brand")
     
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

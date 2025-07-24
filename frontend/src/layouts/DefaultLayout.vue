@@ -13,8 +13,8 @@
           <v-icon v-if="rail" color="primary" size="large">mdi-alpha-j</v-icon>
 
           <div v-if="!rail" class="sidebar-title-wrapper">
-            <h1 class="sidebar-title">Artacom</h1>
-            <span class="sidebar-subtitle">BILLING SYSTEM</span>
+            <h1 class="sidebar-title">Artacom Ftth</h1>
+            <span class="sidebar-subtitle">BILLING SYSTEM V2.0</span>
           </div>
 
           <v-spacer v-if="!rail"></v-spacer>

@@ -1,440 +1,216 @@
 <template>
-  <v-container fluid class="pa-6">
-    <!-- Header Section -->
-    <div class="d-flex align-center mb-6">
-      <div class="d-flex align-center">
-        <v-avatar class="me-3" color="deep-purple" size="40">
-          <v-icon color="white">mdi-account-group</v-icon>
-        </v-avatar>
-        <div>
-          <h1 class="text-h4 font-weight-bold text-deep-purple">Data Pelanggan</h1>
-          <p class="text-subtitle-1 text-medium-emphasis mb-0">Kelola semua data pelanggan Anda</p>
+  <v-container fluid class="pa-4 pa-md-6">
+    <div class="header-card mb-6">
+      <div class="d-flex flex-column flex-md-row align-center gap-4">
+        <div class="d-flex align-center">
+          <div class="header-avatar-wrapper">
+            <v-avatar class="header-avatar" color="transparent" size="50">
+              <v-icon color="white" size="28">mdi-account-group</v-icon>
+            </v-avatar>
+          </div>
+          <div class="ml-4">
+            <h1 class="header-title">Data Pelanggan</h1>
+            <p class="header-subtitle">Kelola semua data pelanggan Anda dengan mudah</p>
+          </div>
+        </div>
+        <v-spacer class="d-none d-md-block"></v-spacer>
+        <div class="d-flex flex-column flex-sm-row gap-2 gap-sm-3">
+          <v-btn variant="outlined" color="success" @click="dialogImport = true" prepend-icon="mdi-file-upload-outline" class="text-none" size="default">Import</v-btn>
+          <v-btn variant="outlined" color="primary" @click="exportToCsv" :loading="exporting" prepend-icon="mdi-file-download-outline" class="text-none" size="default">Export</v-btn>
+          <v-btn color="primary" @click="openDialog()" prepend-icon="mdi-account-plus" class="text-none" size="default" elevation="2">Tambah Pelanggan</v-btn>
         </div>
       </div>
-      <v-spacer></v-spacer>
-      <v-btn 
-        color="deep-purple" 
-        size="large"
-        elevation="2"
-        @click="openDialog()"
-        prepend-icon="mdi-account-plus"
-        class="text-none"
-      >
-        Tambah Pelanggan
-      </v-btn>
     </div>
 
-    <!-- Main Data Table Card -->
-    <v-card elevation="3" class="rounded-lg">
-      <v-card-title class="d-flex align-center pa-6 bg-grey-lighten-5">
-        <v-icon start icon="mdi-format-list-bulleted-square" color="deep-purple"></v-icon>
-        <span class="text-h6 font-weight-bold">Daftar Pelanggan</span>
-        <v-spacer></v-spacer>
-        <v-chip color="deep-purple" variant="outlined" size="small">
+    <v-card class="data-table-card" elevation="0">
+      <div class="card-header">
+        <div class="d-flex align-center">
+          <div class="header-icon-wrapper">
+            <v-icon color="primary" size="20">mdi-format-list-bulleted-square</v-icon>
+          </div>
+          <span class="card-title ml-3">Daftar Pelanggan</span>
+        </div>
+        <v-chip color="primary" variant="tonal" size="small" class="count-chip">
           {{ pelangganList.length }} pelanggan
         </v-chip>
-      </v-card-title>
-      
-      <v-data-table
-        :headers="headers"
-        :items="pelangganList"
-        :loading="loading"
-        item-value="id"
-        class="elevation-0"
-        :items-per-page="10"
-      >
-        <template v-slot:item.nama="{ item }">
-          <div class="font-weight-bold">{{ item.nama }}</div>
-          <div class="text-caption text-medium-emphasis">{{ item.email }}</div>
-        </template>
-
-        <template v-slot:item.alamat="{ item }">
-          <div>{{ item.alamat }}</div>
-          <div class="text-caption text-medium-emphasis">Blok {{ item.blok }} / Unit {{ item.unit }}</div>
-        </template>
-        
-        <!-- PERUBAHAN 1: Menambahkan :class untuk gradient -->
-        <template v-slot:item.id_brand="{ item }">
-          <v-chip
-            size="small"
-            :color="getBrandColor(getBrandName(item.id_brand))"
-            :class="{ 'gradient-chip-nagrak': getBrandName(item.id_brand)?.toLowerCase().includes('nagrak') }"
-            class="font-weight-bold"
-          >
-            {{ getBrandName(item.id_brand) || 'N/A' }}
-          </v-chip>
-        </template>
-
-        <template v-slot:item.tgl_instalasi="{ item }">
+      </div>
+      <div class="table-container">
+        <v-data-table
+          :headers="headers"
+          :items="pelangganList"
+          :loading="loading"
+          item-value="id"
+          class="elegant-table"
+          :items-per-page="10"
+          :items-per-page-options="[5, 10, 25, 50]"
+        >
+          <template v-slot:loading>
+            <div class="d-flex justify-center align-center py-8">
+              <v-progress-circular color="primary" indeterminate size="40"></v-progress-circular>
+            </div>
+          </template>
+          <template v-slot:item.nama="{ item }">
+            <div>
+              <div class="font-weight-bold">{{ item.nama }}</div>
+              <div class="text-caption text-grey">{{ item.email }}</div>
+            </div>
+          </template>
+          <template v-slot:item.id_brand="{ item }">
+            <v-chip size="small" :color="getBrandChipColor(getBrandName(item.id_brand))" variant="tonal">
+              {{ getBrandName(item.id_brand) }}
+            </v-chip>
+          </template>
+          <template v-slot:item.tgl_instalasi="{ item }">
             {{ formatDate(item.tgl_instalasi) }}
-        </template>
-
-        <template v-slot:item.actions="{ item }">
-          <div class="d-flex justify-center ga-2">
-            <v-btn size="small" variant="tonal" color="primary" @click="openDialog(item)">
-              <v-icon start size="16">mdi-pencil</v-icon> Edit
-            </v-btn>
-            <v-btn size="small" variant="tonal" color="error" @click="openDeleteDialog(item)">
-              <v-icon start size="16">mdi-delete</v-icon> Hapus
-            </v-btn>
-          </div>
-        </template>
-      </v-data-table>
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <div class="d-flex gap-1">
+              <v-btn size="small" variant="tonal" color="primary" @click="openDialog(item)" icon="mdi-pencil"></v-btn>
+              <v-btn size="small" variant="tonal" color="error" @click="openDeleteDialog(item)" icon="mdi-delete"></v-btn>
+            </div>
+          </template>
+          <template v-slot:no-data>
+            <div class="d-flex flex-column align-center justify-center text-center py-8">
+              <v-icon size="48" color="grey-lighten-1">mdi-account-off</v-icon>
+              <div class="mt-2 text-grey">Belum ada data pelanggan</div>
+              <v-btn color="primary" variant="tonal" @click="openDialog()" class="mt-4 text-none">Tambah Pelanggan</v-btn>
+            </div>
+          </template>
+        </v-data-table>
+      </div>
     </v-card>
 
-    <!-- ENHANCED Add/Edit Dialog -->
-    <v-dialog v-model="dialog" max-width="900px" persistent scrollable>
-      <v-card class="rounded-xl elegant-form-card" elevation="24">
-        <!-- Elegant Header with Gradient -->
-        <div class="form-header-gradient pa-6">
-          <div class="d-flex align-center text-white">
-            <v-avatar color="white" class="me-4" size="48">
-              <v-icon color="deep-purple" size="28">
-                {{ editedIndex === -1 ? 'mdi-account-plus' : 'mdi-account-edit' }}
-              </v-icon>
-            </v-avatar>
-            <div>
-              <h2 class="text-h4 font-weight-bold mb-1">{{ formTitle }}</h2>
-              <p class="text-subtitle-1 opacity-90 mb-0">
-                {{ editedIndex === -1 ? 'Tambahkan pelanggan baru ke dalam sistem' : 'Perbarui informasi pelanggan' }}
-              </p>
-            </div>
-          </div>
+    <v-dialog v-model="dialog" max-width="900px" persistent>
+       <v-card>
+        <div class="form-header" style="background-color: #1A237E; color: white; padding: 16px;">
+          <v-icon class="mr-2">mdi-account-edit</v-icon>
+          <span class="text-h6">{{ formTitle }}</span>
         </div>
-
-        <!-- Form Content with Enhanced Styling -->
-        <v-card-text class="pa-8">
-          <!-- Progress Indicator -->
-          <div class="form-progress-indicator mb-8">
-            <div class="d-flex align-center justify-center">
-              <div class="progress-step" :class="{ active: currentStep >= 1 }">
-                <v-icon size="20">mdi-account</v-icon>
-                <span class="step-label">Identitas</span>
-              </div>
-              <div class="progress-line" :class="{ active: currentStep >= 2 }"></div>
-              <div class="progress-step" :class="{ active: currentStep >= 2 }">
-                <v-icon size="20">mdi-home</v-icon>
-                <span class="step-label">Alamat</span>
-              </div>
-              <div class="progress-line" :class="{ active: currentStep >= 3 }"></div>
-              <div class="progress-step" :class="{ active: currentStep >= 3 }">
-                <v-icon size="20">mdi-cog</v-icon>
-                <span class="step-label">Layanan</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 1: Personal Information -->
-          <v-expand-transition>
-            <div v-show="currentStep === 1" class="form-section">
-              <div class="section-header mb-6">
-                <v-icon color="deep-purple" class="me-3">mdi-account-circle</v-icon>
-                <h3 class="text-h6 font-weight-bold">Informasi Pribadi</h3>
-              </div>
-              
-              <v-row class="form-row">
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-account</v-icon>
-                      Nama Lengkap
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.nama" 
-                      placeholder="Masukkan nama lengkap"
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      :rules="[rules.required]"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-card-account-details</v-icon>
-                      Nomor KTP
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.no_ktp" 
-                      placeholder="Masukkan nomor KTP"
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      :rules="[rules.required, rules.ktp]"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-email</v-icon>
-                      Email Address
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.email" 
-                      placeholder="contoh@email.com"
-                      type="email" 
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      :rules="[rules.required, rules.email]"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-phone</v-icon>
-                      Nomor Telepon
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.no_telp" 
-                      placeholder="+62 812-3456-7890"
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      :rules="[rules.required, rules.phone]"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-          </v-expand-transition>
-
-          <!-- Step 2: Address Information -->
-          <v-expand-transition>
-            <div v-show="currentStep === 2" class="form-section">
-              <div class="section-header mb-6">
-                <v-icon color="deep-purple" class="me-3">mdi-home-variant</v-icon>
-                <h3 class="text-h6 font-weight-bold">Informasi Alamat</h3>
-              </div>
-              
-              <v-row class="form-row">
-                <v-col cols="12">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-map-marker</v-icon>
-                      Alamat Utama
-                    </label>
-                    <v-textarea 
-                      v-model="editedItem.alamat" 
-                      placeholder="Masukkan alamat lengkap"
-                      variant="outlined" 
-                      rows="3"
-                      density="comfortable"
-                      class="elegant-input"
-                      :rules="[rules.required]"
-                      hide-details="auto"
-                    ></v-textarea>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-home-city</v-icon>
-                      Blok
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.blok" 
-                      placeholder="A, B, C, dll"
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      :rules="[rules.required]"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-numeric</v-icon>
-                      Unit
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.unit" 
-                      placeholder="01, 02, 03, dll"
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      :rules="[rules.required]"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-map-marker-plus</v-icon>
-                      Alamat Tambahan (Opsional)
-                    </label>
-                    <v-textarea 
-                      v-model="editedItem.alamat_2" 
-                      placeholder="Patokan atau detail tambahan alamat"
-                      variant="outlined" 
-                      rows="2"
-                      density="comfortable"
-                      class="elegant-input"
-                      hide-details="auto"
-                    ></v-textarea>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-          </v-expand-transition>
-
-          <!-- Step 3: Service Information -->
-          <v-expand-transition>
-            <div v-show="currentStep === 3" class="form-section">
-              <div class="section-header mb-6">
-                <v-icon color="deep-purple" class="me-3">mdi-cog-outline</v-icon>
-                <h3 class="text-h6 font-weight-bold">Informasi Layanan</h3>
-              </div>
-              
-              <v-row class="form-row">
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-wifi</v-icon>
-                      Layanan
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.layanan" 
-                      placeholder="Internet, TV, dsb"
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12" md="6">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-tag</v-icon>
-                      Brand Provider
-                    </label>
-                    <v-select
-                      v-model="editedItem.id_brand"
-                      :items="hargaLayananList"
-                      item-title="brand"
-                      item-value="id_brand"
-                      placeholder="Pilih brand provider"
-                      variant="outlined"
-                      density="comfortable"
-                      class="elegant-input"
-                      hide-details="auto"
-                    ></v-select>
-                  </div>
-                </v-col>
-                
-                <v-col cols="12">
-                  <div class="input-group">
-                    <label class="input-label">
-                      <v-icon size="18" class="me-2">mdi-calendar-clock</v-icon>
-                      Tanggal Instalasi
-                    </label>
-                    <v-text-field 
-                      v-model="editedItem.tgl_instalasi" 
-                      type="date" 
-                      variant="outlined" 
-                      density="comfortable"
-                      class="elegant-input"
-                      hide-details="auto"
-                    ></v-text-field>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-          </v-expand-transition>
+        <v-card-text class="pa-4">
+          <v-form ref="form" v-model="isFormValid">
+            <v-stepper v-model="currentStep" flat>
+              <v-stepper-header>
+                <v-stepper-item title="Info Pribadi" :value="1" :complete="currentStep > 1" color="primary"></v-stepper-item>
+                <v-divider></v-divider>
+                <v-stepper-item title="Alamat & Layanan" :value="2" color="primary"></v-stepper-item>
+              </v-stepper-header>
+              <v-stepper-window>
+                <v-stepper-window-item :value="1">
+                  <v-row class="mt-2">
+                    <v-col cols="12" md="6"><v-text-field v-model="editedItem.nama" label="Nama Lengkap" :rules="[rules.required]" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" md="6"><v-text-field v-model="editedItem.no_ktp" label="Nomor KTP" :rules="[rules.required, rules.ktp]" variant="outlined" counter="16"></v-text-field></v-col>
+                    <v-col cols="12" md="6"><v-text-field v-model="editedItem.email" label="Email" :rules="[rules.required, rules.email]" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" md="6"><v-text-field v-model="editedItem.no_telp" label="Nomor Telepon" :rules="[rules.required, rules.phone]" variant="outlined"></v-text-field></v-col>
+                  </v-row>
+                </v-stepper-window-item>
+                <v-stepper-window-item :value="2">
+                  <v-row class="mt-2">
+                    <v-col cols="12"><v-text-field v-model="editedItem.alamat" label="Alamat Utama" :rules="[rules.required]" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12"><v-text-field v-model="editedItem.alamat_2" label="Alamat Tambahan (Opsional)" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" md="6"><v-text-field v-model="editedItem.blok" label="Blok" :rules="[rules.required]" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" md="6"><v-text-field v-model="editedItem.unit" label="Unit" :rules="[rules.required]" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" md="4"><v-text-field v-model="editedItem.tgl_instalasi" label="Tanggal Instalasi" type="date" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" md="4"><v-text-field v-model="editedItem.layanan" label="Layanan" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" md="4"><v-select v-model="editedItem.id_brand" :items="hargaLayananList" item-title="brand" item-value="id_brand" label="Brand Provider" variant="outlined"></v-select></v-col>
+                  </v-row>
+                </v-stepper-window-item>
+              </v-stepper-window>
+            </v-stepper>
+          </v-form>
         </v-card-text>
-
-        <!-- Enhanced Action Buttons -->
-        <v-card-actions class="pa-6 bg-grey-lighten-5">
-          <div class="d-flex w-100 align-center">
-            <!-- Navigation Buttons -->
-            <div class="d-flex ga-3">
-              <v-btn 
-                v-if="currentStep > 1"
-                variant="outlined" 
-                color="deep-purple"
-                @click="currentStep--"
-                prepend-icon="mdi-chevron-left"
-                class="nav-btn"
-              >
-                Sebelumnya
-              </v-btn>
-              
-              <v-btn 
-                v-if="currentStep < 3"
-                color="deep-purple" 
-                variant="flat"
-                @click="currentStep++"
-                append-icon="mdi-chevron-right"
-                class="nav-btn"
-              >
-                Selanjutnya
-              </v-btn>
-            </div>
-
-            <v-spacer></v-spacer>
-
-            <!-- Action Buttons -->
-            <div class="d-flex ga-3">
-              <v-btn 
-                variant="outlined" 
-                color="grey"
-                @click="closeDialog"
-                prepend-icon="mdi-close"
-                class="action-btn"
-              >
-                Batal
-              </v-btn>
-              
-              <v-btn 
-                color="deep-purple" 
-                variant="flat" 
-                @click="savePelanggan" 
-                :loading="saving"
-                :disabled="!isFormValid"
-                prepend-icon="mdi-content-save"
-                class="action-btn save-btn"
-              >
-                {{ editedIndex === -1 ? 'Tambah Pelanggan' : 'Simpan Perubahan' }}
-              </v-btn>
-            </div>
-          </div>
+        <v-card-actions class="pa-4">
+          <v-btn v-if="currentStep > 1" @click="currentStep--" text>Kembali</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn @click="closeDialog" text>Batal</v-btn>
+          <v-btn v-if="currentStep < 2" @click="currentStep++" color="primary">Lanjut</v-btn>
+          <v-btn v-else @click="savePelanggan" :loading="saving" :disabled="!isFormValid" color="primary" variant="flat">Simpan</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <!-- Delete Dialog -->
-    <v-dialog v-model="dialogDelete" max-width="500px">
-      <v-card class="rounded-lg">
-        <v-card-title class="text-h5 text-center pt-8 text-error">Konfirmasi Hapus</v-card-title>
+    <v-dialog v-model="dialogDelete" max-width="450px">
+      <v-card>
+        <div class="d-flex align-center pa-4" style="background-color: #D32F2F; color: white;">
+          <v-icon class="mr-2">mdi-delete-alert</v-icon>
+          <span class="text-h6">Konfirmasi Hapus</span>
+        </div>
         <v-card-text class="text-center pa-6">
-          Anda yakin ingin menghapus pelanggan <strong>{{ itemToDelete?.nama }}</strong>?
+          <v-icon size="64" color="warning">mdi-alert-circle-outline</v-icon>
+          <p class="mt-4">Anda yakin ingin menghapus pelanggan <strong>{{ itemToDelete?.nama }}</strong>?</p>
+          <p class="text-caption text-grey">Tindakan ini tidak dapat dibatalkan!</p>
         </v-card-text>
         <v-card-actions class="pa-4">
           <v-spacer></v-spacer>
-          <v-btn variant="text" @click="closeDeleteDialog">Batal</v-btn>
-          <v-btn color="error" variant="flat" @click="confirmDelete" :loading="deleting">Ya, Hapus</v-btn>
-          <v-spacer></v-spacer>
+          <v-btn @click="closeDeleteDialog" text>Batal</v-btn>
+          <v-btn @click="confirmDelete" :loading="deleting" color="error" variant="flat">Ya, Hapus</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="dialogImport" max-width="700px" persistent>
+      <v-card class="import-card">
+        <div class="import-header" style="display: flex; align-items: center; background-color: #00695C; color: white; padding: 12px 16px;">
+          <v-icon class="mr-3">mdi-upload</v-icon>
+          <span class="import-title" style="font-size: 1.1rem; font-weight: 500;">Import Pelanggan dari CSV</span>
+          <v-spacer></v-spacer>
+          <v-btn icon variant="text" @click="closeImportDialog"><v-icon color="white">mdi-close</v-icon></v-btn>
+        </div>
+        <v-card-text class="pa-6">
+          <v-sheet border rounded class="pa-4 mb-5">
+            <div class="d-flex align-center">
+              <v-avatar color="green-lighten-4" size="50"><v-icon color="success">mdi-file-document-outline</v-icon></v-avatar>
+              <div class="ml-4">
+                <div class="font-weight-bold">Gunakan Template Kami</div>
+                <p class="text-caption text-grey-darken-1 mb-0">Unduh template CSV untuk memastikan format data sesuai.</p>
+              </div>
+              <v-spacer></v-spacer>
+              <v-btn color="success" variant="flat" @click="downloadCsvTemplate" :loading="downloadingTemplate" prepend-icon="mdi-download" class="text-none">Unduh</v-btn>
+            </div>
+          </v-sheet>
+          <div class="font-weight-bold mb-2">Unggah File Anda</div>
+          <v-file-input 
+  :model-value="fileToImport"
+  @update:model-value="handleFileSelection"
+  label="Pilih file .csv" 
+  accept=".csv" 
+  variant="outlined" 
+  prepend-icon="" 
+  prepend-inner-icon="mdi-paperclip" 
+  show-size 
+  clearable 
+  hide-details="auto">
+</v-file-input>
+          <v-expand-transition>
+            <div v-if="importErrors.length > 0" class="mt-4">
+              <v-alert type="error" variant="tonal" prominent border="start">
+                <div class="d-flex justify-space-between align-center mb-2">
+                  <h6 class="text-h6">Impor Gagal</h6>
+                  <v-chip color="error" size="small">{{ importErrors.length }} Kesalahan</v-chip>
+                </div>
+                <p class="mb-3">Mohon perbaiki kesalahan berikut di file CSV Anda dan coba lagi.</p>
+                <v-divider class="mb-3"></v-divider>
+                <div class="error-list">
+                  <div v-for="(error, i) in importErrors" :key="i" class="error-item">
+                    <v-icon size="x-small" color="error" class="mr-2">mdi-alert-circle</v-icon>
+                    <span>{{ error }}</span>
+                  </div>
+                </div>
+              </v-alert>
+            </div>
+          </v-expand-transition>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pa-4">
+          <v-spacer></v-spacer>
+          <v-btn variant="text" @click="closeImportDialog">Batal</v-btn>
+          <v-btn color="success" variant="flat" @click="importFromCsv" :loading="importing" :disabled="fileToImport.length === 0" prepend-icon="mdi-upload" class="text-none">Impor Sekarang</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="4000" location="top right">
+      {{ snackbar.text }}
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -443,18 +219,17 @@ import { ref, onMounted, computed } from 'vue';
 import apiClient from '@/services/api';
 import type { Pelanggan as BasePelanggan } from '@/interfaces/pelanggan';
 
-// --- Interface ---
+// --- INTERFACES ---
 interface Pelanggan extends BasePelanggan {
   alamat_2?: string | null;
   id_brand?: string | null;
 }
-
 interface HargaLayanan {
   id_brand: string;
   brand: string;
 }
 
-// --- State ---
+// --- STATE MANAGEMENT ---
 const pelangganList = ref<Pelanggan[]>([]);
 const hargaLayananList = ref<HargaLayanan[]>([]);
 const loading = ref(true);
@@ -463,7 +238,15 @@ const deleting = ref(false);
 const dialog = ref(false);
 const dialogDelete = ref(false);
 const editedIndex = ref(-1);
-const currentStep = ref(1); // New state for form steps
+const currentStep = ref(1);
+const isFormValid = ref(false);
+
+const dialogImport = ref(false);
+const importing = ref(false);
+const exporting = ref(false);
+const downloadingTemplate = ref(false);
+const fileToImport = ref<File[]>([]);
+const importErrors = ref<string[]>([]);
 
 const defaultItem: Partial<Pelanggan> = { 
   id: undefined, 
@@ -475,78 +258,93 @@ const defaultItem: Partial<Pelanggan> = {
   alamat: '', 
   blok: '', 
   unit: '', 
-  tgl_instalasi: new Date(),
+  tgl_instalasi: new Date().toISOString().split('T')[0], // Format to YYYY-MM-DD
   alamat_2: '',
   id_brand: null
 };
-const editedItem = ref({ ...defaultItem });
+const editedItem = ref<Partial<Pelanggan>>({ ...defaultItem });
 const itemToDelete = ref<Pelanggan | null>(null);
+const snackbar = ref({ show: false, text: '', color: 'success' as 'success' | 'error' | 'warning' });
 
-// --- Validation Rules ---
+// --- ATURAN VALIDASI ---
 const rules = {
   required: (value: any) => !!value || 'Field ini wajib diisi',
-  email: (value: string) => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(value) || 'Format email tidak valid';
-  },
-  phone: (value: string) => {
-    const pattern = /^[\+]?[0-9\s\-\(\)]{10,}$/;
-    return pattern.test(value) || 'Format nomor telepon tidak valid';
-  },
-  ktp: (value: string) => {
-    const pattern = /^[0-9]{16}$/;
-    return pattern.test(value) || 'Nomor KTP harus 16 digit';
-  }
+  email: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Format email tidak valid',
+  phone: (value: string) => /^[\+]?[0-9\s\-\(\)]{10,}$/.test(value) || 'Format nomor telepon tidak valid',
+  ktp: (value: string) => (value && value.length === 16 && /^[0-9]+$/.test(value)) || 'Nomor KTP harus 16 digit angka',
 };
 
-// --- Headers ---
+// --- HEADER TABEL ---
 const headers = [
-  { title: 'Nama Pelanggan', key: 'nama', sortable: true },
-  { title: 'Alamat', key: 'alamat' },
-  { title: 'No. Telepon', key: 'no_telp' },
-  { title: 'Email', key: 'email'},
-  { title: 'Layanan', key: 'layanan'},
-  { title: 'Brand', key: 'id_brand'},
-  { title: 'Tgl Instalasi', key: 'tgl_instalasi', align: 'center' },
-  { title: 'Actions', key: 'actions', sortable: false, align: 'center', width: '200px' },
+  { title: 'Pelanggan', key: 'nama', sortable: true },
+  { title: 'Alamat', key: 'alamat', sortable: false },
+  { title: 'No. Telepon', key: 'no_telp', sortable: false },
+  { title: 'Layanan', key: 'layanan', sortable: false },
+  { title: 'Brand', key: 'id_brand', sortable: true },
+  { title: 'Tgl Instalasi', key: 'tgl_instalasi', align: 'center', sortable: true },
+  { title: 'Aksi', key: 'actions', sortable: false, align: 'center', width: '120px' },
 ] as const;
 
-// --- Computed Properties ---
+// --- COMPUTED PROPERTIES ---
 const formTitle = computed(() => editedIndex.value === -1 ? 'Tambah Pelanggan Baru' : 'Edit Pelanggan');
 
-const isFormValid = computed(() => {
-  return !!(editedItem.value.nama && editedItem.value.no_ktp && editedItem.value.email && 
-           editedItem.value.no_telp && editedItem.value.alamat && editedItem.value.blok && 
-           editedItem.value.unit);
-});
-
-// --- Lifecycle ---
+// --- LIFECYCLE HOOK ---
 onMounted(() => {
   fetchPelanggan();
   fetchHargaLayanan();
 });
 
-// --- Methods ---
+// --- METODE CRUD ---
 async function fetchPelanggan() {
   loading.value = true;
   try {
     const response = await apiClient.get('/pelanggan/');
     pelangganList.value = response.data;
-  } catch (error) { console.error("Gagal mengambil data pelanggan:", error); } 
-  finally { loading.value = false; }
+  } catch (error) { 
+    console.error("Gagal mengambil data pelanggan:", error);
+    showSnackbar('Gagal mengambil data pelanggan', 'error');
+  } finally { 
+    loading.value = false; 
+  }
 }
+
+function handleFileSelection(newFiles: File | File[]) {
+  importErrors.value = []; // Bersihkan error lama
+
+  // Cek apakah data yang masuk adalah sebuah array
+  if (Array.isArray(newFiles)) {
+    // Jika ya, langsung gunakan
+    fileToImport.value = newFiles;
+  } else if (newFiles) {
+    // Jika bukan array (artinya hanya 1 file), bungkus menjadi array
+    fileToImport.value = [newFiles];
+  } else {
+    // Jika kosong (null atau undefined, misal saat file dihapus), jadikan array kosong
+    fileToImport.value = [];
+  }
+  
+  console.log('File state diperbarui:', fileToImport.value);
+}
+
 
 async function fetchHargaLayanan() {
   try {
     const response = await apiClient.get('/harga_layanan');
     hargaLayananList.value = response.data;
-  } catch (error) { console.error("Gagal mengambil data harga layanan:", error); }
+  } catch (error) { 
+    console.error("Gagal mengambil data harga layanan:", error);
+  }
 }
 
 function openDialog(item?: Pelanggan) {
   editedIndex.value = item ? pelangganList.value.findIndex(p => p.id === item.id) : -1;
-  editedItem.value = item ? { ...item } : { ...defaultItem };
-  currentStep.value = 1; // Reset to first step
+  const targetItem = item ? { ...item } : { ...defaultItem };
+  // Ensure date is in YYYY-MM-DD format for the input
+  if (targetItem.tgl_instalasi) {
+    targetItem.tgl_instalasi = new Date(targetItem.tgl_instalasi).toISOString().split('T')[0];
+  }
+  editedItem.value = targetItem;
+  currentStep.value = 1;
   dialog.value = true;
 }
 
@@ -554,23 +352,28 @@ function closeDialog() {
   dialog.value = false;
   editedItem.value = { ...defaultItem };
   editedIndex.value = -1;
-  currentStep.value = 1; // Reset step
+  currentStep.value = 1;
 }
 
 async function savePelanggan() {
   if (!isFormValid.value) return;
-  
   saving.value = true;
   try {
     if (editedIndex.value > -1) {
       await apiClient.patch(`/pelanggan/${editedItem.value.id}`, editedItem.value);
+      showSnackbar('Data pelanggan berhasil diperbarui', 'success');
     } else {
       await apiClient.post('/pelanggan/', editedItem.value);
+      showSnackbar('Data pelanggan berhasil ditambahkan', 'success');
     }
-    fetchPelanggan();
+    await fetchPelanggan();
     closeDialog();
-  } catch (error) { console.error("Gagal menyimpan data pelanggan:", error); } 
-  finally { saving.value = false; }
+  } catch (error) {
+    console.error("Gagal menyimpan data pelanggan:", error);
+    showSnackbar('Gagal menyimpan data pelanggan', 'error');
+  } finally {
+    saving.value = false;
+  }
 }
 
 function openDeleteDialog(item: Pelanggan) {
@@ -588,157 +391,450 @@ async function confirmDelete() {
   deleting.value = true;
   try {
     await apiClient.delete(`/pelanggan/${itemToDelete.value.id}`);
-    fetchPelanggan();
+    await fetchPelanggan();
+    showSnackbar('Data pelanggan berhasil dihapus', 'success');
     closeDeleteDialog();
-  } catch (error) { console.error("Gagal menghapus pelanggan:", error); }
-  finally { deleting.value = false; }
+  } catch (error) {
+    console.error("Gagal menghapus data pelanggan:", error);
+    showSnackbar('Gagal menghapus data pelanggan', 'error');
+  } finally {
+    deleting.value = false;
+  }
 }
 
-// --- Helper Methods ---
-function getBrandName(idBrand: string | null | undefined): string | null {
-  if (!idBrand) return null;
-  const brand = hargaLayananList.value.find(h => h.id_brand === idBrand);
-  return brand?.brand || idBrand;
+// --- METODE IMPORT / EXPORT ---
+function closeImportDialog() {
+  dialogImport.value = false;
+  importing.value = false;
+  fileToImport.value = [];
+  importErrors.value = [];
 }
 
-function getBrandColor(brandName: string | null): string {
-  if (!brandName) return 'grey';
-  const lowerBrandName = brandName.toLowerCase();
+async function downloadCsvTemplate() {
+  downloadingTemplate.value = true;
+  try {
+    const response = await apiClient.get('/pelanggan/template/csv', { responseType: 'blob' });
+    downloadFile(response.data, 'template_import_pelanggan.csv');
+  } catch (error) {
+    console.error("Gagal mengunduh template:", error);
+    showSnackbar('Gagal mengunduh template.', 'error');
+  } finally {
+    downloadingTemplate.value = false;
+  }
+}
 
-  if (lowerBrandName.includes('nagrak')) return ''; 
-  if (lowerBrandName.includes('jakinet')) return 'error';
-  if (lowerBrandName.includes('jelantik')) return 'info';
+async function exportToCsv() {
+  exporting.value = true;
+  try {
+    const response = await apiClient.get('/pelanggan/export/csv', { responseType: 'blob' });
+    const date = new Date().toISOString().split('T')[0];
+    downloadFile(response.data, `export_pelanggan_${date}.csv`);
+  } catch (error) {
+    console.error("Gagal mengekspor data:", error);
+    showSnackbar('Tidak ada data untuk diekspor atau terjadi kesalahan.', 'error');
+  } finally {
+    exporting.value = false;
+  }
+}
+
+async function importFromCsv() {
+  // 1. Ambil file dari array terlebih dahulu
+  const file = fileToImport.value[0]; 
+
+  // 2. Lakukan pengecekan yang lebih kuat pada file itu sendiri
+  if (!file) {
+    showSnackbar('Silakan pilih file CSV terlebih dahulu.', 'warning');
+    return; // Langsung hentikan fungsi jika tidak ada file
+  }
+
+  importing.value = true;
+  importErrors.value = [];
   
-  return 'primary';
+  const formData = new FormData();
+  // 3. Sekarang aman untuk menambahkan file ke FormData
+  formData.append('file', file); 
+  
+  try {
+    const response = await apiClient.post('/pelanggan/import', formData);
+    
+    showSnackbar(response.data.message, 'success');
+    await fetchPelanggan();
+    closeImportDialog();
+  } catch (error: any) {
+    console.error("Gagal mengimpor data:", error);
+    if (error.response?.data) {
+      const errors = error.response.data.errors;
+      // Cek jika ada array 'errors', jika tidak, buat array dari pesan 'detail'
+      if (Array.isArray(errors) && errors.length > 0) {
+        importErrors.value = errors;
+      } else {
+        // Jika tidak ada array 'errors', tampilkan pesan utama sebagai satu-satunya error
+        const detailMsg = error.response.data.detail;
+        if (typeof detailMsg === 'string') {
+          importErrors.value = [detailMsg];
+        } else if (Array.isArray(detailMsg)) {
+          // Menangani kasus jika 'detail' adalah array objek seperti pada error Anda
+          importErrors.value = detailMsg.map(err => err.msg || 'Error tidak diketahui');
+        } else {
+          importErrors.value = ["Terjadi kesalahan yang tidak diketahui."];
+        }
+      }
+    } else {
+      // Fallback untuk error jaringan atau error tak terduga lainnya
+      importErrors.value = ["Tidak dapat terhubung ke server atau terjadi error."];
+    }
+  } finally {
+    importing.value = false;
+  }
 }
 
-function formatDate(dateString: string | Date | undefined): string {
-  if (!dateString) return 'N/A';
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return 'Invalid Date';
-  return date.toLocaleDateString('id-ID', {
-    year: 'numeric', month: 'long', day: 'numeric'
+// --- FUNGSI BANTU (HELPERS) ---
+function downloadFile(blobData: any, filename: string) {
+  const url = window.URL.createObjectURL(new Blob([blobData]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
+
+function getBrandName(id_brand: string | null | undefined): string {
+  if (!id_brand) return 'N/A';
+  const brand = hargaLayananList.value.find(h => h.id_brand === id_brand);
+  return brand ? brand.brand : 'Unknown';
+}
+
+function getBrandChipColor(brandName: string): string {
+  if (brandName.includes('Jakinet')) return 'blue';
+  if (brandName.includes('Jelantik')) return 'purple';
+  return 'grey';
+}
+
+function formatDate(date: string | Date | null): string {
+  if (!date) return '-';
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return '-';
+  // Add timezone offset to prevent date from shifting
+  const offset = d.getTimezoneOffset();
+  const correctedDate = new Date(d.getTime() + (offset * 60 * 1000));
+  return correctedDate.toLocaleDateString('id-ID', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
   });
+}
+
+function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
+  snackbar.value = { show: true, text, color };
 }
 </script>
 
 <style scoped>
-/* Original gradient chip style */
-.gradient-chip-nagrak {
-  background: linear-gradient(to right, #ef4444, #3b82f6) !important;
+/* Header Styles */
+.header-card {
+  background: linear-gradient(135deg, #383f5a 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.header-avatar-wrapper {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  padding: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.header-avatar {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(5px);
+}
+
+.header-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 4px 0 0;
+  font-weight: 400;
+}
+
+.action-btn, .primary-btn {
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: none;
+  gap: 12px;
+  margin-right: 12px;
+  padding: 10 30px;
+  height: 55px;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #97aafe 0%, #764ba2 100%) !important;
   color: white !important;
-  border: none;
 }
 
-/* Enhanced Form Styles */
-.elegant-form-card {
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(164, 177, 235, 0.4);
+}
+
+/* Data Table Card */
+.data-table-card {
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(124, 58, 237, 0.1);
-  box-shadow: 0 20px 60px rgba(124, 58, 237, 0.15) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-.form-header-gradient {
-  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #3b82f6 100%);
-  position: relative;
+.card-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.form-header-gradient::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #fbbf24, #f59e0b, #d97706);
+.header-icon-wrapper {
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+  padding: 8px;
 }
 
-/* Progress Indicator */
-.form-progress-indicator {
-  padding: 0 24px;
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
 }
 
-.progress-step {
+.count-chip {
+  font-weight: 600;
+}
+
+.table-container {
+  background: white;
+}
+
+.elegant-table {
+  background: transparent !important;
+}
+
+.elegant-table ::v-deep(.v-data-table__wrapper) {
+  border-radius: 0;
+}
+
+.elegant-table ::v-deep(th) {
+  background: #f8fafc !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #e2e8f0 !important;
+  padding: 16px !important;
+}
+
+.elegant-table ::v-deep(td) {
+  padding: 16px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.elegant-table ::v-deep(tr:hover) {
+  background: #f8fafc !important;
+}
+
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.customer-email {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.brand-chip {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.brand-chip-indihome {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+.brand-chip-firstmedia {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+}
+
+.brand-chip-biznet {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.brand-chip-mncplay {
+  background-color: #fce7f3 !important;
+  color: #be185d !important;
+}
+
+.brand-chip-cbn {
+  background-color: #f3e8ff !important;
+  color: #7c3aed !important;
+}
+
+.brand-chip-myrepublic {
+  background-color: #fed7d7 !important;
+  color: #c53030 !important;
+}
+
+.brand-chip-default {
+  background-color: #f1f5f9 !important;
+  color: #64748b !important;
+}
+
+.date-cell {
+  font-weight: 500;
+  color: #475569;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn-small {
+  min-width: 36px !important;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.no-data-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 16px;
-  border-radius: 12px;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
-  min-width: 120px;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.progress-step.active {
-  background: linear-gradient(135deg, #7c3aed, #4f46e5);
-  border-color: #7c3aed;
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
-}
-
-.progress-step .v-icon {
-  transition: all 0.3s ease;
-}
-
-.progress-step.active .v-icon {
-  color: white !important;
-}
-
-.step-label {
-  font-size: 12px;
-  font-weight: 600;
+  padding: 60px 20px;
   text-align: center;
 }
 
-.progress-line {
-  flex: 1;
-  height: 4px;
-  background: linear-gradient(90deg, #e2e8f0, #cbd5e1);
-  border-radius: 2px;
-  margin: 0 16px;
-  transition: all 0.3s ease;
+.no-data-text {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin-top: 16px;
+  font-weight: 500;
 }
 
-.progress-line.active {
-  background: linear-gradient(90deg, #7c3aed, #4f46e5);
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+/* Form Dialog */
+.form-dialog ::v-deep(.v-overlay__content) {
+  margin: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
 }
 
-/* Form Sections */
-.form-section {
-  animation: fadeInUp 0.5s ease-out;
+.form-card {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.form-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px;
+  color: white;
 }
 
-.section-header {
+.form-header-content {
   display: flex;
   align-items: center;
-  padding-bottom: 16px;
-  border-bottom: 2px solid #f1f5f9;
-  margin-bottom: 24px;
 }
 
-.section-header h3 {
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.form-content {
+  padding: 32px !important;
+  background: #fafbfc;
+}
+
+.elegant-stepper {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.stepper-header {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.stepper-divider {
+  margin: 0 16px;
+}
+
+.stepper-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.step-content {
+  padding: 0 !important;
+}
+
+.step-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.step-header h3 {
   color: #1e293b;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.step-header p {
+  color: #64748b;
   margin: 0;
 }
 
-/* Enhanced Input Styling */
+.form-row {
+  margin: 0 -12px;
+}
+
 .input-group {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .input-label {
@@ -746,267 +842,273 @@ function formatDate(dateString: string | Date | undefined): string {
   align-items: center;
   font-weight: 600;
   color: #374151;
-  font-size: 14px;
   margin-bottom: 8px;
-  letter-spacing: 0.025em;
+  font-size: 0.875rem;
 }
 
-.elegant-input :deep(.v-field) {
-  border-radius: 12px !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-.elegant-input :deep(.v-field):hover {
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.1);
-  border-color: rgba(124, 58, 237, 0.3);
-}
-
-.elegant-input :deep(.v-field--focused) {
-  box-shadow: 0 4px 25px rgba(124, 58, 237, 0.2) !important;
-  border-color: #7c3aed !important;
-}
-
-.elegant-input :deep(.v-field__input) {
-  padding: 16px 20px;
-  font-size: 15px;
-  line-height: 1.4;
-}
-
-.elegant-input :deep(.v-field__input)::placeholder {
-  color: #9ca3af;
-  opacity: 1;
-}
-
-.elegant-input :deep(.v-field__outline) {
-  --v-field-border-opacity: 0.12;
-}
-
-.elegant-input :deep(.v-field--error) {
-  --v-field-border-color: #ef4444;
-}
-
-/* Form Row Spacing */
-.form-row {
-  margin: 0 -12px;
-}
-
-.form-row .v-col {
-  padding: 0 12px 8px;
-}
-
-/* Enhanced Button Styles */
-.nav-btn {
-  min-width: 120px;
-  height: 44px;
-  border-radius: 10px;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0.025em;
+.elegant-input ::v-deep(.v-field) {
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
   transition: all 0.3s ease;
 }
 
-.nav-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.elegant-input ::v-deep(.v-field:hover) {
+  border-color: #cbd5e1;
+  background: white;
 }
 
-.action-btn {
-  min-width: 140px;
-  height: 48px;
+.elegant-input ::v-deep(.v-field--focused) {
+  background: white;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.elegant-input ::v-deep(.v-field__input) {
+  padding: 12px 16px;
+  font-size: 0.95rem;
+}
+
+.form-actions {
+  padding: 24px 32px !important;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.nav-btn, .save-btn {
   border-radius: 12px;
   font-weight: 600;
+  padding: 0 24px;
+  height: 44px;
   text-transform: none;
-  letter-spacing: 0.025em;
-  transition: all 0.3s ease;
-}
-
-.action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .save-btn {
-  background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
-  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.save-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Delete Dialog */
+.delete-dialog ::v-deep(.v-overlay__content) {
+  margin: 24px;
+}
+
+.delete-card {
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-.save-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+.delete-header {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  padding: 20px 24px;
+  color: white;
+  display: flex;
+  align-items: center;
 }
 
-.save-btn:hover::before {
-  left: 100%;
+.delete-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-left: 12px;
 }
 
-.save-btn:disabled {
-  opacity: 0.6;
-  transform: none !important;
-  box-shadow: none !important;
+.delete-content {
+  padding: 32px 24px !important;
 }
 
-/* Card Actions Enhancement */
-.v-card-actions {
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  background: linear-gradient(to right, #fafafa, #f8fafc);
+.delete-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.delete-text {
+  font-size: 1.1rem;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.customer-name-delete {
+  color: #dc2626;
+}
+
+.delete-warning {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.delete-actions {
+  padding: 16px 24px !important;
+  background: #f9fafb;
+}
+
+.cancel-btn, .delete-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
+  padding: 0 20px;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+  color: white !important;
+}
+
+/* Import Dialog */
+.import-dialog ::v-deep(.v-overlay__content) {
+  margin: 24px;
+}
+
+.import-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.import-header {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  padding: 20px 24px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.import-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.import-content {
+  padding: 32px 24px !important;
+}
+
+.alert-content {
+  line-height: 1.6;
+}
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.alert-text {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.template-card {
+  border: 2px dashed #d1d5db;
+  transition: all 0.3s ease;
+}
+
+.template-card:hover {
+  border-color: #059669;
+  background: #f0fdf4;
+}
+
+.template-icon {
+  background: #dcfce7;
+  border-radius: 50%;
+  padding: 12px;
+}
+
+.template-title {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.template-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.template-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.file-input ::v-deep(.v-field) {
+  border: 2px dashed #d1d5db !important;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.file-input ::v-deep(.v-field:hover) {
+  border-color: #059669 !important;
+  background: #f0fdf4;
+}
+
+.import-actions {
+  padding: 16px 24px !important;
+  background: #f9fafb;
+}
+
+.import-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: white !important;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
+  padding: 0 20px;
+}
+
+/* Enhanced Snackbar */
+.enhanced-snackbar ::v-deep(.v-snackbar__wrapper) {
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .form-progress-indicator {
-    padding: 0 12px;
+  .header-card {
+    padding: 16px;
   }
   
-  .progress-step {
-    min-width: 80px;
-    padding: 12px 8px;
+  .header-title {
+    font-size: 1.5rem;
   }
   
-  .step-label {
-    font-size: 11px;
+  .card-header {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
   
-  .progress-line {
-    margin: 0 8px;
+  .form-content {
+    padding: 24px 16px !important;
   }
   
-  .section-header h3 {
-    font-size: 18px;
+  .stepper-content {
+    padding: 16px;
   }
   
-  .nav-btn, .action-btn {
-    min-width: 100px;
-    font-size: 14px;
+  .form-actions {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
   }
   
-  .elegant-input :deep(.v-field__input) {
-    padding: 14px 16px;
-    font-size: 14px;
+  .action-btn-small {
+    width: 100%;
+    min-width: auto !important;
   }
-}
-
-/* ===== PERBAIKAN UNTUK MODE GELAP (DARK MODE FIX) ===== */
-.v-theme--dark .bg-grey-lighten-5 {
-  background-color: rgba(var(--v-theme-surface-variant), 0.5) !important;
-}
-
-.v-theme--dark .v-card-actions.bg-grey-lighten-5 {
-    background: linear-gradient(to right, rgb(var(--v-theme-surface)), rgba(var(--v-theme-surface-variant), 0.5)) !important;
-    border-top: 1px solid rgba(var(--v-theme-on-surface), 0.12) !important;
-}
-
-.v-theme--dark .progress-step {
-  background: rgba(var(--v-theme-on-surface), 0.08);
-  border-color: rgba(var(--v-theme-on-surface), 0.12);
-}
-
-.v-theme--dark .progress-step .step-label,
-.v-theme--dark .progress-step .v-icon:not(.v-icon--size-default) {
-  color: rgba(var(--v-theme-on-surface), 0.87) !important;
-}
-
-.v-theme--dark .progress-line {
-  background: linear-gradient(90deg, rgba(var(--v-theme-on-surface), 0.12), rgba(var(--v-theme-on-surface), 0.2));
-}
-
-.v-theme--dark .section-header {
-  border-bottom: 2px solid rgba(var(--v-theme-on-surface), 0.12);
-}
-
-.v-theme--dark .section-header h3 {
-  color: #FFFFFF;
-}
-
-.v-theme--dark .input-label {
-  color: rgba(var(--v-theme-on-surface), 0.85);
-}
-
-.v-theme--dark .elegant-input :deep(.v-field) {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.v-theme--dark .elegant-input :deep(.v-field):hover {
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.2);
-  border-color: rgba(124, 58, 237, 0.4);
-}
-
-/* Additional Polish */
-.v-dialog > .v-overlay__content {
-  animation: dialogSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes dialogSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-50px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Focus States */
-.elegant-input :deep(.v-field--focused .v-field__outline) {
-  --v-field-border-width: 2px;
-  --v-field-border-color: #7c3aed;
-}
-
-/* Error States */
-.elegant-input :deep(.v-field--error .v-field__outline) {
-  --v-field-border-width: 2px;
-  --v-field-border-color: #ef4444;
-}
-
-/* Loading States */
-.save-btn.v-btn--loading {
-  pointer-events: none;
-}
-
-.save-btn.v-btn--loading .v-btn__content {
-  opacity: 0;
-}
-
-/* Enhanced Select Styling */
-.elegant-input :deep(.v-select .v-field__append-inner) {
-  padding-inline-start: 16px;
-}
-
-.elegant-input :deep(.v-select__selection-text) {
-  color: #374151;
-  font-weight: 500;
-}
-
-/* Textarea specific styles */
-.elegant-input :deep(.v-textarea .v-field__input) {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-/* Date input specific styles */
-.elegant-input :deep(input[type="date"]) {
-  color: #374151;
-  font-weight: 500;
-}
-
-.elegant-input :deep(input[type="date"]::-webkit-calendar-picker-indicator) {
-  color: #7c3aed;
-  opacity: 0.7;
-  cursor: pointer;
-}
-
-.elegant-input :deep(input[type="date"]::-webkit-calendar-picker-indicator):hover {
-  opacity: 1;
-  background-color: rgba(124, 58, 237, 0.1);
-  border-radius: 4px;
 }
 </style>

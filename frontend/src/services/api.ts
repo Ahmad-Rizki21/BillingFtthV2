@@ -2,10 +2,8 @@ import axios from 'axios';
 
 // Konfigurasi instance axios
 const apiClient = axios.create({
-  baseURL: 'http://127.0.0.1:8000', // Sesuaikan dengan URL backend FastAPI Anda
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'http://127.0.0.1:8000',
+  timeout: 30000,
 });
 
 // Tambahkan interceptor untuk menyisipkan token JWT dari localStorage ke setiap request

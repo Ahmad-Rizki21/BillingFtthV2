@@ -48,3 +48,27 @@ class DataTeknisUpdate(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+# Skema khusus untuk validasi data dari file import Excel
+class DataTeknisImport(BaseModel):
+    email_pelanggan: str
+    id_vlan: str
+    id_pelanggan: str
+    password_pppoe: str
+    ip_pelanggan: str
+    profile_pppoe: str
+    olt: str
+    olt_custom: Optional[str] = None
+    pon: Optional[int] = None
+    otb: Optional[int] = None
+    odc: Optional[int] = None
+    odp: Optional[int] = None
+    onu_power: Optional[int] = None
+    
+    # --- INI BAGIAN YANG PERLU DIPASTIKAN ---
+    # Pastikan mikrotik_server_id juga Optional
+    mikrotik_server_id: Optional[int] = None
+
+    class Config:
+        from_attributes = True

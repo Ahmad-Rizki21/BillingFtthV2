@@ -35,6 +35,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # ==========================================================
 origins = [
     "http://localhost:3000", # Alamat server development Vue Anda
+    "http://127.0.0.1:3000",
 ]
 
 app.add_middleware(
