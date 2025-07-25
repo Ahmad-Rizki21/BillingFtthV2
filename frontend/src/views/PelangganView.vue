@@ -1,6 +1,5 @@
 <template>
   <v-container fluid class="pa-4 pa-md-6">
-    <!-- Header Section -->
     <div class="header-card mb-6">
       <div class="d-flex flex-column flex-md-row align-center gap-4">
         <div class="d-flex align-center">
@@ -49,7 +48,6 @@
       </div>
     </div>
 
-    <!-- Data Table Card -->
     <v-card class="data-table-card" elevation="0">
       <div class="card-header">
         <div class="d-flex align-center">
@@ -151,7 +149,6 @@
       </div>
     </v-card>
 
-    <!-- Form Dialog -->
     <v-dialog v-model="dialog" max-width="1000px" persistent class="form-dialog">
       <v-card class="form-card">
         <div class="form-header">
@@ -264,14 +261,16 @@
                           <v-icon size="small" class="mr-2">mdi-map-marker</v-icon>
                           Alamat Utama
                         </label>
-                        <v-text-field 
-                          v-model="editedItem.alamat" 
-                          :rules="[rules.required]" 
+                        <v-combobox
+                          v-model="editedItem.alamat"
+                          :items="alamatOptions"
+                          :rules="[rules.required]"
                           variant="outlined"
                           class="elegant-input"
                           density="comfortable"
-                        ></v-text-field>
-                      </div>
+                          placeholder="Pilih atau ketik alamat"
+                        ></v-combobox>
+                        </div>
                     </v-col>
                     <v-col cols="12">
                       <div class="input-group">
@@ -414,7 +413,6 @@
       </v-card>
     </v-dialog>
 
-    <!-- Delete Dialog -->
     <v-dialog v-model="dialogDelete" max-width="500px" class="delete-dialog">
       <v-card class="delete-card">
         <div class="delete-header">
@@ -456,7 +454,6 @@
       </v-card>
     </v-dialog>
 
-    <!-- Import Dialog -->
     <v-dialog v-model="dialogImport" max-width="800px" persistent class="import-dialog">
       <v-card class="import-card">
         <div class="import-header">
@@ -474,7 +471,6 @@
         </div>
         
         <v-card-text class="import-content">
-          <!-- Template Download Section -->
           <v-sheet 
             border 
             rounded="lg" 
@@ -504,7 +500,6 @@
             </div>
           </v-sheet>
 
-          <!-- File Upload Section -->
           <div class="mb-4">
             <h6 class="text-h6 mb-3 d-flex align-center upload-title">
               <v-icon class="mr-2">mdi-cloud-upload</v-icon>
@@ -527,7 +522,6 @@
             </v-file-input>
           </div>
 
-          <!-- Error Messages -->
           <v-expand-transition>
             <div v-if="importErrors.length > 0" class="mt-4">
               <v-alert 
@@ -590,7 +584,6 @@
       </v-card>
     </v-dialog>
 
-    <!-- Snackbar -->
     <v-snackbar 
       v-model="snackbar.show" 
       :color="snackbar.color" 
@@ -660,6 +653,20 @@ const defaultItem: Partial<Pelanggan> = {
 const editedItem = ref<Partial<Pelanggan>>({ ...defaultItem });
 const itemToDelete = ref<Pelanggan | null>(null);
 const snackbar = ref({ show: false, text: '', color: 'success' as 'success' | 'error' | 'warning' });
+
+// MODIFIKASI DIMULAI DI SINI
+const alamatOptions = ref([
+  'Tambun',
+  'Rusun Pinus Elok',
+  'Rusun Pulogebang',
+  'Rusun Cakung KM2',
+  'Rusun Tipar Cakung',
+  'Rusun Albo',
+  'Rusun Nagrak',
+  'Waringin',
+  'Parama'
+]);
+// MODIFIKASI SELESAI
 
 const layananOptions = ref([
   'Internet 10 Mbps',
