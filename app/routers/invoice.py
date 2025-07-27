@@ -1,9 +1,8 @@
-# app/routers/invoice.py
-
 from fastapi import APIRouter, Depends, HTTPException, status, Request, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy.future import select
+from sqlalchemy import func # <-- TAMBAHAN: Impor func
 from datetime import date, timedelta, datetime, timezone
 from dateutil.relativedelta import relativedelta
 import uuid
@@ -13,12 +12,12 @@ import logging
 import pytz
 from ..websocket_manager import manager
 
-
-
 # Impor semua model dan skema yang dibutuhkan
 from ..models.invoice import Invoice as InvoiceModel
 from ..models.langganan import Langganan as LanggananModel
 from ..models.pelanggan import Pelanggan as PelangganModel
+from ..models.user import User as UserModel # <-- TAMBAHAN: Impor UserModel
+from ..models.role import Role as RoleModel # <-- TAMBAHAN: Impor RoleModel
 from ..schemas.invoice import Invoice as InvoiceSchema, InvoiceGenerate, MarkAsPaidRequest
 from ..database import get_db
 from ..config import settings
@@ -31,9 +30,6 @@ router = APIRouter(
     tags=["Invoices"],
     responses={404: {"description": "Not found"}},
 )
-
-
-
 
 @router.get("/", response_model=List[InvoiceSchema])
 async def get_all_invoices(db: AsyncSession = Depends(get_db)):
@@ -57,8 +53,8 @@ def parse_xendit_datetime(iso_datetime_str: str) -> datetime:
 async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, payload: dict = None):
     """Fungsi terpusat untuk menangani logika setelah invoice lunas."""
     pelanggan = await db.get(
-        PelangganModel, 
-        invoice.pelanggan_id, 
+        PelangganModel,
+        invoice.pelanggan_id,
         options=[selectinload(PelangganModel.langganan), selectinload(PelangganModel.data_teknis)]
     )
     if not pelanggan or not pelanggan.langganan:
@@ -86,7 +82,8 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
 
     logger.info(f"Payment processed successfully for invoice {invoice.invoice_number}")
 
-    # Kirim notifikasi ke semua admin yang terhubung
+    # ===== PERUBAIKAN LOGIKA NOTIFIKASI DIMULAI DI SINI =====
+    # 1. Siapkan payload notifikasi
     notification_message = {
         "type": "new_payment",
         "data": {
@@ -97,7 +94,21 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
         }
     }
     
-    await manager.broadcast(json.dumps(notification_message))
+    # 2. Tentukan siapa penerima notifikasi (misal: Admin dan Finance)
+    target_roles = ['Admin', 'Finance'] # Anda bisa sesuaikan ini
+    query = (
+        select(UserModel.id)
+        .join(RoleModel)
+        .where(func.lower(RoleModel.name).in_([r.lower() for r in target_roles]))
+    )
+    result = await db.execute(query)
+    target_user_ids = result.scalars().all()
+
+    # 3. Panggil fungsi yang benar: broadcast_to_roles
+    if target_user_ids:
+        await manager.broadcast_to_roles(notification_message, target_user_ids)
+    
+    # ===== AKHIR PERUBAIKAN =====
 
     if old_status == "Suspended":
         await mikrotik_service.trigger_mikrotik_update(db, langganan)
@@ -137,7 +148,8 @@ async def handle_xendit_callback(request: Request, x_callback_token: Optional[st
     except Exception as e:
         await db.rollback()
         logger.error(f"Unexpected error processing Xendit callback: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error processing callback: {str(e)}")
+        # Mengubah detail error agar lebih informatif tanpa membocorkan terlalu banyak
+        raise HTTPException(status_code=500, detail="Internal server error while processing callback.")
 
     return {"message": "Callback processed successfully"}
 
