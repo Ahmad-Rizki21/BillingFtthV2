@@ -722,3 +722,4 @@ WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
 2025-07-24 21:49:38 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
 2025-07-24 21:51:00 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
 2025-07-24 22:21:30 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-25 14:05:53 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out

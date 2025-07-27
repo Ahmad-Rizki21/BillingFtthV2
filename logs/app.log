@@ -12944,3 +12944,308 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-25 09:27:05 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51454 - "GET /langganan/ HTTP/1.1" 200
 2025-07-25 09:27:05 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51455 - "GET /pelanggan/ HTTP/1.1" 200
 2025-07-25 09:27:05 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51456 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:44:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64581 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-25 09:44:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64582 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-25 09:44:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64583 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:44:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64582 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 09:44:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64581 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:44:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64583 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 09:48:01 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 09:48:01 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50511 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 09:48:01 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50512 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50514 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50515 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50517 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50516 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50517 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50517 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50513 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50512 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50515 - "GET /roles/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50514 - "GET /users/me HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50516 - "GET /users/ HTTP/1.1" 200
+2025-07-25 09:48:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50512 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 09:51:56 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 09:51:56 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53643 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 09:51:56 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 09:51:56 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /users/me HTTP/1.1" 401
+2025-07-25 09:51:56 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53646 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 09:51:56 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-25 09:51:56 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53649 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:51:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53648 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 09:51:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53651 - "GET /roles/ HTTP/1.1" 200
+2025-07-25 09:51:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53652 - "GET /users/ HTTP/1.1" 200
+2025-07-25 09:51:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53652 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53652 - "POST /users/token HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53652 - "GET /users/me HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53676 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 09:51:58 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53652 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53648 - "GET /roles/ HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53649 - "GET /users/ HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53651 - "GET /users/me HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53652 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-25 09:51:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 09:51:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 09:51:59 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-25 09:51:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 09:52:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53651 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:52:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 09:52:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53652 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 09:52:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54029 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 09:52:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54030 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 09:52:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54031 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:55:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56089 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-25 09:55:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56091 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:55:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56090 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-25 09:55:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56090 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 09:55:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56091 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 09:55:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56089 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:04:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62924 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 10:04:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62925 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:04:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62926 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 10:04:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63040 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-25 10:04:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63041 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:04:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63042 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:04:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63041 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-25 10:04:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63040 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:04:34 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:04:34 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63128 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 10:04:34 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:04:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "OPTIONS /invoices/ HTTP/1.1" 200
+2025-07-25 10:04:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63128 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:04:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63183 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 10:04:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "GET /invoices/ HTTP/1.1" 200
+2025-07-25 10:04:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:04:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-25 10:04:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-25 10:04:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 10:04:44 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-25 10:04:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63127 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 10:30:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64980 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:30:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64981 - "OPTIONS /harga_layanan HTTP/1.1" 200
+2025-07-25 10:30:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64980 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-25 10:30:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64980 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:30:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64981 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:30:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64980 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:30:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-25 10:30:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65138 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-25 10:30:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:30:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 10:30:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65138 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 10:30:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65138 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-25 10:30:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:30:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-25 10:30:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:30:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65138 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:30:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65138 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:30:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 10:30:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "OPTIONS /invoices/ HTTP/1.1" 200
+2025-07-25 10:30:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65138 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:30:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 10:30:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /invoices/ HTTP/1.1" 200
+2025-07-25 10:30:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:30:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-25 10:30:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-25 10:30:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "GET /users/ HTTP/1.1" 200
+2025-07-25 10:30:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /roles/ HTTP/1.1" 200
+2025-07-25 10:30:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "OPTIONS /permissions/ HTTP/1.1" 200
+2025-07-25 10:30:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65137 - "GET /roles/ HTTP/1.1" 200
+2025-07-25 10:30:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /permissions/ HTTP/1.1" 200
+2025-07-25 10:30:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65139 - "GET /permissions/ HTTP/1.1" 200
+2025-07-25 10:41:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56765 - "POST /users/token HTTP/1.1" 200
+2025-07-25 10:41:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56765 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-25 10:41:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56765 - "GET /users/me HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56773 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 10:41:02 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56765 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56775 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56765 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56776 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56776 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56776 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56774 - "GET /users/me HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56775 - "GET /roles/ HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56777 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56765 - "GET /users/ HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56776 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56776 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 10:41:02 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-25 10:41:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56776 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 10:41:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57390 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-25 10:41:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57392 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:41:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57391 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:41:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57391 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-25 10:41:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57392 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:41:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57390 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:42:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57497 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-25 10:42:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57498 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-25 10:42:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57499 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:42:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57498 - "GET /langganan/ HTTP/1.1" 200
+2025-07-25 10:42:01 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57497 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-25 10:42:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57497 - "OPTIONS /harga_layanan HTTP/1.1" 200
+2025-07-25 10:42:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57497 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-25 10:42:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57498 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:42:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57498 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:42:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57498 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:49:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63138 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-25 10:49:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63137 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:49:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63138 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:50:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63559 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-25 10:50:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63560 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:50:02 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63561 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-25 10:55:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50891 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-25 10:55:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50891 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-25 10:55:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50891 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 10:55:16 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-25 10:55:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50891 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 10:57:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52756 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:57:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52757 - "OPTIONS /harga_layanan HTTP/1.1" 200
+2025-07-25 10:57:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52756 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-25 10:57:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52756 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:57:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52757 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-25 10:57:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52757 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-25 10:58:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53437 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-25 10:58:31 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-25 10:58:31 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53437 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 13:28:48 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 13:28:48 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 13:28:48 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 13:33:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60934 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 13:33:11 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 13:33:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60936 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 13:33:11 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 13:33:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60938 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 13:33:11 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 14:05:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 14:05:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 14:05:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 14:05:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52544 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 14:05:37 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 14:05:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52547 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-25 14:05:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52551 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-25 14:05:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52552 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-25 14:05:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52550 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-25 14:05:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52553 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 14:05:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52553 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-25 14:05:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52550 - "GET /users/me HTTP/1.1" 401
+2025-07-25 14:05:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52550 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 14:05:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52547 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-25 14:05:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52551 - "GET /roles/ HTTP/1.1" 200
+2025-07-25 14:05:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52552 - "GET /users/ HTTP/1.1" 200
+2025-07-25 14:05:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52550 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-25 14:05:53 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-25 14:05:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52550 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-25 14:31:28 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 14:32:33 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55448 - "WebSocket /ws/notifications" [accepted]
+2025-07-25 14:32:33 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-25 17:17:33 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-25 17:17:42 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-25 17:17:42 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [18248]
+2025-07-25 17:17:42 | UVICORN.ERROR        | [92mINFO    [0m | ASGI 'lifespan' protocol appears unsupported.
+2025-07-27 13:44:32 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-27 13:44:32 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-27 13:44:32 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-27 13:44:32 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-27 13:44:32 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-27 13:45:13 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-27 13:45:14 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53458 - "POST /users/token HTTP/1.1" 200
+2025-07-27 13:45:14 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53458 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53458 - "GET /users/me HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53490 - "WebSocket /ws/notifications" [accepted]
+2025-07-27 13:45:15 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53458 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53491 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53493 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53495 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53495 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53495 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53493 - "GET /users/ HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53494 - "GET /users/me HTTP/1.1" 200
+2025-07-27 13:45:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53491 - "GET /roles/ HTTP/1.1" 200
+2025-07-27 13:45:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53495 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-27 13:45:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53458 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-27 13:45:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53458 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-27 13:45:16 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-27 13:45:16 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53458 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-27 13:45:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53648 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:45:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53649 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-27 13:45:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-27 13:45:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53648 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-27 13:45:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53649 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:45:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-27 13:45:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-27 13:45:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53649 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-27 13:45:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53648 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-27 13:45:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53649 - "GET /langganan/ HTTP/1.1" 200
+2025-07-27 13:45:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53650 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-27 13:45:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53759 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:45:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53760 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-27 13:45:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53761 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-27 13:45:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53761 - "OPTIONS /data_teknis/4 HTTP/1.1" 200
+2025-07-27 13:45:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53761 - "DELETE /data_teknis/4 HTTP/1.1" 204
+2025-07-27 13:45:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53761 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:46:25 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54303 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:46:25 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54303 - "POST /data_teknis/ HTTP/1.1" 422
+2025-07-27 13:49:59 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56897 - "POST /data_teknis/ HTTP/1.1" 422
+2025-07-27 13:50:13 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-27 13:50:16 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57095 - "WebSocket /ws/notifications" [accepted]
+2025-07-27 13:50:16 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57097 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57101 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57097 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57102 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57100 - "GET /users/me HTTP/1.1" 200
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57098 - "GET /users/ HTTP/1.1" 200
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57097 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-27 13:50:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:57099 - "GET /roles/ HTTP/1.1" 200
+2025-07-27 13:52:40 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-27 13:52:40 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-27 13:52:41 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-27 13:52:41 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-27 13:52:41 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [11876]
+2025-07-27 13:56:44 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-27 13:56:44 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-27 13:56:44 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-27 13:56:44 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-27 13:56:44 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-27 13:56:44 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58774 - "WebSocket /ws/notifications" [accepted]
+2025-07-27 13:56:44 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-27 13:56:48 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-27 13:56:51 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61844 - "WebSocket /ws/notifications" [accepted]
+2025-07-27 13:56:51 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-27 13:56:51 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61847 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:56:51 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61847 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-27 13:56:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61849 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-27 13:56:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61853 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-27 13:56:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61852 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-27 13:56:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61850 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-27 13:56:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61851 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-27 13:56:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61849 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61853 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61850 - "GET /roles/ HTTP/1.1" 200
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61853 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61852 - "GET /users/ HTTP/1.1" 200
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61851 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61855 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61849 - "GET /users/me HTTP/1.1" 200
+2025-07-27 13:56:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61853 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-27 13:57:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62419 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-27 13:57:37 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-27 13:57:37 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil membuat PPPoE secret untuk 'ART-0023'.
+2025-07-27 13:57:37 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Menutup koneksi Mikrotik.
+2025-07-27 13:57:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62419 - "POST /data_teknis/ HTTP/1.1" 201
+2025-07-27 13:57:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62419 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-27 14:00:00 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-27 14:00:00 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-27 14:00:00 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-27 14:00:00 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-27 14:00:00 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [24948]

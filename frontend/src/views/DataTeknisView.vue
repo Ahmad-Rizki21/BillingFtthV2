@@ -571,11 +571,12 @@
         <v-row>
         <v-col cols="12" sm="6">
             <v-select
-                v-model="editedItem.olt"
+                v-model="editedItem.mikrotik_server_id"
                 :items="mikrotikServers"
                 item-title="name"
-                item-value="name"
+                item-value="id"
                 label="OLT"
+                @update:modelValue="handleOltSelection"
                 variant="outlined"
                 prepend-inner-icon="mdi-router"
                 placeholder="Pilih server OLT"
@@ -767,6 +768,7 @@ interface DataTeknis {
   odp: number;
   speedtest_proof?: string | null;
   onu_power: number;
+  mikrotik_server_id: number;
 }
 
 interface Pelanggan {
@@ -861,6 +863,15 @@ const pppoeProfiles = (() => {
   }
   return profiles;
 })();
+
+
+function handleOltSelection(serverId: number) {
+  const selectedServer = mikrotikServers.value.find(s => s.id === serverId);
+  if (selectedServer) {
+    editedItem.value.olt = selectedServer.name;
+  }
+}
+
 
 // --- Methods ---
 onMounted(() => {

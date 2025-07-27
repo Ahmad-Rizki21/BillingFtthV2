@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 # Skema dasar untuk data teknis
@@ -19,12 +19,46 @@ class DataTeknisBase(BaseModel):
     onu_power: int
 
 # Skema untuk membuat data teknis baru
-class DataTeknisCreate(DataTeknisBase):
-    pass
+class DataTeknisCreate(BaseModel):
+    # Field yang WAJIB diisi oleh tim NOC
+    pelanggan_id: int
+    id_pelanggan: str
+    password_pppoe: str
+    mikrotik_server_id: int
+    olt: str
+    
+    # Field yang OPSIONAL saat pembuatan
+    id_vlan: Optional[str] = None
+    ip_pelanggan: Optional[str] = None
+    profile_pppoe: Optional[str] = "default-profile"
+    olt_custom: Optional[str] = None
+    
+    # Field yang akan diisi teknisi, diberi nilai default 0
+    # Penggunaan Field() sudah benar setelah di-impor
+    pon: int = Field(default=0)
+    otb: int = Field(default=0)
+    odc: int = Field(default=0)
+    odp: int = Field(default=0)
+    onu_power: float = Field(default=0.0)
 
 # Skema untuk membaca data (response)
-class DataTeknis(DataTeknisBase):
+class DataTeknis(BaseModel):
     id: int
+    pelanggan_id: int
+    id_pelanggan: str
+    password_pppoe: str
+    mikrotik_server_id: Optional[int] = None
+    olt: Optional[str] = None
+    id_vlan: Optional[str] = None
+    ip_pelanggan: Optional[str] = None
+    profile_pppoe: Optional[str] = None
+    olt_custom: Optional[str] = None
+    pon: Optional[int] = None
+    otb: Optional[int] = None
+    odc: Optional[int] = None
+    odp: Optional[int] = None
+    onu_power: Optional[float] = None
+    speedtest_proof: Optional[str] = None
 
     class Config:
         from_attributes = True
