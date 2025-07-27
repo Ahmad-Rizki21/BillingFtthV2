@@ -101,19 +101,30 @@
           <v-list-item
             v-for="(notif, index) in notifications"
             :key="index"
-            class="py-2"
+            class="py-2 notification-item"  :to="getNotificationLink(notif)"
           >
             <template v-slot:prepend>
-              <v-avatar color="success" size="32" class="me-3">
-                  <v-icon size="18">mdi-cash-check</v-icon>
+              <v-avatar :color="getNotificationColor(notif.type)" size="32" class="me-3">
+                  <v-icon size="18">{{ getNotificationIcon(notif.type) }}</v-icon>
               </v-avatar>
             </template>
-            <v-list-item-title class="font-weight-medium text-body-2">Pembayaran Diterima</v-list-item-title>
-            <v-list-item-subtitle class="text-caption">
-              <strong>{{ notif.data.invoice_number }}</strong> dari <strong>{{ notif.data.pelanggan_nama }}</strong> ({{ notif.data.id_pelanggan }}) telah lunas.
-            </v-list-item-subtitle>
+
+            <div v-if="notif.type === 'new_payment'">
+              <v-list-item-title class="font-weight-medium text-body-2">Pembayaran Diterima</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">
+                <strong>{{ notif.data.invoice_number }}</strong> dari <strong>{{ notif.data.pelanggan_nama }}</strong> telah lunas.
+              </v-list-item-subtitle>
+            </div>
+
+            <div v-if="notif.type === 'new_customer_for_noc'">
+              <v-list-item-title class="font-weight-medium text-body-2">Pelanggan Baru</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">
+                <strong>{{ notif.data.pelanggan_nama }}</strong> perlu dibuatkan Data Teknis.
+              </v-list-item-subtitle>
+            </div>
+
           </v-list-item>
-        </v-list>
+          </v-list>
       </v-menu>
     </v-app-bar>
 
@@ -205,26 +216,9 @@ onMounted(() => {
   fetchRoleCount();
   fetchUserCount();
   fetchSuspendedCount();
-  setupWebSocket();
+  
 });
 
-// --- Methods ---
-async function fetchCurrentUser() {
-  try {
-    const response = await apiClient.get('/users/me');
-    const roleName = response.data.role?.name.toLowerCase();
-    
-    if (roleName === 'admin') { // Anggap 'admin' adalah super-admin
-      userPermissions.value = ['*']; // Beri akses ke semua
-    } else {
-      const permissions = response.data.role?.permissions.map((p: any) => p.name) || [];
-      userPermissions.value = permissions;
-    }
-  } catch (error) {
-    console.error("Gagal mengambil data pengguna:", error);
-    handleLogout();
-  }
-}
 
 function toggleTheme() {
   const newTheme = theme.global.current.value.dark ? 'light' : 'dark';
@@ -232,17 +226,58 @@ function toggleTheme() {
   localStorage.setItem('theme', newTheme);
 }
 
+async function fetchCurrentUser() {
+  try {
+    const response = await apiClient.get('/users/me');
+    const roleName = response.data.role?.name.toLowerCase();
+    
+    if (roleName === 'admin') {
+      userPermissions.value = ['*'];
+    } else {
+      const permissions = response.data.role?.permissions.map((p: any) => p.name) || [];
+      userPermissions.value = permissions;
+    }
+    
+    // ===== PERUBAHAN DI SINI: Panggil WebSocket setelah user otentik =====
+    setupWebSocket();
+
+  } catch (error) {
+    console.error("Gagal mengambil data pengguna:", error);
+    handleLogout();
+  }
+}
+
 function setupWebSocket() {
-    const ws = new WebSocket("ws://127.0.0.1:8000/ws/notifications");
+    // Ambil token dari localStorage untuk otentikasi
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+        console.log("Tidak ada token, koneksi WebSocket dibatalkan.");
+        return;
+    }
+
+    // Sambungkan ke endpoint baru dengan token sebagai query parameter
+    const ws = new WebSocket(`ws://127.0.0.1:8000/ws/notifications?token=${token}`);
+    
     ws.onmessage = (event) => {
         const message = JSON.parse(event.data);
-        if (message.type === 'new_payment') {
+        
+        // Cek tipe notifikasi dan tambahkan ke awal array
+        if (message.type === 'new_payment' || message.type === 'new_customer_for_noc') {
             notifications.value.unshift(message);
+
+            try {
+                const audio = new Audio('/payment.mp3'); // Path ke file di folder public
+                audio.play();
+            } catch (e) {
+                console.error("Gagal memutar audio notifikasi:", e);
+            }
+
             if (notifications.value.length > 10) {
                 notifications.value.pop();
             }
         }
     };
+    
     ws.onopen = () => console.log("WebSocket terhubung.");
     ws.onclose = () => {
         console.log("WebSocket terputus. Mencoba menghubungkan kembali dalam 5 detik...");
@@ -250,8 +285,36 @@ function setupWebSocket() {
     };
     ws.onerror = (error) => {
         console.error("WebSocket error:", error);
-        ws.close();
+        ws.close(); // Tutup koneksi saat terjadi error untuk memicu onclose
     };
+}
+
+// ===== TAMBAHAN: Helper functions untuk tampilan notifikasi dinamis =====
+function getNotificationIcon(type: string): string {
+  switch (type) {
+    case 'new_payment': return 'mdi-cash-check';
+    case 'new_customer_for_noc': return 'mdi-account-plus-outline';
+    default: return 'mdi-bell-outline';
+  }
+}
+
+function getNotificationColor(type: string): string {
+  switch (type) {
+    case 'new_payment': return 'success';
+    case 'new_customer_for_noc': return 'info';
+    default: return 'grey';
+  }
+}
+
+// Fungsi untuk mengarahkan user saat notifikasi di-klik
+function getNotificationLink(notification: any): string | undefined {
+    if (notification.type === 'new_customer_for_noc') {
+        // Arahkan ke halaman 'Data Teknis' dan mungkin filter berdasarkan pelanggan ID
+        // Untuk saat ini, kita arahkan ke halaman utama Data Teknis
+        return '/data-teknis';
+    }
+    // Tambahkan link untuk notifikasi lain di sini jika perlu
+    return undefined;
 }
 
 async function fetchSuspendedCount() {
@@ -308,6 +371,23 @@ function handleLogout() {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.notification-item .v-list-item-subtitle {
+  white-space: normal !important;      /* Izinkan teks untuk wrap ke baris baru */
+  line-height: 1.4;                  /* Perbaiki jarak antar baris agar mudah dibaca */
+  -webkit-line-clamp: 2; 
+  line-clamp: 2;              /* Batasi teks hingga 2 baris */
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notification-item.v-list-item {
+  min-height: 60px !important;         /* Beri tinggi minimal untuk menampung 2 baris */
+  height: auto !important;             /* Biarkan tinggi item menyesuaikan konten */
+  align-items: center;               /* Posisikan avatar dan teks di tengah */
 }
 
 .sidebar-header {

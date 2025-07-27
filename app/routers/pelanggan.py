@@ -11,6 +11,11 @@ from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from fastapi.responses import StreamingResponse
 from dateutil import parser
 
+from sqlalchemy import func
+from ..models.user import User as UserModel
+from ..models.role import Role as RoleModel
+from ..websocket_manager import manager
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -40,6 +45,35 @@ async def create_pelanggan(
     db.add(db_pelanggan)
     await db.commit()
     await db.refresh(db_pelanggan)
+
+    try:
+        # Cari semua user ID dengan role 'NOC' atau 'CS'
+        target_roles = ['NOC', 'CS', 'Admin'] # Sesuaikan nama role jika perlu
+        query = (
+            select(UserModel.id)
+            .join(RoleModel)
+            .where(func.lower(RoleModel.name).in_([r.lower() for r in target_roles]))
+        )
+        result = await db.execute(query)
+        target_user_ids = result.scalars().all()
+
+        if target_user_ids:
+            # Siapkan payload notifikasi
+            notification_payload = {
+                "type": "new_customer_for_noc",
+                "data": {
+                    "pelanggan_id": db_pelanggan.id,
+                    "pelanggan_nama": db_pelanggan.nama,
+                    "message": f"Pelanggan baru '{db_pelanggan.nama}' telah ditambahkan. Segera buatkan Data Teknis."
+                }
+            }
+            # Kirim notifikasi ke user yang relevan
+            await manager.broadcast_to_roles(notification_payload, target_user_ids)
+            
+    except Exception as e:
+        # Jika pengiriman notifikasi gagal, jangan gagalkan proses utama
+        logger.error(f"Gagal mengirim notifikasi pelanggan baru: {e}")
+
     return db_pelanggan
 
 

@@ -1,3 +1,5 @@
+# app/auth.py
+
 from datetime import datetime, timedelta
 from typing import Union
 from jose import JWTError, jwt
@@ -14,7 +16,7 @@ from .models.role import Role
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # Sesuaikan dengan endpoint login Anda
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verifikasi password."""
@@ -48,7 +50,7 @@ async def get_current_active_user(
     token: str = Depends(oauth2_scheme),
     db: AsyncSession = Depends(get_db)
 ) -> User:
-    """Mengambil pengguna aktif berdasarkan token JWT."""
+    """Mengambil pengguna aktif berdasarkan token JWT untuk rute HTTP."""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -72,6 +74,36 @@ async def get_current_active_user(
     result = await db.execute(query)
     user = result.scalar_one_or_none()
 
+    if user is None:
+        raise credentials_exception
+    return user
+
+# --- FUNGSI BARU UNTUK OTENTIKASI WEBSOCKET ---
+async def get_user_from_token(token: str, db: AsyncSession) -> User | None:
+    """
+    Mendekode token JWT dan mengambil data user dari database.
+    Didesain untuk digunakan di luar dependency injection standar (untuk WebSocket).
+    """
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+    )
+    try:
+        payload = verify_access_token(token)
+        user_id: str = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    
+    # Ambil user dari database
+    query = (
+        select(User)
+        .where(User.id == int(user_id))
+        .options(selectinload(User.role).selectinload(Role.permissions))
+    )
+    user = (await db.execute(query)).scalar_one_or_none()
+    
     if user is None:
         raise credentials_exception
     return user
