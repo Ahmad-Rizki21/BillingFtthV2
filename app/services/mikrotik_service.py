@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 import logging
+from datetime import datetime
 
 # Impor model yang dibutuhkan
 from ..models.langganan import Langganan as LanggananModel
@@ -61,6 +62,27 @@ def update_pppoe_secret(api, data_teknis: DataTeknisModel, new_status: str):
     except Exception as e:
         logger.error(f"Terjadi error saat update PPPoE secret: {e}")
         raise e
+    
+
+
+def remove_active_connection(api, id_pelanggan: str):
+    """Mencari dan menghapus koneksi PPPoE yang sedang aktif."""
+    try:
+        ppp_active = api.get_resource('/ppp/active')
+        active_connections = ppp_active.get(name=id_pelanggan)
+
+        if active_connections:
+            connection_id = active_connections[0]['id']
+            ppp_active.remove(id=connection_id)
+            logger.info(f"Berhasil menghapus koneksi aktif untuk '{id_pelanggan}'.")
+        else:
+            logger.info(f"Tidak ada koneksi aktif yang ditemukan untuk '{id_pelanggan}'.")
+    except Exception as e:
+        logger.error(f"Gagal menghapus koneksi aktif untuk '{id_pelanggan}': {e}")
+        # Tidak perlu 'raise e' agar proses suspend utama tidak gagal total
+        # jika hanya gagal menghapus koneksi aktif.
+
+
 
 async def trigger_mikrotik_update(db: AsyncSession, langganan: LanggananModel):
     """Fungsi utama yang dipanggil dari router atau job untuk trigger update ke Mikrotik."""
@@ -92,6 +114,66 @@ async def trigger_mikrotik_update(db: AsyncSession, langganan: LanggananModel):
 
     try:
         update_pppoe_secret(api, data_teknis, langganan.status)
+
+    # Jika statusnya adalah Suspended, panggil juga fungsi untuk remove active connection
+        if langganan.status == "Suspended":
+            remove_active_connection(api, data_teknis.id_pelanggan)
+
+    finally:
+        if connection:
+            logger.info("Menutup koneksi Mikrotik.")
+            connection.disconnect()
+
+
+# --- FUNGSI BARU UNTUK MEMBUAT SECRET ---
+def create_pppoe_secret(api, data_teknis: DataTeknisModel):
+    """Menambahkan PPPoE secret baru di Mikrotik."""
+    try:
+        ppp_secrets = api.get_resource('/ppp/secret')
+        
+        # Siapkan data untuk secret baru
+        secret_payload = {
+            'name': data_teknis.id_pelanggan,
+            'password': data_teknis.password_pppoe,
+            'profile': data_teknis.profile_pppoe,
+            'service': 'pppoe',
+            'comment': f"Created by Billing API on {datetime.now().strftime('%Y-%m-%d')}"
+        }
+
+        # Tambahkan IP Address jika ada
+        if data_teknis.ip_pelanggan:
+            secret_payload['remote-address'] = data_teknis.ip_pelanggan
+
+        ppp_secrets.add(**secret_payload)
+        logger.info(f"Berhasil membuat PPPoE secret untuk '{data_teknis.id_pelanggan}'.")
+
+    except Exception as e:
+        logger.error(f"Gagal membuat PPPoE secret untuk '{data_teknis.id_pelanggan}': {e}")
+        raise e
+
+# --- FUNGSI BARU SEBAGAI TRIGGER ---
+async def trigger_mikrotik_create(db: AsyncSession, data_teknis: DataTeknisModel):
+    """Fungsi utama yang dipanggil untuk trigger pembuatan secret di Mikrotik."""
+    if not data_teknis or not data_teknis.id_pelanggan:
+        logger.warning(f"Data teknis atau id_pelanggan tidak valid. Skip pembuatan secret.")
+        return
+
+    server_id = data_teknis.mikrotik_server_id
+    if not server_id:
+        logger.error(f"mikrotik_server_id tidak di-set untuk data teknis ID {data_teknis.id}. Skip.")
+        return
+
+    mikrotik_server_info = await db.get(MikrotikServerModel, server_id)
+    if not mikrotik_server_info:
+        logger.error(f"Server Mikrotik dengan ID {server_id} tidak ditemukan.")
+        return
+
+    api, connection = get_api_connection(mikrotik_server_info)
+    if not api:
+        return
+
+    try:
+        create_pppoe_secret(api, data_teknis)
     finally:
         if connection:
             logger.info("Menutup koneksi Mikrotik.")

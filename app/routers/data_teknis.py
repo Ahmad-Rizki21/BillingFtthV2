@@ -17,7 +17,9 @@ from fastapi.responses import StreamingResponse
 
 # Impor model Pelanggan dengan nama asli 'Pelanggan', lalu kita beri alias 'PelangganModel'
 from ..models.pelanggan import Pelanggan as PelangganModel 
-from ..database import AsyncSessionLocal 
+from ..database import AsyncSessionLocal
+
+from ..services import mikrotik_service
 
 # Impor model DataTeknis
 from ..models.data_teknis import DataTeknis as DataTeknisModel
@@ -65,6 +67,16 @@ async def create_data_teknis(
     db.add(db_data_teknis)
     await db.commit()
     await db.refresh(db_data_teknis)
+
+    try:
+        # Panggil fungsi trigger setelah data berhasil disimpan
+        await mikrotik_service.trigger_mikrotik_create(db, db_data_teknis)
+    except Exception as e:
+        # Jika gagal membuat secret, jangan batalkan proses.
+        # Cukup catat errornya. Data teknis tetap berhasil dibuat.
+        logger.error(f"Data teknis ID {db_data_teknis.id} berhasil disimpan, "
+                     f"namun gagal membuat secret di Mikrotik: {e}")
+
     return db_data_teknis
 
 
