@@ -141,11 +141,11 @@
                   <span class="text-h6 font-weight-bold text-white">Paket Layanan untuk</span>
                   <v-chip color="white" class="ms-3 elevation-2" size="large">
                     <v-avatar start color="teal" size="24">
-                      <span class="text-caption font-weight-bold">
+                      <span class="text-caption font-weight-bold text-white">
                         {{ selectedBrand.brand.substring(0, 2).toUpperCase() }}
                       </span>
                     </v-avatar>
-                    <span class="text-teal font-weight-bold">{{ selectedBrand.brand }}</span>
+                    <span class="font-weight-bold text-white">{{ selectedBrand.brand }}</span>
                   </v-chip>
                 </div>
                 <v-spacer></v-spacer>
