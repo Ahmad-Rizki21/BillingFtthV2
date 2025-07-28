@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy.future import select
-from sqlalchemy import func # <-- TAMBAHAN: Impor func
+from sqlalchemy import func, or_ # <-- TAMBAHAN: Impor func
 from datetime import date, timedelta, datetime, timezone
 from dateutil.relativedelta import relativedelta
 import uuid
@@ -11,6 +11,8 @@ import json
 import logging
 import pytz
 from ..websocket_manager import manager
+
+from typing import Optional
 
 # Impor semua model dan skema yang dibutuhkan
 from ..models.invoice import Invoice as InvoiceModel
@@ -32,9 +34,43 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=List[InvoiceSchema])
-async def get_all_invoices(db: AsyncSession = Depends(get_db)):
-    """Mengambil semua data invoice."""
-    result = await db.execute(select(InvoiceModel))
+async def get_all_invoices(
+    db: AsyncSession = Depends(get_db),
+    # Tambahkan parameter filter
+    search: Optional[str] = None,
+    status_invoice: Optional[str] = None,
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None,
+):
+    """Mengambil semua data invoice dengan filter."""
+    query = (
+        select(InvoiceModel)
+        .join(InvoiceModel.pelanggan)
+        .options(selectinload(InvoiceModel.pelanggan))
+    )
+
+    # Filter pencarian umum (No. Invoice, Nama Pelanggan, ID PPPoE)
+    if search:
+        search_term = f"%{search}%"
+        query = query.where(
+            or_(
+                InvoiceModel.invoice_number.ilike(search_term),
+                PelangganModel.nama.ilike(search_term),
+                InvoiceModel.id_pelanggan.ilike(search_term)
+            )
+        )
+
+    # Filter berdasarkan status invoice
+    if status_invoice:
+        query = query.where(InvoiceModel.status_invoice == status_invoice)
+
+    # Filter berdasarkan rentang tanggal jatuh tempo
+    if start_date:
+        query = query.where(InvoiceModel.tgl_jatuh_tempo >= start_date)
+    if end_date:
+        query = query.where(InvoiceModel.tgl_jatuh_tempo <= end_date)
+
+    result = await db.execute(query)
     return result.scalars().all()
 
 

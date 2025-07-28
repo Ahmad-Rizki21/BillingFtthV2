@@ -38,20 +38,33 @@ async def create_langganan(langganan: LanggananCreate, db: AsyncSession = Depend
 #Penyempurnaan
 @router.get("/", response_model=List[LanggananSchema])
 async def get_all_langganan(
+    # Tambahkan parameter filter baru
+    search: Optional[str] = None,       # Untuk mencari nama pelanggan
+    paket_layanan_id: Optional[int] = None,
     status: Optional[str] = None,
-    skip: int = 0, 
-    limit: int = 100, 
+    skip: int = 0,
+    limit: int = 100,
     db: AsyncSession = Depends(get_db)
 ):
     query = (
         select(LanggananModel)
-        # --- KUNCI PERBAIKAN ADA DI SINI ---
+        # JOIN dengan tabel Pelanggan agar bisa mencari berdasarkan nama
+        .join(LanggananModel.pelanggan)
         .options(selectinload(LanggananModel.paket_layanan))
     )
-    
+
+    # Filter berdasarkan pencarian nama pelanggan
+    if search:
+        query = query.where(PelangganModel.nama.ilike(f"%{search}%"))
+
+    # Filter berdasarkan paket layanan
+    if paket_layanan_id:
+        query = query.where(LanggananModel.paket_layanan_id == paket_layanan_id)
+
+    # Filter berdasarkan status
     if status:
         query = query.where(LanggananModel.status == status)
-        
+
     query = query.offset(skip).limit(limit)
     result = await db.execute(query)
     return result.scalars().all()

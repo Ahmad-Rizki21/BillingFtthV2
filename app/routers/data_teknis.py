@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy import select, func 
+from sqlalchemy import select, func, or_
 from typing import List
 import csv
 import io
@@ -12,6 +12,8 @@ from sqlalchemy.orm import selectinload
 import logging
 from io import BytesIO
 from fastapi.responses import StreamingResponse
+
+from typing import Optional
 
 # --- PASTIKAN SEMUA IMPORT INI ADA DAN BENAR ---
 
@@ -82,12 +84,39 @@ async def create_data_teknis(
 
 @router.get("/", response_model=List[DataTeknisSchema])
 async def read_all_data_teknis(
-    skip: int = 0, limit: int = 100, db: AsyncSession = Depends(get_db)
+    skip: int = 0, 
+    limit: int = 100,
+    # Tambahkan parameter filter
+    search: Optional[str] = None,
+    olt: Optional[str] = None,
+    db: AsyncSession = Depends(get_db)
 ):
     """
-    Mengambil daftar semua data teknis dengan paginasi.
+    Mengambil daftar semua data teknis dengan paginasi dan filter.
     """
-    query = select(DataTeknisModel).offset(skip).limit(limit)
+    query = (
+        select(DataTeknisModel)
+        # JOIN dengan tabel Pelanggan agar bisa mencari berdasarkan nama
+        .join(DataTeknisModel.pelanggan)
+        .options(selectinload(DataTeknisModel.pelanggan)) # Eager load data pelanggan
+    )
+
+    # Filter pencarian umum (Nama Pelanggan, ID PPPoE, IP)
+    if search:
+        search_term = f"%{search}%"
+        query = query.where(
+            or_(
+                PelangganModel.nama.ilike(search_term),
+                DataTeknisModel.id_pelanggan.ilike(search_term),
+                DataTeknisModel.ip_pelanggan.ilike(search_term)
+            )
+        )
+
+    # Filter berdasarkan OLT
+    if olt:
+        query = query.where(DataTeknisModel.olt == olt)
+
+    query = query.offset(skip).limit(limit)
     result = await db.execute(query)
     data_teknis_list = result.scalars().all()
     return data_teknis_list

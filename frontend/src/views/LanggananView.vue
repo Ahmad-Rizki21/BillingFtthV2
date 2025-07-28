@@ -52,6 +52,50 @@
           </v-card>
         </v-dialog>
 
+        <v-card class="filter-card mb-6" elevation="0">
+      <div class="d-flex flex-wrap align-center gap-4">
+        <v-text-field
+          v-model="searchQuery"
+          label="Cari Nama Pelanggan"
+          prepend-inner-icon="mdi-magnify"
+          variant="outlined"
+          density="comfortable"
+          hide-details
+        ></v-text-field>
+
+        <v-select
+          v-model="selectedPaket"
+          :items="paketLayananSelectList"
+          item-title="nama_paket"
+          item-value="id"
+          label="Filter Paket Layanan"
+          variant="outlined"
+          density="comfortable"
+          hide-details
+          clearable
+        ></v-select>
+
+        <v-select
+          v-model="selectedStatus"
+          :items="statusOptions"
+          label="Filter Status"
+          variant="outlined"
+          density="comfortable"
+          hide-details
+          clearable
+        ></v-select>
+        
+        <v-btn
+            variant="text"
+            @click="resetFilters"
+        >
+          Reset Filter
+        </v-btn>
+      </div>
+    </v-card>
+    <v-card elevation="3" class="rounded-lg">
+      </v-card>
+
     <v-card elevation="3" class="rounded-lg">
       <v-card-title class="d-flex align-center pa-6 bg-grey-lighten-5">
         <v-icon start icon="mdi-format-list-bulleted-square" color="primary"></v-icon>
@@ -404,6 +448,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
 import apiClient from '@/services/api';
+import { debounce } from 'lodash-es';
 
 // --- Interfaces ---
 interface Langganan {
@@ -447,6 +492,11 @@ const dialogImport = ref(false);
 const importing = ref(false);
 const fileToImport = ref<File[]>([]);
 const importErrors = ref<string[]>([]);
+
+const searchQuery = ref('');
+const selectedPaket = ref<number | null>(null);
+const selectedStatus = ref<string | null>(null);
+const statusOptions = ref(['Aktif', 'Suspended', 'Ditangguhkan', 'Berhenti']);
 
 
 function handleFileSelection(newFiles: File | File[]) {
@@ -547,7 +597,18 @@ watch(
 async function fetchLangganan() {
   loading.value = true;
   try {
-    const response = await apiClient.get<Langganan[]>('/langganan/');
+    const params = new URLSearchParams();
+    if (searchQuery.value) {
+      params.append('search', searchQuery.value);
+    }
+    if (selectedPaket.value) {
+      params.append('paket_layanan_id', String(selectedPaket.value));
+    }
+    if (selectedStatus.value) {
+      params.append('status', selectedStatus.value);
+    }
+    
+    const response = await apiClient.get<Langganan[]>(`/langganan/?${params.toString()}`);
     langgananList.value = response.data;
   } catch (error) {
     console.error("Gagal mengambil data langganan:", error);
@@ -555,6 +616,24 @@ async function fetchLangganan() {
     loading.value = false;
   }
 }
+
+// Fungsi yang di-debounce untuk menerapkan filter
+const applyFilters = debounce(() => {
+  fetchLangganan();
+}, 500); // Tunda 500ms
+
+// Perhatikan perubahan pada filter dan panggil fungsi applyFilters
+watch([searchQuery, selectedPaket, selectedStatus], () => {
+  applyFilters();
+});
+
+// Fungsi untuk mereset semua filter
+function resetFilters() {
+  searchQuery.value = '';
+  selectedPaket.value = null;
+  selectedStatus.value = null;
+}
+// ============================================
 
 async function fetchPelangganForSelect() {
   try {
@@ -736,6 +815,280 @@ async function importFromCsv() {
 </script>
 
 <style scoped>
+
+/* ============================================
+   ENHANCED FILTER CARD STYLING
+   ============================================ */
+
+.filter-card {
+  border-radius: 20px;
+  border: 1px solid rgba(var(--v-theme-primary), 0.12);
+  background: linear-gradient(145deg, 
+    rgba(var(--v-theme-surface), 0.95) 0%, 
+    rgba(var(--v-theme-background), 0.98) 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 20px rgba(var(--v-theme-shadow), 0.08),
+    0 1px 3px rgba(var(--v-theme-shadow), 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efek hover pada filter card */
+.filter-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 30px rgba(var(--v-theme-shadow), 0.12),
+    0 2px 6px rgba(var(--v-theme-shadow), 0.16);
+  border-color: rgba(var(--v-theme-primary), 0.2);
+}
+
+/* Efek glow subtle di bagian atas card */
+.filter-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(var(--v-theme-primary), 0.6) 50%, 
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.filter-card:hover::before {
+  opacity: 1;
+}
+
+/* Container utama filter */
+.filter-card .d-flex {
+  padding: 28px 32px !important;
+  gap: 20px !important;
+}
+
+/* Styling untuk text field pencarian */
+.filter-card .v-text-field {
+  min-width: 320px !important;
+}
+
+.filter-card .v-text-field :deep(.v-field) {
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border: 2px solid rgba(var(--v-theme-outline-variant), 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-card .v-text-field :deep(.v-field:hover) {
+  border-color: rgba(var(--v-theme-primary), 0.4) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 4px 12px rgba(var(--v-theme-primary), 0.1);
+}
+
+.filter-card .v-text-field :deep(.v-field--focused) {
+  border-color: rgb(var(--v-theme-primary)) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 0 0 3px rgba(var(--v-theme-primary), 0.12);
+}
+
+/* Icon pencarian */
+.filter-card .v-text-field :deep(.v-field__prepend-inner) {
+  padding-right: 12px;
+}
+
+.filter-card .v-text-field :deep(.v-field__prepend-inner .v-icon) {
+  color: rgba(var(--v-theme-primary), 0.7) !important;
+  transition: color 0.2s ease;
+}
+
+.filter-card .v-text-field:hover :deep(.v-field__prepend-inner .v-icon) {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Styling untuk select fields (alamat & brand) */
+.filter-card .v-select {
+  min-width: 220px !important;
+}
+
+.filter-card .v-select :deep(.v-field) {
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border: 2px solid rgba(var(--v-theme-outline-variant), 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-card .v-select :deep(.v-field:hover) {
+  border-color: rgba(var(--v-theme-primary), 0.4) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 4px 12px rgba(var(--v-theme-primary), 0.1);
+}
+
+.filter-card .v-select :deep(.v-field--focused) {
+  border-color: rgb(var(--v-theme-primary)) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 0 0 3px rgba(var(--v-theme-primary), 0.12);
+}
+
+/* Label styling yang lebih refined */
+.filter-card .v-field :deep(.v-field__label) {
+  color: rgba(var(--v-theme-on-surface), 0.7) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+}
+
+.filter-card .v-field--focused :deep(.v-field__label) {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Tombol Reset Filter */
+.filter-card .v-btn[variant="text"] {
+  border-radius: 14px !important;
+  font-weight: 600 !important;
+  height: 48px !important;
+  min-width: 120px !important;
+  color: rgba(var(--v-theme-primary), 0.8) !important;
+  background: rgba(var(--v-theme-primary), 0.08) !important;
+  border: 1px solid rgba(var(--v-theme-primary), 0.2) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-card .v-btn[variant="text"]:hover {
+  background: rgba(var(--v-theme-primary), 0.12) !important;
+  color: rgb(var(--v-theme-primary)) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.2);
+}
+
+.filter-card .v-btn[variant="text"]:active {
+  transform: translateY(0);
+}
+
+/* Efek ripple custom untuk tombol reset */
+.filter-card .v-btn[variant="text"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(var(--v-theme-primary), 0.3);
+  transition: width 0.3s ease, height 0.3s ease;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.filter-card .v-btn[variant="text"]:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive design untuk mobile */
+@media (max-width: 960px) {
+  .filter-card .d-flex {
+    padding: 20px 24px !important;
+    gap: 16px !important;
+  }
+  
+  .filter-card .v-text-field,
+  .filter-card .v-select {
+    min-width: 100% !important;
+  }
+  
+  .filter-card .v-btn[variant="text"] {
+    width: 100% !important;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .filter-card .d-flex {
+    padding: 16px 20px !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  
+  .filter-card {
+    border-radius: 16px;
+    margin: 0 8px;
+  }
+}
+
+/* Dark mode adjustments */
+.v-theme--dark .filter-card {
+  background: linear-gradient(145deg, 
+    rgba(var(--v-theme-surface), 0.9) 0%, 
+    rgba(var(--v-theme-background), 0.95) 100%);
+  border-color: rgba(var(--v-theme-primary), 0.2);
+}
+
+.v-theme--dark .filter-card:hover {
+  border-color: rgba(var(--v-theme-primary), 0.3);
+}
+
+.v-theme--dark .filter-card .v-text-field :deep(.v-field),
+.v-theme--dark .filter-card .v-select :deep(.v-field) {
+  background: rgba(var(--v-theme-surface), 0.6) !important;
+  border-color: rgba(var(--v-theme-outline), 0.3) !important;
+}
+
+.v-theme--dark .filter-card .v-text-field :deep(.v-field:hover),
+.v-theme--dark .filter-card .v-select :deep(.v-field:hover) {
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border-color: rgba(var(--v-theme-primary), 0.5) !important;
+}
+
+/* Loading state untuk field */
+.filter-card .v-field--loading :deep(.v-field) {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Animasi untuk smooth transitions */
+.filter-card * {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus ring yang lebih halus */
+.filter-card .v-field--focused :deep(.v-field__outline) {
+  border-width: 2px !important;
+  border-color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Custom scrollbar untuk dropdown */
+.filter-card .v-select :deep(.v-list) {
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(var(--v-theme-shadow), 0.15);
+}
+
+.filter-card .v-select :deep(.v-list-item) {
+  border-radius: 8px;
+  margin: 2px 8px;
+  transition: all 0.2s ease;
+}
+
+.filter-card .v-select :deep(.v-list-item:hover) {
+  background: rgba(var(--v-theme-primary), 0.08) !important;
+  transform: translateX(4px);
+}
+
 .v-data-table {
   --v-data-table-header-height: 60px;
 }

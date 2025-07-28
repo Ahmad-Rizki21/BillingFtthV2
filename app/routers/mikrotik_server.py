@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from datetime import datetime
-from typing import List
+from typing import List, Optional
+from sqlalchemy import or_
 
 # Impor model dan skema secara langsung
 from ..models.mikrotik_server import MikrotikServer as MikrotikServerModel
@@ -30,11 +31,37 @@ async def create_mikrotik_server(server_data: MikrotikServerCreate, db: AsyncSes
     return db_server
 
 @router.get("/", response_model=List[MikrotikServerSchema])
-async def get_all_mikrotik_servers(db: AsyncSession = Depends(get_db)):
+async def get_all_mikrotik_servers(
+    # Tambahkan parameter filter
+    search: Optional[str] = None,
+    is_active: Optional[bool] = None,
+    last_connection_status: Optional[str] = None,
+    db: AsyncSession = Depends(get_db)
+):
     """
-    Mengambil daftar semua server Mikrotik yang terdaftar.
+    Mengambil daftar semua server Mikrotik yang terdaftar dengan filter.
     """
-    result = await db.execute(select(MikrotikServerModel))
+    query = select(MikrotikServerModel)
+
+    # Filter pencarian umum (Nama Server atau IP)
+    if search:
+        search_term = f"%{search}%"
+        query = query.where(
+            or_(
+                MikrotikServerModel.name.ilike(search_term),
+                MikrotikServerModel.host_ip.ilike(search_term)
+            )
+        )
+
+    # Filter berdasarkan status aktif/nonaktif
+    if is_active is not None:
+        query = query.where(MikrotikServerModel.is_active == is_active)
+
+    # Filter berdasarkan status koneksi terakhir
+    if last_connection_status:
+        query = query.where(MikrotikServerModel.last_connection_status == last_connection_status)
+
+    result = await db.execute(query)
     servers = result.scalars().all()
     return servers
 
