@@ -279,11 +279,24 @@
         </template>
 
         <template v-slot:item.ip_pelanggan="{ item }">
-          <v-chip size="small" variant="tonal" color="primary" class="font-mono" :style="{ fontFamily: 'monospace' }">
+        <a 
+          :href="`http://${item.ip_pelanggan}`" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style="text-decoration: none;"
+        >
+          <v-chip 
+            size="small" 
+            variant="tonal" 
+            color="primary" 
+            class="font-mono" 
+            :style="{ fontFamily: 'monospace' }"
+          >
             <v-icon start size="16">mdi-ip-network</v-icon>
             {{ item.ip_pelanggan }}
           </v-chip>
-        </template>
+        </a>
+      </template>
 
         <template v-slot:item.olt="{ item }">
           <div class="d-flex align-center">
