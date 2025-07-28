@@ -33256,3 +33256,299 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-28 21:51:46 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
 2025-07-28 21:51:46 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
 2025-07-28 21:51:47 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [27780]
+2025-07-28 21:58:03 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:58:03 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:58:03 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:58:03 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:58:03 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:58:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50122 - "OPTIONS /invoices/ HTTP/1.1" 200
+2025-07-28 21:58:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50124 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 21:58:03 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50317 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:58:03 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63485 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:58:03 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:58:03 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:58:03 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51825 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51821 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51823 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51824 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51822 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51820 - "GET /invoices/ HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51824 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51822 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51824 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51821 - "GET /users/me HTTP/1.1" 401
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51825 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51820 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51824 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:58:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51823 - "GET /users/ HTTP/1.1" 200
+2025-07-28 21:58:10 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 21:58:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51823 - "POST /users/token HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51823 - "GET /users/me HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51823 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51821 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51820 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51825 - "GET /users/ HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51824 - "GET /users/me HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51822 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51821 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:58:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51872 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 21:58:11 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:58:11 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:58:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51821 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 21:58:26 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 21:58:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51821 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 21:58:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51822 - "GET /invoices/ HTTP/1.1" 200
+2025-07-28 21:58:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51825 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:58:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51824 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 22:00:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53303 - "OPTIONS /invoices/?status_invoice=Belum+Dibayar HTTP/1.1" 200
+2025-07-28 22:00:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53303 - "GET /invoices/?status_invoice=Belum+Dibayar HTTP/1.1" 200
+2025-07-28 22:00:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53303 - "GET /invoices/ HTTP/1.1" 200
+2025-07-28 22:00:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53502 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:00:42 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:00:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53502 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:04:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56005 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:04:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56001 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:04:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56002 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:04:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56003 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:04:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56004 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:04:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56005 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:04:23 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:04:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56005 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:04:23 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56012 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:04:23 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:04:23 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:07:02 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:07:02 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:07:02 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:07:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58235 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:07:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58238 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:07:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58236 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:07:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58235 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:07:03 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58237 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:07:18 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58237 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58237 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58235 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58311 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58238 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58236 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58313 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:07:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58237 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:07:18 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58244 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:07:18 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:07:18 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:07:18 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58438 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:07:18 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:07:18 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:07:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:07:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58235 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:07:33 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:07:33 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:07:33 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:07:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58238 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:07:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58236 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:07:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58235 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:07:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58311 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:07:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58313 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:07:33 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58630 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:07:33 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:07:33 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:07:49 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:07:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58313 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:08:32 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:08:32 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59376 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59377 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59378 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59379 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59380 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59380 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59380 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59377 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59376 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59378 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59379 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59380 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:08:33 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59380 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:08:48 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:08:48 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:08:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59380 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:08:48 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59386 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:08:48 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:08:48 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:08:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59742 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:08:53 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:08:53 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:09:37 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:09:37 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:09:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60317 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:09:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60322 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:09:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60320 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:09:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60321 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:09:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60319 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:09:54 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:09:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60319 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:09:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60321 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:09:54 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60330 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:09:54 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:09:54 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:11:58 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:11:58 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:12:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62003 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:12:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61998 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:12:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62001 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:12:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62002 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:12:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62000 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:12:00 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62000 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:12:15 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:12:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62000 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:12:15 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62009 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:12:15 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:12:15 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:14:07 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:14:07 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:14:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63700 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:14:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63703 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:14:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63700 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:14:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63701 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:14:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63702 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:14:24 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:14:24 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63702 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:14:24 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63701 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:14:24 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63712 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:14:24 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:14:24 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:14:51 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:14:51 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:14:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64259 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:14:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64255 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:14:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64256 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:15:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:15:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64257 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:15:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64258 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:15:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64255 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:15:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64259 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:15:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64269 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:15:08 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:15:08 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:15:41 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:15:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:15:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64978 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:15:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64977 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:15:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64975 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:15:43 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64976 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:15:43 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64979 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:15:43 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64978 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:15:58 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:15:58 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64985 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:15:58 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:15:58 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:15:58 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:15:58 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64978 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:16:03 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65232 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:16:03 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:16:03 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:16:22 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:16:22 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:16:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65474 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:16:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65477 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:16:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65475 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:16:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65474 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:16:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65476 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:16:38 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:16:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65476 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:16:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65474 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:16:38 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65484 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:16:38 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:16:38 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:16:52 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:16:52 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:16:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49476 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:16:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49472 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:16:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49473 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:16:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49474 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:16:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49476 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:16:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49475 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:17:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:17:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49621 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:17:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49479 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:17:08 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:17:08 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:17:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:17:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49472 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:17:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49476 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:17:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49473 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:17:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49621 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:17:08 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49475 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:17:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49677 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:17:08 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:17:08 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:17:23 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:17:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49475 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:18:36 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:18:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50828 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50828 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50830 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50832 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50831 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50828 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50828 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50830 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50831 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50832 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50832 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:18:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50831 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:18:53 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:18:53 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:18:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50831 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:18:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50836 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:18:53 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:18:53 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:18:53 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50832 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:18:58 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51109 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:18:58 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:18:58 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:19:04 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:19:04 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:19:05 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51203 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:19:05 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50833 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:19:06 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51202 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:19:06 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51200 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:19:06 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51201 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:19:21 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:19:21 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50833 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:19:21 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:19:21 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51210 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:19:21 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:19:21 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:19:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51419 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:19:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51423 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:19:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51420 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:19:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51421 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:19:22 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51422 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:19:37 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:19:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51422 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 22:19:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51421 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:19:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51430 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:19:37 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:19:37 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:19:38 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 22:19:38 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 22:19:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51645 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 22:19:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51422 - "GET /users/me HTTP/1.1" 200
+2025-07-28 22:19:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51643 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 22:19:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51645 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 22:19:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51421 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 22:19:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51644 - "GET /users/ HTTP/1.1" 200
+2025-07-28 22:19:39 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51650 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzE2NDkwfQ.WzPG3IC2HmDLI4BoSTdnSFGXrwH9KqeuXWgS2N1RNlY" [accepted]
+2025-07-28 22:19:39 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 22:19:39 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 22:19:55 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:19:55 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51644 - "GET /dashboard/mikrotik-status HTTP/1.1" 200

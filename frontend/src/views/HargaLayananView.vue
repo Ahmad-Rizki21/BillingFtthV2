@@ -10,7 +10,7 @@
             </v-avatar>
             <div>
               <h1 class="text-h4 font-weight-bold text-white mb-1">Brand & Paket Layanan</h1>
-              <p class="text-subtitle-1 text-white-darken-2 mb-0 opacity-90">
+              <p class="header-subtitle mb-0">
                 Kelola brand provider dan paket yang ditawarkan dengan mudah
               </p>
             </div>
@@ -33,7 +33,7 @@
 
     <v-container class="pa-6">
       <!-- Brand Provider Card -->
-      <v-card elevation="8" class="rounded-xl mb-8 overflow-hidden">
+      <v-card elevation="8" class="rounded-xl mb-8 overflow-hidden brand-provider-card">
         <div class="card-header">
           <v-card-title class="d-flex align-center pa-6">
             <v-icon color="teal" size="24" class="me-3">mdi-domain</v-icon>
@@ -133,7 +133,7 @@
       <!-- Package Details Section -->
       <v-expand-transition>
         <div v-if="selectedBrand">
-          <v-card elevation="8" class="rounded-xl overflow-hidden">
+          <v-card elevation="8" class="rounded-xl overflow-hidden package-details-card">
             <div class="package-header">
               <v-card-title class="d-flex align-center pa-6">
                 <v-icon color="white" size="24" class="me-3">mdi-package-variant</v-icon>
@@ -223,7 +223,7 @@
               </template>
 
               <template v-slot:no-data>
-                <div class="text-center pa-8">
+                <div class="text-center pa-8 no-data-section">
                   <v-icon size="64" color="grey-lighten-1" class="mb-4">mdi-package-variant-closed</v-icon>
                   <div class="text-h6 text-medium-emphasis mb-2">Belum ada paket layanan</div>
                   <div class="text-body-2 text-medium-emphasis">
@@ -240,8 +240,7 @@
       <v-card 
         v-if="!selectedBrand && brands.length > 0" 
         elevation="4" 
-        class="rounded-xl pa-8 text-center mt-8"
-        color="grey-lighten-5"
+        class="rounded-xl pa-8 text-center mt-8 empty-state-card"
       >
         <v-icon size="80" color="grey-lighten-1" class="mb-4">mdi-mouse-left-click</v-icon>
         <div class="text-h6 text-medium-emphasis mb-2">Pilih Brand untuk Melihat Paket</div>
@@ -389,7 +388,9 @@ function openDeletePackageDialog(item: PaketLayanan) { alert(`Hapus Paket: ${ite
 </script>
 
 <style scoped>
-/* Header with gradient background */
+/* ========== LIGHT MODE STYLES ========== */
+
+/* Header styling */
 .header-section {
   background: linear-gradient(135deg, #00695c 0%, #00897b 50%, #26a69a 100%);
   position: relative;
@@ -406,19 +407,55 @@ function openDeletePackageDialog(item: PaketLayanan) { alert(`Hapus Paket: ${ite
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.05"/><circle cx="10" cy="50" r="1" fill="white" opacity="0.05"/><circle cx="90" cy="30" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
 }
 
-/* Card headers with gradient */
+/* Header text styling */
+.header-section h1 {
+  color: white !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header-subtitle {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
+}
+
+/* Card styling */
+.brand-provider-card,
+.package-details-card {
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Card headers - Light Mode */
 .card-header {
-  background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+  background: linear-gradient(135deg, rgba(0, 105, 92, 0.05) 0%, rgba(38, 166, 154, 0.03) 100%);
   border-bottom: 1px solid rgba(0, 105, 92, 0.1);
+  transition: all 0.3s ease;
 }
 
 .package-header {
   background: linear-gradient(135deg, #00695c 0%, #00897b 100%);
 }
 
-/* Enhanced table styling */
+/* Empty state card styling */
+.empty-state-card {
+  background: rgba(var(--v-theme-surface-variant), 0.3);
+  border: 2px dashed rgba(var(--v-theme-on-surface), 0.2);
+  transition: all 0.3s ease;
+}
+
+.no-data-section {
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+/* Table styling - Light Mode */
 .brand-table :deep(tbody tr) {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgb(var(--v-theme-surface));
 }
 
 .brand-table :deep(tbody tr:hover) {
@@ -436,6 +473,7 @@ function openDeletePackageDialog(item: PaketLayanan) { alert(`Hapus Paket: ${ite
 
 .package-table :deep(tbody tr) {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgb(var(--v-theme-surface));
 }
 
 .package-table :deep(tbody tr:hover) {
@@ -444,7 +482,7 @@ function openDeletePackageDialog(item: PaketLayanan) { alert(`Hapus Paket: ${ite
   box-shadow: 0 2px 8px rgba(0, 105, 92, 0.1);
 }
 
-/* Enhanced buttons and chips */
+/* Button and chip transitions */
 .v-btn {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -459,21 +497,106 @@ function openDeletePackageDialog(item: PaketLayanan) { alert(`Hapus Paket: ${ite
 
 /* Loading animation */
 .v-skeleton-loader {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(
+    90deg, 
+    rgba(var(--v-theme-on-surface), 0.04) 25%, 
+    rgba(var(--v-theme-on-surface), 0.08) 50%, 
+    rgba(var(--v-theme-on-surface), 0.04) 75%
+  );
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
 
 @keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
-/* Responsive design */
+/* ========== DARK MODE STYLES ========== */
+
+/* Dark mode card adjustments */
+.v-theme--dark .brand-provider-card,
+.v-theme--dark .package-details-card {
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+}
+
+/* Dark mode card headers */
+.v-theme--dark .card-header {
+  background: linear-gradient(
+    135deg, 
+    rgba(var(--v-theme-on-surface), 0.08) 0%, 
+    rgba(var(--v-theme-on-surface), 0.04) 100%
+  );
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+}
+
+.v-theme--dark .card-header .v-card-title,
+.v-theme--dark .card-header .v-icon {
+  color: rgb(var(--v-theme-on-surface));
+}
+
+/* Dark mode empty state */
+.v-theme--dark .empty-state-card {
+  background: rgba(var(--v-theme-surface-variant), 0.5);
+  border: 2px dashed rgba(var(--v-theme-on-surface), 0.3);
+}
+
+.v-theme--dark .no-data-section .v-icon {
+  color: rgba(var(--v-theme-on-surface), 0.6) !important;
+}
+
+/* Dark mode table styling */
+.v-theme--dark .brand-table :deep(tbody tr) {
+  background: rgb(var(--v-theme-surface));
+}
+
+.v-theme--dark .brand-table :deep(tbody tr:hover) {
+  background-color: rgba(var(--v-theme-primary), 0.08) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.v-theme--dark .brand-table :deep(tbody tr.selected-row) {
+  background: linear-gradient(
+    135deg, 
+    rgba(38, 166, 154, 0.15) 0%, 
+    rgba(38, 166, 154, 0.2) 100%
+  ) !important;
+  border-left: 4px solid #26a69a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.v-theme--dark .package-table :deep(tbody tr) {
+  background: rgb(var(--v-theme-surface));
+}
+
+.v-theme--dark .package-table :deep(tbody tr:hover) {
+  background-color: rgba(var(--v-theme-primary), 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode skeleton loader */
+.v-theme--dark .v-skeleton-loader {
+  background: linear-gradient(
+    90deg, 
+    rgba(var(--v-theme-on-surface), 0.08) 25%, 
+    rgba(var(--v-theme-on-surface), 0.12) 50%, 
+    rgba(var(--v-theme-on-surface), 0.08) 75%
+  );
+}
+
+/* Dark mode text adjustments */
+.v-theme--dark .text-medium-emphasis {
+  color: rgba(var(--v-theme-on-surface), 0.7) !important;
+}
+
+.v-theme--dark .empty-state-card .text-h6,
+.v-theme--dark .empty-state-card .text-body-2 {
+  color: rgba(var(--v-theme-on-surface), 0.8) !important;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
 @media (max-width: 960px) {
   .header-section .v-container {
     padding: 1rem !important;
@@ -487,51 +610,85 @@ function openDeletePackageDialog(item: PaketLayanan) { alert(`Hapus Paket: ${ite
   .v-card .pa-6 {
     padding: 1rem !important;
   }
-}
-
-/* 1. Perbaikan header kartu */
-.v-theme--dark .card-header {
-  background: linear-gradient(135deg, rgba(var(--v-theme-on-surface), 0.05), rgba(var(--v-theme-on-surface), 0.02)) !important;
-  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12) !important;
-}
-
-/* Memastikan teks di dalam header kartu menjadi terang */
-.v-theme--dark .card-header .v-card-title {
-  color: var(--v-theme-on-surface);
-}
-
-/* 2. Perbaikan kartu "empty state" yang berwarna terang */
-.v-theme--dark .v-card[color="grey-lighten-5"] {
-  background-color: rgb(var(--v-theme-surface-variant)) !important;
-}
-
-/* 3. Perbaikan efek hover dan seleksi pada tabel brand */
-.v-theme--dark .brand-table :deep(tbody tr:hover) {
-  background-color: rgba(var(--v-theme-primary), 0.08) !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.v-theme--dark .brand-table :deep(tbody tr.selected-row) {
-  background: linear-gradient(135deg, rgba(38, 166, 154, 0.15) 0%, rgba(38, 166, 154, 0.2) 100%) !important;
-  border-left: 4px solid #26a69a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-}
-
-/* 4. Perbaikan efek hover pada tabel paket */
-.v-theme--dark .package-table :deep(tbody tr:hover) {
-  background-color: rgba(var(--v-theme-primary), 0.08) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* 5. Perbaikan animasi loading skeleton */
-.v-theme--dark .v-skeleton-loader {
-  background: linear-gradient(90deg, rgba(var(--v-theme-on-surface), 0.08) 25%, rgba(var(--v-theme-on-surface), 0.12) 50%, rgba(var(--v-theme-on-surface), 0.08) 75%);
-}
-
-/* Dark mode support */
-/* @media (prefers-color-scheme: dark) {
-  .card-header {
-    background: linear-gradient(135deg, #2e2e2e 0%, #1a3a1a 100%);
+  
+  .brand-table,
+  .package-table {
+    font-size: 0.875rem;
   }
-} */
+}
+
+@media (max-width: 600px) {
+  .header-section h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  .header-subtitle {
+    font-size: 0.875rem !important;
+  }
+  
+  .v-card .pa-6 {
+    padding: 0.75rem !important;
+  }
+  
+  .d-flex.ga-2 {
+    gap: 0.25rem !important;
+  }
+  
+  .v-btn[size="small"] {
+    min-width: 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+/* ========== ACCESSIBILITY IMPROVEMENTS ========== */
+
+/* Focus states */
+.v-btn:focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: 2px;
+}
+
+.brand-table :deep(tbody tr):focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: -2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card-header {
+    border-bottom-width: 2px;
+  }
+  
+  .empty-state-card {
+    border-width: 3px;
+  }
+  
+  .brand-table :deep(tbody tr.selected-row) {
+    border-left-width: 6px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .v-btn,
+  .v-chip,
+  .brand-table :deep(tbody tr),
+  .package-table :deep(tbody tr) {
+    transition: none;
+  }
+  
+  .v-skeleton-loader {
+    animation: none;
+  }
+  
+  .v-btn:hover {
+    transform: none;
+  }
+  
+  .brand-table :deep(tbody tr:hover),
+  .package-table :deep(tbody tr:hover) {
+    transform: none;
+  }
+}
 </style>
