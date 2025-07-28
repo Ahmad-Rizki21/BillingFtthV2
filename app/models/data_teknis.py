@@ -15,13 +15,13 @@ class DataTeknis(Base):
     __tablename__ = 'data_teknis'
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, index=True)
-    pelanggan_id: Mapped[int] = mapped_column(ForeignKey('pelanggan.id'))
+    pelanggan_id: Mapped[int] = mapped_column(ForeignKey('pelanggan.id'), index=True)
     id_vlan: Mapped[str] = mapped_column(String(191))
-    id_pelanggan: Mapped[str] = mapped_column(String(191))
+    id_pelanggan: Mapped[str] = mapped_column(String(191), index=True)
     password_pppoe: Mapped[str] = mapped_column(String(191))
-    ip_pelanggan: Mapped[str] = mapped_column(String(191))
+    ip_pelanggan: Mapped[str] = mapped_column(String(191), index=True)
     profile_pppoe: Mapped[str] = mapped_column(String(191))
-    olt: Mapped[str] = mapped_column(String(191))
+    olt: Mapped[str] = mapped_column(String(191), index=True)
     olt_custom: Mapped[str | None] = mapped_column(String(191), nullable=True)
     pon: Mapped[int | None] = mapped_column(Integer, nullable=True)
     otb: Mapped[int | None] = mapped_column(Integer, nullable=True)

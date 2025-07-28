@@ -8,7 +8,7 @@ class Pelanggan(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, index=True) # Sesuai dengan PRIMARY KEY dan ix_pelanggan_id
     no_ktp: Mapped[str] = mapped_column(String(191))
     nama: Mapped[str] = mapped_column(String(191), index=True) # Sesuai dengan KEY ix_pelanggan_nama
-    alamat: Mapped[str] = mapped_column(String(191))
+    alamat: Mapped[str] = mapped_column(String(191), index=True)
     alamat_custom: Mapped[str | None] = mapped_column(String(191))
     alamat_2: Mapped[str | None] = mapped_column(Text)
     tgl_instalasi: Mapped[Date | None] = mapped_column(Date)
@@ -16,7 +16,7 @@ class Pelanggan(Base):
     unit: Mapped[str] = mapped_column(String(191))
     no_telp: Mapped[str] = mapped_column(String(191), index=True) # Sesuai dengan KEY ix_pelanggan_no_telp
     email: Mapped[str] = mapped_column(String(191), unique=True, index=True) # Sesuai dengan KEY ix_pelanggan_email
-    id_brand: Mapped[str | None] = mapped_column(ForeignKey('harga_layanan.id_brand'))
+    id_brand: Mapped[str | None] = mapped_column(ForeignKey('harga_layanan.id_brand'), index=True)
     layanan: Mapped[str | None] = mapped_column(String(191))
     brand_default: Mapped[str | None] = mapped_column(String(191))
 

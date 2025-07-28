@@ -2,6 +2,7 @@ import pandas as pd
 from typing import List
 import openpyxl
 from io import BytesIO
+from typing import Optional
 from datetime import datetime, timedelta
 import io
 import csv
@@ -11,7 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from fastapi.responses import StreamingResponse
 from dateutil import parser
 
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from ..models.user import User as UserModel
 from ..models.role import Role as RoleModel
 from ..websocket_manager import manager
@@ -79,29 +80,44 @@ async def create_pelanggan(
 
 @router.get("/", response_model=List[PelangganSchema])
 async def read_all_pelanggan(
-    skip: int = 0, limit: int = 100, db: AsyncSession = Depends(get_db)
+    skip: int = 0, 
+    limit: int = 100, 
+    # Tambahkan parameter filter opsional di sini
+    search: Optional[str] = None,
+    alamat: Optional[str] = None,
+    id_brand: Optional[str] = None,
+    db: AsyncSession = Depends(get_db)
 ):
     """
-    Mengambil daftar semua pelanggan dengan paginasi.
+    Mengambil daftar semua pelanggan dengan paginasi dan filter.
     """
-    query = select(PelangganModel).offset(skip).limit(limit).options(selectinload(PelangganModel.data_teknis))
+    query = select(PelangganModel).options(selectinload(PelangganModel.data_teknis))
+
+    # Terapkan filter pencarian umum (nama, email, no_telp)
+    if search:
+        search_term = f"%{search}%"
+        query = query.where(
+            or_(
+                PelangganModel.nama.ilike(search_term),
+                PelangganModel.email.ilike(search_term),
+                PelangganModel.no_telp.ilike(search_term)
+            )
+        )
+
+    # Terapkan filter berdasarkan alamat
+    if alamat:
+        query = query.where(PelangganModel.alamat == alamat)
+
+    # Terapkan filter berdasarkan ID Brand
+    if id_brand:
+        query = query.where(PelangganModel.id_brand == id_brand)
+
+    # Terapkan paginasi setelah semua filter
+    query = query.offset(skip).limit(limit)
+    
     result = await db.execute(query)
     pelanggan_list = result.scalars().all()
     return pelanggan_list
-
-
-@router.get("/{pelanggan_id}", response_model=PelangganSchema)
-async def read_pelanggan_by_id(pelanggan_id: int, db: AsyncSession = Depends(get_db)):
-    """
-    Mengambil satu data pelanggan berdasarkan ID.
-    """
-    query = select(PelangganModel).where(PelangganModel.id == pelanggan_id).options(selectinload(PelangganModel.data_teknis))
-    result = await db.execute(query)
-    db_pelanggan = result.scalar_one_or_none()
-
-    if db_pelanggan is None:
-        raise HTTPException(status_code=404, detail="Pelanggan not found")
-    return db_pelanggan
 
 
 @router.patch("/{pelanggan_id}", response_model=PelangganSchema)

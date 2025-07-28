@@ -32071,3 +32071,1188 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-28 10:49:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61968 - "GET /dashboard/ HTTP/1.1" 200
 2025-07-28 10:49:23 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
 2025-07-28 10:49:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:61968 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 10:51:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63274 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 10:51:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63276 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 10:51:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63275 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 10:53:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64719 - "OPTIONS /data_teknis/3 HTTP/1.1" 200
+2025-07-28 10:53:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64719 - "PATCH /data_teknis/3 HTTP/1.1" 200
+2025-07-28 10:53:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64719 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 10:54:07 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64781 - "PATCH /data_teknis/3 HTTP/1.1" 200
+2025-07-28 10:54:07 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64781 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 10:54:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64821 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 10:54:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64822 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 10:55:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64828 - "GET /invoices/ HTTP/1.1" 200
+2025-07-28 10:55:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64830 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 10:55:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64829 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 10:55:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64829 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 10:55:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64832 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 10:55:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64833 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 10:55:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64832 - "GET /users/ HTTP/1.1" 200
+2025-07-28 10:55:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64834 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 11:09:19 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58970 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 11:09:19 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58971 - "OPTIONS /harga_layanan HTTP/1.1" 200
+2025-07-28 11:09:19 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58970 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-28 11:09:19 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58970 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-28 11:09:19 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58971 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 11:09:19 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58970 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 11:13:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62025 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 11:13:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62026 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-28 11:13:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62025 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 11:13:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62026 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 11:13:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62027 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 11:16:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64142 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 11:16:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64142 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 11:16:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64142 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 11:16:42 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-28 11:16:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64142 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 11:16:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64170 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-28 11:16:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64142 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 11:16:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64170 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 11:18:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65507 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-28 11:18:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65508 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 11:18:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65509 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 11:18:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65508 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 11:18:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:65507 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 11:26:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54667 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-28 11:26:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54668 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-28 11:26:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54668 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 11:26:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54667 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 11:31:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58378 - "OPTIONS /invoices/ HTTP/1.1" 200
+2025-07-28 11:31:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58380 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 11:31:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58379 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 11:31:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58378 - "GET /invoices/ HTTP/1.1" 200
+2025-07-28 11:31:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58379 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 11:31:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58380 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 11:37:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62594 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 11:37:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:62594 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 11:41:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50478 - "OPTIONS /mikrotik_servers/1/test_connection HTTP/1.1" 200
+2025-07-28 11:41:20 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-28 11:41:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50478 - "POST /mikrotik_servers/1/test_connection HTTP/1.1" 200
+2025-07-28 11:41:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:50478 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 13:06:51 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63571 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 13:06:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63571 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 13:06:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63571 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 13:06:52 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-28 13:06:52 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:63571 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59412 - "POST /users/token HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59412 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59412 - "GET /users/me HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59412 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59441 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59412 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59442 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59445 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59442 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59441 - "GET /users/ HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "GET /users/me HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59412 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 13:47:40 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59448 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjg3MDU5fQ.2MI5YqXJHO-JQ7xIjvZYhubiaUCiz0_F-WVzZqVvG-I" [accepted]
+2025-07-28 13:47:40 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 13:47:40 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 13:47:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 13:47:41 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-28 13:47:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 13:47:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 13:47:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "OPTIONS /harga_layanan HTTP/1.1" 200
+2025-07-28 13:47:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-28 13:47:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-28 13:47:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 13:47:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 13:47:47 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 13:47:47 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-28 13:47:47 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 13:47:47 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59530 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 13:47:47 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 13:47:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-28 13:47:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59530 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 13:47:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59530 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 13:47:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 13:47:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 13:47:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59510 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 13:47:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59443 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 13:47:51 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 13:47:51 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:08:41 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59285 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:08:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59450 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:09:12 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59776 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:09:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59849 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:09:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:60192 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:16:55 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 14:16:55 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:16:55 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [7704]
+2025-07-28 14:16:55 | UVICORN.ERROR        | [92mINFO    [0m | ASGI 'lifespan' protocol appears unsupported.
+2025-07-28 14:17:12 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:17:12 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 14:17:12 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 14:17:12 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:17:12 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 14:17:16 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49609 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:16 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:16 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:17:16 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 14:17:17 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:49611 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:17:22 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49693 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:22 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:22 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:17:28 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49774 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:28 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:28 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:17:34 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49851 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:34 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:34 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:17:40 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49938 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:40 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:40 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:17:46 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50076 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:46 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:46 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:17:52 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50156 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:52 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:52 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:17:58 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50229 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:17:58 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:17:58 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:04 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50307 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:04 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:04 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:10 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50382 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:10 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:10 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:16 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50463 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:16 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:16 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:22 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50530 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:22 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:22 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:28 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50616 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:28 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:28 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:34 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50694 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:34 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:34 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:40 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50776 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:40 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:40 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:47 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50869 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:47 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:47 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:18:57 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50999 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:18:57 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:18:57 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:19:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51125 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:19:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:19:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:19:16 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51232 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:19:16 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:19:16 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:19:25 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51461 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:19:25 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:19:25 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:19:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51597 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:19:33 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51668 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:19:33 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:19:33 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:19:41 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51772 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:19:41 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:19:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:19:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51847 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:19:50 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51882 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:19:50 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:19:50 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:19:51 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 14:19:51 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 14:19:51 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 14:19:51 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [29780]
+2025-07-28 14:20:09 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:20:09 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 14:20:09 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 14:20:09 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:20:09 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 14:20:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52161 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:20:11 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:20:11 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:20:12 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 14:20:12 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52178 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:20:20 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52292 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:20:20 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:20:21 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:20:30 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52423 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjc1OTkxfQ.x4axT9mwVT2PE4zRLWpqbJOATXoDs_sl5K8Y6pBIV5s" 403
+2025-07-28 14:20:30 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 14:20:30 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:20:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52538 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 14:20:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52539 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 14:20:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52541 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 14:20:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 14:20:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52542 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 14:20:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52539 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 14:20:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "GET /users/me HTTP/1.1" 401
+2025-07-28 14:20:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 14:20:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52541 - "GET /users/ HTTP/1.1" 200
+2025-07-28 14:20:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52542 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 14:20:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52538 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 14:20:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 14:20:40 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-28 14:20:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 14:20:43 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:20:43 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "GET /users/me HTTP/1.1" 200
+2025-07-28 14:20:43 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52539 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 14:20:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52538 - "GET /users/me HTTP/1.1" 200
+2025-07-28 14:20:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52542 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 14:20:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52541 - "GET /users/ HTTP/1.1" 200
+2025-07-28 14:20:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52540 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 14:20:44 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52604 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjg5MDQzfQ.L-xlmh4EDjUZn0dnem63U9RXPilCDY7UdtZeJZ15_Ds" [accepted]
+2025-07-28 14:20:44 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 14:20:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52539 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 14:20:44 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 14:20:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52539 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 14:20:44 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-28 14:20:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52539 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 14:41:59 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 14:41:59 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 14:41:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:41:59 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 14:41:59 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 14:41:59 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [12916]
+2025-07-28 14:42:03 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:42:03 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 14:42:03 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 14:42:03 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:42:04 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 14:42:04 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54359 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjg5MDQzfQ.L-xlmh4EDjUZn0dnem63U9RXPilCDY7UdtZeJZ15_Ds" [accepted]
+2025-07-28 14:42:04 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 14:42:04 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 14:42:06 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 14:42:06 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 14:42:06 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:42:06 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 14:42:06 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 14:42:06 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [2856]
+2025-07-28 14:42:13 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:42:13 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 14:42:13 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 14:42:13 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:42:13 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 14:42:13 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54454 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjg5MDQzfQ.L-xlmh4EDjUZn0dnem63U9RXPilCDY7UdtZeJZ15_Ds" [accepted]
+2025-07-28 14:42:13 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 14:42:13 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 14:43:43 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 14:43:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:55625 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:44:24 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56172 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:44:54 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 14:44:54 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 14:44:54 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 14:44:54 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 14:44:54 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 14:44:54 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [11924]
+2025-07-28 14:45:05 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:45:05 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 14:45:05 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 14:45:05 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:45:05 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 14:45:08 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 14:45:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:56834 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:46:53 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 14:46:53 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 14:46:53 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 14:46:53 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [14376]
+2025-07-28 14:47:17 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:47:17 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 14:47:17 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 14:47:17 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:47:17 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 14:47:19 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 14:47:19 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58448 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:48:24 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 14:48:24 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 14:48:24 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 14:48:24 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [3596]
+2025-07-28 14:48:48 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:48:48 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 14:48:48 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 14:48:48 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 14:48:48 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 14:48:50 | PASSLIB.HANDLERS.BCRYPT | [93mWARNING [0m | (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\laragon\www\ArtacomFTTHBilling_V2\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 14:48:51 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59718 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:49:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59925 - "POST /users/token HTTP/1.1" 200
+2025-07-28 14:49:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59925 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 14:49:09 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59936 - "GET /users/me HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59936 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59950 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59952 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59949 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59949 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59949 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59953 - "GET /users/me HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59962 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNjkwNzQ5fQ.Kz4hSt5D9ffG6mb5bn2KGyw33IlK0rcq80Y1ir41krI" [accepted]
+2025-07-28 14:49:10 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59952 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59936 - "GET /users/ HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59949 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59950 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 14:49:10 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59950 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 14:49:11 | SERVICES.MIKROTIK_SERVICE | [92mINFO    [0m | Berhasil terhubung ke Mikrotik Tambun
+2025-07-28 14:49:11 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59950 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 17:53:38 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 17:53:38 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "POST /users/token HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "GET /users/me HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51258 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51259 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51256 - "GET /users/me HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51259 - "GET /users/ HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51258 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51241 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51260 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 20:51:38 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51266 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 20:51:38 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 20:51:38 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 20:51:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51260 - "OPTIONS /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 20:51:54 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 20:51:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51260 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 20:52:29 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 20:52:29 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 20:52:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51875 - "GET /dashboard/ HTTP/1.1" 200
+2025-07-28 20:52:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51879 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 20:52:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51876 - "GET /users/me HTTP/1.1" 200
+2025-07-28 20:52:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51877 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 20:52:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51878 - "GET /users/ HTTP/1.1" 200
+2025-07-28 20:52:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 20:52:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51878 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-07-28 20:52:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51877 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 20:52:45 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51887 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 20:52:45 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 20:52:45 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 20:55:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54024 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 20:55:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54025 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 20:55:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54026 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-28 20:55:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54024 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 20:55:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54025 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 20:55:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54026 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:02:31 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:02:31 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:02:31 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:02:32 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:02:32 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:02:32 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [24164]
+2025-07-28 21:02:37 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:02:37 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:02:37 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:02:37 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:02:37 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:02:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59196 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 21:02:37 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:02:37 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:03:08 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:03:08 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:03:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:03:08 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:03:08 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:03:08 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [22628]
+2025-07-28 21:03:12 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:03:12 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:03:12 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:03:12 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:03:12 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:03:13 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59714 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 21:03:13 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:03:13 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:05:17 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:05:17 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:05:17 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:05:17 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:05:17 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:05:17 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [15040]
+2025-07-28 21:05:21 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:05:21 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:05:21 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:05:21 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:05:21 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:05:22 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61336 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 21:05:22 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:05:22 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:09:56 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:09:56 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64920 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64921 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64922 - "OPTIONS /users/me HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64920 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64923 - "OPTIONS /roles/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64924 - "OPTIONS /users/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64921 - "OPTIONS /langganan?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64923 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64923 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64923 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64921 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64920 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64925 - "GET /users/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64924 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64922 - "GET /users/me HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:64923 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:09:57 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64934 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 21:09:57 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:09:57 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:14:29 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:14:29 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:14:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51815 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:14:29 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51815 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 21:14:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51817 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:14:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51816 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:14:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51818 - "GET /users/me HTTP/1.1" 200
+2025-07-28 21:14:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51819 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 21:14:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51820 - "GET /users/ HTTP/1.1" 200
+2025-07-28 21:14:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51819 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:14:30 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51822 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 21:14:30 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:14:30 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:14:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51967 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:14:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51968 - "OPTIONS /harga_layanan HTTP/1.1" 200
+2025-07-28 21:14:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51968 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-28 21:14:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51967 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:14:42 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:14:42 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51968 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51968 - "GET /langganan?status=Ditangguhkan HTTP/1.1" 307
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51994 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51995 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51997 - "GET /roles/ HTTP/1.1" 200
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51998 - "GET /users/ HTTP/1.1" 200
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51996 - "GET /users/me HTTP/1.1" 200
+2025-07-28 21:14:44 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51995 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:14:44 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52004 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 21:14:44 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:14:44 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:14:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51996 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-28 21:14:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51995 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:14:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51995 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-28 21:14:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51995 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 21:17:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53816 - "OPTIONS /pelanggan/?id_brand=ajn-02 HTTP/1.1" 200
+2025-07-28 21:17:15 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53816 - "GET /pelanggan/?id_brand=ajn-02 HTTP/1.1" 200
+2025-07-28 21:17:18 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53816 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:17:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53816 - "OPTIONS /pelanggan/?id_brand=ajn-01 HTTP/1.1" 200
+2025-07-28 21:17:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53816 - "GET /pelanggan/?id_brand=ajn-01 HTTP/1.1" 200
+2025-07-28 21:17:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:53816 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:17:34 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54027 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:17:34 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54028 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:17:34 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54026 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:17:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54028 - "GET /harga_layanan HTTP/1.1" 307
+2025-07-28 21:17:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54026 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:17:36 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:54026 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 21:21:24 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:21:24 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:21:24 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:21:24 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:21:24 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:21:24 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [23132]
+2025-07-28 21:21:33 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:21:33 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:21:33 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:21:33 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:21:33 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:21:33 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56941 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" [accepted]
+2025-07-28 21:21:33 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 connected. Total connections: 1
+2025-07-28 21:21:33 | UVICORN.ERROR        | [92mINFO    [0m | connection open
+2025-07-28 21:24:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59130 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 21:24:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59131 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:24:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59132 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:24:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59130 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:24:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59131 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:24:20 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59132 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:24:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "OPTIONS /langganan/?paket_layanan_id=8 HTTP/1.1" 200
+2025-07-28 21:24:30 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "GET /langganan/?paket_layanan_id=8 HTTP/1.1" 200
+2025-07-28 21:24:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:24:35 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "OPTIONS /langganan/?status=Aktif HTTP/1.1" 200
+2025-07-28 21:24:35 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "GET /langganan/?status=Aktif HTTP/1.1" 200
+2025-07-28 21:24:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "OPTIONS /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:24:38 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "GET /langganan/?status=Ditangguhkan HTTP/1.1" 200
+2025-07-28 21:24:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59260 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:29:36 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:29:36 | WEBSOCKET_MANAGER    | [92mINFO    [0m | User 4 disconnected. Total connections: 0
+2025-07-28 21:29:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:29:36 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:29:36 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:29:36 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [21396]
+2025-07-28 21:29:39 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:29:39 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:29:39 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:29:39 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:29:39 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:29:41 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63078 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:29:41 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:29:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:29:47 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63145 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:29:47 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:29:47 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:29:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63216 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:29:53 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:29:53 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:29:59 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63286 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:29:59 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:29:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:00 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:30:01 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:30:01 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:30:01 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [30028]
+2025-07-28 21:30:05 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:30:05 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:30:05 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:30:05 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:30:05 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:30:05 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63359 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:05 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:05 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63429 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:11 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:11 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:17 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63496 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:17 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:17 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:23 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63570 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:23 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:23 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:29 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63660 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:29 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:29 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:35 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63732 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:35 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:35 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:41 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63811 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:41 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:47 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63887 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:47 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:47 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:30:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63970 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:30:53 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:30:53 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:00 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64053 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:00 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:00 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:06 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64128 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:06 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:06 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:13 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64215 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:13 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:13 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:16 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:31:17 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:31:17 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:31:17 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [17136]
+2025-07-28 21:31:21 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:31:21 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:31:21 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:31:21 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:31:21 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:31:21 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64327 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:21 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:21 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:29 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64514 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:29 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:29 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64620 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:37 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:37 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64692 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64763 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:31:55 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64834 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:31:55 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:31:55 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:01 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64908 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:01 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:01 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:07 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:64991 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:07 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:07 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:13 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65065 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:13 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:13 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:19 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65143 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:19 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:19 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:25 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65226 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:25 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:25 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:31 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65303 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:31 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:31 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65377 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:37 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:37 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65448 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:65528 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:32:55 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49226 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:32:55 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:32:55 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:02 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49290 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:02 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:02 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49369 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:15 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49457 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:15 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:15 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:24 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49566 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:24 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:24 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:34 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49693 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:34 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:34 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:42 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49801 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:42 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:42 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:47 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49862 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:47 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:47 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:49944 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:53 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:53 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:33:59 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50073 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:33:59 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:33:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:05 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50148 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:05 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:05 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50223 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:11 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:11 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:17 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50292 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:17 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:17 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:23 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50361 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:23 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:23 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:29 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50427 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:29 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:29 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:35 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50494 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:35 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:35 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:41 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50562 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:41 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:47 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50630 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:47 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:47 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50707 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:53 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:53 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:34:59 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50781 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:34:59 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:34:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:35:06 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50861 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:35:06 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:35:06 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:35:12 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:50943 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:35:12 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:35:12 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:35:19 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51022 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:35:19 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:35:19 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:35:29 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51162 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:35:29 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:35:29 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:35:31 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51180 - "OPTIONS /data_teknis/ HTTP/1.1" 200
+2025-07-28 21:35:31 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51181 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:35:31 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51182 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:35:31 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51181 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 21:35:31 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51180 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:35:31 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51182 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:35:38 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51279 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:35:38 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:35:38 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:35:48 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51393 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:35:48 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:35:48 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:35:56 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51483 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:35:56 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:35:56 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:03 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51577 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:03 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:03 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51675 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:11 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:11 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:19 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51765 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:19 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:19 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:25 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51843 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 21:36:25 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51848 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:25 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:25 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51843 - "OPTIONS /data_teknis/?search=ART HTTP/1.1" 200
+2025-07-28 21:36:26 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51843 - "GET /data_teknis/?search=ART HTTP/1.1" 200
+2025-07-28 21:36:28 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:51843 - "GET /data_teknis/ HTTP/1.1" 200
+2025-07-28 21:36:35 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:51969 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:35 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:35 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52058 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52086 - "OPTIONS /harga_layanan/ HTTP/1.1" 200
+2025-07-28 21:36:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52087 - "OPTIONS /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:36:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52087 - "GET /harga_layanan/ HTTP/1.1" 200
+2025-07-28 21:36:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52086 - "GET /paket_layanan/ HTTP/1.1" 200
+2025-07-28 21:36:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52175 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:53 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:53 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:36:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52200 - "OPTIONS /invoices/ HTTP/1.1" 200
+2025-07-28 21:36:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52201 - "OPTIONS /langganan/ HTTP/1.1" 200
+2025-07-28 21:36:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52202 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:36:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52201 - "GET /invoices/ HTTP/1.1" 200
+2025-07-28 21:36:54 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52200 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:36:59 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52254 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:36:59 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:36:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:37:04 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:52319 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:37:06 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52340 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:37:06 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:37:06 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:37:13 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52437 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:37:13 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:37:13 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:37:24 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52559 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:37:24 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:37:24 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:37:31 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52639 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:37:31 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:37:31 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:37:41 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52772 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:37:41 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:37:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:37:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52876 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:37:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:37:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:37:57 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:52975 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:37:57 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:37:57 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:38:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53093 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:38:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:38:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:38:17 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53192 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:38:17 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:38:17 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:38:26 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53296 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:38:26 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:38:26 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:38:36 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53413 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:38:36 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:38:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:38:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53510 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:38:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:38:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:38:51 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53594 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:38:51 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:38:51 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:38:59 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53685 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:38:59 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:38:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:39:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53804 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:39:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:39:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:39:17 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:53912 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:39:17 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:39:17 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:39:26 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54021 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:39:26 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:39:26 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:39:35 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54118 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:39:35 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:39:35 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:39:44 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54224 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:39:44 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:39:44 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:39:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54282 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:39:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:39:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:39:55 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54348 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:39:55 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:39:55 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:01 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54413 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:01 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:01 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:07 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54483 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:07 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:07 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:13 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54548 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:13 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:13 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:19 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54613 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:19 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:19 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:25 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54680 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:25 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:25 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:31 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54745 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:31 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:31 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54813 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:37 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:37 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54882 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:54950 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:40:55 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55024 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:40:55 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:40:55 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:01 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55096 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:01 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:01 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55170 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:14 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55255 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:14 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:14 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:20 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55338 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:20 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:20 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:28 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55427 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:28 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:28 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:36 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55535 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:36 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55623 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:41:53 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55742 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:41:53 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:41:53 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:42:01 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55847 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:42:01 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:42:01 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:42:10 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:55970 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:42:10 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:42:10 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:42:15 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:42:15 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:42:15 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:42:15 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [17916]
+2025-07-28 21:42:20 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:42:20 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:42:20 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:42:20 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:42:20 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:42:20 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56085 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:42:20 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:42:20 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:42:28 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:42:28 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:42:28 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:42:28 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [21824]
+2025-07-28 21:42:34 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:42:34 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:42:34 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:42:34 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:42:34 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:42:34 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56209 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:42:34 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:42:34 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:42:42 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56368 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:42:42 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:42:42 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:42:52 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56606 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:42:52 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:42:52 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:03 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56753 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:03 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:03 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56864 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:11 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:11 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:18 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:56961 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:18 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:18 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:25 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57048 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:25 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:25 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:34 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57159 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:34 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:34 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57273 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:51 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57370 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:51 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:51 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:43:51 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:43:51 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:43:51 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:43:51 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [16592]
+2025-07-28 21:43:56 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:43:56 | MAIN                 | [92mINFO    [0m | Sistem logging berhasil diinisialisasi!
+2025-07-28 21:43:56 | MAIN                 | [92mINFO    [0m | File log disimpan di: D:\laragon\www\ArtacomFTTHBilling_V2\logs
+2025-07-28 21:43:56 | MAIN                 | [92mINFO    [0m | ========================================
+2025-07-28 21:43:56 | UVICORN.ERROR        | [92mINFO    [0m | Application startup complete.
+2025-07-28 21:43:57 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57451 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:43:57 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:43:57 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:04 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57639 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:04 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:04 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:11 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57719 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:11 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:11 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:17 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57818 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:17 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:17 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:24 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:57901 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:24 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:24 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:33 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58017 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:33 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:33 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:41 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58131 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:41 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58229 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:44:57 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58323 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:44:57 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:44:57 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:07 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58450 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:07 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:07 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:14 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58541 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:14 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:14 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58659 - "OPTIONS /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:45:23 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58659 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:45:25 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58684 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:25 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:25 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:31 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58753 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:31 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:31 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "OPTIONS /mikrotik_servers/?search=Serang HTTP/1.1" 200
+2025-07-28 21:45:32 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/?search=Serang HTTP/1.1" 200
+2025-07-28 21:45:35 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:45:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "OPTIONS /mikrotik_servers/?is_active=true HTTP/1.1" 200
+2025-07-28 21:45:37 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/?is_active=true HTTP/1.1" 200
+2025-07-28 21:45:39 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:45:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "OPTIONS /mikrotik_servers/?is_active=false HTTP/1.1" 200
+2025-07-28 21:45:40 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/?is_active=false HTTP/1.1" 200
+2025-07-28 21:45:41 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58869 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:41 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:41 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:42 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:45:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "OPTIONS /mikrotik_servers/?last_connection_status=Success HTTP/1.1" 200
+2025-07-28 21:45:45 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/?last_connection_status=Success HTTP/1.1" 200
+2025-07-28 21:45:46 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:45:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "OPTIONS /mikrotik_servers/?last_connection_status=Failed HTTP/1.1" 200
+2025-07-28 21:45:48 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/?last_connection_status=Failed HTTP/1.1" 200
+2025-07-28 21:45:49 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:58757 - "GET /mikrotik_servers/ HTTP/1.1" 200
+2025-07-28 21:45:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:58959 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:54 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59015 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:54 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:54 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:45:59 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59072 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:45:59 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:45:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:04 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59129 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:04 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:04 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:05 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59152 - "OPTIONS /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:46:06 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59151 - "GET /invoices/ HTTP/1.1" 200
+2025-07-28 21:46:06 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59153 - "GET /langganan/ HTTP/1.1" 200
+2025-07-28 21:46:06 | UVICORN.ACCESS       | [92mINFO    [0m | 127.0.0.1:59152 - "GET /pelanggan/ HTTP/1.1" 200
+2025-07-28 21:46:09 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59198 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:09 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:09 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:15 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59275 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:15 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:15 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:21 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59341 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:21 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:21 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:26 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59408 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:26 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:26 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:31 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59470 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:31 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:31 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59538 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:37 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:37 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59713 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59782 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:46:55 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59851 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:46:55 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:46:55 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:01 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59919 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:01 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:01 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:59991 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:14 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60075 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:14 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:14 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:22 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60156 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:22 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:22 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:29 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60248 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:29 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:29 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:37 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60340 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:37 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:37 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:47 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60454 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:47 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:47 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:47:54 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60552 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:47:54 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:47:54 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:48:03 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60661 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:48:03 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:48:03 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:48:12 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60760 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:48:12 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:48:12 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:48:21 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60862 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:48:21 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:48:21 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:48:31 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:60976 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:48:31 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:48:31 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:48:39 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61061 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:48:39 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:48:39 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:48:49 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61180 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:48:49 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:48:49 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:48:59 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61288 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:48:59 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:48:59 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:49:05 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61364 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:49:05 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:49:05 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:49:15 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61475 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:49:15 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:49:15 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:49:23 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61566 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:49:23 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:49:23 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:49:33 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61677 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:49:33 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:49:33 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:49:43 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61794 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:49:43 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:49:43 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:49:50 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61874 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:49:50 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:49:50 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:49:56 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:61937 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:49:56 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:49:56 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:02 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62005 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:02 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:02 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62072 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:14 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62140 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:14 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:14 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:20 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62204 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:20 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:20 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:26 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62271 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:26 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:26 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:32 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62337 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:32 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:32 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:38 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62406 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:38 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:38 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:44 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62473 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:44 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:44 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:50 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62543 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:50 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:50 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:50:56 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62620 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:50:56 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:50:56 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:02 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62701 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:51:02 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:51:02 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:08 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62785 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:51:08 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:51:08 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:15 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:62871 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:51:15 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:51:15 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:21 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63059 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:51:21 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:51:21 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:27 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63140 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:51:27 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:51:27 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:36 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63246 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:51:36 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:51:36 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:45 | UVICORN.ERROR        | [92mINFO    [0m | 127.0.0.1:63364 - "WebSocket /ws/notifications?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiZXhwIjoxNzUzNzEyNDk4fQ.IlLmU9hMZT-ic9RjPM7maG9FxglC0Br6SjxyY0y3Nsc" 403
+2025-07-28 21:51:45 | UVICORN.ERROR        | [92mINFO    [0m | connection rejected (403 Forbidden)
+2025-07-28 21:51:45 | UVICORN.ERROR        | [92mINFO    [0m | connection closed
+2025-07-28 21:51:46 | UVICORN.ERROR        | [92mINFO    [0m | Shutting down
+2025-07-28 21:51:46 | UVICORN.ERROR        | [92mINFO    [0m | Waiting for application shutdown.
+2025-07-28 21:51:46 | UVICORN.ERROR        | [92mINFO    [0m | Application shutdown complete.
+2025-07-28 21:51:47 | UVICORN.ERROR        | [92mINFO    [0m | Finished server process [27780]

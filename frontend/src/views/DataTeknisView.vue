@@ -120,6 +120,43 @@
       </v-btn>
     </div>
 
+    <v-card class="filter-card mb-6" elevation="0">
+      <div class="d-flex flex-wrap align-center gap-4 pa-4">
+        <v-text-field
+          v-model="searchQuery"
+          label="Cari (Nama, ID PPPoE, IP)"
+          prepend-inner-icon="mdi-magnify"
+          variant="outlined"
+          density="comfortable"
+          hide-details
+          class="flex-grow-1"
+          style="min-width: 300px;"
+        ></v-text-field>
+
+        <v-select
+          v-model="selectedOlt"
+          :items="oltOptions"
+          label="Filter OLT"
+          variant="outlined"
+          density="comfortable"
+          hide-details
+          clearable
+          class="flex-grow-1"
+          style="min-width: 200px;"
+        ></v-select>
+        
+        <v-btn
+            variant="text"
+            @click="resetFilters"
+            class="text-none"
+        >
+          Reset Filter
+        </v-btn>
+      </div>
+    </v-card>
+    <v-card elevation="8" class="modern-card overflow-hidden">
+      </v-card>
+
     <v-row class="mb-6" no-gutters>
       <v-col cols="12" sm="6" md="3" class="pa-2">
         <v-card 
@@ -250,7 +287,7 @@
 
       <v-data-table
         :headers="headers"
-        :items="filteredDataTeknisList"
+        :items="dataTeknisList"
         :loading="loading"
         item-value="id"
         class="elevation-0 modern-table"
@@ -761,8 +798,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import apiClient from '@/services/api';
+import { debounce } from 'lodash-es';
 
 // --- Interfaces ---
 interface DataTeknis {
@@ -813,6 +851,7 @@ const dialogImport = ref(false);
 const importing = ref(false);
 const snackbar = ref({ show: false, text: '', color: 'success' });
 const importErrors = ref<string[]>([]);
+const selectedOlt = ref<string | null>(null);
 
 
 // Ref untuk komponen file input
@@ -842,17 +881,9 @@ const pelangganForSelect = computed(() => {
   return pelangganList.value.filter(p => !existingIds.has(p.id));
 });
 
-const filteredDataTeknisList = computed(() => {
-  if (!searchQuery.value) return dataTeknisList.value;
-  
-  const query = searchQuery.value.toLowerCase();
-  return dataTeknisList.value.filter(item => {
-    const pelangganName = getPelangganName(item.pelanggan_id).toLowerCase();
-    return pelangganName.includes(query) ||
-           item.id_pelanggan.toLowerCase().includes(query) ||
-           item.ip_pelanggan.toLowerCase().includes(query) ||
-           item.olt.toLowerCase().includes(query);
-  });
+const oltOptions = computed(() => {
+  const olts = dataTeknisList.value.map(item => item.olt);
+  return [...new Set(olts)]; // Mengambil daftar OLT yang unik
 });
 
 // --- Table Headers ---
@@ -896,11 +927,32 @@ onMounted(() => {
 async function fetchDataTeknis() {
   loading.value = true;
   try {
-    const response = await apiClient.get('/data_teknis/');
+    const params = new URLSearchParams();
+    if (searchQuery.value) {
+      params.append('search', searchQuery.value);
+    }
+    if (selectedOlt.value) {
+      params.append('olt', selectedOlt.value);
+    }
+    
+    const response = await apiClient.get(`/data_teknis/?${params.toString()}`);
     dataTeknisList.value = response.data;
   } finally {
     loading.value = false;
   }
+}
+
+const applyFilters = debounce(() => {
+  fetchDataTeknis();
+}, 500);
+
+watch([searchQuery, selectedOlt], () => {
+  applyFilters();
+});
+
+function resetFilters() {
+  searchQuery.value = '';
+  selectedOlt.value = null;
 }
 
 async function fetchMikrotikServers() {
@@ -1137,6 +1189,281 @@ function showSnackbar(text: string, color: string) {
 </script>
 
 <style scoped>
+
+/* ============================================
+   ENHANCED FILTER CARD STYLING
+   ============================================ */
+
+.filter-card {
+  border-radius: 20px;
+  border: 1px solid rgba(var(--v-theme-primary), 0.12);
+  background: linear-gradient(145deg, 
+    rgba(var(--v-theme-surface), 0.95) 0%, 
+    rgba(var(--v-theme-background), 0.98) 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 20px rgba(var(--v-theme-shadow), 0.08),
+    0 1px 3px rgba(var(--v-theme-shadow), 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efek hover pada filter card */
+.filter-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 30px rgba(var(--v-theme-shadow), 0.12),
+    0 2px 6px rgba(var(--v-theme-shadow), 0.16);
+  border-color: rgba(var(--v-theme-primary), 0.2);
+}
+
+/* Efek glow subtle di bagian atas card */
+.filter-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(var(--v-theme-primary), 0.6) 50%, 
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.filter-card:hover::before {
+  opacity: 1;
+}
+
+/* Container utama filter */
+.filter-card .d-flex {
+  padding: 28px 32px !important;
+  gap: 20px !important;
+}
+
+/* Styling untuk text field pencarian */
+.filter-card .v-text-field {
+  min-width: 320px !important;
+}
+
+.filter-card .v-text-field :deep(.v-field) {
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border: 2px solid rgba(var(--v-theme-outline-variant), 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-card .v-text-field :deep(.v-field:hover) {
+  border-color: rgba(var(--v-theme-primary), 0.4) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 4px 12px rgba(var(--v-theme-primary), 0.1);
+}
+
+.filter-card .v-text-field :deep(.v-field--focused) {
+  border-color: rgb(var(--v-theme-primary)) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 0 0 3px rgba(var(--v-theme-primary), 0.12);
+}
+
+/* Icon pencarian */
+.filter-card .v-text-field :deep(.v-field__prepend-inner) {
+  padding-right: 12px;
+}
+
+.filter-card .v-text-field :deep(.v-field__prepend-inner .v-icon) {
+  color: rgba(var(--v-theme-primary), 0.7) !important;
+  transition: color 0.2s ease;
+}
+
+.filter-card .v-text-field:hover :deep(.v-field__prepend-inner .v-icon) {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Styling untuk select fields (alamat & brand) */
+.filter-card .v-select {
+  min-width: 220px !important;
+}
+
+.filter-card .v-select :deep(.v-field) {
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border: 2px solid rgba(var(--v-theme-outline-variant), 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-card .v-select :deep(.v-field:hover) {
+  border-color: rgba(var(--v-theme-primary), 0.4) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 4px 12px rgba(var(--v-theme-primary), 0.1);
+}
+
+.filter-card .v-select :deep(.v-field--focused) {
+  border-color: rgb(var(--v-theme-primary)) !important;
+  background: rgba(var(--v-theme-surface), 1) !important;
+  box-shadow: 
+    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
+    0 0 0 3px rgba(var(--v-theme-primary), 0.12);
+}
+
+/* Label styling yang lebih refined */
+.filter-card .v-field :deep(.v-field__label) {
+  color: rgba(var(--v-theme-on-surface), 0.7) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+}
+
+.filter-card .v-field--focused :deep(.v-field__label) {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Tombol Reset Filter */
+.filter-card .v-btn[variant="text"] {
+  border-radius: 14px !important;
+  font-weight: 600 !important;
+  height: 48px !important;
+  min-width: 120px !important;
+  color: rgba(var(--v-theme-primary), 0.8) !important;
+  background: rgba(var(--v-theme-primary), 0.08) !important;
+  border: 1px solid rgba(var(--v-theme-primary), 0.2) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-card .v-btn[variant="text"]:hover {
+  background: rgba(var(--v-theme-primary), 0.12) !important;
+  color: rgb(var(--v-theme-primary)) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.2);
+}
+
+.filter-card .v-btn[variant="text"]:active {
+  transform: translateY(0);
+}
+
+/* Efek ripple custom untuk tombol reset */
+.filter-card .v-btn[variant="text"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(var(--v-theme-primary), 0.3);
+  transition: width 0.3s ease, height 0.3s ease;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.filter-card .v-btn[variant="text"]:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive design untuk mobile */
+@media (max-width: 960px) {
+  .filter-card .d-flex {
+    padding: 20px 24px !important;
+    gap: 16px !important;
+  }
+  
+  .filter-card .v-text-field,
+  .filter-card .v-select {
+    min-width: 100% !important;
+  }
+  
+  .filter-card .v-btn[variant="text"] {
+    width: 100% !important;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .filter-card .d-flex {
+    padding: 16px 20px !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  
+  .filter-card {
+    border-radius: 16px;
+    margin: 0 8px;
+  }
+}
+
+/* Dark mode adjustments */
+.v-theme--dark .filter-card {
+  background: linear-gradient(145deg, 
+    rgba(var(--v-theme-surface), 0.9) 0%, 
+    rgba(var(--v-theme-background), 0.95) 100%);
+  border-color: rgba(var(--v-theme-primary), 0.2);
+}
+
+.v-theme--dark .filter-card:hover {
+  border-color: rgba(var(--v-theme-primary), 0.3);
+}
+
+.v-theme--dark .filter-card .v-text-field :deep(.v-field),
+.v-theme--dark .filter-card .v-select :deep(.v-field) {
+  background: rgba(var(--v-theme-surface), 0.6) !important;
+  border-color: rgba(var(--v-theme-outline), 0.3) !important;
+}
+
+.v-theme--dark .filter-card .v-text-field :deep(.v-field:hover),
+.v-theme--dark .filter-card .v-select :deep(.v-field:hover) {
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border-color: rgba(var(--v-theme-primary), 0.5) !important;
+}
+
+/* Loading state untuk field */
+.filter-card .v-field--loading :deep(.v-field) {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Animasi untuk smooth transitions */
+.filter-card * {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus ring yang lebih halus */
+.filter-card .v-field--focused :deep(.v-field__outline) {
+  border-width: 2px !important;
+  border-color: rgb(var(--v-theme-primary)) !important;
+}
+
+/* Custom scrollbar untuk dropdown */
+.filter-card .v-select :deep(.v-list) {
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(var(--v-theme-shadow), 0.15);
+}
+
+.filter-card .v-select :deep(.v-list-item) {
+  border-radius: 8px;
+  margin: 2px 8px;
+  transition: all 0.2s ease;
+}
+
+.filter-card .v-select :deep(.v-list-item:hover) {
+  background: rgba(var(--v-theme-primary), 0.08) !important;
+  transform: translateX(4px);
+}
+
+
 .header-gradient {
   background: linear-gradient(135deg, #00ACC1 0%, #006064 100%);
   -webkit-background-clip: text;

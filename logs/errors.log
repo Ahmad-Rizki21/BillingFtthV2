@@ -732,3 +732,5 @@ WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
 2025-07-27 20:06:32 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
 2025-07-27 20:07:20 | ROUTERS.INVOICE      | [91mERROR   [0m | Unexpected error processing Xendit callback: 'ConnectionManager' object has no attribute 'broadcast'
 2025-07-27 20:12:17 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 20:51:54 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 20:52:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out

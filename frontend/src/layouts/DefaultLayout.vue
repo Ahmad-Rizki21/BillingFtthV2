@@ -132,9 +132,9 @@
       <router-view></router-view>
     </v-main>
     
-    <v-footer app height="60" class="d-flex align-center justify-center text-medium-emphasis" style="border-top: 1px solid rgba(0,0,0,0.08);">
+    <v-footer app height="69px" class="d-flex align-center justify-center text-medium-emphasis" style="border-top: 1px solid rgba(0,0,0,0.08);">
       <div>
-        &copy; {{ new Date().getFullYear() }} <strong>Artacom Billing System</strong>. All Rights Reserved by 
+        &copy; {{ new Date().getFullYear() }} <strong>Artacom Billing System</strong>. All Rights Design Reserved by 
         <a 
           href="https://www.instagram.com/amad.dyk/" 
           target="_blank" 
@@ -391,8 +391,8 @@ function handleLogout() {
 }
 
 .sidebar-header {
-  height: 75px;
-  padding: 0 16px !important;
+  height: 65px;
+  padding: 0 11.5px !important;
   border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   flex-shrink: 0;
   transition: border-color 0.3s ease;
@@ -441,7 +441,7 @@ function handleLogout() {
 }
 
 .navigation-wrapper {
-  flex: 1;
+  flex: 2;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 8px 0;
