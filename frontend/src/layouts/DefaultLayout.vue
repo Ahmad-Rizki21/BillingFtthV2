@@ -9,7 +9,8 @@
     >
       <v-list-item class="sidebar-header" :class="{'px-0': rail}" :ripple="false">
         <div class="header-flex-container">
-          <img v-if="!rail" :src="logoJelantik" alt="Jelantik Logo" class="sidebar-logo-full"/>
+          <img v-if="!rail" :src="logoSrc" alt="Jelantik Logo" class="sidebar-logo-full"/>
+          
           <v-icon v-if="rail" color="primary" size="large">mdi-alpha-j</v-icon>
 
           <div v-if="!rail" class="sidebar-title-wrapper">
@@ -152,7 +153,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { ref, onMounted, computed } from 'vue'; // <-- Tambahkan computed
-import logoJelantik from '@/assets/images/Jelantik.webp';
+import logoLight from '@/assets/images/Jelantik-Light.webp';
+import logoDark from '@/assets/images/Jelantik-Dark.webp';
 import { useTheme } from 'vuetify';
 import apiClient from '@/services/api';
 
@@ -203,6 +205,10 @@ const filteredMenuGroups = computed(() => {
   }).filter(group => group.items.length > 0);
 
   return filtered;
+});
+
+const logoSrc = computed(() => {
+  return theme.global.current.value.dark ? logoDark : logoLight;
 });
 
 // --- Panggil API saat komponen dimuat ---
