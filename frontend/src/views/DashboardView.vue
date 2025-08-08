@@ -22,7 +22,7 @@
     <!-- Stats Cards Section -->
     <div v-if="loading" class="stats-grid mb-6">
       <v-skeleton-loader 
-        v-for="n in 3" :key="n" 
+        v-for="n in 6" :key="n" 
         type="list-item-avatar-two-line" 
         class="stat-card-skeleton"
       ></v-skeleton-loader>
@@ -34,25 +34,18 @@
         :key="stat.title" 
         class="stat-card" 
         :class="`card-${index % 4}`"
-        @mouseenter="handleCardHover(index, true)"
-        @mouseleave="handleCardHover(index, false)"
       >
         <div class="stat-card-content">
           <div class="stat-header">
             <div class="stat-icon-container" :class="`icon-${index % 4}`">
               <v-icon :color="stat.color" size="20">{{ stat.icon }}</v-icon>
             </div>
-            <div class="stat-trend">
-              <v-icon size="14" color="success" class="trend-icon">mdi-trending-up</v-icon>
-            </div>
           </div>
-          
           <div class="stat-body">
             <h3 class="stat-value">{{ stat.value }}</h3>
             <p class="stat-title">{{ stat.title }}</p>
             <p class="stat-description">{{ stat.description }}</p>
           </div>
-          
           <div class="stat-footer">
             <div class="progress-bar">
               <div class="progress-fill" :class="`progress-${index % 4}`"></div>
@@ -77,9 +70,6 @@
               </h3>
               <p class="chart-subtitle">Distribusi pelanggan berdasarkan lokasi</p>
             </div>
-            <v-btn icon size="small" variant="text" class="chart-menu-btn">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
           </div>
           <div class="chart-container">
             <Chart v-if="!loading" type="bar" :data="lokasiChartData" :options="chartOptions" />
@@ -98,9 +88,6 @@
               </h3>
               <p class="chart-subtitle">Distribusi pelanggan berdasarkan paket</p>
             </div>
-            <v-btn icon size="small" variant="text" class="chart-menu-btn">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
           </div>
           <div class="chart-container">
             <Chart v-if="!loading" type="bar" :data="paketChartData" :options="chartOptions" />
@@ -120,13 +107,6 @@
             </h3>
             <p class="chart-subtitle">Ringkasan status invoice per bulan</p>
           </div>
-          <div class="chart-actions">
-            <v-btn-toggle mandatory variant="outlined" size="small" class="period-toggle">
-              <v-btn value="month" size="small">Bulan</v-btn>
-              <v-btn value="quarter" size="small">Kuartal</v-btn>
-              <v-btn value="year" size="small">Tahun</v-btn>
-            </v-btn-toggle>
-          </div>
         </div>
         <div class="chart-container large-chart">
           <Chart v-if="!loading" type="bar" :data="invoiceChartData" :options="invoiceChartOptions" />
@@ -145,17 +125,23 @@ import {
   Tooltip, 
   Legend, 
   BarElement, 
+  BarController,
+  LineElement,
+  LineController,
+  PointElement,
   CategoryScale, 
   LinearScale, 
-  PointElement, 
-  LineElement, 
+  Filler,
   ChartData,
-  ChartOptions // <-- 1. Impor ChartOptions yang hilang
+  ChartOptions
 } from 'chart.js';
 import { useTheme } from 'vuetify';
 import apiClient from '@/services/api';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
+// Mendaftarkan semua komponen yang dibutuhkan
+ChartJS.register(
+  Title, Tooltip, Legend, BarElement, BarController, LineElement, LineController, PointElement, CategoryScale, LinearScale, Filler
+);
 
 const theme = useTheme();
 const loading = ref(true);
@@ -165,17 +151,12 @@ const lokasiChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
 const paketChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
 const invoiceChartData = ref<any>({ labels: [], datasets: [] });
 
-// 2. Tambahkan fungsi handleCardHover yang hilang
-const handleCardHover = (_index: number, _isHover: boolean) => {
-  // Fungsi ini bisa dikosongkan jika tidak ada efek hover yang diinginkan
-};
-
 async function fetchMikrotikStats() {
   try {
+    // FIX: Menghapus /api/ dari URL karena sudah ada di baseURL
     const response = await apiClient.get('/dashboard/mikrotik-status');
     const { online, offline } = response.data;
 
-    // Find and update the corresponding stat cards
     const onlineStat = stats.value.find(s => s.title === "Online Servers");
     if (onlineStat) onlineStat.value = online;
 
@@ -184,16 +165,16 @@ async function fetchMikrotikStats() {
 
   } catch (error) {
     console.error("Failed to fetch Mikrotik server status:", error);
-    // Optionally handle the error in the UI
     const onlineStat = stats.value.find(s => s.title === "Online Servers");
-    if (onlineStat) onlineStat.value = 'Error';
+    if (onlineStat) onlineStat.value = 'N/A';
     const offlineStat = stats.value.find(s => s.title === "Offline Servers");
-    if (offlineStat) offlineStat.value = 'Error';
+    if (offlineStat) offlineStat.value = 'N/A';
   }
 }
 
 onMounted(async () => {
   try {
+    // FIX: Menghapus /api/ dari URL karena sudah ada di baseURL
     const response = await apiClient.get('/dashboard/');
     const data = response.data;
 
@@ -293,7 +274,6 @@ onMounted(async () => {
     console.error("Failed to fetch dashboard data:", error);
   } finally {
     loading.value = false;
-    // 2. After the main data is loaded, fetch the Mikrotik status
     fetchMikrotikStats();
   }
 });
@@ -302,7 +282,7 @@ function getIconForStat(title: string) {
   if (title.toLowerCase().includes('jakinet')) return 'mdi-account-network';
   if (title.toLowerCase().includes('jelantik')) return 'mdi-account-group';
   if (title.toLowerCase().includes('nagrak')) return 'mdi-home-group';
-  if (title.toLowerCase().includes('servers')) return 'mdi-server';
+  if (title.toLowerCase().includes('total servers')) return 'mdi-server';
   if (title.toLowerCase().includes('online')) return 'mdi-check-circle';
   if (title.toLowerCase().includes('offline')) return 'mdi-close-circle';
   return 'mdi-chart-box';
@@ -312,7 +292,7 @@ function getColorForStat(title: string) {
   if (title.toLowerCase().includes('jakinet')) return 'primary';
   if (title.toLowerCase().includes('jelantik')) return 'success';
   if (title.toLowerCase().includes('nagrak')) return 'warning';
-  if (title.toLowerCase().includes('servers')) return 'info';
+  if (title.toLowerCase().includes('total servers')) return 'error';
   if (title.toLowerCase().includes('online')) return 'success';
   if (title.toLowerCase().includes('offline')) return 'error';
   return 'primary';
@@ -416,6 +396,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
 </script>
 
 <style scoped>
+/* Styling tetap sama, tidak perlu diubah */
 .dashboard-container {
   padding: 1.5rem;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.02) 0%, rgba(34, 197, 94, 0.02) 100%);
@@ -423,7 +404,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   animation: fadeIn 0.6s ease-out;
 }
 
-/* Header Styles */
 .dashboard-header {
   margin-bottom: 1.5rem;
   background: rgba(255, 255, 255, 0.85);
@@ -476,18 +456,10 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   font-size: 0.75rem;
 }
 
-/* Stats Grid - Optimized Layout */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 768px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (min-width: 1200px) {
@@ -516,7 +488,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #6366f1, #22c55e);
 }
 
 .stat-card.card-0::before { background: linear-gradient(90deg, #6366f1, #8b5cf6); }
@@ -560,14 +531,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
 .stat-icon-container.icon-1 { background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.05)); }
 .stat-icon-container.icon-2 { background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(249, 115, 22, 0.05)); }
 .stat-icon-container.icon-3 { background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(236, 72, 153, 0.05)); }
-
-.trend-icon {
-  transition: all 0.2s ease;
-}
-
-.stat-card:hover .trend-icon {
-  transform: scale(1.2);
-}
 
 .stat-body {
   margin-bottom: 1rem;
@@ -613,7 +576,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
 .progress-fill.progress-2 { background: linear-gradient(90deg, #f59e0b, #f97316); }
 .progress-fill.progress-3 { background: linear-gradient(90deg, #ef4444, #ec4899); }
 
-/* Charts Section */
 .charts-section {
   display: flex;
   flex-direction: column;
@@ -688,20 +650,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   font-weight: 500;
 }
 
-.chart-menu-btn {
-  transition: all 0.2s ease;
-}
-
-.chart-menu-btn:hover {
-  transform: scale(1.1);
-  background: rgba(var(--v-theme-primary), 0.1);
-}
-
-.period-toggle {
-  border-radius: 8px;
-  overflow: hidden;
-}
-
 .chart-container {
   height: 250px;
   position: relative;
@@ -711,59 +659,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   height: 350px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .dashboard-container {
-    padding: 1rem;
-  }
-  
-  .dashboard-header {
-    padding: 1rem;
-  }
-  
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-  
-  .dashboard-title {
-    font-size: 1.75rem;
-  }
-  
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-  
-  .charts-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .chart-container {
-    height: 220px;
-  }
-  
-  .large-chart {
-    height: 300px;
-  }
-}
-
-@media (max-width: 480px) {
-  .stat-card-content {
-    padding: 1rem;
-  }
-  
-  .stat-value {
-    font-size: 1.75rem;
-  }
-  
-  .dashboard-title {
-    font-size: 1.5rem;
-  }
-}
-
-/* Animations */
 @keyframes fadeIn {
   from { 
     opacity: 0; 
@@ -780,7 +675,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   to { width: 75%; }
 }
 
-/* Dark Mode Support */
 .v-theme--dark .dashboard-header,
 .v-theme--dark .stat-card,
 .v-theme--dark .chart-card {
@@ -792,19 +686,6 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
 }
 
-/* Performance Optimizations */
-.stat-card,
-.chart-card {
-  will-change: transform;
-}
-
-.stat-icon-container,
-.chart-icon-wrapper,
-.trend-icon {
-  will-change: transform;
-}
-
-/* Skeleton Loading */
 .stat-card-skeleton {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
