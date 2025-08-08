@@ -11,6 +11,7 @@ from ..schemas.dashboard import DashboardData, StatCard, ChartData, InvoiceSumma
 from ..models import Pelanggan, Langganan, Invoice, PaketLayanan, HargaLayanan, MikrotikServer
 from ..services import mikrotik_service
 
+# --- PERBAIKAN: Menambahkan prefix agar URL cocok dengan frontend ---
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
 # --- Skema baru untuk respons status Mikrotik ---
@@ -33,7 +34,7 @@ async def get_dashboard_data(db: AsyncSession = Depends(get_db)):
 
     # --- Query untuk Total Server (disederhanakan) ---
     total_servers_stmt = select(func.count(MikrotikServer.id))
-    total_servers = (await db.execute(total_servers_stmt)).scalar_one()
+    total_servers = (await db.execute(total_servers_stmt)).scalar_one_or_none() or 0
 
     server_stats = [
         StatCard(title="Total Servers", value=total_servers, description="Total Mikrotik servers"),
@@ -43,23 +44,38 @@ async def get_dashboard_data(db: AsyncSession = Depends(get_db)):
     ]
     stat_cards.extend(server_stats)
     
-    # --- Sisa Query untuk Chart ---
-    # ... (kode untuk lokasi_chart, paket_chart, dan invoice_summary_chart tetap sama)
-
+    # --- Query untuk Chart Lokasi ---
+    # NOTE: Chart ini akan terisi jika ada data di tabel Pelanggan.
     lokasi_stmt = select(Pelanggan.alamat, func.count(Pelanggan.id)).group_by(Pelanggan.alamat).order_by(func.count(Pelanggan.id).desc()).limit(5)
     lokasi_data = (await db.execute(lokasi_stmt)).all()
     lokasi_chart = ChartData(
-        labels=[item[0] for item in lokasi_data],
-        data=[item[1] for item in lokasi_data]
+        labels=[item[0] for item in lokasi_data if item[0] is not None],
+        data=[item[1] for item in lokasi_data if item[0] is not None]
     )
 
-    paket_stmt = select(PaketLayanan.kecepatan, func.count(Langganan.id)).join(Langganan).group_by(PaketLayanan.kecepatan).order_by(PaketLayanan.kecepatan)
+    # --- Query untuk Chart Paket ---
+    # NOTE: Chart ini akan terisi jika ada data di tabel PaketLayanan dan Langganan.
+    paket_stmt = select(
+        PaketLayanan.kecepatan, 
+        func.count(Langganan.id)
+    ).join(
+        Langganan, 
+        PaketLayanan.id == Langganan.paket_layanan_id,
+        isouter=True  # LEFT JOIN untuk menampilkan semua paket
+    ).group_by(
+        PaketLayanan.kecepatan
+    ).order_by(
+        PaketLayanan.kecepatan
+    )
+    
     paket_data = (await db.execute(paket_stmt)).all()
     paket_chart = ChartData(
         labels=[f"{item[0]} Mbps" for item in paket_data],
         data=[item[1] for item in paket_data]
     )
 
+    # --- Query untuk Chart Invoice ---
+    # NOTE: Chart ini akan terisi jika ada data di tabel Invoice.
     six_months_ago = datetime.now() - timedelta(days=180)
     invoice_stmt = select(
         func.date_format(Invoice.tgl_invoice, "%Y-%m").label("bulan"),
@@ -72,11 +88,11 @@ async def get_dashboard_data(db: AsyncSession = Depends(get_db)):
     invoice_data = (await db.execute(invoice_stmt)).all()
     
     invoice_summary_chart = InvoiceSummary(
-        labels=[datetime.strptime(item[0], "%Y-%m").strftime("%b") for item in invoice_data],
-        total=[item[1] if item[1] is not None else 0 for item in invoice_data],
-        lunas=[item[2] if item[2] is not None else 0 for item in invoice_data],
-        menunggu=[item[3] if item[3] is not None else 0 for item in invoice_data],
-        kadaluarsa=[item[4] if item[4] is not None else 0 for item in invoice_data]
+        labels=[datetime.strptime(item.bulan, "%Y-%m").strftime("%b") for item in invoice_data],
+        total=[item.total or 0 for item in invoice_data],
+        lunas=[item.lunas or 0 for item in invoice_data],
+        menunggu=[item.menunggu or 0 for item in invoice_data],
+        kadaluarsa=[item.kadaluarsa or 0 for item in invoice_data]
     )
 
     return DashboardData(
@@ -88,7 +104,7 @@ async def get_dashboard_data(db: AsyncSession = Depends(get_db)):
 
 
 # ==========================================================
-# --- ENDPOINT BARU KHUSUS UNTUK STATUS MIKROTIK ---
+# --- ENDPOINT STATUS MIKROTIK YANG DIPERBAIKI ---
 # ==========================================================
 @router.get("/mikrotik-status", response_model=MikrotikStatus)
 async def get_mikrotik_status(db: AsyncSession = Depends(get_db)):
@@ -101,12 +117,21 @@ async def get_mikrotik_status(db: AsyncSession = Depends(get_db)):
     if total_servers == 0:
         return MikrotikStatus(online=0, offline=0)
 
+    # Menggunakan kembali logika yang lebih andal untuk mengecek status
     async def check_status(server):
-        api, conn = mikrotik_service.get_api_connection(server)
-        if api and conn:
-            conn.disconnect()
-            return True
-        return False
+        try:
+            # Mencoba membuat koneksi adalah cara paling pasti untuk mengecek status.
+            # Dijalankan di dalam executor untuk menghindari blocking.
+            loop = asyncio.get_event_loop()
+            api, conn = await loop.run_in_executor(
+                None, mikrotik_service.get_api_connection, server
+            )
+            if api and conn:
+                conn.disconnect()
+                return True
+            return False
+        except Exception:
+            return False
 
     results = await asyncio.gather(*(check_status(server) for server in all_servers))
     online_servers = sum(1 for res in results if res)

@@ -20,6 +20,7 @@ from typing import Optional
 # Impor model Pelanggan dengan nama asli 'Pelanggan', lalu kita beri alias 'PelangganModel'
 from ..models.pelanggan import Pelanggan as PelangganModel 
 from ..database import AsyncSessionLocal
+from ..models.mikrotik_server import MikrotikServer as MikrotikServerModel
 
 from ..services import mikrotik_service
 
@@ -311,6 +312,13 @@ async def import_from_csv_teknis(file: UploadFile = File(...), db: AsyncSession 
                 errors.append(f"Baris {row_num}: Pelanggan '{pelanggan.nama}' sudah memiliki data teknis.")
                 continue
             
+            # Validasi mikrotik_server_id
+            mikrotik_server_id = data_import.mikrotik_server_id
+            mikrotik_server_result = await db.execute(select(MikrotikServerModel).where(MikrotikServerModel.id == mikrotik_server_id))
+            if not mikrotik_server_result.scalar_one_or_none():
+                errors.append(f"Baris {row_num}: Mikrotik Server ID '{mikrotik_server_id}' tidak ditemukan.")
+                continue
+
             # Siapkan data untuk disimpan
             teknis_data_dict = data_import.model_dump()
             teknis_data_dict['pelanggan_id'] = pelanggan.id
@@ -318,12 +326,15 @@ async def import_from_csv_teknis(file: UploadFile = File(...), db: AsyncSession 
             
             data_to_create.append(DataTeknisModel(**teknis_data_dict))
             processed_emails.add(email)
+            logger.info(f"Valid data prepared for row {row_num}: Pelanggan {pelanggan.nama}, Mikrotik ID {mikrotik_server_id}")
 
         except ValidationError as e:
             error_details = "; ".join([f"{err['loc'][0]}: {err['msg']}" for err in e.errors()])
             errors.append(f"Baris {row_num}: {error_details}")
+            logger.error(f"Validation error at row {row_num}: {error_details}")
         except Exception as e:
             errors.append(f"Baris {row_num}: Terjadi error tidak terduga - {str(e)}")
+            logger.error(f"Unexpected error at row {row_num}: {str(e)}")
 
     if errors:
         raise HTTPException(
@@ -337,8 +348,10 @@ async def import_from_csv_teknis(file: UploadFile = File(...), db: AsyncSession 
     try:
         db.add_all(data_to_create)
         await db.commit()
+        logger.info(f"Successfully imported {len(data_to_create)} data teknis records")
     except Exception as e:
         await db.rollback()
+        logger.error(f"Database save failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Gagal menyimpan ke database: {str(e)}")
 
     return {"message": f"Berhasil mengimpor {len(data_to_create)} data teknis baru."}

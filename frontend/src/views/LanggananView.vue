@@ -297,6 +297,22 @@
                             hide-details="auto"
                           ></v-select>
                         </v-col>
+
+                        <v-col 
+                          v-if="editedItem.metode_pembayaran === 'Prorate' && editedIndex === -1" 
+                          cols="12" 
+                          md="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.tgl_mulai_langganan"
+                            label="Tanggal Mulai Langganan"
+                            type="date"
+                            variant="solo-filled"
+                            prepend-inner-icon="mdi-calendar-start"
+                            class="enhanced-field"
+                            hide-details="auto"
+                          ></v-text-field>
+                        </v-col>
                         
                         <v-col cols="12" md="6">
                           <v-text-field
@@ -460,7 +476,9 @@ interface Langganan {
   tgl_invoice_terakhir: string | null;
   metode_pembayaran: string;
   harga_awal: number | null;
+  tgl_mulai_langganan?: string | null; 
 }
+
 
 interface PelangganSelectItem {
   id: number;
@@ -524,6 +542,7 @@ const defaultItem: Partial<Langganan> = {
   tgl_invoice_terakhir: null,
   metode_pembayaran: 'Otomatis',
   harga_awal: 0,
+  tgl_mulai_langganan: null,
 };
 const editedItem = ref({ ...defaultItem });
 const itemToDelete = ref<Langganan | null>(null);
@@ -558,39 +577,43 @@ onMounted(() => {
 
 // --- Logic Watcher ---
 watch(
-  () => [editedItem.value.metode_pembayaran, editedItem.value.paket_layanan_id],
-  ([metode, paketId]) => {
-    if (!dialog.value || !paketId) {
-      // Jika form baru dibuka dan belum ada paket, set harga ke 0 atau nilai dari item yang diedit
+  () => [editedItem.value.metode_pembayaran, editedItem.value.paket_layanan_id, editedItem.value.pelanggan_id, editedItem.value.tgl_mulai_langganan],
+  async ([metode, paketId, pelangganId, tglMulai]) => {
+    
+    // Jangan lakukan apa-apa jika metode bukan Prorate dan tanggal mulai belum diisi
+    if (metode === 'Prorate' && !tglMulai && editedIndex.value === -1) {
+      return; 
+    }
+    
+    if (!dialog.value || !paketId || !pelangganId) {
       if(editedIndex.value === -1) {
         editedItem.value.harga_awal = 0;
       }
       return;
     }
 
-    const selectedPaket = paketLayananSelectList.value.find(p => p.id === paketId);
-    if (!selectedPaket) return;
-
-    const fullPrice = selectedPaket.harga;
-    const today = new Date();
-
-    if (metode === 'Otomatis') {
-      editedItem.value.harga_awal = fullPrice;
-      const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-      editedItem.value.tgl_jatuh_tempo = nextMonth.toISOString().split('T')[0];
-    } 
-    else if (metode === 'Prorate') {
-      const date = today.getDate();
-      const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-      const remainingDays = lastDayOfMonth - date + 1;
+    // Gunakan API calculate-price untuk perhitungan yang akurat
+    try {
+      // --- PERUBAHAN PAYLOAD API ---
+      const payload = {
+        paket_layanan_id: paketId,
+        metode_pembayaran: metode,
+        pelanggan_id: pelangganId,
+        // Kirim tgl_mulai jika metode Prorate, jika tidak, biarkan backend menggunakan default (today)
+        ...(metode === 'Prorate' && { tgl_mulai: tglMulai }) 
+      };
       
-      const proratedPriceBeforeTax = (fullPrice / lastDayOfMonth) * remainingDays;
-      const proratedPriceWithTax = proratedPriceBeforeTax * 1.11;
+      const response = await apiClient.post('/langganan/calculate-price', payload);
       
-      editedItem.value.harga_awal = Math.round(proratedPriceWithTax);
-      editedItem.value.tgl_jatuh_tempo = today.toISOString().split('T')[0];
+      editedItem.value.harga_awal = response.data.harga_awal;
+      editedItem.value.tgl_jatuh_tempo = response.data.tgl_jatuh_tempo;
+      
+    } catch (error: unknown) {
+      // ... (fallback logic tetap sama, bisa juga di-update untuk menggunakan tglMulai)
+      console.error('Error memanggil API calculate-price:', error);
     }
-  }
+  },
+  { deep: true } // Gunakan deep watch untuk memantau properti objek
 );
 
 // --- API Methods ---

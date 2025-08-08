@@ -152,26 +152,109 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { ref, onMounted, computed } from 'vue'; // <-- Tambahkan computed
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import logoLight from '@/assets/images/Jelantik-Light.webp';
 import logoDark from '@/assets/images/Jelantik-Dark.webp';
 import { useTheme } from 'vuetify';
 import apiClient from '@/services/api';
+import { useAuthStore } from '@/stores/auth';
 
+// --- State ---
 const theme = useTheme();
 const drawer = ref(true);
 const rail = ref(false);
 const router = useRouter();
 const notifications = ref<any[]>([]);
 const suspendedCount = ref(0);
-const userCount = ref(0); // Tambahkan state untuk user count
-const roleCount = ref(0); // Tambahkan state untuk role count
-
-// --- State baru untuk permission ---
+const userCount = ref(0);
+const roleCount = ref(0);
 const userPermissions = ref<string[]>([]);
+const authStore = useAuthStore();
+let socket: WebSocket | null = null;
+let reconnectInterval: NodeJS.Timeout | null = null;
 
-// --- Daftar menu statis (sebagai master) ---
-// Tambahkan properti 'permission' pada setiap item menu yang ingin dilindungi
+// --- Fungsi WebSocket yang Diperbaiki ---
+function connectWebSocket() {
+  if (!authStore.token) return;
+  if (socket && socket.readyState === WebSocket.OPEN) return;
+
+  // Untuk development (localhost)
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    const wsUrl = `ws://127.0.0.1:8000/ws/notifications?token=${authStore.token}`;
+    console.log(`Connecting to WebSocket at ${wsUrl}`);
+    socket = new WebSocket(wsUrl);
+  } else {
+    // Untuk production - gunakan wss dengan domain yang sama
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${wsProtocol}//${window.location.host}/ws/notifications?token=${authStore.token}`;
+    console.log(`Connecting to WebSocket at ${wsUrl}`);
+    socket = new WebSocket(wsUrl);
+  }
+
+  socket.onopen = () => {
+    console.log('WebSocket connection established.');
+    // Clear reconnect interval jika berhasil
+    if (reconnectInterval) {
+      clearInterval(reconnectInterval);
+      reconnectInterval = null;
+    }
+  };
+
+  socket.onmessage = (event) => {
+    console.log('WebSocket message received:', event.data);
+    try {
+      const data = JSON.parse(event.data);
+      
+      // Handle different notification types
+      if (data.type === 'new_payment' || data.type === 'new_customer_for_noc') {
+        notifications.value.unshift(data);
+        
+        // Batasi jumlah notifikasi (max 50)
+        if (notifications.value.length > 50) {
+          notifications.value = notifications.value.slice(0, 50);
+        }
+      }
+    } catch (error) {
+      console.error('Error parsing WebSocket message:', error);
+    }
+  };
+
+  socket.onerror = (error) => {
+    console.error('WebSocket error:', error);
+  };
+
+  socket.onclose = (event) => {
+    console.log('WebSocket closed:', event.code, event.reason);
+    
+    // Hanya reconnect jika user masih authenticated dan bukan intentional close
+    if (authStore.isAuthenticated && event.code !== 1000) {
+      console.log('WebSocket closed unexpectedly. Attempting to reconnect...');
+      if (!reconnectInterval) {
+        reconnectInterval = setInterval(() => {
+          if (authStore.isAuthenticated) {
+            connectWebSocket();
+          } else {
+            disconnectWebSocket();
+          }
+        }, 5000);
+      }
+    }
+  };
+}
+
+function disconnectWebSocket() {
+  if (reconnectInterval) clearInterval(reconnectInterval);
+  reconnectInterval = null;
+  if (socket) {
+    socket.onclose = null; 
+    socket.close();
+    socket = null;
+    console.log('WebSocket connection intentionally disconnected.');
+  }
+}
+// --- AKHIR BLOK KODE WEBSOCKET ---
+
+
 const menuGroups = ref([
   { title: 'DASHBOARD', items: [{ title: 'Dashboard', icon: 'mdi-home-variant', value: 'dashboard', to: '/dashboard', permission: 'view_dashboard' }] },
   { title: 'FTTH', items: [
@@ -189,42 +272,37 @@ const menuGroups = ref([
   ]},
 ]);
 
-// --- Computed property untuk menyaring menu ---
 const filteredMenuGroups = computed(() => {
-  // Jika user super-admin ('admin'), tampilkan semua menu.
-  // Ganti 'admin' dengan nama role super-admin Anda jika berbeda.
-  if (userPermissions.value.includes('*')) { // Misal super-admin punya permission '*'
-    return menuGroups.value;
-  }
-  
-  const filtered = menuGroups.value.map(group => {
-    const items = group.items.filter(item => 
-      !item.permission || userPermissions.value.includes(item.permission)
-    );
-    return { ...group, items };
-  }).filter(group => group.items.length > 0);
-
-  return filtered;
+  if (userPermissions.value.includes('*')) return menuGroups.value;
+  return menuGroups.value.map(group => ({
+    ...group,
+    items: group.items.filter(item => !item.permission || userPermissions.value.includes(item.permission)),
+  })).filter(group => group.items.length > 0);
 });
 
-const logoSrc = computed(() => {
-  return theme.global.current.value.dark ? logoDark : logoLight;
-});
+const logoSrc = computed(() => theme.global.current.value.dark ? logoDark : logoLight);
 
-// --- Panggil API saat komponen dimuat ---
-onMounted(() => {
+onMounted(async () => {
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-    theme.global.name.value = savedTheme;
+  if (savedTheme) theme.global.name.value = savedTheme;
+  
+  const userIsValid = await authStore.verifyToken();
+  if (userIsValid && authStore.user?.role) {
+    const role = authStore.user.role;
+    if (typeof role === 'object' && role !== null && role.name) {
+      if (role.name.toLowerCase() === 'admin') userPermissions.value = ['*'];
+      else userPermissions.value = role.permissions?.map((p: any) => p.name) || [];
+    } else if (typeof role === 'string') {
+      if (role.toLowerCase() === 'admin') userPermissions.value = ['*'];
+    }
+    fetchRoleCount();
+    fetchUserCount();
+    fetchSuspendedCount();
+    connectWebSocket(); // Memulai WebSocket setelah user terverifikasi
   }
-  
-  fetchCurrentUser();
-  fetchRoleCount();
-  fetchUserCount();
-  fetchSuspendedCount();
-  
 });
 
+onUnmounted(() => disconnectWebSocket());
 
 function toggleTheme() {
   const newTheme = theme.global.current.value.dark ? 'light' : 'dark';
@@ -232,71 +310,7 @@ function toggleTheme() {
   localStorage.setItem('theme', newTheme);
 }
 
-async function fetchCurrentUser() {
-  try {
-    const response = await apiClient.get('/users/me');
-    const roleName = response.data.role?.name.toLowerCase();
-    
-    if (roleName === 'admin') {
-      userPermissions.value = ['*'];
-    } else {
-      const permissions = response.data.role?.permissions.map((p: any) => p.name) || [];
-      userPermissions.value = permissions;
-    }
-    
-    // ===== PERUBAHAN DI SINI: Panggil WebSocket setelah user otentik =====
-    setupWebSocket();
-
-  } catch (error) {
-    console.error("Gagal mengambil data pengguna:", error);
-    handleLogout();
-  }
-}
-
-function setupWebSocket() {
-    // Ambil token dari localStorage untuk otentikasi
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-        console.log("Tidak ada token, koneksi WebSocket dibatalkan.");
-        return;
-    }
-
-    // Sambungkan ke endpoint baru dengan token sebagai query parameter
-    const ws = new WebSocket(`ws://127.0.0.1:8000/ws/notifications?token=${token}`);
-    
-    ws.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        
-        // Cek tipe notifikasi dan tambahkan ke awal array
-        if (message.type === 'new_payment' || message.type === 'new_customer_for_noc') {
-            notifications.value.unshift(message);
-
-            try {
-                const audio = new Audio('/payment.mp3'); // Path ke file di folder public
-                audio.play();
-            } catch (e) {
-                console.error("Gagal memutar audio notifikasi:", e);
-            }
-
-            if (notifications.value.length > 10) {
-                notifications.value.pop();
-            }
-        }
-    };
-    
-    ws.onopen = () => console.log("WebSocket terhubung.");
-    ws.onclose = () => {
-        console.log("WebSocket terputus. Mencoba menghubungkan kembali dalam 5 detik...");
-        setTimeout(setupWebSocket, 5000);
-    };
-    ws.onerror = (error) => {
-        console.error("WebSocket error:", error);
-        ws.close(); // Tutup koneksi saat terjadi error untuk memicu onclose
-    };
-}
-
-// ===== TAMBAHAN: Helper functions untuk tampilan notifikasi dinamis =====
-function getNotificationIcon(type: string): string {
+function getNotificationIcon(type: string) {
   switch (type) {
     case 'new_payment': return 'mdi-cash-check';
     case 'new_customer_for_noc': return 'mdi-account-plus-outline';
@@ -304,7 +318,7 @@ function getNotificationIcon(type: string): string {
   }
 }
 
-function getNotificationColor(type: string): string {
+function getNotificationColor(type: string) {
   switch (type) {
     case 'new_payment': return 'success';
     case 'new_customer_for_noc': return 'info';
@@ -312,15 +326,11 @@ function getNotificationColor(type: string): string {
   }
 }
 
-// Fungsi untuk mengarahkan user saat notifikasi di-klik
-function getNotificationLink(notification: any): string | undefined {
-    if (notification.type === 'new_customer_for_noc') {
-        // Arahkan ke halaman 'Data Teknis' dan mungkin filter berdasarkan pelanggan ID
-        // Untuk saat ini, kita arahkan ke halaman utama Data Teknis
-        return '/data-teknis';
-    }
-    // Tambahkan link untuk notifikasi lain di sini jika perlu
-    return undefined;
+function getNotificationLink(notification: any) {
+  if (notification.type === 'new_customer_for_noc') {
+    return '/data-teknis';
+  }
+  return undefined;
 }
 
 async function fetchSuspendedCount() {
@@ -351,8 +361,8 @@ async function fetchUserCount() {
 }
 
 function handleLogout() {
-  localStorage.removeItem('access_token');
-  userPermissions.value = [];
+  disconnectWebSocket();
+  authStore.logout();
   router.push('/login');
 }
 </script>

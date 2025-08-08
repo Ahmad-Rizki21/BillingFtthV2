@@ -423,12 +423,12 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
-                :model-value="formatCurrency(selectedLanggananDetails.paket_layanan?.harga)"
-                label="Harga Paket"
-                variant="outlined"
-                readonly
-                prepend-inner-icon="mdi-cash"
-              ></v-text-field>
+  :model-value="formatCurrency(selectedLanggananDetails.harga_awal)"
+  label="Harga Sesuai Langganan"
+  variant="outlined"
+  readonly
+  prepend-inner-icon="mdi-cash"
+></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
@@ -661,7 +661,8 @@ async function fetchPelangganForSelect() {
 
 async function fetchLanggananForSelect() {
   try {
-    const response = await apiClient.get<any[]>('/langganan/');
+    // const response = await apiClient.get<any[]>('/langganan/');
+    const response = await apiClient.get<any[]>('/langganan/?for_invoice_selection=true');
     langgananList.value = response.data;
   } catch (error) { console.error(error); }
 }

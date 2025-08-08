@@ -12,7 +12,7 @@ from datetime import datetime, timedelta, timezone
 
 logger = logging.getLogger('app.services.xendit')
 
-async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan, paket: PaketLayanan) -> dict:
+async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan, paket: PaketLayanan, deskripsi_xendit: str, pajak: float, no_telp_xendit: str = None) -> dict:
     """Mengirim request ke Xendit untuk membuat invoice baru."""
     target_key_name = pelanggan.harga_layanan.xendit_key_name
     api_key = settings.XENDIT_API_KEYS.get(target_key_name)
@@ -25,15 +25,23 @@ async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan, paket: P
         "Authorization": f"Basic {encoded_key}"
     }
 
-    # ==========================================================
-    # --- MULAI LOGIKA BARU YANG SUDAH DISEMPURNAKAN ---
-    # ==========================================================
-    
     brand_info = pelanggan.harga_layanan
     jatuh_tempo_str = invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
-    deskripsi_xendit = f"Biaya berlangganan internet up to {paket.kecepatan} Mbps jatuh tempo pembayaran tanggal {jatuh_tempo_str}"
 
-    # Langkah 1: Siapkan payload dasar, SELALU sertakan 'amount' di awal
+    # Validasi data
+    if not invoice.total_harga or invoice.total_harga <= 0:
+        raise ValueError("Total harga invoice tidak valid")
+    if not paket.harga or float(paket.harga) <= 0:
+        raise ValueError("Harga paket tidak valid")
+    if not pelanggan.nama or not pelanggan.email:
+        raise ValueError("Data pelanggan (nama atau email) tidak lengkap")
+
+    # Hitung harga dasar
+    harga_dasar = float(invoice.total_harga) - pajak
+    if harga_dasar < 0:
+        raise ValueError("Harga dasar tidak boleh negatif")
+
+    # Siapkan payload
     payload = {
         "external_id": invoice.invoice_number,
         "amount": float(invoice.total_harga),
@@ -42,93 +50,93 @@ async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan, paket: P
         "customer": {
             "given_names": pelanggan.nama,
             "email": pelanggan.email,
-            "mobile_number": pelanggan.no_telp
+            "mobile_number": no_telp_xendit if no_telp_xendit else pelanggan.no_telp
         },
         "currency": "IDR",
-    }
-    
-    # Langkah 2: Logika Kustom jika brand adalah "Jakinet"
-    if brand_info.brand.lower() == "jakinet":
-        # Buat Referensi ID kustom
-        nama_user = pelanggan.nama.replace(' ', '')
-        lokasi = pelanggan.alamat.split(' ')[0]
-        payload["external_id"] = f"Jakinet/ftth/{nama_user}/{lokasi}/{invoice.invoice_number}"
-
-        # Hitung harga dasar dan pajak untuk rincian item
-        harga_dasar = float(paket.harga)
-        pajak = harga_dasar * (float(brand_info.pajak) / 100)
-        
-        periode = f"Periode Tgl {invoice.tgl_invoice.day}-{invoice.tgl_jatuh_tempo.day} {invoice.tgl_jatuh_tempo.strftime('%B %Y')}"
-
-        # Tambahkan 'items' dan 'fees'
-        payload["items"] = [
+        "with_short_url": True,
+        "items": [
             {
                 "name": f"Biaya berlangganan internet up to {paket.kecepatan} Mbps",
                 "price": harga_dasar,
                 "quantity": 1,
-                "description": periode
+                "description": deskripsi_xendit,
+                "currency": "IDR",
+                "type": "PRODUCT"
             }
-        ]
-        payload["fees"] = [{"type": "Tax", "value": pajak}]
+        ],
+        "fees": [{"type": "Tax", "value": pajak}]
+    }
 
-    # ==========================================================
-    # --- AKHIR LOGIKA BARU ---
-    # ==========================================================
+    # Logika external_id dinamis
+    brand_prefix_map = {
+        "ajn-01": "Jakinet",
+        "ajn-02": "Jelantik",
+        "ajn-03": "Nagrak"
+    }
 
-    async with httpx.AsyncClient() as client:
+    id_brand_pelanggan = brand_info.id_brand
+    brand_prefix = brand_prefix_map.get(id_brand_pelanggan, brand_info.brand)
+    nama_user = pelanggan.nama.replace(' ', '')
+    lokasi_singkat = pelanggan.alamat.split(' ')[0] if pelanggan.alamat else 'Lokasi'
+    bulan_tahun = invoice.tgl_jatuh_tempo.strftime('%B-%Y')
+
+    payload["external_id"] = f"{brand_prefix}/ftth/{nama_user}/{bulan_tahun}/{invoice.id}"
+
+    logger.info(f"Payload yang dikirim ke Xendit: {json.dumps(payload, indent=2)}")
+
+    async with httpx.AsyncClient(timeout=30.0) as client:  # Tambahkan timeout
         try:
             response = await client.post(settings.XENDIT_API_URL, json=payload, headers=headers)
             response.raise_for_status()
-            return response.json()
+            result = response.json()
+            logger.info(f"Respons dari Xendit: {json.dumps(result, indent=2)}")
+            return result
         except httpx.HTTPStatusError as e:
-            logger.error(f"Error saat membuat invoice Xendit. Payload yang dikirim: {json.dumps(payload, indent=2)}")
+            logger.error(f"Error saat membuat invoice Xendit. Payload: {json.dumps(payload, indent=2)}")
             logger.error(f"Respons Error dari Xendit: {e.response.text}")
             raise e
-
+        except httpx.RequestError as e:
+            logger.error(f"Kesalahan jaringan ke Xendit: {str(e)}")
+            raise ValueError(f"Kesalahan jaringan ke Xendit: {str(e)}")
 
 async def get_paid_invoice_ids_since(days: int) -> list[str]:
     """
-    Mengambil daftar external_id dari semua invoice yang statusnya PAID
-    sejak beberapa hari yang lalu dari Xendit (Batch API Call).
+    Mengambil daftar external_id dari semua invoice PAID dari SEMUA BRAND.
     """
     start_date = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
-    
-    api_key = settings.XENDIT_API_KEYS.get("JAKINET")
-    if not api_key:
-        logger.error("Kunci API Xendit default tidak ditemukan untuk verifikasi.")
-        return []
+    all_paid_ids = []
 
-    encoded_key = base64.b64encode(f"{api_key}:".encode('utf-8')).decode('utf-8')
-    headers = {"Authorization": f"Basic {encoded_key}"}
-    
-    # ==========================================================
-    # --- PERUBAHAN UTAMA ADA DI SINI ---
-    # ==========================================================
-    
-    # Kita tidak lagi menggunakan dict 'params' untuk httpx,
-    # karena formatting array-nya tidak sesuai harapan Xendit.
-    # Kita akan membangun query string secara manual.
-    
-    base_url = "https://api.xendit.co/v2/invoices"
-    query_params = {
-        "statuses[]": "PAID", # Gunakan 'statuses[]' untuk menandakan array
-        "paid_after": start_date,
-        "limit": 1000
-    }
-    
-    # Gunakan urllib untuk encode parameter dengan benar
-    encoded_params = urllib.parse.urlencode(query_params)
-    full_url = f"{base_url}?{encoded_params}"
+    for brand_name, api_key in settings.XENDIT_API_KEYS.items():
+        if not api_key:
+            logger.warning(f"Kunci API Xendit untuk brand '{brand_name}' tidak ditemukan, dilewati.")
+            continue
 
-    # ==========================================================
+        logger.info(f"Memeriksa pembayaran lunas untuk brand: {brand_name}")
+        encoded_key = base64.b64encode(f"{api_key}:".encode('utf-8')).decode('utf-8')
+        headers = {"Authorization": f"Basic {encoded_key}"}
+        
+        base_url = "https://api.xendit.co/v2/invoices"
+        query_params = {
+            "statuses[]": "PAID",
+            "paid_after": start_date,
+            "limit": 1000 
+        }
+        
+        # Gunakan httpx dengan params, ini cara yang lebih modern dan aman
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            try:
+                # httpx akan meng-encode 'statuses[]' dengan benar menjadi statuses%5B%5D=PAID
+                response = await client.get(base_url, headers=headers, params=query_params)
+                response.raise_for_status()
+                
+                # Cek apakah response.json() menghasilkan dict dan punya key 'data'
+                response_data = response.json()
+                invoices_data = response_data.get("data", []) if isinstance(response_data, dict) else []
 
-    async with httpx.AsyncClient() as client:
-        try:
-            # Panggil URL yang sudah diformat dengan benar
-            response = await client.get(full_url, headers=headers)
-            response.raise_for_status()
-            invoices_data = response.json()
-            return [inv.get("external_id") for inv in invoices_data if inv.get("external_id")]
-        except httpx.HTTPStatusError as e:
-            logger.error(f"Error saat mengambil data dari Xendit: {e.response.text}")
-            return []
+                brand_paid_ids = [inv.get("external_id") for inv in invoices_data if inv.get("external_id")]
+                all_paid_ids.extend(brand_paid_ids)
+                logger.info(f"Ditemukan {len(brand_paid_ids)} pembayaran lunas untuk brand {brand_name}.")
+            except httpx.HTTPStatusError as e:
+                logger.error(f"Error saat mengambil data dari Xendit untuk brand {brand_name}: {e.response.text}")
+    
+    return all_paid_ids

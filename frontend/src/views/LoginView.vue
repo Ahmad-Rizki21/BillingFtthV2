@@ -107,18 +107,18 @@ function backToLogin() {
 
     <!-- Main Login Container -->
     <div class="login-container">
-      <!-- Left Panel - Branding -->
+      <!-- Left Panel - Branding (Hidden on mobile) -->
       <div class="branding-panel">
         <div class="brand-content">
          <div class="logo-container">
             <div class="logo-icon">
-              <img src="@/assets/images/Jelantik 1.webp" alt="Logo" style="width: 200px; height: 110px; bottom: 100px; border-radius: 10px;" />
+              <img src="@/assets/images/Jelantik 1.webp" alt="Logo" class="logo-image" />
             </div>
             <h1 class="brand-name">Artacom Billing V2.0</h1>
           </div>
           
           <div class="brand-description">
-            <h2>System Managemant</h2>
+            <h2>System Management</h2>
             <p>Sistem yang di rancang dengan detail serta memberikan
               kemudahan akses ke Third Party dengan Payment Gateway.
             </p>
@@ -147,6 +147,15 @@ function backToLogin() {
 
       <!-- Right Panel - Login/Forgot Password Form -->
       <div class="login-panel">
+        <!-- Mobile Header (Only visible on mobile) -->
+        <div class="mobile-header">
+          <div class="mobile-logo">
+            <img src="@/assets/images/Jelantik 1.webp" alt="Logo" class="mobile-logo-image" />
+          </div>
+          <h1 class="mobile-brand-name">Artacom Billing V2.0</h1>
+          <p class="mobile-subtitle">System Management</p>
+        </div>
+
         <div class="login-form-container">
           <!-- Login Form -->
           <div v-if="!showForgotPassword" class="form-section">
@@ -317,18 +326,16 @@ function backToLogin() {
 </template>
 
 <style scoped>
-/* Hapus 'space-y' karena bukan properti CSS standar */
+/* Base Styles */
 .login-form,
 .forgot-form {
-  /* Ganti 'space-y: 1.5rem' dengan margin-bottom manual */
-  margin-bottom: 1.5rem; /* Sesuaikan dengan kebutuhan */
+  margin-bottom: 1.5rem;
 }
 
 .form-group {
   margin-bottom: 1.5rem;
 }
 
-/* Sisanya biarkan seperti aslinya */
 .login-wrapper {
   position: fixed;
   top: 0;
@@ -421,12 +428,14 @@ function backToLogin() {
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+  overflow: hidden;
 }
 
-.logo-icon svg {
-  width: 40px;
-  height: 40px;
-  color: white;
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
 .brand-name {
@@ -470,6 +479,47 @@ function backToLogin() {
   font-size: 1.2rem;
 }
 
+/* Mobile Header (Hidden on desktop) */
+.mobile-header {
+  display: none;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem 0 1rem;
+}
+
+.mobile-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+  overflow: hidden;
+}
+
+.mobile-logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.mobile-brand-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.mobile-subtitle {
+  color: #64748b;
+  font-size: 1rem;
+  margin: 0;
+}
+
 /* Login Panel */
 .login-panel {
   flex: 1;
@@ -480,12 +530,17 @@ function backToLogin() {
   justify-content: center;
   padding: 3rem;
   position: relative;
+  min-height: 100vh;
 }
 
 .login-form-container {
   max-width: 400px;
   width: 100%;
   margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .form-section {
@@ -542,14 +597,6 @@ function backToLogin() {
   font-size: 1rem;
 }
 
-.login-form, .forgot-form {
-  margin-bottom: 1.5rem
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
 .form-label {
   display: flex;
   align-items: center;
@@ -577,6 +624,7 @@ function backToLogin() {
   background: #f9fafb;
   transition: all 0.3s ease;
   color: #1f2937;
+  box-sizing: border-box;
 }
 
 .form-input:focus {
@@ -792,34 +840,70 @@ function backToLogin() {
   }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Responsive Styles */
+@media (max-width: 1024px) {
   .login-container {
     flex-direction: column;
   }
   
   .branding-panel {
     flex: 0 0 auto;
-    padding: 2rem 1.5rem 1rem;
-  }
-  
-  .brand-content {
-    max-width: none;
+    min-height: 40vh;
+    padding: 2rem 1.5rem;
   }
   
   .brand-name {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
   
-  .features-list {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+  .brand-description h2 {
+    font-size: 1.3rem;
+  }
+  
+  .brand-description p {
+    font-size: 1rem;
   }
   
   .login-panel {
     flex: 1;
-    padding: 1.5rem;
+    min-height: 60vh;
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+  
+  /* Hide desktop branding panel */
+  .branding-panel {
+    display: none;
+  }
+  
+  /* Show mobile header */
+  .mobile-header {
+    display: block;
+  }
+  
+  .login-panel {
+    flex: 1;
+    padding: 1rem;
     justify-content: flex-start;
+    min-height: 100vh;
+  }
+  
+  .login-form-container {
+    max-width: none;
+    margin-top: 0;
+  }
+  
+  .form-header h3 {
+    font-size: 1.5rem;
+  }
+  
+  .form-header p {
+    font-size: 0.9rem;
   }
   
   .system-status {
@@ -828,32 +912,202 @@ function backToLogin() {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+  
+  .features-list {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
-  .branding-panel {
-    padding: 1.5rem 1rem 0.5rem;
-  }
-  
   .login-panel {
-    padding: 1rem;
+    padding: 0.75rem;
   }
   
-  .login-form-container {
-    max-width: none;
+  .mobile-header {
+    padding: 1.5rem 0 1rem;
   }
   
-  .form-header h3 {
+  .mobile-brand-name {
     font-size: 1.5rem;
   }
   
-  .brand-description p {
+  .mobile-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .form-header {
+    margin-bottom: 2rem;
+  }
+  
+  .form-header h3 {
+    font-size: 1.4rem;
+  }
+  
+  .form-input {
+    padding: 0.9rem 1rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .login-button, .reset-button {
+    padding: 1rem;
     font-size: 1rem;
   }
-
+  
   .system-status {
-    gap: 0.5rem;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
   }
+  
+  .status-item {
+    font-size: 0.75rem;
+  }
+  
+  .security-notice {
+    margin-top: 1.5rem;
+    padding: 0.875rem;
+  }
+  
+  .notice-content h4 {
+    font-size: 0.85rem;
+  }
+  
+  .notice-content p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .mobile-header {
+    padding: 1rem 0 0.75rem;
+  }
+  
+  .mobile-logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .mobile-brand-name {
+    font-size: 1.3rem;
+  }
+  
+  .form-header h3 {
+    font-size: 1.3rem;
+  }
+  
+  .form-input {
+    padding: 0.8rem 0.9rem;
+  }
+  
+  .login-button, .reset-button {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+  
+  .error-message, .success-message {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .login-panel {
+    justify-content: flex-start;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  .mobile-header {
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .mobile-brand-name {
+    font-size: 1.2rem;
+    margin-bottom: 0.1rem;
+  }
+  
+  .mobile-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .form-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .system-status {
+    margin-top: 1rem;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .security-notice {
+    margin-top: 1rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .logo-image,
+  .mobile-logo-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Dark mode support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+  /* Styles can be added here for dark mode support */
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .network-node,
+  .network-node::before,
+  .status-indicator::before,
+  .loading-spinner {
+    animation: none;
+  }
+  
+  .form-input:focus {
+    transform: none;
+  }
+  
+  .login-button:hover:not(:disabled),
+  .reset-button:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Focus styles for accessibility */
+.login-button:focus-visible,
+.reset-button:focus-visible,
+.back-button:focus-visible,
+.forgot-link:focus-visible,
+.back-to-login:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.form-input:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
 }
 </style>

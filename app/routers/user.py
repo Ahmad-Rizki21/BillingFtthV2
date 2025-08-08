@@ -32,16 +32,18 @@ async def login_for_access_token(
     query = select(UserModel).where(UserModel.email == form_data.username)
     user = (await db.execute(query)).scalar_one_or_none()
 
+    # --- PERIKSA BLOK INI DENGAN SEKSAMA ---
     if not user or not auth.verify_password(form_data.password, user.password):
+        # PASTIKAN ANDA MELEMPAR HTTPException DI SINI
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Email atau password salah",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    # --- AKHIR BLOK PEMERIKSAAN ---
         
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = auth.create_access_token(
-        # Pastikan user.id dikonversi ke string untuk payload JWT
         data={"sub": str(user.id)},
         expires_delta=access_token_expires
     )
