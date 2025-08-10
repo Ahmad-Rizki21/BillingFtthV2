@@ -105,15 +105,34 @@
           {{ langgananList.length }} langganan
         </v-chip>
       </v-card-title>
+
+      <v-expand-transition>
+        <div v-if="selectedLangganan.length > 0" class="selection-toolbar pa-4">
+          <span class="font-weight-bold text-primary">{{ selectedLangganan.length }} langganan terpilih</span>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="error"
+            variant="tonal"
+            prepend-icon="mdi-delete-sweep"
+            @click="dialogBulkDelete = true"
+          >
+            Hapus Terpilih
+          </v-btn>
+        </div>
+      </v-expand-transition>
       
       <v-data-table
+        v-model="selectedLangganan"
         :headers="headers"
         :items="langgananList"
         :loading="loading"
         item-value="id"
         class="elevation-0"
         :items-per-page="10"
+        show-select
+        return-object
       >
+
          <template v-slot:item.nomor="{ index }">
             {{ index + 1 }}
         </template>
@@ -458,6 +477,44 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="dialogBulkDelete" max-width="500px">
+      <v-card class="rounded-xl elevation-8">
+        <div class="delete-header text-center pa-8">
+          <v-avatar size="64" color="error" class="mb-4">
+            <v-icon size="32" color="white">mdi-delete-alert</v-icon>
+          </v-avatar>
+          <h2 class="text-h5 font-weight-bold text-error mb-2">Konfirmasi Hapus Massal</h2>
+          <p class="text-body-1 text-medium-emphasis mb-0">
+            Anda yakin ingin menghapus <strong>{{ selectedLangganan.length }} langganan</strong> yang dipilih?
+          </p>
+        </div>
+        
+        <v-card-actions class="pa-6 pt-0">
+          <v-spacer></v-spacer>
+          <v-btn 
+            variant="text" 
+            color="grey-darken-1" 
+            @click="dialogBulkDelete = false"
+            class="text-none me-2"
+          >
+            Batal
+          </v-btn>
+          <v-btn 
+            color="error" 
+            variant="flat" 
+            @click="confirmBulkDelete" 
+            :loading="deleting"
+            class="text-none"
+          >
+            <v-icon start>mdi-delete</v-icon>
+            Ya, Hapus
+          </v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -505,6 +562,9 @@ const dialog = ref(false);
 const dialogDelete = ref(false);
 const editedIndex = ref(-1);
 const formValid = ref(false);
+
+const selectedLangganan = ref<Langganan[]>([]);
+const dialogBulkDelete = ref(false);
 
 const dialogImport = ref(false);
 const importing = ref(false);
@@ -649,6 +709,32 @@ const applyFilters = debounce(() => {
 watch([searchQuery, selectedPaket, selectedStatus], () => {
   applyFilters();
 });
+
+
+async function confirmBulkDelete() {
+  const itemsToDelete = [...selectedLangganan.value];
+  if (itemsToDelete.length === 0) return;
+
+  deleting.value = true;
+  try {
+    const deletePromises = itemsToDelete.map(langganan =>
+      apiClient.delete(`/langganan/${langganan.id}`)
+    );
+    await Promise.all(deletePromises);
+
+    // Asumsi Anda punya fungsi showSnackbar
+    // showSnackbar(`${itemsToDelete.length} langganan berhasil dihapus.`, 'success');
+    
+    fetchLangganan();
+    selectedLangganan.value = [];
+  } catch (error) {
+    console.error("Gagal melakukan hapus massal langganan:", error);
+    // showSnackbar('Terjadi kesalahan saat menghapus data.', 'error');
+  } finally {
+    deleting.value = false;
+    dialogBulkDelete.value = false;
+  }
+}
 
 // Fungsi untuk mereset semua filter
 function resetFilters() {
@@ -1052,6 +1138,14 @@ async function importFromCsv() {
     border-radius: 16px;
     margin: 0 8px;
   }
+}
+
+.selection-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: rgba(var(--v-theme-primary), 0.08);
+  border-bottom: 1px solid rgba(var(--v-theme-primary), 0.15);
 }
 
 /* Dark mode adjustments */

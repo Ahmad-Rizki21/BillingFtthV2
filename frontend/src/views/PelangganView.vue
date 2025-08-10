@@ -110,18 +110,35 @@
           {{ pelangganList.length }} pelanggan
         </v-chip>
       </div>
-      
+      <v-expand-transition>
+        <div v-if="selectedPelanggan.length > 0" class="selection-toolbar">
+          <span class="font-weight-bold text-primary">{{ selectedPelanggan.length }} pelanggan terpilih</span>
+          <v-spacer></v-spacer>
+         <v-btn 
+            color="error" 
+            variant="tonal" 
+            prepend-icon="mdi-delete-sweep"
+            @click="deleteSelectedPelanggan"
+          >
+            Hapus Terpilih
+          </v-btn>
+        </div>
+      </v-expand-transition>
       <div class="table-container">
         <v-data-table
-          :headers="headers"
-          :items="pelangganList"
-          :loading="loading"
-          item-value="id"
-          class="elegant-table"
-          :items-per-page="10"
-          :items-per-page-options="[5, 10, 25, 50]"
-          hover
-        >
+  v-model="selectedPelanggan"
+  :headers="headers"
+  :items="pelangganList"
+  :loading="loading"
+  item-value="id"
+  class="elegant-table"
+  :items-per-page="10"
+  :items-per-page-options="[5, 10, 25, 50]"
+  hover
+  show-select
+  return-object
+>
+        
           <template v-slot:loading>
             <div class="d-flex justify-center align-center py-12">
               <div class="text-center">
@@ -381,20 +398,20 @@
                       </div>
                     </v-col>
                     <v-col cols="12" md="4">
-  <div class="input-group">
-    <label class="input-label">
-      <v-icon size="small" class="mr-2">mdi-wifi</v-icon>
-      Layanan
-    </label>
-    <v-select
-      v-model="editedItem.layanan"
-      :items="layananOptions"
-      variant="outlined"
-      class="elegant-input"
-      density="comfortable"
-    ></v-select>
-  </div>
-</v-col>
+                      <div class="input-group">
+                        <label class="input-label">
+                          <v-icon size="small" class="mr-2">mdi-wifi</v-icon>
+                          Layanan
+                        </label>
+                        <v-select
+                          v-model="editedItem.layanan"
+                          :items="layananOptions"
+                          variant="outlined"
+                          class="elegant-input"
+                          density="comfortable"
+                        ></v-select>
+                      </div>
+                    </v-col>
                     <v-col cols="12" md="4">
                       <div class="input-group">
                         <label class="input-label">
@@ -490,7 +507,7 @@
             Batal
           </v-btn>
           <v-btn 
-            @click="confirmDelete" 
+            @click="confirmDelete"  
             :loading="deleting" 
             color="error" 
             variant="elevated"
@@ -501,6 +518,48 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+    </v-dialog>
+
+
+    <v-dialog v-model="dialogBulkDelete" max-width="500px" class="delete-dialog">
+      <v-card class="delete-card">
+        <div class="delete-header">
+          <v-icon class="mr-3">mdi-delete-sweep-outline</v-icon>
+          <span class="delete-title">Konfirmasi Hapus Massal</span>
+        </div>
+
+        <v-card-text class="delete-content">
+          <div class="delete-message">
+            <v-icon size="72" color="warning" class="mb-4">mdi-alert-circle-outline</v-icon>
+            <p class="delete-text">
+              Anda yakin ingin menghapus 
+              <strong>{{ selectedPelanggan.length }} pelanggan</strong> yang dipilih?
+            </p>
+            <p class="delete-warning">Tindakan ini tidak dapat dibatalkan!</p>
+          </div>
+        </v-card-text>
+
+        <v-card-actions class="delete-actions">
+          <v-spacer></v-spacer>
+            <v-btn 
+              @click="dialogBulkDelete = false" 
+              variant="text"
+              class="cancel-btn"
+            >
+              Batal
+            </v-btn>
+            <v-btn
+              @click="confirmBulkDelete"
+              :loading="deleting"
+              color="error"
+              variant="elevated"
+              class="delete-btn"
+              prepend-icon="mdi-delete"
+            >
+              Ya, Hapus
+            </v-btn>
+          </v-card-actions>
+        </v-card>
     </v-dialog>
 
     <v-dialog v-model="dialogImport" max-width="800px" persistent class="import-dialog">
@@ -675,9 +734,11 @@ const saving = ref(false);
 const deleting = ref(false);
 const dialog = ref(false);
 const dialogDelete = ref(false);
+const dialogBulkDelete = ref(false);
 const editedIndex = ref(-1);
 const currentStep = ref(1);
 const isFormValid = ref(false);
+const selectedPelanggan = ref<any[]>([]);
 
 const dialogImport = ref(false);
 const importing = ref(false);
@@ -757,6 +818,42 @@ onMounted(() => {
   fetchPelanggan();
   fetchHargaLayanan();
 });
+
+
+//Buat hapus data
+function deleteSelectedPelanggan() {
+  if (selectedPelanggan.value.length === 0) {
+    showSnackbar('Tidak ada pelanggan yang dipilih.', 'warning');
+    return;
+  }
+  // Tugasnya sekarang hanya membuka dialog
+  dialogBulkDelete.value = true;
+}
+
+async function confirmBulkDelete() {
+  const itemsToDelete = [...selectedPelanggan.value];
+  deleting.value = true; // Menggunakan state 'deleting' yang sudah ada
+
+  try {
+    const deletePromises = itemsToDelete.map(pelanggan =>
+      apiClient.delete(`/pelanggan/${pelanggan.id}`)
+    );
+
+    await Promise.all(deletePromises);
+
+    showSnackbar(`${itemsToDelete.length} pelanggan berhasil dihapus.`, 'success');
+
+    await fetchPelanggan();
+    selectedPelanggan.value = []; // Kosongkan pilihan
+
+  } catch (error) {
+    console.error("Gagal melakukan hapus massal:", error);
+    showSnackbar('Terjadi kesalahan saat menghapus data.', 'error');
+  } finally {
+    deleting.value = false;
+    dialogBulkDelete.value = false; // Tutup dialog setelah selesai
+  }
+}
 
 // --- METODE CRUD ---
 async function fetchPelanggan() {
@@ -1494,6 +1591,14 @@ function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
   font-size: 0.85rem;
   color: rgb(var(--v-theme-on-surface));
   opacity: 0.7;
+}
+
+.selection-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 12px 28px;
+  background-color: rgba(var(--v-theme-primary), 0.08);
+  border-bottom: 1px solid rgba(var(--v-theme-primary), 0.15);
 }
 
 /* Dialog Form */
