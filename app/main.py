@@ -37,9 +37,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # --- Middleware Backend to FrontEnd ---
 # ==========================================================
 origins = [
-    "https://billingftth.my.id",
-    "wss://billingftth.my.id",
-    "http://192.168.222.20",
+    # "https://billingftth.my.id",
+    # "wss://billingftth.my.id",
+    # "http://192.168.222.20",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "tauri://localhost"
@@ -162,13 +162,13 @@ async def startup_event():
     # scheduler.add_job(job_generate_invoices, 'cron', hour=1, minute=0, timezone='Asia/Jakarta') #Real
     
     # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
-    scheduler.add_job(job_generate_invoices, 'cron', hour=10, minute=0, timezone='Asia/Jakarta', id="generate_invoices_job")
+     #scheduler.add_job(job_generate_invoices, 'cron', hour=10, minute=0, timezone='Asia/Jakarta', id="generate_invoices_job")
     # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
 
     # scheduler.add_job(job_suspend_services, 'cron', hour=2, minute=0, timezone='Asia/Jakarta') #Real
     
     # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
-    scheduler.add_job(job_suspend_services, 'interval', minutes=20, id="suspend_services_job")
+     #scheduler.add_job(job_suspend_services, 'interval', minutes=20, id="suspend_services_job")
 
     # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
     
@@ -178,7 +178,7 @@ async def startup_event():
     # scheduler.add_job(job_verify_payments, 'cron', hour='*', minute=15, timezone='Asia/Jakarta', id="verify_payments_job") #Cek pembayaran setiap jam menit ke-15.
     
     #scheduler.add_job(job_verify_payments, 'interval', minutes=1, id="verify_payments_job")
-    scheduler.add_job(job_verify_payments, 'interval', minutes=20, id="verify_payments_job")
+     #scheduler.add_job(job_verify_payments, 'interval', minutes=20, id="verify_payments_job")
     # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
 
 
@@ -194,21 +194,21 @@ async def shutdown_event():
     print("Scheduler telah dimatikan.")
 
 # Meng-include semua router
-app.include_router(pelanggan.router, prefix="/api")
-app.include_router(user.router, prefix="/api")
-app.include_router(role.router, prefix="/api")
-app.include_router(data_teknis.router, prefix="/api")
-app.include_router(harga_layanan.router, prefix="/api")
-app.include_router(langganan.router, prefix="/api")
-app.include_router(paket_layanan.router, prefix="/api")
-app.include_router(invoice.router, prefix="/api")
-app.include_router(mikrotik_server.router, prefix="/api")
-app.include_router(uploads.router, prefix="/api")
+app.include_router(pelanggan.router)
+app.include_router(user.router)
+app.include_router(role.router)
+app.include_router(data_teknis.router)
+app.include_router(harga_layanan.router)
+app.include_router(langganan.router)
+app.include_router(paket_layanan.router)
+app.include_router(invoice.router)
+app.include_router(mikrotik_server.router)
+app.include_router(uploads.router)
 # app.include_router(system_log.router)
 # app.include_router(activity_log.router)
-app.include_router(notifications.router, prefix="/api")
-app.include_router(dashboard.router, prefix="/api")
-app.include_router(permission.router, prefix="/api")
+app.include_router(notifications.router)
+app.include_router(dashboard.router)
+app.include_router(permission.router)
 
 # Endpoint root untuk verifikasi
 @app.get("/")

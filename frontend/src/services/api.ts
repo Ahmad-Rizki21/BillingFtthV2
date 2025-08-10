@@ -5,8 +5,8 @@ import router from '@/router'; // 1. Impor router Vue Anda
 
 // Konfigurasi instance axios
 const apiClient = axios.create({
-  baseURL: '/api',
-  // baseURL: 'http://127.0.0.1:8000',
+  // baseURL: '/api',
+  baseURL: 'http://127.0.0.1:8000',
   timeout: 30000,
 });
 

@@ -171,18 +171,36 @@
           ></v-text-field>
         </div>
       </div>
+
+      <v-expand-transition>
+        <div v-if="selectedInvoices.length > 0" class="selection-toolbar">
+          <span class="font-weight-bold text-primary">{{ selectedInvoices.length }} invoice terpilih</span>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="error"
+            variant="tonal"
+            prepend-icon="mdi-delete-sweep"
+            @click="dialogBulkDelete = true"
+          >
+            Hapus Terpilih
+          </v-btn>
+        </div>
+      </v-expand-transition>
       
       <!-- Data Table -->
       <v-data-table
-        :headers="headers"
-        :items="invoices"
-        :loading="loading"
-        item-value="id"
-        class="invoice-table"
-        :items-per-page="15"
-        :loading-text="'Memuat data invoice...'"
-        :no-data-text="'Tidak ada data invoice'"
-      >
+          v-model="selectedInvoices"
+          :headers="headers"
+          :items="invoices"
+          :loading="loading"
+          item-value="id"
+          class="invoice-table"
+          :items-per-page="15"
+          :loading-text="'Memuat data invoice...'"
+          :no-data-text="'Tidak ada data invoice'"
+          show-select
+          return-object
+        >
         <!-- Loading slot -->
         <template v-slot:loading>
           <div class="text-center pa-8">
@@ -423,87 +441,111 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
-  :model-value="formatCurrency(selectedLanggananDetails.harga_awal)"
-  label="Harga Sesuai Langganan"
-  variant="outlined"
-  readonly
-  prepend-inner-icon="mdi-cash"
-></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field
-                :model-value="formatDate(selectedLanggananDetails.tgl_jatuh_tempo)"
-                label="Jatuh Tempo"
+                :model-value="formatCurrency(selectedLanggananDetails.harga_awal)"
+                label="Harga Sesuai Langganan"
                 variant="outlined"
                 readonly
-                prepend-inner-icon="mdi-calendar-end"
+                prepend-inner-icon="mdi-cash"
               ></v-text-field>
-            </v-col>
-          </v-row>
-          <p class="text-caption text-medium-emphasis mt-n2">
-            * Total tagihan akhir akan ditambahkan pajak sesuai brand.
-          </p>
-        </div>
-      </v-expand-transition>
-      
-    </v-card-text>
-    
-    <v-card-actions class="pa-6 pt-0">
-      <v-spacer></v-spacer>
-      <v-btn 
-        variant="outlined" 
-        @click="closeDialog"
-        size="large"
-        class="text-none"
-      >
-        Batal
-      </v-btn>
-      <v-btn 
-        color="primary" 
-        @click="generateManualInvoice"
-        :loading="generating"
-        :disabled="!selectedLanggananId"
-        variant="elevated"
-        size="large"
-        class="text-none font-weight-bold"
-      >
-        <v-icon class="me-2">mdi-plus</v-icon>
-        Buat Invoice
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
-    
-    <!-- Enhanced Snackbar -->
-    <v-snackbar 
-      v-model="snackbar.show" 
-      :color="snackbar.color" 
-      :timeout="4000"
-      location="top right"
-      variant="elevated"
-      class="custom-snackbar"
-    >
-      <div class="d-flex align-center">
-        <v-icon class="me-2">{{ getSnackbarIcon(snackbar.color) }}</v-icon>
-        {{ snackbar.text }}
-      </div>
-      <template v-slot:actions>
-        <v-btn
-          variant="text"
-          @click="snackbar.show = false"
-          icon="mdi-close"
-          size="small"
-        ></v-btn>
-      </template>
-    </v-snackbar>
+                          </v-col>
+                          <v-col cols="12" md="6">
+                            <v-text-field
+                              :model-value="formatDate(selectedLanggananDetails.tgl_jatuh_tempo)"
+                              label="Jatuh Tempo"
+                              variant="outlined"
+                              readonly
+                              prepend-inner-icon="mdi-calendar-end"
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <p class="text-caption text-medium-emphasis mt-n2">
+                          * Total tagihan akhir akan ditambahkan pajak sesuai brand.
+                        </p>
+                      </div>
+                    </v-expand-transition>
+                    
+                  </v-card-text>
+                  
+                  <v-card-actions class="pa-6 pt-0">
+                    <v-spacer></v-spacer>
+                    <v-btn 
+                      variant="outlined" 
+                      @click="closeDialog"
+                      size="large"
+                      class="text-none"
+                    >
+                      Batal
+                    </v-btn>
+                    <v-btn 
+                      color="primary" 
+                      @click="generateManualInvoice"
+                      :loading="generating"
+                      :disabled="!selectedLanggananId"
+                      variant="elevated"
+                      size="large"
+                      class="text-none font-weight-bold"
+                    >
+                      <v-icon class="me-2">mdi-plus</v-icon>
+                      Buat Invoice
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
 
-    <InvoiceDetailDialog 
-      v-model="dialogDetail" 
-      :invoice="selectedInvoice"
-    />
+              <v-dialog v-model="dialogBulkDelete" max-width="500px" persistent>
+                <v-card class="rounded-xl">
+                  <v-card-title class="text-h5 d-flex align-center bg-error">
+                    <v-icon start>mdi-delete-alert</v-icon>
+                    Konfirmasi Hapus Massal
+                  </v-card-title>
+                  <v-card-text class="pt-6">
+                    Anda yakin ingin menghapus <strong>{{ selectedInvoices.length }} invoice</strong> yang dipilih? Tindakan ini tidak dapat dibatalkan.
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="dialogBulkDelete = false">Batal</v-btn>
+                    <v-btn 
+                      color="error" 
+                      variant="flat"
+                      @click="confirmBulkDelete" 
+                      :loading="deleting"
+                    >
+                      Ya, Hapus
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
     
+              <!-- Enhanced Snackbar -->
+              <v-snackbar 
+                v-model="snackbar.show" 
+                :color="snackbar.color" 
+                :timeout="4000"
+                location="top right"
+                variant="elevated"
+                class="custom-snackbar"
+              >
+                <div class="d-flex align-center">
+                  <v-icon class="me-2">{{ getSnackbarIcon(snackbar.color) }}</v-icon>
+                  {{ snackbar.text }}
+                </div>
+                <template v-slot:actions>
+                  <v-btn
+                    variant="text"
+                    @click="snackbar.show = false"
+                    icon="mdi-close"
+                    size="small"
+                  ></v-btn>
+                </template>
+              </v-snackbar>
 
-  </v-container>
+              <InvoiceDetailDialog 
+                v-model="dialogDetail" 
+                :invoice="selectedInvoice"
+              />
+              
+
+            </v-container>
 </template>
 
 <script setup lang="ts">
@@ -530,6 +572,10 @@ const deleting = ref(false);
 const itemToDelete = ref<Invoice | null>(
   null
 );
+
+const selectedInvoices = ref<Invoice[]>([]);
+const dialogBulkDelete = ref(false);
+
 const dialogMarkAsPaid = ref(false);
 const markingAsPaid = ref(false);
 const itemToMark = ref<Invoice | null>(null);
@@ -600,6 +646,30 @@ async function confirmDelete() {
     showSnackbar(detail, 'error');
   } finally {
     deleting.value = false;
+  }
+}
+
+async function confirmBulkDelete() {
+  const itemsToDelete = [...selectedInvoices.value];
+  if (itemsToDelete.length === 0) return;
+
+  deleting.value = true;
+  try {
+    const deletePromises = itemsToDelete.map(invoice =>
+      apiClient.delete(`/invoices/${invoice.id}`)
+    );
+    await Promise.all(deletePromises);
+
+    showSnackbar(`${itemsToDelete.length} invoice berhasil dihapus.`, 'success');
+    
+    fetchInvoices();
+    selectedInvoices.value = [];
+  } catch (error) {
+    console.error("Gagal melakukan hapus massal invoices:", error);
+    showSnackbar('Terjadi kesalahan saat menghapus data.', 'error');
+  } finally {
+    deleting.value = false;
+    dialogBulkDelete.value = false;
   }
 }
 
@@ -858,6 +928,14 @@ async function confirmMarkAsPaid() {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+}
+
+.selection-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: rgba(var(--v-theme-primary), 0.08);
+  border-bottom: 1px solid rgba(var(--v-theme-primary), 0.15);
 }
 
 /* Efek hover pada filter card */
