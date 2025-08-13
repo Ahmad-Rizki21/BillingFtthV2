@@ -260,11 +260,16 @@
           </v-chip>
         </template>
 
-        <!-- Due Date Column -->
+        <!-- Due Date Column (FIXED) -->
         <template v-slot:item.tgl_jatuh_tempo="{ item }">
           <div class="due-date-cell">
             <div class="font-weight-medium">{{ formatDate(item.tgl_jatuh_tempo) }}</div>
-            <div class="text-caption" :class="getDueDateClass(item.tgl_jatuh_tempo)">
+            <!-- This div will now only show if the invoice is NOT 'Lunas' -->
+            <div 
+              v-if="item.status_invoice !== 'Lunas'"
+              class="text-caption" 
+              :class="getDueDateClass(item.tgl_jatuh_tempo)"
+            >
               {{ getDueDateLabel(item.tgl_jatuh_tempo) }}
             </div>
           </div>
@@ -597,18 +602,6 @@ const headers = [
 ];
 
 // --- Computed Properties ---
-// const filteredInvoices = computed(() => {
-//   if (!searchQuery.value) return invoices.value;
-//   const query = searchQuery.value.toLowerCase();
-//   return invoices.value.filter(inv => 
-//     inv.invoice_number.toLowerCase().includes(query) ||
-//     getPelangganName(inv.pelanggan_id).toLowerCase().includes(query) ||
-//     inv.id_pelanggan.toLowerCase().includes(query)
-//   );
-// });
-
-
-
 const langgananForSelect = computed((): LanggananSelectItem[] => {
   return langgananList.value.map(langganan => {
     const pelanggan = pelangganList.value.find(p => p.id === langganan.pelanggan_id);
@@ -636,10 +629,9 @@ async function confirmDelete() {
   
   deleting.value = true;
   try {
-    // Asumsi endpoint hapus adalah DELETE /invoices/{id}
     await apiClient.delete(`/invoices/${itemToDelete.value.id}`);
     showSnackbar('Invoice berhasil dihapus', 'success');
-    fetchInvoices(); // Refresh tabel
+    fetchInvoices(); // Refresh table
     closeDeleteDialog();
   } catch (error: any) {
     const detail = error.response?.data?.detail || 'Gagal menghapus invoice.';
@@ -675,7 +667,6 @@ async function confirmBulkDelete() {
 
 const selectedLanggananDetails = computed(() => {
   if (!selectedLanggananId.value) return null;
-  // Cari langganan yang cocok di dalam daftar
   return langgananList.value.find(lang => lang.id === selectedLanggananId.value);
 })
 
@@ -731,7 +722,6 @@ async function fetchPelangganForSelect() {
 
 async function fetchLanggananForSelect() {
   try {
-    // const response = await apiClient.get<any[]>('/langganan/');
     const response = await apiClient.get<any[]>('/langganan/?for_invoice_selection=true');
     langgananList.value = response.data;
   } catch (error) { console.error(error); }
@@ -875,7 +865,7 @@ async function confirmMarkAsPaid() {
       metode_pembayaran: paymentMethod.value
     });
     showSnackbar('Invoice berhasil ditandai lunas', 'success');
-    fetchInvoices(); // Refresh tabel
+    fetchInvoices(); // Refresh table
     closeMarkAsPaidDialog();
   } catch (error: any) {
     const detail = error.response?.data?.detail || 'Gagal menandai lunas.';

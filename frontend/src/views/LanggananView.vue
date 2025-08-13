@@ -11,46 +11,80 @@
         </div>
       </div>
       <v-spacer></v-spacer>
-      <v-btn variant="outlined" color="green" @click="dialogImport = true" prepend-icon="mdi-file-upload-outline" class="text-none me-3">Import</v-btn>
-        <v-btn variant="outlined" color="blue" @click="exportLangganan" prepend-icon="mdi-file-download-outline" class="text-none me-3">Export</v-btn>
+      
+      <!-- Enhanced Action Buttons -->
+      <div class="header-actions">
         <v-btn 
-          color="primary" 
+          class="import-btn" 
+          @click="dialogImport = true" 
+          prepend-icon="mdi-file-upload-outline"
+        >
+          Import
+        </v-btn>
+        <v-btn 
+          class="export-btn" 
+          @click="exportLangganan" 
+          prepend-icon="mdi-file-download-outline"
+        >
+          Export
+        </v-btn>
+        <v-btn 
+          class="add-subscription-btn"
           size="large"
-          elevation="2"
           @click="openDialog()"
           prepend-icon="mdi-plus-circle"
-          class="text-none"
         >
           Tambah Langganan
         </v-btn>
-
+      </div>
         </div> <v-dialog v-model="dialogImport" max-width="600px" persistent>
-          <v-card>
-            <v-card-title class="bg-green text-white">Import Langganan</v-card-title>
-            <v-card-text class="pa-6">
-              <v-alert type="info" variant="tonal" class="mb-4">
-                Gunakan <strong>Email Pelanggan</strong> dan <strong>Nama Paket Layanan</strong> sebagai kunci pencocokan.
-                <a :href="`${apiClient.defaults.baseURL}/langganan/template/csv`" download>Unduh template di sini</a>.
-              </v-alert>
-              <v-alert v-if="importErrors.length" type="error" closable @update:model-value="importErrors = []">
-                <ul><li v-for="(err, i) in importErrors" :key="i">{{ err }}</li></ul>
-              </v-alert>
-              <v-file-input
-                :model-value="fileToImport"
-                @update:model-value="handleFileSelection"
-                label="Pilih file CSV"
-                accept=".csv"
-                variant="outlined"
-                class="mt-4"
-              ></v-file-input>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn text @click="closeImportDialog">Batal</v-btn>
-              <v-btn color="green" @click="importFromCsv" :loading="importing" :disabled="!fileToImport.length">Unggah</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+            <v-card class="import-dialog">
+              <v-card-title class="import-dialog-header">Import Langganan</v-card-title>
+              <v-card-text class="import-dialog-content">
+                <v-alert 
+                  type="info" 
+                  variant="tonal" 
+                  class="import-info-alert"
+                >
+                  Gunakan <strong>Email Pelanggan</strong> dan <strong>Nama Paket Layanan</strong> sebagai kunci pencocokan.
+                  <a :href="`${apiClient.defaults.baseURL}/langganan/template/csv`" download>Unduh template di sini</a>.
+                </v-alert>
+                
+                <v-alert 
+                  v-if="importErrors.length" 
+                  type="error" 
+                  closable 
+                  @update:model-value="importErrors = []"
+                  class="import-error-alert"
+                >
+                  <ul>
+                    <li v-for="(err, i) in importErrors" :key="i">{{ err }}</li>
+                  </ul>
+                </v-alert>
+                
+                <v-file-input
+                  :model-value="fileToImport"
+                  @update:model-value="handleFileSelection"
+                  label="Pilih file CSV"
+                  accept=".csv"
+                  variant="outlined"
+                  class="import-file-input"
+                ></v-file-input>
+              </v-card-text>
+            <v-card-actions class="import-dialog-actions">
+            <v-spacer></v-spacer>
+            <v-btn class="import-cancel-btn" @click="closeImportDialog">Batal</v-btn>
+            <v-btn 
+              class="import-upload-btn" 
+              @click="importFromCsv" 
+              :loading="importing" 
+              :disabled="!fileToImport.length"
+            >
+              Unggah
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
         <v-card class="filter-card mb-6" elevation="0">
       <div class="d-flex flex-wrap align-center gap-4">
@@ -190,49 +224,50 @@
 
     <!-- Enhanced Dialog Form -->
     <v-dialog v-model="dialog" max-width="800px" persistent scrollable>
-      <v-card class="rounded-xl elevation-12">
+      <v-card class="subscription-form-dialog">
         <!-- Enhanced Header with Gradient -->
         <v-card-title class="pa-0 position-relative overflow-hidden">
-          <div class="form-header-gradient d-flex align-center pa-6 text-white">
-            <div class="form-icon-container me-4">
-              <v-avatar size="48" color="white" class="text-primary">
-                <v-icon size="28">{{ editedIndex === -1 ? 'mdi-plus-circle' : 'mdi-pencil-circle' }}</v-icon>
-              </v-avatar>
-            </div>
-            <div>
-              <h2 class="text-h4 font-weight-bold mb-1">{{ formTitle }}</h2>
-              <p class="text-subtitle-1 opacity-90 mb-0">
-                {{ editedIndex === -1 ? 'Tambahkan langganan baru untuk pelanggan' : 'Perbarui informasi langganan pelanggan' }}
-              </p>
+          <div class="enhanced-form-header">
+            <div class="form-header-content">
+              <div class="form-icon-wrapper">
+                <v-avatar size="48" color="white" class="text-primary">
+                  <v-icon size="28">{{ editedIndex === -1 ? 'mdi-plus-circle' : 'mdi-pencil-circle' }}</v-icon>
+                </v-avatar>
+              </div>
+              <div>
+                <h2 class="form-title">{{ formTitle }}</h2>
+                <p class="form-subtitle">
+                  {{ editedIndex === -1 ? 'Tambahkan langganan baru untuk pelanggan' : 'Perbarui informasi langganan pelanggan' }}
+                </p>
+              </div>
             </div>
           </div>
-          <div class="form-header-decoration"></div>
         </v-card-title>
 
-        <v-card-text class="pa-0">
+         <v-card-text class="pa-0">
           <v-container class="pa-8">
-            <!-- Step Indicator -->
-            <div class="step-indicator mb-8">
+            <!-- Enhanced Step Indicator -->
+            <div class="enhanced-step-indicator">
               <div class="d-flex align-center justify-center mb-4">
-                <div class="step-line"></div>
-                <v-chip color="primary" variant="flat" size="small" class="mx-2 font-weight-bold">
+                <v-chip class="step-badge">
                   <v-icon start size="16">mdi-form-select</v-icon>
                   Form Langganan
                 </v-chip>
-                <div class="step-line"></div>
               </div>
             </div>
 
             <v-form ref="formRef" v-model="formValid" lazy-validation>
               <v-row class="mb-4">
-                <!-- Pelanggan Section -->
+                <!-- Enhanced Pelanggan Section -->
                 <v-col cols="12">
-                  <div class="form-section">
-                    <div class="form-section-header mb-4">
-                      <v-icon color="primary" class="me-2">mdi-account-group</v-icon>
-                      <span class="text-h6 font-weight-bold text-primary">Informasi Pelanggan</span>
+                  <div class="enhanced-form-section">
+                    <div class="enhanced-section-header">
+                      <div class="section-icon">
+                        <v-icon>mdi-account-group</v-icon>
+                      </div>
+                      <span class="section-title">Informasi Pelanggan</span>
                     </div>
-                    <v-card variant="tonal" color="blue-grey" class="pa-4 rounded-lg">
+                    <v-card class="enhanced-section-card">
                       <v-autocomplete
                         v-model="editedItem.pelanggan_id"
                         :items="pelangganSelectList"
@@ -244,7 +279,7 @@
                         prepend-inner-icon="mdi-account-search"
                         :rules="[rules.required]"
                         :disabled="editedIndex !== -1"
-                        class="enhanced-field"
+                        class="enhanced-form-field"
                         clearable
                         hide-details="auto"
                       >
@@ -266,174 +301,167 @@
 
                 <!-- Paket Layanan Section -->
                 <v-col cols="12">
-                  <div class="form-section">
-                    <div class="form-section-header mb-4">
-                      <v-icon color="primary" class="me-2">mdi-wifi</v-icon>
-                      <span class="text-h6 font-weight-bold text-primary">Paket & Pembayaran</span>
-                    </div>
-                    <v-card variant="tonal" color="indigo" class="pa-4 rounded-lg">
-                      <v-row>
-                        <v-col cols="12">
-                          <v-select
-                            v-model="editedItem.paket_layanan_id"
-                            :items="paketLayananSelectList"
-                            :loading="paketLoading"
-                            item-title="nama_paket" 
-                            item-value="id"
-                            label="Pilih Paket Layanan"
-                            placeholder="Pilih paket yang sesuai"
-                            variant="solo-filled"
-                            prepend-inner-icon="mdi-wifi-star"
-                            :rules="[rules.required]"
-                            class="enhanced-field"
-                            hide-details="auto"
-                          >
-                            <template v-slot:item="{ props, item }">
-                              <v-list-item v-bind="props" class="px-4">
-                                <template v-slot:prepend>
-                                  <v-avatar color="indigo" size="32">
-                                    <v-icon color="white" size="16">mdi-wifi</v-icon>
-                                  </v-avatar>
-                                </template>
-                                <v-list-item-title class="font-weight-medium">{{ item.raw.nama_paket }}</v-list-item-title>
-                                <v-list-item-subtitle>{{ item.raw.kecepatan }} Mbps - {{ formatCurrency(item.raw.harga) }}</v-list-item-subtitle>
-                              </v-list-item>
-                            </template>
-                          </v-select>
-                        </v-col>
-                        
-                        <v-col cols="12" md="6">
-                          <v-select
-                            v-model="editedItem.metode_pembayaran"
-                            :items="[
-                              { title: 'Otomatis (Bulanan)', value: 'Otomatis' },
-                              { title: 'Prorate (Proporsional)', value: 'Prorate' }
-                            ]"
-                            label="Metode Pembayaran"
-                            variant="solo-filled"
-                            prepend-inner-icon="mdi-cash-multiple"
-                            class="enhanced-field"
-                            hide-details="auto"
-                          ></v-select>
-                        </v-col>
-
-                        <v-col 
-                          v-if="editedItem.metode_pembayaran === 'Prorate' && editedIndex === -1" 
-                          cols="12" 
-                          md="6"
-                        >
-                          <v-text-field
-                            v-model="editedItem.tgl_mulai_langganan"
-                            label="Tanggal Mulai Langganan"
-                            type="date"
-                            variant="solo-filled"
-                            prepend-inner-icon="mdi-calendar-start"
-                            class="enhanced-field"
-                            hide-details="auto"
-                          ></v-text-field>
-                        </v-col>
-                        
-                        <v-col cols="12" md="6">
-                          <v-text-field
-                            v-model="editedItem.harga_awal"
-                            label="Total Harga Awal"
-                            variant="solo-filled"
-                            prepend-inner-icon="mdi-currency-usd"
-                            prefix="Rp"
-                            readonly
-                            class="enhanced-field font-weight-bold price-field"
-                            hide-details="auto"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-card>
+              <div class="enhanced-form-section">
+                <div class="enhanced-section-header">
+                  <div class="section-icon">
+                    <v-icon>mdi-wifi</v-icon>
                   </div>
-                </v-col>
+                  <span class="section-title">Paket & Pembayaran</span>
+                </div>
+                <v-card class="enhanced-section-card">
+                  <v-row>
+                    <v-col cols="12">
+                      <v-select
+                        v-model="editedItem.paket_layanan_id"
+                        :items="paketLayananSelectList"
+                        :loading="paketLoading"
+                        item-title="nama_paket" 
+                        item-value="id"
+                        label="Pilih Paket Layanan"
+                        placeholder="Pilih paket yang sesuai"
+                        variant="solo-filled"
+                        prepend-inner-icon="mdi-wifi-star"
+                        :rules="[rules.required]"
+                        class="enhanced-form-field"
+                        hide-details="auto"
+                      >
+                        <template v-slot:item="{ props, item }">
+                          <v-list-item v-bind="props" class="px-4">
+                            <template v-slot:prepend>
+                              <v-avatar color="indigo" size="32">
+                                <v-icon color="white" size="16">mdi-wifi</v-icon>
+                              </v-avatar>
+                            </template>
+                            <v-list-item-title class="font-weight-medium">{{ item.raw.nama_paket }}</v-list-item-title>
+                            <v-list-item-subtitle>{{ item.raw.kecepatan }} Mbps - {{ formatCurrency(item.raw.harga) }}</v-list-item-subtitle>
+                          </v-list-item>
+                        </template>
+                      </v-select>
+                    </v-col>
+                    
+                    <v-col cols="12" md="6">
+                      <v-select
+                        v-model="editedItem.metode_pembayaran"
+                        :items="[
+                          { title: 'Otomatis (Bulanan)', value: 'Otomatis' },
+                          { title: 'Prorate (Proporsional)', value: 'Prorate' }
+                        ]"
+                        label="Metode Pembayaran"
+                        variant="solo-filled"
+                        prepend-inner-icon="mdi-cash-multiple"
+                        class="enhanced-form-field"
+                        hide-details="auto"
+                      ></v-select>
+                    </v-col>
+
+                    <v-col 
+                      v-if="editedItem.metode_pembayaran === 'Prorate' && editedIndex === -1" 
+                      cols="12" 
+                      md="6"
+                    >
+                      <v-text-field
+                        v-model="editedItem.tgl_mulai_langganan"
+                        label="Tanggal Mulai Langganan"
+                        type="date"
+                        variant="solo-filled"
+                        prepend-inner-icon="mdi-calendar-start"
+                        class="enhanced-form-field"
+                        hide-details="auto"
+                      ></v-text-field>
+                    </v-col>
+                    
+                    <v-col cols="12" md="6">
+                      <v-text-field
+                        v-model="editedItem.harga_awal"
+                        label="Total Harga Awal"
+                        variant="solo-filled"
+                        prepend-inner-icon="mdi-currency-usd"
+                        prefix="Rp"
+                        readonly
+                        class="enhanced-form-field enhanced-price-field"
+                        hide-details="auto"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </div>
+            </v-col>
 
                 <!-- Status & Tanggal Section -->
                 <v-col cols="12">
-                  <div class="form-section">
-                    <div class="form-section-header mb-4">
-                      <v-icon color="primary" class="me-2">mdi-cog</v-icon>
-                      <span class="text-h6 font-weight-bold text-primary">Status & Jadwal</span>
-                    </div>
-                    <v-card variant="tonal" color="green" class="pa-4 rounded-lg">
-                      <v-row>
-                        <v-col cols="12" sm="6">
-                          <v-select
-                            v-model="editedItem.status"
-                            :items="[
-                              { title: 'Aktif', value: 'Aktif' },
-                              { title: 'Suspended', value: 'Suspended' },
-                              { title: 'Berhenti', value: 'Berhenti' }
-                            ]"
-                            label="Status Langganan"
-                            variant="solo-filled"
-                            prepend-inner-icon="mdi-check-circle-outline"
-                            :rules="[rules.required]"
-                            class="enhanced-field"
-                            hide-details="auto"
-                          ></v-select>
-                        </v-col>
-                        
-                        <v-col cols="12" sm="6">
-                          <v-text-field
-                            v-model="editedItem.tgl_jatuh_tempo"
-                            label="Tanggal Jatuh Tempo"
-                            type="date"
-                            variant="solo-filled"
-                            prepend-inner-icon="mdi-calendar-alert"
-                            class="enhanced-field"
-                            hide-details="auto"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-card>
+              <div class="enhanced-form-section">
+                <div class="enhanced-section-header">
+                  <div class="section-icon">
+                    <v-icon>mdi-cog</v-icon>
                   </div>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-container>
-        </v-card-text>
+                  <span class="section-title">Status & Jadwal</span>
+                </div>
+                <v-card class="enhanced-section-card">
+                  <v-row>
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        v-model="editedItem.status"
+                        :items="[
+                          { title: 'Aktif', value: 'Aktif' },
+                          { title: 'Suspended', value: 'Suspended' },
+                          { title: 'Berhenti', value: 'Berhenti' }
+                        ]"
+                        label="Status Langganan"
+                        variant="solo-filled"
+                        prepend-inner-icon="mdi-check-circle-outline"
+                        :rules="[rules.required]"
+                        class="enhanced-form-field"
+                        hide-details="auto"
+                      ></v-select>
+                    </v-col>
+                    
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        v-model="editedItem.tgl_jatuh_tempo"
+                        label="Tanggal Jatuh Tempo"
+                        type="date"
+                        variant="solo-filled"
+                        prepend-inner-icon="mdi-calendar-alert"
+                        class="enhanced-form-field"
+                        hide-details="auto"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </div>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-container>
+    </v-card-text>
 
         <!-- Enhanced Action Buttons -->
         <v-card-actions class="pa-0">
-          <div class="action-footer w-100">
-            <v-container class="pa-6">
-              <v-row align="center" justify="end">
-                <v-col cols="auto">
-                  <v-btn 
-                    variant="text" 
-                    color="grey-darken-1" 
-                    @click="closeDialog"
-                    size="large"
-                    class="me-4 text-none"
-                  >
-                    <v-icon start>mdi-close</v-icon>
-                    Batal
-                  </v-btn>
-                </v-col>
-                <v-col cols="auto">
-                  <v-btn
-                    color="primary"
-                    variant="flat"
-                    @click="saveLangganan"
-                    :loading="saving"
-                    :disabled="!isFormValid"
-                    size="large"
-                    class="text-none px-8 save-button"
-                    elevation="2"
-                  >
-                    <v-icon start>{{ editedIndex === -1 ? 'mdi-plus' : 'mdi-content-save' }}</v-icon>
-                    {{ editedIndex === -1 ? 'Tambah Langganan' : 'Simpan Perubahan' }}
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </div>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      <div class="enhanced-action-footer w-100">
+        <div class="action-buttons">
+          <v-btn 
+            class="enhanced-cancel-btn"
+            @click="closeDialog"
+            size="large"
+          >
+            <v-icon start>mdi-close</v-icon>
+            Batal
+          </v-btn>
+          <v-btn
+            class="enhanced-save-btn"
+            @click="saveLangganan"
+            :loading="saving"
+            :disabled="!isFormValid"
+            size="large"
+          >
+            <v-icon start>{{ editedIndex === -1 ? 'mdi-plus' : 'mdi-content-save' }}</v-icon>
+            {{ editedIndex === -1 ? 'Tambah Langganan' : 'Simpan Perubahan' }}
+          </v-btn>
+        </div>
+      </div>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
 
     <!-- Enhanced Delete Dialog -->
     <v-dialog v-model="dialogDelete" max-width="500px">
@@ -924,6 +952,1566 @@ async function importFromCsv() {
 </script>
 
 <style scoped>
+
+:root {
+  /* Light Theme Colors */
+  --light-bg-primary: #ffffff;
+  --light-bg-secondary: #f8fafc;
+  --light-bg-tertiary: #f1f5f9;
+  --light-surface: #ffffff;
+  --light-surface-variant: #f8fafc;
+  --light-border: rgba(0, 0, 0, 0.12);
+  --light-border-hover: rgba(0, 0, 0, 0.24);
+  --light-text-primary: #1a202c;
+  --light-text-secondary: #4a5568;
+  --light-text-tertiary: #718096;
+  --light-shadow: rgba(0, 0, 0, 0.1);
+  --light-shadow-hover: rgba(0, 0, 0, 0.15);
+  
+  /* Dark Theme Colors */
+  --dark-bg-primary: #1a1a1a;
+  --dark-bg-secondary: #242424;
+  --dark-bg-tertiary: #2d2d2d;
+  --dark-surface: #1e1e1e;
+  --dark-surface-variant: #2a2a2a;
+  --dark-border: rgba(255, 255, 255, 0.12);
+  --dark-border-hover: rgba(255, 255, 255, 0.24);
+  --dark-text-primary: #ffffff;
+  --dark-text-secondary: #e2e8f0;
+  --dark-text-tertiary: #a0aec0;
+  --dark-shadow: rgba(0, 0, 0, 0.3);
+  --dark-shadow-hover: rgba(0, 0, 0, 0.4);
+  
+  /* Primary Colors */
+  --primary-500: #6366f1;
+  --primary-600: #4f46e5;
+  --primary-700: #4338ca;
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  
+  /* Success Colors */
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+  --success-50: #f0fdf4;
+  
+  /* Info Colors */
+  --info-500: #3b82f6;
+  --info-600: #2563eb;
+  --info-50: #eff6ff;
+  
+  /* Error Colors */
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --error-50: #fef2f2;
+}
+
+/* ============================================
+   BASE CONTAINER STYLING
+   ============================================ */
+.v-container {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Mode Base */
+.v-theme--light .v-container {
+  background: linear-gradient(135deg, 
+    var(--light-bg-secondary) 0%, 
+    var(--light-bg-tertiary) 100%);
+  color: var(--light-text-primary);
+}
+
+/* Dark Mode Base */
+.v-theme--dark .v-container {
+  background: linear-gradient(135deg, 
+    var(--dark-bg-primary) 0%, 
+    var(--dark-bg-secondary) 100%);
+  color: var(--dark-text-primary);
+}
+
+/* ============================================
+   HEADER SECTION STYLING
+   ============================================ */
+.header-section {
+  margin-bottom: 32px;
+  padding: 24px 0;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light Mode Header */
+.v-theme--light .header-section {
+  background: linear-gradient(135deg, 
+    var(--light-surface) 0%, 
+    var(--light-surface-variant) 100%);
+  border: 1px solid var(--light-border);
+  box-shadow: 0 4px 20px var(--light-shadow);
+}
+
+/* Dark Mode Header */
+.v-theme--dark .header-section {
+  background: linear-gradient(135deg, 
+    var(--dark-surface) 0%, 
+    var(--dark-surface-variant) 100%);
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 4px 20px var(--dark-shadow);
+}
+
+/* Header Icon Styling */
+.header-section .v-avatar {
+  box-shadow: 0 4px 16px rgba(var(--primary-500), 0.3);
+}
+
+.header-section .text-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   ENHANCED BUTTON STYLING
+   ============================================ */
+
+/* Import Button */
+.import-btn {
+  background: linear-gradient(135deg, var(--success-500) 0%, var(--success-600) 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 16px rgba(var(--success-500), 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.import-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--success-500), 0.4) !important;
+}
+
+/* Export Button */
+.export-btn {
+  background: linear-gradient(135deg, var(--info-500) 0%, var(--info-600) 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 16px rgba(var(--info-500), 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--info-500), 0.4) !important;
+}
+
+/* Add Subscription Button */
+.add-subscription-btn {
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 16px !important;
+  padding: 14px 28px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
+  box-shadow: 0 6px 20px rgba(var(--primary-500), 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.add-subscription-btn:hover {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(var(--primary-500), 0.4) !important;
+}
+
+/* ============================================
+   FILTER CARD STYLING
+   ============================================ */
+.filter-card {
+  border-radius: 20px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+/* Light Mode Filter Card */
+.v-theme--light .filter-card {
+  background: linear-gradient(145deg, 
+    var(--light-surface) 0%, 
+    var(--light-surface-variant) 100%) !important;
+  border: 1px solid var(--light-border) !important;
+  box-shadow: 0 4px 20px var(--light-shadow) !important;
+}
+
+.v-theme--light .filter-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--light-shadow-hover) !important;
+  border-color: rgba(var(--primary-500), 0.2) !important;
+}
+
+/* Dark Mode Filter Card */
+.v-theme--dark .filter-card {
+  background: linear-gradient(145deg, 
+    var(--dark-surface) 0%, 
+    var(--dark-surface-variant) 100%) !important;
+  border: 1px solid var(--dark-border) !important;
+  box-shadow: 0 4px 20px var(--dark-shadow) !important;
+}
+
+.v-theme--dark .filter-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--dark-shadow-hover) !important;
+  border-color: rgba(var(--primary-500), 0.3) !important;
+}
+
+/* Filter Card Top Border Effect */
+.filter-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--primary-500) 50%, 
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.filter-card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================
+   FORM FIELD STYLING
+   ============================================ */
+
+/* Base Field Styling */
+.enhanced-form-field .v-field {
+  border-radius: 12px !important;
+  border-width: 2px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Light Mode Fields */
+.v-theme--light .enhanced-form-field .v-field {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: var(--light-border) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.v-theme--light .enhanced-form-field .v-field:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  border-color: rgba(var(--primary-500), 0.4) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(var(--primary-500), 0.1) !important;
+}
+
+.v-theme--light .enhanced-form-field .v-field--focused {
+  background: white !important;
+  border-color: var(--primary-500) !important;
+  box-shadow: 0 0 0 4px rgba(var(--primary-500), 0.1) !important;
+}
+
+/* Dark Mode Fields */
+.v-theme--dark .enhanced-form-field .v-field {
+  background: rgba(42, 42, 42, 0.9) !important;
+  border-color: var(--dark-border) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.v-theme--dark .enhanced-form-field .v-field:hover {
+  background: rgba(46, 46, 46, 1) !important;
+  border-color: rgba(var(--primary-500), 0.5) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(var(--primary-500), 0.2) !important;
+}
+
+.v-theme--dark .enhanced-form-field .v-field--focused {
+  background: var(--dark-surface-variant) !important;
+  border-color: var(--primary-500) !important;
+  box-shadow: 0 0 0 4px rgba(var(--primary-500), 0.2) !important;
+}
+
+/* Field Input Text Color */
+.v-theme--dark .enhanced-form-field .v-field__input {
+  color: var(--dark-text-primary) !important;
+}
+
+.v-theme--light .enhanced-form-field .v-field__input {
+  color: var(--light-text-primary) !important;
+}
+
+/* Field Label Colors */
+.v-theme--dark .enhanced-form-field .v-field-label {
+  color: var(--dark-text-secondary) !important;
+}
+
+.v-theme--light .enhanced-form-field .v-field-label {
+  color: var(--light-text-secondary) !important;
+}
+
+/* ============================================
+   DATA TABLE STYLING
+   ============================================ */
+.v-data-table {
+  border-radius: 16px !important;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light Mode Data Table */
+.v-theme--light .v-data-table {
+  background: var(--light-surface) !important;
+  border: 1px solid var(--light-border) !important;
+}
+
+.v-theme--light .v-data-table .v-data-table-header {
+  background: linear-gradient(135deg, 
+    var(--light-surface-variant) 0%, 
+    var(--light-bg-tertiary) 100%) !important;
+  border-bottom: 1px solid var(--light-border) !important;
+}
+
+.v-theme--light .v-data-table tbody tr:nth-child(even) {
+  background: rgba(var(--primary-50), 0.3) !important;
+}
+
+.v-theme--light .v-data-table tbody tr:hover {
+  background: rgba(var(--primary-50), 0.6) !important;
+}
+
+/* Dark Mode Data Table */
+.v-theme--dark .v-data-table {
+  background: var(--dark-surface) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+.v-theme--dark .v-data-table .v-data-table-header {
+  background: linear-gradient(135deg, 
+    var(--dark-surface-variant) 0%, 
+    var(--dark-bg-tertiary) 100%) !important;
+  border-bottom: 1px solid var(--dark-border) !important;
+}
+
+.v-theme--dark .v-data-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.v-theme--dark .v-data-table tbody tr:hover {
+  background: rgba(var(--primary-500), 0.1) !important;
+}
+
+/* Data Table Text Colors */
+.v-theme--dark .v-data-table th,
+.v-theme--dark .v-data-table td {
+  color: var(--dark-text-primary) !important;
+}
+
+.v-theme--light .v-data-table th,
+.v-theme--light .v-data-table td {
+  color: var(--light-text-primary) !important;
+}
+
+/* ============================================
+   IMPORT DIALOG STYLING
+   ============================================ */
+.import-dialog {
+  border-radius: 20px !important;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Import Dialog Header */
+.import-dialog-header {
+  background: linear-gradient(135deg, var(--success-500) 0%, var(--success-600) 100%) !important;
+  color: white !important;
+  padding: 24px 32px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.import-dialog-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 100px;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(15deg);
+  transition: all 0.3s ease;
+}
+
+/* Import Dialog Content - Light Mode */
+.v-theme--light .import-dialog-content {
+  background: linear-gradient(145deg, 
+    var(--light-surface) 0%, 
+    var(--light-surface-variant) 100%) !important;
+  color: var(--light-text-primary) !important;
+}
+
+/* Import Dialog Content - Dark Mode */
+.v-theme--dark .import-dialog-content {
+  background: linear-gradient(145deg, 
+    var(--dark-surface) 0%, 
+    var(--dark-surface-variant) 100%) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+/* Import File Input Styling */
+.import-file-input .v-field {
+  border-radius: 16px !important;
+  border: 3px dashed rgba(var(--success-500), 0.3) !important;
+  min-height: 80px !important;
+  padding: 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Light Mode File Input */
+.v-theme--light .import-file-input .v-field {
+  background: linear-gradient(135deg, 
+    rgba(var(--success-50), 0.5) 0%, 
+    rgba(var(--success-50), 0.3) 100%) !important;
+}
+
+.v-theme--light .import-file-input .v-field:hover {
+  background: linear-gradient(135deg, 
+    rgba(var(--success-50), 0.8) 0%, 
+    rgba(var(--success-50), 0.6) 100%) !important;
+  border-color: rgba(var(--success-500), 0.5) !important;
+}
+
+/* Dark Mode File Input */
+.v-theme--dark .import-file-input .v-field {
+  background: linear-gradient(135deg, 
+    rgba(var(--success-500), 0.1) 0%, 
+    rgba(var(--success-500), 0.05) 100%) !important;
+}
+
+.v-theme--dark .import-file-input .v-field:hover {
+  background: linear-gradient(135deg, 
+    rgba(var(--success-500), 0.15) 0%, 
+    rgba(var(--success-500), 0.1) 100%) !important;
+  border-color: rgba(var(--success-500), 0.5) !important;
+}
+
+/* ============================================
+   FORM DIALOG STYLING
+   ============================================ */
+.subscription-form-dialog {
+  border-radius: 24px !important;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Enhanced Form Header */
+.enhanced-form-header {
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 50%, var(--primary-700) 100%) !important;
+  position: relative;
+  overflow: hidden;
+  padding: 32px !important;
+}
+
+.enhanced-form-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 200px;
+  height: 200%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  transform: rotate(25deg);
+  transition: all 0.5s ease;
+}
+
+/* Section Cards - Light Mode */
+.v-theme--light .enhanced-section-card {
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.9) 100%) !important;
+  border: 1px solid rgba(var(--primary-500), 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+.v-theme--light .enhanced-section-card:hover {
+  border-color: rgba(var(--primary-500), 0.2) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Section Cards - Dark Mode */
+.v-theme--dark .enhanced-section-card {
+  background: linear-gradient(145deg, 
+    rgba(30, 30, 30, 0.95) 0%,
+    rgba(42, 42, 42, 0.9) 100%) !important;
+  border: 1px solid rgba(var(--primary-500), 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+.v-theme--dark .enhanced-section-card:hover {
+  border-color: rgba(var(--primary-500), 0.3) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ============================================
+   ACTION BUTTONS STYLING
+   ============================================ */
+
+/* Cancel Button */
+.enhanced-cancel-btn {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  padding: 14px 24px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Light Mode Cancel Button */
+.v-theme--light .enhanced-cancel-btn {
+  color: var(--light-text-secondary) !important;
+  background: rgba(107, 114, 128, 0.1) !important;
+  border: 1px solid rgba(107, 114, 128, 0.2) !important;
+}
+
+.v-theme--light .enhanced-cancel-btn:hover {
+  background: rgba(107, 114, 128, 0.15) !important;
+  color: var(--light-text-primary) !important;
+}
+
+/* Dark Mode Cancel Button */
+.v-theme--dark .enhanced-cancel-btn {
+  color: var(--dark-text-secondary) !important;
+  background: rgba(156, 163, 175, 0.1) !important;
+  border: 1px solid rgba(156, 163, 175, 0.2) !important;
+}
+
+.v-theme--dark .enhanced-cancel-btn:hover {
+  background: rgba(156, 163, 175, 0.15) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+/* Save Button */
+.enhanced-save-btn {
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  padding: 14px 32px !important;
+  font-size: 1rem !important;
+  box-shadow: 0 6px 20px rgba(var(--primary-500), 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.enhanced-save-btn:hover {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(var(--primary-500), 0.4) !important;
+}
+
+/* ============================================
+   ACTION FOOTER STYLING
+   ============================================ */
+
+/* Light Mode Action Footer */
+.v-theme--light .enhanced-action-footer {
+  background: linear-gradient(145deg, 
+    var(--light-surface-variant) 0%, 
+    var(--light-bg-tertiary) 100%) !important;
+  border-top: 1px solid var(--light-border) !important;
+}
+
+/* Dark Mode Action Footer */
+.v-theme--dark .enhanced-action-footer {
+  background: linear-gradient(145deg, 
+    var(--dark-surface-variant) 0%, 
+    var(--dark-bg-tertiary) 100%) !important;
+  border-top: 1px solid var(--dark-border) !important;
+}
+
+/* ============================================
+   DELETE DIALOG STYLING
+   ============================================ */
+.delete-header {
+  transition: background 0.3s ease;
+}
+
+/* Light Mode Delete Header */
+.v-theme--light .delete-header {
+  background: linear-gradient(135deg, 
+    var(--light-surface) 0%, 
+    var(--light-surface-variant) 100%) !important;
+}
+
+/* Dark Mode Delete Header */
+.v-theme--dark .delete-header {
+  background: linear-gradient(135deg, 
+    var(--dark-surface) 0%, 
+    var(--dark-surface-variant) 100%) !important;
+}
+
+/* ============================================
+   SELECTION TOOLBAR
+   ============================================ */
+.selection-toolbar {
+  border-radius: 12px 12px 0 0;
+  transition: all 0.3s ease;
+}
+
+/* Light Mode Selection Toolbar */
+.v-theme--light .selection-toolbar {
+  background: rgba(var(--primary-50), 0.6) !important;
+  border-bottom: 1px solid rgba(var(--primary-500), 0.15) !important;
+  color: var(--light-text-primary) !important;
+}
+
+/* Dark Mode Selection Toolbar */
+.v-theme--dark .selection-toolbar {
+  background: rgba(var(--primary-500), 0.15) !important;
+  border-bottom: 1px solid rgba(var(--primary-500), 0.25) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+/* ============================================
+   CHIP STYLING
+   ============================================ */
+.v-chip {
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+}
+
+/* Status Chips */
+.v-chip--color-green {
+  background: linear-gradient(135deg, var(--success-500), var(--success-600)) !important;
+  color: white !important;
+}
+
+.v-chip--color-red {
+  background: linear-gradient(135deg, var(--error-500), var(--error-600)) !important;
+  color: white !important;
+}
+
+.v-chip--color-blue {
+  background: linear-gradient(135deg, var(--info-500), var(--info-600)) !important;
+  color: white !important;
+}
+
+/* ============================================
+   RESPONSIVE ENHANCEMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .import-btn,
+  .export-btn,
+  .add-subscription-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .subscription-form-dialog {
+    margin: 16px !important;
+    max-width: calc(100vw - 32px) !important;
+    border-radius: 16px !important;
+  }
+  
+  .enhanced-form-header {
+    padding: 24px !important;
+  }
+  
+  .enhanced-section-card {
+    padding: 20px !important;
+    margin: 0 -4px !important;
+  }
+  
+  .filter-card .d-flex {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  
+  .enhanced-form-field,
+  .v-select,
+  .v-text-field {
+    min-width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .import-dialog-content {
+    padding: 20px !important;
+  }
+  
+  .import-dialog-header {
+    padding: 20px !important;
+  }
+  
+  .enhanced-action-footer {
+    padding: 20px !important;
+  }
+  
+  .enhanced-action-footer .action-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  
+  .enhanced-cancel-btn,
+  .enhanced-save-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   SMOOTH TRANSITIONS
+   ============================================ */
+* {
+  transition: background-color 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Focus Visible States */
+.v-btn:focus-visible,
+.v-field:focus-visible,
+.v-select:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  :root {
+    --light-border: rgba(0, 0, 0, 0.3);
+    --dark-border: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ============================================
+   ENHANCED IMPORT/EXPORT BUTTONS STYLING
+   ============================================ */
+
+/* Container untuk button group di header */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Enhanced Import Button */
+.import-btn {
+  position: relative;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 
+    0 4px 12px rgba(76, 175, 80, 0.3),
+    0 2px 6px rgba(76, 175, 80, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  overflow: hidden;
+}
+
+.import-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #388e3c 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(76, 175, 80, 0.4),
+    0 4px 12px rgba(76, 175, 80, 0.3) !important;
+}
+
+.import-btn:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
+/* Import button icon animation */
+.import-btn .v-icon {
+  transition: transform 0.3s ease;
+}
+
+.import-btn:hover .v-icon {
+  transform: translateY(-2px) scale(1.1);
+}
+
+/* Enhanced Export Button */
+.export-btn {
+  position: relative;
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 
+    0 4px 12px rgba(33, 150, 243, 0.3),
+    0 2px 6px rgba(33, 150, 243, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  overflow: hidden;
+}
+
+.export-btn:hover {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(33, 150, 243, 0.4),
+    0 4px 12px rgba(33, 150, 243, 0.3) !important;
+}
+
+.export-btn:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
+/* Export button icon animation */
+.export-btn .v-icon {
+  transition: transform 0.3s ease;
+}
+
+.export-btn:hover .v-icon {
+  transform: translateY(-2px) scale(1.1);
+}
+
+/* Enhanced Add Button */
+.add-subscription-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 16px !important;
+  padding: 14px 28px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
+  box-shadow: 
+    0 6px 20px rgba(99, 102, 241, 0.3),
+    0 3px 10px rgba(99, 102, 241, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-subscription-btn:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 30px rgba(99, 102, 241, 0.4),
+    0 5px 15px rgba(99, 102, 241, 0.3) !important;
+}
+
+.add-subscription-btn:active {
+  transform: translateY(-1px);
+  transition: all 0.1s ease;
+}
+
+/* Ripple effect for buttons */
+.import-btn::before,
+.export-btn::before,
+.add-subscription-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: width 0.6s ease, height 0.6s ease;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.import-btn:active::before,
+.export-btn:active::before,
+.add-subscription-btn:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Button text and icon positioning */
+.import-btn .v-btn__content,
+.export-btn .v-btn__content,
+.add-subscription-btn .v-btn__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================
+   ENHANCED IMPORT DIALOG STYLING
+   ============================================ */
+
+.import-dialog {
+  border-radius: 20px !important;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Import dialog header */
+.import-dialog-header {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 50%, #388e3c 100%) !important;
+  color: white !important;
+  padding: 24px 32px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.import-dialog-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 100px;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(15deg);
+  transition: all 0.3s ease;
+}
+
+.import-dialog-header:hover::before {
+  right: -5%;
+}
+
+.import-dialog-header .v-card-title {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.import-dialog-header .v-card-title::before {
+  content: '📊';
+  font-size: 1.8rem;
+}
+
+/* Import dialog content */
+.import-dialog-content {
+  padding: 32px !important;
+  background: linear-gradient(145deg, #fafafa 0%, #f5f5f5 100%);
+}
+
+/* Enhanced info alert */
+.import-info-alert {
+  border-radius: 12px !important;
+  border: 1px solid rgba(33, 150, 243, 0.2) !important;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%) !important;
+  padding: 20px !important;
+  margin-bottom: 24px !important;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.1) !important;
+}
+
+.import-info-alert .v-alert__content {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+.import-info-alert strong {
+  color: #1976d2 !important;
+  font-weight: 700 !important;
+}
+
+.import-info-alert a {
+  color: #1976d2 !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  background: rgba(25, 118, 210, 0.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+.import-info-alert a:hover {
+  background: rgba(25, 118, 210, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+/* Enhanced error alert */
+.import-error-alert {
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%) !important;
+  border: 1px solid rgba(244, 67, 54, 0.2) !important;
+  margin-bottom: 20px !important;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.1) !important;
+}
+
+.import-error-alert ul {
+  margin: 0 !important;
+  padding-left: 20px !important;
+}
+
+.import-error-alert li {
+  margin-bottom: 4px !important;
+  color: #c62828 !important;
+  font-weight: 500 !important;
+}
+
+/* Enhanced file input */
+.import-file-input {
+  margin-top: 24px !important;
+}
+
+.import-file-input .v-field {
+  border-radius: 16px !important;
+  border: 3px dashed rgba(76, 175, 80, 0.3) !important;
+  background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e8 100%) !important;
+  transition: all 0.3s ease !important;
+  min-height: 80px !important;
+  padding: 16px !important;
+}
+
+.import-file-input .v-field:hover {
+  border-color: rgba(76, 175, 80, 0.5) !important;
+  background: linear-gradient(135deg, #e8f5e8 0%, #dcedc8 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.15) !important;
+}
+
+.import-file-input .v-field--focused {
+  border-color: #4caf50 !important;
+  background: white !important;
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1) !important;
+}
+
+.import-file-input .v-field__input {
+  padding-top: 20px !important;
+  font-weight: 600 !important;
+  color: #2e7d32 !important;
+}
+
+.import-file-input .v-field__prepend-inner {
+  padding-right: 16px !important;
+}
+
+.import-file-input .v-field__prepend-inner .v-icon {
+  color: #4caf50 !important;
+  font-size: 1.5rem !important;
+}
+
+/* Dialog actions */
+.import-dialog-actions {
+  padding: 24px 32px !important;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.import-dialog-actions .v-btn {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  padding: 12px 24px !important;
+}
+
+.import-upload-btn {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3) !important;
+}
+
+.import-upload-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #388e3c 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4) !important;
+}
+
+.import-cancel-btn {
+  color: #666 !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.import-cancel-btn:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: #333 !important;
+}
+
+/* ============================================
+   ENHANCED FORM DIALOG STYLING
+   ============================================ */
+
+.subscription-form-dialog {
+  border-radius: 24px !important;
+  overflow: hidden;
+  max-width: 900px !important;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.15),
+    0 15px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Enhanced form header with better gradient and animations */
+.enhanced-form-header {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #4338ca 100%) !important;
+  position: relative;
+  overflow: hidden;
+  padding: 32px !important;
+}
+
+.enhanced-form-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 200px;
+  height: 200%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  transform: rotate(25deg);
+  transition: all 0.5s ease;
+}
+
+.enhanced-form-header:hover::before {
+  right: -10%;
+  transform: rotate(25deg) scale(1.1);
+}
+
+.enhanced-form-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.3) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.enhanced-form-header .form-header-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.enhanced-form-header .form-icon-wrapper {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-form-header .form-icon-wrapper .v-avatar {
+  background: white !important;
+  color: #6366f1 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.enhanced-form-header .form-title {
+  color: white;
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 8px !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-form-header .form-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem !important;
+  font-weight: 400 !important;
+  margin: 0 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced step indicator */
+.enhanced-step-indicator {
+  padding: 32px 0 !important;
+  position: relative;
+}
+
+.enhanced-step-indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    rgba(99, 102, 241, 0.2) 25%,
+    rgba(99, 102, 241, 0.6) 50%,
+    rgba(99, 102, 241, 0.2) 75%,
+    transparent 100%
+  );
+  transform: translateY(-50%);
+}
+
+.enhanced-step-indicator .step-badge {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  border-radius: 50px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  border: 3px solid white !important;
+  box-shadow: 
+    0 6px 20px rgba(99, 102, 241, 0.3),
+    0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+  position: relative;
+  z-index: 2;
+}
+
+/* Enhanced form sections */
+.enhanced-form-section {
+  margin-bottom: 40px !important;
+  position: relative;
+}
+
+.enhanced-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px !important;
+  padding: 16px 0;
+  position: relative;
+}
+
+.enhanced-section-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    rgba(99, 102, 241, 0.3) 0%,
+    rgba(99, 102, 241, 0.1) 50%,
+    transparent 100%
+  );
+}
+
+.enhanced-section-header .section-icon {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.enhanced-section-header .section-title {
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Enhanced section cards */
+.enhanced-section-card {
+  border-radius: 20px !important;
+  padding: 32px !important;
+  border: 1px solid rgba(99, 102, 241, 0.1) !important;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(249, 250, 251, 0.8) 100%
+  ) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.05),
+    0 4px 10px rgba(99, 102, 241, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-section-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #4f46e5, #4338ca);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.enhanced-section-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.1),
+    0 8px 20px rgba(99, 102, 241, 0.2) !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
+}
+
+.enhanced-section-card:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced form fields */
+.enhanced-form-field .v-field {
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 2px solid rgba(99, 102, 241, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.enhanced-form-field .v-field:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.1) !important;
+}
+
+.enhanced-form-field .v-field--focused {
+  background: white !important;
+  border-color: #6366f1 !important;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.15),
+    0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+}
+
+.enhanced-form-field .v-field__input {
+  padding: 16px 20px !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+
+.enhanced-form-field .v-field__prepend-inner .v-icon {
+  color: rgba(99, 102, 241, 0.7) !important;
+  font-size: 1.2rem !important;
+  margin-right: 12px !important;
+}
+
+.enhanced-form-field .v-field--focused .v-field__prepend-inner .v-icon {
+  color: #6366f1 !important;
+  transform: scale(1.1);
+}
+
+/* Special styling for price field */
+.enhanced-price-field .v-field {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+  border-color: rgba(14, 165, 233, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+.enhanced-price-field .v-field:hover {
+  border-color: rgba(14, 165, 233, 0.5) !important;
+}
+
+.enhanced-price-field .v-field--focused {
+  border-color: #0ea5e9 !important;
+  box-shadow: 
+    0 8px 25px rgba(14, 165, 233, 0.15),
+    0 0 0 4px rgba(14, 165, 233, 0.1) !important;
+}
+
+.enhanced-price-field .v-field__input {
+  color: #0369a1 !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+}
+
+/* Enhanced action footer */
+.enhanced-action-footer {
+  background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 32px !important;
+}
+
+.enhanced-action-footer .action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+.enhanced-cancel-btn {
+  color: #6b7280 !important;
+  background: rgba(107, 114, 128, 0.1) !important;
+  border: 1px solid rgba(107, 114, 128, 0.2) !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  padding: 14px 24px !important;
+  transition: all 0.3s ease !important;
+}
+
+.enhanced-cancel-btn:hover {
+  background: rgba(107, 114, 128, 0.15) !important;
+  color: #374151 !important;
+  border-color: rgba(107, 114, 128, 0.3) !important;
+}
+
+.enhanced-save-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  padding: 14px 32px !important;
+  font-size: 1rem !important;
+  box-shadow: 
+    0 6px 20px rgba(99, 102, 241, 0.3),
+    0 3px 10px rgba(99, 102, 241, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-save-btn:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 30px rgba(99, 102, 241, 0.4),
+    0 5px 15px rgba(99, 102, 241, 0.3) !important;
+}
+
+.enhanced-save-btn:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
+.enhanced-save-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: width 0.6s ease, height 0.6s ease;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.enhanced-save-btn:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+.enhanced-save-btn .v-btn__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   RESPONSIVE ENHANCEMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .import-btn,
+  .export-btn,
+  .add-subscription-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .subscription-form-dialog {
+    margin: 16px !important;
+    max-width: calc(100vw - 32px) !important;
+    border-radius: 16px !important;
+  }
+  
+  .enhanced-form-header {
+    padding: 24px !important;
+  }
+  
+  .enhanced-form-header .form-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .enhanced-section-card {
+    padding: 20px !important;
+    margin: 0 -4px !important;
+  }
+  
+  .enhanced-action-footer {
+    padding: 20px !important;
+  }
+  
+  .enhanced-action-footer .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .enhanced-cancel-btn,
+  .enhanced-save-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .import-dialog-content {
+    padding: 20px !important;
+  }
+  
+  .import-dialog-header {
+    padding: 20px !important;
+  }
+  
+  .import-dialog-actions {
+    padding: 16px 20px !important;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .import-upload-btn,
+  .import-cancel-btn {
+    width: 100%;
+  }
+}
+
+
 
 /* ============================================
    ENHANCED FILTER CARD STYLING

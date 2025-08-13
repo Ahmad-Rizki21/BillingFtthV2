@@ -254,74 +254,36 @@ async def import_from_csv(file: UploadFile = File(...), db: AsyncSession = Depen
     """
     Mengimpor data pelanggan dari file CSV dengan validasi mendalam dan laporan error.
     """
-    # DEBUG: Log informasi file yang diterima
-    logger.info(f"Received file: {file.filename}, content_type: {file.content_type}")
-    
-    if not file.filename:
-        raise HTTPException(status_code=400, detail="Nama file tidak valid")
-        
-    if not file.filename.lower().endswith('.csv'):
+    # 1. Validasi awal file
+    if not file.filename or not file.filename.lower().endswith('.csv'):
         raise HTTPException(status_code=400, detail="File harus berformat .csv")
 
-    try:
-        contents = await file.read()
-        logger.info(f"File content size: {len(contents)} bytes")
-    except Exception as e:
-        logger.error(f"Error reading file: {e}")
-        raise HTTPException(status_code=400, detail=f"Gagal membaca file: {str(e)}")
-    
+    contents = await file.read()
     if not contents:
         raise HTTPException(status_code=400, detail="File kosong.")
 
-    # Deteksi encoding
+    # 2. Baca dan proses file CSV
     try:
+        # Deteksi encoding secara otomatis untuk kompatibilitas
         encoding = chardet.detect(contents)['encoding'] or 'utf-8'
-        logger.info(f"Detected encoding: {encoding}")
         content_str = contents.decode(encoding)
-    except (UnicodeDecodeError, TypeError) as e:
-        logger.error(f"Encoding error: {e}")
-        raise HTTPException(status_code=400, detail="Tidak dapat membaca file. Pastikan encoding adalah UTF-8.")
-
-    stream = io.StringIO(content_str)
-    lines = content_str.strip().splitlines()
-
-    # Cari header secara dinamis
-    header_row_index = -1
-    for i, line in enumerate(lines):
-        if "Nama" in line and "No KTP" in line and "Email" in line:
-            header_row_index = i
-            break
-    
-    logger.info(f"Header found at row: {header_row_index}")
-    
-    if header_row_index == -1:
-        raise HTTPException(status_code=400, detail="Header (Nama, No KTP, Email, dll.) tidak ditemukan dalam file CSV.")
-
-    # Reset stream dan skip baris sebelum header
-    stream.seek(0)
-    for _ in range(header_row_index):
-        next(stream)
-
-    try:
-        # Deteksi dialect
-        sample_line = stream.readline()
-        if sample_line:
-            dialect = csv.Sniffer().sniff(sample_line, delimiters=',;')
-        else:
-            dialect = 'excel'
+        stream = io.StringIO(content_str)
         
-        stream.seek(0)
-        for _ in range(header_row_index):
-            next(stream)
-    except csv.Error:
-        dialect = 'excel'
-        stream.seek(0)
-        for _ in range(header_row_index):
-            next(stream)
+        # Gunakan DictReader, cara paling andal untuk membaca CSV dengan header
+        reader = csv.DictReader(stream)
+        
+        # Validasi sederhana: pastikan header ada
+        if not reader.fieldnames:
+            raise HTTPException(status_code=400, detail="Header tidak ditemukan atau file CSV tidak valid.")
+        
+        logger.info(f"CSV Headers found: {reader.fieldnames}")
 
-    reader = csv.DictReader(stream, dialect=dialect)
-    
-    # Mapping nama kolom di CSV ke field di Pydantic Schema
+    except Exception as e:
+        logger.error(f"Gagal membaca atau mem-parsing file CSV: {e}")
+        raise HTTPException(status_code=400, detail=f"Gagal memproses file CSV: {e}")
+
+    # 3. Siapkan untuk validasi data
+    # Mapping nama kolom di CSV ke field di skema Pydantic
     column_mapping = {
         "Nama": "nama", "No KTP": "no_ktp", "Email": "email", "No Telepon": "no_telp",
         "Alamat": "alamat", "Alamat 2": "alamat_2", "Blok": "blok", "Unit": "unit",
@@ -330,80 +292,65 @@ async def import_from_csv(file: UploadFile = File(...), db: AsyncSession = Depen
 
     new_customers = []
     errors = []
-    required_fields = ["nama", "no_ktp", "email", "no_telp", "alamat", "blok", "unit"]
-
-    processed_rows = 0
-    for row_num, row in enumerate(reader, start=header_row_index + 2):
-        processed_rows += 1
-        logger.info(f"Processing row {row_num}: {list(row.keys())}")
-        
+    
+    # 4. Loop melalui setiap baris data (header sudah otomatis dilewati oleh DictReader)
+    for row_num, row in enumerate(reader, start=2): # Mulai dari baris 2 untuk logging
         data = {}
+        # Membersihkan dan memetakan data dari baris CSV
         for csv_header, model_field in column_mapping.items():
-            value = row.get(csv_header, "").strip() if row.get(csv_header) else ""
-            if value and value.lower() not in ['null', 'none', 'n/a', '']:
+            # Ambil nilai dari baris, bersihkan spasi di awal/akhir
+            value = row.get(csv_header, "").strip()
+            # Hanya proses jika sel tidak kosong. "N/A" akan dianggap sebagai data valid.
+            if value:
                 data[model_field] = value
         
-        # Skip empty rows
-        if not any(data.values()):
-            logger.info(f"Skipping empty row {row_num}")
+        # Lewati baris yang sepenuhnya kosong
+        if not data:
+            logger.warning(f"Skipping empty row {row_num}")
             continue
 
         try:
-            # Check required fields
-            missing_fields = [field for field in required_fields if not data.get(field)]
-            if missing_fields:
-                errors.append(f"Baris {row_num}: Field wajib kosong: {', '.join(missing_fields)}")
-                continue
-
-            # Parse date if exists
-            if 'tgl_instalasi' in data and data['tgl_instalasi']:
+            # Validasi tanggal jika ada
+            if 'tgl_instalasi' in data:
                 try:
                     data['tgl_instalasi'] = parser.parse(data['tgl_instalasi']).date()
                 except (parser.ParserError, ValueError):
                     errors.append(f"Baris {row_num}: Format tanggal tidak valid untuk '{data['tgl_instalasi']}'. Gunakan YYYY-MM-DD.")
                     continue
             
-            # Validate with Pydantic
+            # Validasi data menggunakan skema Pydantic
             customer_schema = PelangganCreate(**data)
+            # Jika valid, tambahkan ke daftar untuk disimpan
             new_customers.append(PelangganModel(**customer_schema.model_dump()))
-            logger.info(f"Valid customer added from row {row_num}: {data.get('nama')}")
+            logger.info(f"Valid customer prepared from row {row_num}: {data.get('nama')}")
 
         except ValidationError as e:
-            error_details = "; ".join([f"{err['loc'][0] if err['loc'] else 'unknown'}: {err['msg']}" for err in e.errors()])
+            # Tangkap error validasi dari Pydantic
+            error_details = "; ".join([f"{err['loc'][0]}: {err['msg']}" for err in e.errors()])
             errors.append(f"Baris {row_num}: {error_details}")
-            logger.error(f"Validation error at row {row_num}: {error_details}")
         except Exception as e:
-            errors.append(f"Baris {row_num}: Terjadi error tidak terduga - {str(e)}")
-            logger.error(f"Unexpected error at row {row_num}: {str(e)}")
+            # Tangkap error tak terduga lainnya
+            errors.append(f"Baris {row_num}: Terjadi error - {str(e)}")
 
-    logger.info(f"Processing complete. Processed rows: {processed_rows}, Valid customers: {len(new_customers)}, Errors: {len(errors)}")
-
-    # Return errors if any
+    # 5. Laporkan error jika ada
     if errors:
-        logger.warning(f"Import failed with {len(errors)} errors")
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail={"message": f"Ditemukan {len(errors)} kesalahan dalam file.", "errors": errors}
         )
 
     if not new_customers:
-        logger.warning("No valid customers to import")
         raise HTTPException(status_code=400, detail="Tidak ada data pelanggan yang valid untuk diimpor.")
 
-    # Save to database
+    # 6. Simpan ke database jika tidak ada error
     try:
         db.add_all(new_customers)
         await db.commit()
-        logger.info(f"Successfully saved {len(new_customers)} customers to database")
     except Exception as e:
         await db.rollback()
-        logger.error(f"Database save failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Terjadi kesalahan saat menyimpan ke database: {str(e)}")
 
-    success_message = f"Sukses! Berhasil mengimpor {len(new_customers)} pelanggan baru."
-    logger.info(success_message)
-    
-    # PERBAIKAN: Pastikan return response yang proper
-    return {"message": success_message, "imported_count": len(new_customers)}
+    # 7. Kirim pesan sukses
+    return {"message": f"Sukses! Berhasil mengimpor {len(new_customers)} pelanggan baru."}
 
 #========================================================== IMPORT DAN EXPORT ========================================================== 
