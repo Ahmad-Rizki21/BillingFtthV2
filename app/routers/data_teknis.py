@@ -109,7 +109,8 @@ async def read_all_data_teknis(
             or_(
                 PelangganModel.nama.ilike(search_term),
                 DataTeknisModel.id_pelanggan.ilike(search_term),
-                DataTeknisModel.ip_pelanggan.ilike(search_term)
+                DataTeknisModel.ip_pelanggan.ilike(search_term),
+                DataTeknisModel.sn.ilike(search_term)
             )
         )
 

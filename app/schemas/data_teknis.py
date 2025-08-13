@@ -40,6 +40,7 @@ class DataTeknisCreate(BaseModel):
     odc: int = Field(default=0)
     odp: int = Field(default=0)
     onu_power: float = Field(default=0.0)
+    sn: Optional[str] = None
 
 # Skema untuk membaca data (response)
 class DataTeknis(BaseModel):
@@ -58,6 +59,7 @@ class DataTeknis(BaseModel):
     odc: Optional[int] = None
     odp: Optional[int] = None
     onu_power: Optional[float] = None
+    sn: Optional[str] = None
     speedtest_proof: Optional[str] = None
 
     class Config:
@@ -78,6 +80,7 @@ class DataTeknisUpdate(BaseModel):
     odc: Optional[int] = None
     odp: Optional[int] = None
     speedtest_proof: Optional[str] = None
+    sn: Optional[str] = None
     onu_power: Optional[int] = None
 
     class Config:
@@ -98,6 +101,7 @@ class DataTeknisImport(BaseModel):
     otb: Optional[int] = None
     odc: Optional[int] = None
     odp: Optional[int] = None
+    sn: Optional[str] = None
     onu_power: Optional[int] = None
     
     # --- INI BAGIAN YANG PERLU DIPASTIKAN ---

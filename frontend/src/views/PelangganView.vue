@@ -774,6 +774,7 @@ const snackbar = ref({ show: false, text: '', color: 'success' as 'success' | 'e
 const alamatOptions = ref([
   'Tambun',
   'Rusun Pinus Elok',
+  'Luar Pinus Elok',
   'Rusun Pulogebang',
   'Rusun Cakung KM2',
   'Rusun Tipar Cakung',

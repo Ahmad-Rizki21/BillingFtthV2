@@ -7,6 +7,7 @@ from sqlalchemy import update
 from sqlalchemy.orm import selectinload
 import uuid
 import traceback
+import math
 
 # Impor komponen
 from .database import AsyncSessionLocal as SessionLocal
@@ -28,13 +29,20 @@ async def generate_single_invoice(db, langganan: LanggananModel):
             logger.error(f"Data tidak lengkap untuk langganan ID {langganan.id}. Skip.")
             return
 
-        # --- PERBAIKAN DIMULAI DI SINI ---
+        # --- PERBAIKAN FINAL ---
         
-        # 1. Hitung harga dan pajak (sebelumnya tidak ada di sini)
+        # 1. Hitung harga dan pajak
         harga_dasar = float(paket.harga)
         pajak_persen = float(brand.pajak)
-        pajak = round(harga_dasar * (pajak_persen / 100), 2)
-        total_harga = round(harga_dasar + pajak, 2)
+
+        # Hitung nilai pajak mentah
+        pajak_mentah = harga_dasar * (pajak_persen / 100)
+
+        # Lakukan pembulatan matematis standar (round half up) sesuai aturan finance
+        pajak = math.floor(pajak_mentah + 0.5)
+
+        # Total harga adalah harga dasar ditambah pajak yang sudah dibulatkan.
+        total_harga = harga_dasar + pajak
         
         # --- PERBAIKAN PADA new_invoice_data ---
         new_invoice_data = {
@@ -42,7 +50,7 @@ async def generate_single_invoice(db, langganan: LanggananModel):
             "pelanggan_id": pelanggan.id,
             "id_pelanggan": data_teknis.id_pelanggan,
             "brand": brand.brand,
-            "total_harga": total_harga, # Menggunakan total_harga yang sudah dihitung dengan pajak
+            "total_harga": total_harga, # Menggunakan total_harga yang sudah dihitung dengan benar
             "no_telp": pelanggan.no_telp,
             "email": pelanggan.email,
             "tgl_invoice": date.today(),
@@ -54,7 +62,7 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         db.add(db_invoice)
         await db.flush()
 
-        # 2. Siapkan deskripsi dan format nomor telepon untuk Xendit (sebelumnya tidak ada)
+        # 2. Siapkan deskripsi dan format nomor telepon untuk Xendit
         jatuh_tempo_str = db_invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
         deskripsi_xendit = f"Biaya berlangganan internet up to {paket.kecepatan} Mbps jatuh tempo pembayaran tanggal {jatuh_tempo_str}"
         no_telp_xendit = f"+62{pelanggan.no_telp.lstrip('0')}" if pelanggan.no_telp else None
@@ -64,12 +72,10 @@ async def generate_single_invoice(db, langganan: LanggananModel):
             db_invoice, 
             pelanggan, 
             paket, 
-            deskripsi_xendit, # <-- Argumen yang hilang
-            pajak,             # <-- Argumen yang hilang
+            deskripsi_xendit,
+            pajak,
             no_telp_xendit
         )
-
-        # --- AKHIR DARI PERBAIKAN ---
 
         db_invoice.payment_link = xendit_response.get("short_url", xendit_response.get("invoice_url"))
         db_invoice.xendit_id = xendit_response.get("id")
@@ -79,7 +85,6 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         logger.info(f"Invoice {db_invoice.invoice_number} berhasil dibuat untuk Langganan ID {langganan.id}")
 
     except Exception as e:
-        # Tambahkan traceback untuk melihat error lebih detail jika terjadi lagi
         import traceback
         logger.error(f"Gagal membuat invoice untuk Langganan ID {langganan.id}: {e}\n{traceback.format_exc()}")
 
@@ -108,6 +113,7 @@ async def job_suspend_services():
                 return
 
             for langganan in overdue_subscriptions:
+                logger.info(f"LOOP SAAT INI UNTUK: Langganan ID {langganan.id}, User PPPoE: {langganan.pelanggan.data_teknis.id_pelanggan}")
                 logger.warning(f"Melakukan suspend layanan untuk Langganan ID: {langganan.id} karena terlambat pada {current_date}.")
                 langganan.status = "Suspended"
                 db.add(langganan)

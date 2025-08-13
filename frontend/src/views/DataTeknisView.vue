@@ -439,6 +439,9 @@
                       <v-list-item prepend-icon="mdi-distribution-point">
                         <v-list-item-title>ODP: {{ item.odp }}</v-list-item-title>
                       </v-list-item>
+                      <v-list-item prepend-icon="mdi-barcode-scan">
+                          <v-list-item-title>SN: {{ item.sn || 'N/A' }}</v-list-item-title>
+                      </v-list-item>
                     </v-list>
                   </v-col>
                   <v-col cols="12" md="4">
@@ -563,6 +566,14 @@
                 <v-row>
                   <v-col cols="12" sm="6">
                     <v-text-field v-model.number="editedItem.onu_power" label="ONU Power" type="number" suffix="dBm" variant="outlined"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field 
+                      v-model="editedItem.sn" 
+                      label="Serial Number (SN) ONU" 
+                      variant="outlined"
+                      prepend-inner-icon="mdi-barcode-scan"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-file-input ref="fileInputComponent" label="Unggah Bukti Speedtest" variant="outlined" accept="image/*" clearable></v-file-input>
@@ -698,6 +709,7 @@ interface DataTeknis {
   speedtest_proof?: string | null;
   onu_power: number;
   mikrotik_server_id: number;
+  sn?: string | null;
 }
 
 interface Pelanggan {
@@ -713,6 +725,7 @@ interface MikrotikServer {
 // --- State ---
 const dataTeknisList = ref<DataTeknis[]>([]);
 const pelangganList = ref<Pelanggan[]>([]);
+const pelangganMap = ref(new Map<number, Pelanggan>());
 const loading = ref(true);
 const saving = ref(false);
 const deleting = ref(false);
@@ -850,6 +863,15 @@ async function fetchPelanggan() {
   try {
     const response = await apiClient.get('/pelanggan/');
     pelangganList.value = response.data;
+
+    // --- AWAL PERUBAHAN ---
+    // Ubah array menjadi Map untuk pencarian super cepat
+    const newMap = new Map<number, Pelanggan>();
+    for (const pelanggan of response.data) {
+      newMap.set(pelanggan.id, pelanggan);
+    }
+    pelangganMap.value = newMap;
+
   } catch(error) {
     console.error("Gagal mengambil daftar pelanggan:", error);
   }
@@ -961,8 +983,10 @@ async function confirmDelete() {
 
 // --- Helper Functions ---
 function getPelangganName(pelangganId: number) {
-  const pelanggan = pelangganList.value.find(p => p.id === pelangganId);
-  return pelanggan?.nama || 'Tidak Ditemukan';
+  // --- AWAL PERUBAHAN ---
+  // Pencarian jauh lebih cepat menggunakan Map.get()
+  return pelangganMap.value.get(pelangganId)?.nama || 'Tidak Ditemukan';
+  // --- AKHIR PERUBAHAN ---
 }
 
 function getPelangganInitials(pelangganId: number) {

@@ -28,6 +28,7 @@ class DataTeknis(Base):
     odc: Mapped[int | None] = mapped_column(Integer, nullable=True)
     odp: Mapped[int | None] = mapped_column(Integer, nullable=True)
     onu_power: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    sn: Mapped[str | None] = mapped_column(String(191), nullable=True, index=True)
     speedtest_proof: Mapped[str | None] = mapped_column(String(191), nullable=True)
 
     mikrotik_server_id: Mapped[int | None] = mapped_column(ForeignKey('mikrotik_servers.id'))

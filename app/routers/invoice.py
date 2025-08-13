@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy.future import select
-from sqlalchemy import func, or_ # <-- TAMBAHAN: Impor func
+from sqlalchemy import func, or_
 from datetime import date, timedelta, datetime, timezone
 from dateutil.relativedelta import relativedelta
 import uuid
@@ -11,6 +11,7 @@ import json
 import logging
 import pytz
 from ..websocket_manager import manager
+import math
 
 from typing import Optional
 
@@ -18,8 +19,8 @@ from typing import Optional
 from ..models.invoice import Invoice as InvoiceModel
 from ..models.langganan import Langganan as LanggananModel
 from ..models.pelanggan import Pelanggan as PelangganModel
-from ..models.user import User as UserModel # <-- TAMBAHAN: Impor UserModel
-from ..models.role import Role as RoleModel # <-- TAMBAHAN: Impor RoleModel
+from ..models.user import User as UserModel
+from ..models.role import Role as RoleModel
 from ..schemas.invoice import Invoice as InvoiceSchema, InvoiceGenerate, MarkAsPaidRequest
 from ..database import get_db
 from ..services import mikrotik_service
@@ -37,7 +38,6 @@ router = APIRouter(
 @router.get("/", response_model=List[InvoiceSchema])
 async def get_all_invoices(
     db: AsyncSession = Depends(get_db),
-    # Tambahkan parameter filter
     search: Optional[str] = None,
     status_invoice: Optional[str] = None,
     start_date: Optional[date] = None,
@@ -50,7 +50,6 @@ async def get_all_invoices(
         .options(selectinload(InvoiceModel.pelanggan))
     )
 
-    # Filter pencarian umum (No. Invoice, Nama Pelanggan, ID PPPoE)
     if search:
         search_term = f"%{search}%"
         query = query.where(
@@ -61,11 +60,9 @@ async def get_all_invoices(
             )
         )
 
-    # Filter berdasarkan status invoice
     if status_invoice:
         query = query.where(InvoiceModel.status_invoice == status_invoice)
 
-    # Filter berdasarkan rentang tanggal jatuh tempo
     if start_date:
         query = query.where(InvoiceModel.tgl_jatuh_tempo >= start_date)
     if end_date:
@@ -86,11 +83,9 @@ def parse_xendit_datetime(iso_datetime_str: str) -> datetime:
     except (ValueError, TypeError):
         return datetime.now(pytz.utc)
 
-# Fungsi terpusat untuk memproses logika setelah pembayaran berhasil
 async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, payload: dict = None):
     """Fungsi terpusat untuk menangani logika setelah invoice lunas."""
     
-    # --- PERUBAHAN 1: Muat semua data yang diperlukan sekaligus ---
     pelanggan = await db.get(
         PelangganModel,
         invoice.pelanggan_id,
@@ -106,7 +101,6 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
 
     langganan = pelanggan.langganan[0]
 
-    # Update status invoice (logika ini tetap sama)
     invoice.status_invoice = "Lunas"
     if payload:
         invoice.paid_amount = float(payload.get("paid_amount", invoice.total_harga))
@@ -116,30 +110,23 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
         invoice.paid_at = datetime.now(timezone.utc)
     
     db.add(invoice)
-
-    # --- PERUBAHAN 2: Logika siklus penagihan dan pembaruan harga ---
     
     next_due_date = None
 
     if langganan.metode_pembayaran == 'Prorate':
-        # --- TAMBAHAN: Ambil data paket dan brand ---
         paket = langganan.paket_layanan
         brand = pelanggan.harga_layanan
         
-        # Ganti metode pembayaran
         langganan.metode_pembayaran = 'Otomatis'
 
-        # Hitung jatuh tempo berikutnya
         current_due_date = invoice.tgl_jatuh_tempo 
         next_due_date = (current_due_date + relativedelta(days=1)).replace(day=1)
         
-        # --- TAMBAHAN: Hitung ulang dan perbarui harga ke harga normal ---
         if paket and brand:
             harga_paket = float(paket.harga)
             pajak_persen = float(brand.pajak)
             harga_baru_otomatis = harga_paket * (1 + (pajak_persen / 100))
             
-            # Perbarui harga_awal di langganan
             langganan.harga_awal = round(harga_baru_otomatis, 0)
             
             logger.info(f"Harga langganan ID {langganan.id} diupdate ke harga Otomatis: {langganan.harga_awal}")
@@ -152,7 +139,6 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
         current_due_date = langganan.tgl_jatuh_tempo or date.today()
         next_due_date = (current_due_date + relativedelta(months=1)).replace(day=1)
 
-    # Update status langganan dan tanggal jatuh tempo berikutnya
     langganan.status = "Aktif"
     langganan.tgl_jatuh_tempo = next_due_date
     langganan.tgl_invoice_terakhir = date.today()
@@ -164,44 +150,35 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
         logger.info(f"Successfully triggered Mikrotik reactivation for subscription ID {langganan.id}")
     except Exception as e:
         logger.error(f"Failed to trigger Mikrotik reactivation for subscription ID {langganan.id}: {e}")
-        # Tetap lanjutkan proses meskipun trigger gagal, tapi catat errornya.
 
     logger.info(f"Payment processed successfully for invoice {invoice.invoice_number}")
 
 
 @router.post("/xendit-callback", status_code=status.HTTP_200_OK)
 async def handle_xendit_callback(request: Request, x_callback_token: Optional[str] = Header(None), db: AsyncSession = Depends(get_db)):
-    # 1. Ambil payload dari request
     payload = await request.json()
     logger.info(f"Xendit callback received. Payload: {json.dumps(payload, indent=2)}")
     
-    # 2. Ekstrak external_id untuk identifikasi
     external_id = payload.get("external_id")
     if not external_id:
         raise HTTPException(status_code=400, detail="External ID tidak ditemukan di payload")
 
-    # 3. Tentukan brand berdasarkan awalan external_id
     try:
         brand_prefix = external_id.split('/')[0]
     except IndexError:
         raise HTTPException(status_code=400, detail="Format external_id tidak valid")
 
-    # 4. Pilih token callback yang benar berdasarkan brand
     correct_token = None
     if brand_prefix.lower() in ["jakinet", "nagrak"]:
-        # Ambil token dari property Settings yang sudah kita buat
         correct_token = settings.XENDIT_CALLBACK_TOKENS.get("ARTACOMINDO")
         logger.info("Validating with ARTACOMINDO callback token.")
     elif brand_prefix.lower() == "jelantik":
         correct_token = settings.XENDIT_CALLBACK_TOKENS.get("JELANTIK")
         logger.info("Validating with JELANTIK callback token.")
     
-    # 5. Lakukan validasi
     if not correct_token or x_callback_token != correct_token:
         logger.warning(f"Invalid callback token received for brand '{brand_prefix}'.")
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid callback token")
-
-    # --- Dari sini, logika pemrosesan invoice tetap sama ---
     
     xendit_status = payload.get("status")
 
@@ -218,8 +195,6 @@ async def handle_xendit_callback(request: Request, x_callback_token: Optional[st
     try:
         if xendit_status == "PAID":
             await _process_successful_payment(db, invoice, payload)
-            
-            # (Logika notifikasi WebSocket Anda di sini)
 
         elif xendit_status == "EXPIRED":
             invoice.status_invoice = "Kadaluarsa"
@@ -239,7 +214,6 @@ async def generate_manual_invoice(
     db: AsyncSession = Depends(get_db)
 ):
     """Membuat satu invoice secara manual berdasarkan langganan_id."""
-    # 1. Ambil data langganan beserta relasi yang diperlukan
     langganan = await db.get(
         LanggananModel, 
         invoice_data.langganan_id,
@@ -252,14 +226,12 @@ async def generate_manual_invoice(
     if not langganan:
         raise HTTPException(status_code=404, detail="Langganan tidak ditemukan")
 
-    # 2. Validasi status langganan
     if langganan.status == "Berhenti":
         raise HTTPException(
             status_code=400,
             detail=f"Gagal membuat invoice. Status langganan untuk pelanggan '{langganan.pelanggan.nama}' adalah 'Berhenti'."
         )
 
-    # 3. Pastikan semua data relasi ada
     pelanggan = langganan.pelanggan
     paket = langganan.paket_layanan
     if not pelanggan or not paket or not pelanggan.harga_layanan or not pelanggan.data_teknis:
@@ -268,11 +240,9 @@ async def generate_manual_invoice(
     brand = pelanggan.harga_layanan
     data_teknis = pelanggan.data_teknis
 
-    # Validasi data numerik
     if not paket.harga or not brand.pajak:
         raise HTTPException(status_code=400, detail="Harga paket atau pajak tidak valid")
 
-    # 4. Cek apakah invoice untuk periode ini sudah ada
     existing_invoice_stmt = select(InvoiceModel.id).where(
         InvoiceModel.pelanggan_id == langganan.pelanggan_id,
         InvoiceModel.tgl_jatuh_tempo == langganan.tgl_jatuh_tempo
@@ -280,15 +250,21 @@ async def generate_manual_invoice(
     if (await db.execute(existing_invoice_stmt)).scalar_one_or_none():
         raise HTTPException(status_code=409, detail="Invoice untuk periode ini sudah ada.")
 
-    # 5. Buat detail invoice
     jatuh_tempo_str = langganan.tgl_jatuh_tempo.strftime('%d/%m/%Y')
     nomor_invoice = f"INV-{pelanggan.nama.replace(' ', '')}-{langganan.tgl_jatuh_tempo.strftime('%Y%m')}-{uuid.uuid4().hex[:4].upper()}"
 
-    # Hitung harga dasar dan pajak
+    # --- KODE FINAL (SESUAI ATURAN BARU) ---
     harga_dasar = float(paket.harga)
     pajak_persen = float(brand.pajak)
-    pajak = round(harga_dasar * (pajak_persen / 100), 2)
-    total_harga = round(harga_dasar + pajak, 2)
+
+    # Hitung nilai pajak mentah sebelum dibulatkan
+    pajak_mentah = harga_dasar * (pajak_persen / 100)
+
+    # Lakukan pembulatan matematis standar (round half up)
+    pajak = math.floor(pajak_mentah + 0.5)
+
+    # Total harga adalah harga dasar ditambah pajak yang sudah dibulatkan.
+    total_harga = harga_dasar + pajak
 
     new_invoice_data = {
         "invoice_number": nomor_invoice,
@@ -307,11 +283,9 @@ async def generate_manual_invoice(
     db.add(db_invoice)
     await db.flush()
 
-    # 6. Kirim ke Xendit dengan detail pajak dan deskripsi
     try:
         periode = f"Periode Tgl {db_invoice.tgl_invoice.day}-{db_invoice.tgl_jatuh_tempo.day} {db_invoice.tgl_jatuh_tempo.strftime('%B %Y')}"
         deskripsi_xendit = f"Biaya berlangganan internet up to {paket.kecepatan} Mbps jatuh tempo pembayaran tanggal {jatuh_tempo_str}"
-        # Format nomor telepon dengan kode negara
         no_telp_xendit = f"+62{pelanggan.no_telp.replace('0', '', 1)}" if pelanggan.no_telp.startswith('0') else pelanggan.no_telp
         xendit_response = await xendit_service.create_xendit_invoice(db_invoice, pelanggan, paket, deskripsi_xendit, pajak, no_telp_xendit)
         db_invoice.payment_link = xendit_response.get("short_url", xendit_response.get("invoice_url"))
@@ -343,11 +317,8 @@ async def mark_invoice_as_paid(
     if invoice.status_invoice == "Lunas":
         raise HTTPException(status_code=400, detail="Invoice ini sudah lunas.")
 
-    # Set metode pembayaran dari input
     invoice.metode_pembayaran = payload.metode_pembayaran
     
-    # Panggil fungsi logika pembayaran yang sudah ada
-    # Kita tidak mengirim payload Xendit, jadi fungsi akan menggunakan waktu saat ini
     await _process_successful_payment(db, invoice)
     
     await db.commit()
@@ -363,14 +334,11 @@ async def mark_invoice_as_paid(
 async def delete_invoice(invoice_id: int, db: AsyncSession = Depends(get_db)):
     """Menghapus satu invoice berdasarkan ID-nya."""
     
-    # Cari invoice di database
     db_invoice = await db.get(InvoiceModel, invoice_id)
     
-    # Jika tidak ditemukan, kirim error 404
     if not db_invoice:
         raise HTTPException(status_code=404, detail="Invoice tidak ditemukan")
     
-    # Jika ditemukan, hapus dari database
     await db.delete(db_invoice)
     await db.commit()
     
