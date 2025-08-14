@@ -313,12 +313,13 @@
                     <v-col cols="12">
                       <v-select
                         v-model="editedItem.paket_layanan_id"
-                        :items="paketLayananSelectList"
+                        :items="filteredPaketLayanan"  
                         :loading="paketLoading"
                         item-title="nama_paket" 
                         item-value="id"
                         label="Pilih Paket Layanan"
-                        placeholder="Pilih paket yang sesuai"
+                        :disabled="!editedItem.pelanggan_id" 
+                        placeholder="Pilih pelanggan terlebih dahulu"
                         variant="solo-filled"
                         prepend-inner-icon="mdi-wifi-star"
                         :rules="[rules.required]"
@@ -568,6 +569,7 @@ interface Langganan {
 interface PelangganSelectItem {
   id: number;
   nama: string;
+  id_brand: string;
 }
 
 interface PaketLayananSelectItem {
@@ -575,12 +577,14 @@ interface PaketLayananSelectItem {
   nama_paket: string;
   kecepatan: number;
   harga: number;
+  id_brand: string;
 }
 
 // --- State ---
 const langgananList = ref<Langganan[]>([]);
 const pelangganSelectList = ref<PelangganSelectItem[]>([]);
 const paketLayananSelectList = ref<PaketLayananSelectItem[]>([]);
+const filteredPaketLayanan = ref<PaketLayananSelectItem[]>([]);
 
 const loading = ref(true);
 const paketLoading = ref(true);
@@ -662,6 +666,32 @@ onMounted(() => {
   fetchPelangganForSelect();
   fetchPaketLayananForSelect();
 });
+
+watch(() => editedItem.value.pelanggan_id, (newPelangganId) => {
+  // 1. Reset pilihan paket layanan setiap kali pelanggan diganti
+  editedItem.value.paket_layanan_id = undefined;
+
+  // 2. Jika tidak ada pelanggan yang dipilih, kosongkan daftar paket
+  if (!newPelangganId) {
+    filteredPaketLayanan.value = [];
+    return;
+  }
+
+  // 3. Cari data pelanggan yang dipilih untuk mendapatkan ID Brand-nya
+  const selectedPelanggan = pelangganSelectList.value.find(p => p.id === newPelangganId);
+  if (!selectedPelanggan || !selectedPelanggan.id_brand) {
+    // Jika data brand tidak ditemukan, kosongkan juga daftarnya
+    filteredPaketLayanan.value = [];
+    return;
+  }
+  
+  const customerBrandId = selectedPelanggan.id_brand;
+
+  // 4. Saring daftar paket layanan master berdasarkan ID Brand pelanggan
+  filteredPaketLayanan.value = paketLayananSelectList.value.filter(
+    paket => paket.id_brand === customerBrandId
+  );
+}, { immediate: true });
 
 // --- Logic Watcher ---
 watch(

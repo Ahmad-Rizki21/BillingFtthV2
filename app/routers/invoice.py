@@ -23,6 +23,7 @@ from ..models.user import User as UserModel
 from ..models.role import Role as RoleModel
 from ..schemas.invoice import Invoice as InvoiceSchema, InvoiceGenerate, MarkAsPaidRequest
 from ..database import get_db
+from sqlalchemy import select, func
 from ..services import mikrotik_service
 from ..config import settings
 from ..services import xendit_service, mikrotik_service
@@ -150,6 +151,38 @@ async def _process_successful_payment(db: AsyncSession, invoice: InvoiceModel, p
         logger.info(f"Successfully triggered Mikrotik reactivation for subscription ID {langganan.id}")
     except Exception as e:
         logger.error(f"Failed to trigger Mikrotik reactivation for subscription ID {langganan.id}: {e}")
+    
+    #Notif ke frontend
+    try:
+        target_roles = ['Admin', 'NOC', 'Finance'] 
+        query = (
+            select(UserModel.id)
+            .join(RoleModel)
+            .where(func.lower(RoleModel.name).in_([r.lower() for r in target_roles]))
+        )
+        result = await db.execute(query)
+        target_user_ids = result.scalars().all()
+
+        if target_user_ids:
+            # Pastikan pelanggan sudah di-load dengan benar
+            pelanggan_nama = pelanggan.nama if pelanggan else "N/A"
+            notification_payload = {
+                "type": "new_payment",
+                "data": {
+                    "invoice_number": invoice.invoice_number,
+                    "pelanggan_nama": pelanggan_nama,
+                    "message": f"Pembayaran untuk invoice {invoice.invoice_number} dari {pelanggan_nama} telah diterima."
+                }
+            }
+            # Tambahkan log ini untuk memastikan user ID ditemukan
+            logger.info(f"Mencoba mengirim notifikasi pembayaran ke user IDs: {target_user_ids}")
+            await manager.broadcast_to_roles(notification_payload, target_user_ids)
+            logger.info(f"Notifikasi pembayaran berhasil dikirim untuk invoice {invoice.invoice_number}")
+        else:
+            logger.warning(f"Tidak ada user dengan role Admin/CS yang ditemukan untuk dikirimi notifikasi.")
+
+    except Exception as e:
+        logger.error(f"Gagal mengirim notifikasi pembayaran untuk invoice {invoice.invoice_number}: {e}")
 
     logger.info(f"Payment processed successfully for invoice {invoice.invoice_number}")
 
@@ -253,18 +286,20 @@ async def generate_manual_invoice(
     jatuh_tempo_str = langganan.tgl_jatuh_tempo.strftime('%d/%m/%Y')
     nomor_invoice = f"INV-{pelanggan.nama.replace(' ', '')}-{langganan.tgl_jatuh_tempo.strftime('%Y%m')}-{uuid.uuid4().hex[:4].upper()}"
 
-    # --- KODE FINAL (SESUAI ATURAN BARU) ---
-    harga_dasar = float(paket.harga)
+    # Ambil total harga langsung dari data langganan yang sudah dihitung (prorate + PPN).
+    total_harga = float(langganan.harga_awal) 
     pajak_persen = float(brand.pajak)
 
-    # Hitung nilai pajak mentah sebelum dibulatkan
-    pajak_mentah = harga_dasar * (pajak_persen / 100)
-
-    # Lakukan pembulatan matematis standar (round half up)
-    pajak = math.floor(pajak_mentah + 0.5)
-
-    # Total harga adalah harga dasar ditambah pajak yang sudah dibulatkan.
-    total_harga = harga_dasar + pajak
+    # Karena Xendit butuh nilai pajak terpisah, kita hitung mundur dari total harga.
+    # 1. Cari harga dasar sebelum pajak.
+    harga_dasar = total_harga / (1 + (pajak_persen / 100))
+    
+    # 2. Hitung nilai pajak berdasarkan selisih total harga dan harga dasar.
+    # Gunakan pembulatan untuk konsistensi.
+    pajak = round(total_harga - harga_dasar)
+    
+    # Pastikan harga dasar untuk item di Xendit juga konsisten.
+    harga_dasar = total_harga - pajak
 
     new_invoice_data = {
         "invoice_number": nomor_invoice,

@@ -99,7 +99,8 @@ async def job_suspend_services():
                 select(LanggananModel)
                 .join(InvoiceModel, LanggananModel.pelanggan_id == InvoiceModel.pelanggan_id)
                 .where(
-                    LanggananModel.tgl_jatuh_tempo < current_date,
+                    # LanggananModel.tgl_jatuh_tempo < current_date, #ini Logic Suspend di tanggal 2
+                    LanggananModel.tgl_jatuh_tempo <= current_date - timedelta(days=4), # ini Logic Suspend di tanggal 5
                     LanggananModel.status == "Aktif",
                     InvoiceModel.status_invoice == "Belum Dibayar"
                 ).options(
