@@ -200,16 +200,35 @@ function connectWebSocket() {
     }
   };
 
+  function playSound(type: string) {
+  let audioFile = '';
+
+  if (type === 'new_payment') {
+    audioFile = '/pembayaran.mp3'; // Suara baru untuk pembayaran
+  } else if (type === 'new_customer_for_noc') {
+    audioFile = '/payment.mp3'; // Suara lama untuk pelanggan baru
+  }
+
+  if (audioFile) {
+    const audio = new Audio(audioFile);
+    audio.play().catch(error => {
+      console.error(`Gagal memutar audio (${audioFile}):`, error);
+    });
+  }
+}
+
   socket.onmessage = (event) => {
     console.log('WebSocket message received:', event.data);
     try {
       const data = JSON.parse(event.data);
       
-      // Handle different notification types
       if (data.type === 'new_payment' || data.type === 'new_customer_for_noc') {
         notifications.value.unshift(data);
         
-        // Batasi jumlah notifikasi (max 50)
+        // ===== TAMBAHKAN BARIS INI =====
+        playSound(data.type);
+        // ===============================
+
         if (notifications.value.length > 50) {
           notifications.value = notifications.value.slice(0, 50);
         }
@@ -285,6 +304,14 @@ const logoSrc = computed(() => theme.global.current.value.dark ? logoDark : logo
 onMounted(async () => {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) theme.global.name.value = savedTheme;
+
+  const enableAudioContext = () => {
+    // Fungsi ini akan dijalankan sekali saat user mengklik
+    // dan setelah itu listener-nya akan dihapus.
+    console.log('User interaction detected. Audio playback is now enabled for this session.');
+    document.removeEventListener('click', enableAudioContext);
+  };
+  document.addEventListener('click', enableAudioContext);
   
   const userIsValid = await authStore.verifyToken();
   if (userIsValid && authStore.user?.role) {
