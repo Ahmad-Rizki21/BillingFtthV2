@@ -62,12 +62,30 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         db.add(db_invoice)
         await db.flush()
 
-        # 2. Siapkan deskripsi dan format nomor telepon untuk Xendit
-        jatuh_tempo_str = db_invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
-        deskripsi_xendit = f"Biaya berlangganan internet up to {paket.kecepatan} Mbps jatuh tempo pembayaran tanggal {jatuh_tempo_str}"
+        # --- PERUBAHAN DIMULAI DI SINI ---
+        deskripsi_xendit = ""
+        jatuh_tempo_str_lengkap = db_invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
+
+        # Cek metode pembayaran dari data langganan
+        if langganan.metode_pembayaran == 'Prorate':
+            # Jika Prorate, buat deskripsi dengan periode
+            start_day = db_invoice.tgl_invoice.day
+            end_day = db_invoice.tgl_jatuh_tempo.day
+            periode_str = db_invoice.tgl_jatuh_tempo.strftime('%B %Y')
+            deskripsi_xendit = (
+                f"Biaya berlangganan internet up to {paket.kecepatan} Mbps, "
+                f"Periode Tgl {start_day}-{end_day} {periode_str}"
+            )
+        else: # Otomatis
+            # Jika Otomatis, gunakan format deskripsi yang lama
+            deskripsi_xendit = (
+                f"Biaya berlangganan internet up to {paket.kecepatan} Mbps "
+                f"jatuh tempo pembayaran tanggal {jatuh_tempo_str_lengkap}"
+            )
+            
         no_telp_xendit = f"+62{pelanggan.no_telp.lstrip('0')}" if pelanggan.no_telp else None
         
-        # 3. Panggil service Xendit dengan argumen yang lengkap
+        # 3. Panggil service Xendit dengan deskripsi yang sudah dinamis
         xendit_response = await xendit_service.create_xendit_invoice(
             db_invoice, 
             pelanggan, 
