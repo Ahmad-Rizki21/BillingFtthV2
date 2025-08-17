@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="pa-6">
-    <div class="d-flex align-center mb-6">
+  <v-container fluid class="pa-sm-6 pa-4">
+    <div class="d-flex align-center mb-6 page-header">
       <div class="d-flex align-center">
         <v-avatar class="me-3" color="primary" size="40">
           <v-icon color="white">mdi-wifi-star</v-icon>
@@ -10,7 +10,7 @@
           <p class="text-subtitle-1 text-medium-emphasis mb-0">Kelola semua langganan pelanggan</p>
         </div>
       </div>
-      <v-spacer></v-spacer>
+      <v-spacer class="d-none d-md-block"></v-spacer>
       
       <!-- Enhanced Action Buttons -->
       <div class="header-actions">
@@ -18,6 +18,7 @@
           class="import-btn" 
           @click="dialogImport = true" 
           prepend-icon="mdi-file-upload-outline"
+          size="default"
         >
           Import
         </v-btn>
@@ -25,113 +26,131 @@
           class="export-btn" 
           @click="exportLangganan" 
           prepend-icon="mdi-file-download-outline"
+          size="default"
         >
           Export
         </v-btn>
         <v-btn 
           class="add-subscription-btn"
-          size="large"
+          size="default"
           @click="openDialog()"
           prepend-icon="mdi-plus-circle"
         >
           Tambah Langganan
         </v-btn>
-      </div>
-        </div> <v-dialog v-model="dialogImport" max-width="600px" persistent>
-            <v-card class="import-dialog">
-              <v-card-title class="import-dialog-header">Import Langganan</v-card-title>
-              <v-card-text class="import-dialog-content">
-                <v-alert 
-                  type="info" 
-                  variant="tonal" 
-                  class="import-info-alert"
-                >
-                  Gunakan <strong>Email Pelanggan</strong> dan <strong>Nama Paket Layanan</strong> sebagai kunci pencocokan.
-                  <a :href="`${apiClient.defaults.baseURL}/langganan/template/csv`" download>Unduh template di sini</a>.
-                </v-alert>
-                
-                <v-alert 
-                  v-if="importErrors.length" 
-                  type="error" 
-                  closable 
-                  @update:model-value="importErrors = []"
-                  class="import-error-alert"
-                >
-                  <ul>
-                    <li v-for="(err, i) in importErrors" :key="i">{{ err }}</li>
-                  </ul>
-                </v-alert>
-                
-                <v-file-input
-                  :model-value="fileToImport"
-                  @update:model-value="handleFileSelection"
-                  label="Pilih file CSV"
-                  accept=".csv"
-                  variant="outlined"
-                  class="import-file-input"
-                ></v-file-input>
-              </v-card-text>
-            <v-card-actions class="import-dialog-actions">
-            <v-spacer></v-spacer>
-            <v-btn class="import-cancel-btn" @click="closeImportDialog">Batal</v-btn>
-            <v-btn 
-              class="import-upload-btn" 
-              @click="importFromCsv" 
-              :loading="importing" 
-              :disabled="!fileToImport.length"
-            >
-              Unggah
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-        <v-card class="filter-card mb-6" elevation="0">
-      <div class="d-flex flex-wrap align-center gap-4">
-        <v-text-field
-          v-model="searchQuery"
-          label="Cari Nama Pelanggan"
-          prepend-inner-icon="mdi-magnify"
-          variant="outlined"
-          density="comfortable"
-          hide-details
-        ></v-text-field>
-
-        <v-select
-          v-model="selectedPaket"
-          :items="paketLayananSelectList"
-          item-title="nama_paket"
-          item-value="id"
-          label="Filter Paket Layanan"
-          variant="outlined"
-          density="comfortable"
-          hide-details
-          clearable
-        ></v-select>
-
-        <v-select
-          v-model="selectedStatus"
-          :items="statusOptions"
-          label="Filter Status"
-          variant="outlined"
-          density="comfortable"
-          hide-details
-          clearable
-        ></v-select>
-        
-        <v-btn
-            variant="text"
-            @click="resetFilters"
-        >
-          Reset Filter
-        </v-btn>
-      </div>
-    </v-card>
-    <v-card elevation="3" class="rounded-lg">
+      </div> 
+    </div>
+        <v-dialog v-model="dialogImport" max-width="600px" persistent>
+      <v-card class="import-dialog">
+        <v-card-title class="import-dialog-header">Import Langganan</v-card-title>
+        <v-card-text class="import-dialog-content">
+          <v-alert 
+            type="info" 
+            variant="tonal" 
+            class="import-info-alert"
+          >
+            Gunakan <strong>Email Pelanggan</strong> dan <strong>Nama Paket Layanan</strong> sebagai kunci pencocokan.
+            <a :href="`${apiClient.defaults.baseURL}/langganan/template/csv`" download>Unduh template di sini</a>.
+          </v-alert>
+          
+          <v-alert 
+            v-if="importErrors.length" 
+            type="error" 
+            closable 
+            @update:model-value="importErrors = []"
+            class="import-error-alert"
+          >
+            <ul>
+              <li v-for="(err, i) in importErrors" :key="i">{{ err }}</li>
+            </ul>
+          </v-alert>
+          
+          <v-file-input
+            :model-value="fileToImport"
+            @update:model-value="handleFileSelection"
+            label="Pilih file CSV"
+            accept=".csv"
+            variant="outlined"
+            class="import-file-input"
+          ></v-file-input>
+        </v-card-text>
+        <v-card-actions class="import-dialog-actions">
+          <v-spacer></v-spacer>
+          <v-btn class="import-cancel-btn" @click="closeImportDialog">Batal</v-btn>
+          <v-btn 
+            class="import-upload-btn" 
+            @click="importFromCsv" 
+            :loading="importing" 
+            :disabled="!fileToImport.length"
+          >
+            Unggah
+          </v-btn>
+        </v-card-actions>
       </v-card>
+    </v-dialog>
+
+        <v-card class="filter-card mb-4" elevation="1" rounded="lg">
+      <v-card-text class="pa-3">
+        <v-row dense>
+          <v-col cols="12" md="4">
+            <v-text-field
+              :density="fieldDensity"
+              v-model="searchQuery"
+              label="Cari Nama Pelanggan"
+              prepend-inner-icon="mdi-magnify"
+              variant="outlined"
+              hide-details
+              clearable
+              class="compact-field"
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="12" md="3">
+            <v-select
+              v-model="selectedPaket"
+              :items="paketLayananSelectList"
+              item-title="nama_paket"
+              item-value="id"
+              label="Filter Paket Layanan"
+              variant="outlined"
+              density="compact"
+              hide-details
+              clearable
+              class="compact-field"
+            ></v-select>
+          </v-col>
+
+          <v-col cols="12" md="3">
+            <v-select
+              v-model="selectedStatus"
+              :items="statusOptions"
+              label="Filter Status"
+              variant="outlined"
+              density="compact"
+              hide-details
+              clearable
+              class="compact-field"
+            ></v-select>
+          </v-col>
+          
+          <v-col cols="12" md="2" class="d-flex align-center">
+            <v-btn
+              variant="text"
+              color="primary"
+              @click="resetFilters"
+              class="reset-filter-btn"
+              size="small"
+            >
+              <v-icon start size="16">mdi-refresh</v-icon>
+              Reset
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
 
     <v-card elevation="3" class="rounded-lg">
-      <v-card-title class="d-flex align-center pa-6 bg-grey-lighten-5">
+      <v-card-title class="d-flex align-center pa-4 pa-sm-6 bg-grey-lighten-5">
         <v-icon start icon="mdi-format-list-bulleted-square" color="primary"></v-icon>
         <span class="text-h6 font-weight-bold">Daftar Langganan</span>
         <v-spacer></v-spacer>
@@ -155,71 +174,74 @@
         </div>
       </v-expand-transition>
       
-      <v-data-table
-        v-model="selectedLangganan"
-        :headers="headers"
-        :items="langgananList"
-        :loading="loading"
-        item-value="id"
-        class="elevation-0"
-        :items-per-page="10"
-        show-select
-        return-object
-      >
+      <div class="table-responsive-wrapper">
+        <v-data-table
+          v-model="selectedLangganan"
+          :headers="headers"
+          :items="langgananList"
+          :loading="loading"
+          item-value="id"
+          class="elevation-0"
+          :items-per-page="10"
+          show-select
+          return-object
+        >
 
-         <template v-slot:item.nomor="{ index }">
+          <template v-slot:item.nomor="{ index }: { index: number }">
             {{ index + 1 }}
-        </template>
-        <template v-slot:item.pelanggan_id="{ item }">
-          <div class="font-weight-bold">{{ getPelangganName(item.pelanggan_id) }}</div>
-          <div class="text-caption text-medium-emphasis">ID: {{ item.pelanggan_id }}</div>
-        </template>
+          </template>
 
-        <template v-slot:item.paket_layanan_id="{ item }">
-          <div class="font-weight-medium">{{ getPaketName(item.paket_layanan_id) }}</div>
-        </template>
-        
-        <template v-slot:item.metode_pembayaran="{ item }">
-          <v-chip
-            size="small"
-            variant="tonal"
-            :color="item.metode_pembayaran === 'Prorate' ? 'blue' : 'grey-darken-1'"
-          >
-            {{ item.metode_pembayaran }}
-          </v-chip>
-        </template>
+          <template v-slot:item.pelanggan_id="{ item }: { item: Langganan }">
+            <div class="font-weight-bold">{{ getPelangganName(item.pelanggan_id) }}</div>
+            <div class="text-caption text-medium-emphasis">ID: {{ item.pelanggan_id }}</div>
+          </template>
 
-        <template v-slot:item.harga_awal="{ item }">
-          <div class="font-weight-bold text-right">
-            {{ formatCurrency(item.harga_awal) }}
-          </div>
-        </template>
+          <template v-slot:item.paket_layanan_id="{ item }: { item: Langganan }">
+            <div class="font-weight-medium">{{ getPaketName(item.paket_layanan_id) }}</div>
+          </template>
+          
+          <template v-slot:item.metode_pembayaran="{ item }: { item: Langganan }">
+            <v-chip
+              size="small"
+              variant="tonal"
+              :color="item.metode_pembayaran === 'Prorate' ? 'blue' : 'grey-darken-1'"
+            >
+              {{ item.metode_pembayaran }}
+            </v-chip>
+          </template>
 
-        <template v-slot:item.status="{ item }">
-          <v-chip
-            size="small"
-            :color="getStatusColor(item.status)"
-            class="font-weight-bold"
-          >
-            {{ item.status }}
-          </v-chip>
-        </template>
-        
-        <template v-slot:item.tgl_jatuh_tempo="{ item }">
-            {{ formatDate(item.tgl_jatuh_tempo) }}
-        </template>
+          <template v-slot:item.harga_awal="{ item }: { item: Langganan }">
+            <div class="font-weight-bold text-right">
+              {{ formatCurrency(item.harga_awal) }}
+            </div>
+          </template>
 
-        <template v-slot:item.actions="{ item }">
-          <div class="d-flex justify-center ga-2">
-            <v-btn size="small" variant="tonal" color="primary" @click="openDialog(item)">
-              <v-icon start size="16">mdi-pencil</v-icon> Edit
-            </v-btn>
-            <v-btn size="small" variant="tonal" color="error" @click="openDeleteDialog(item)">
-              <v-icon start size="16">mdi-delete</v-icon> Hapus
-            </v-btn>
-          </div>
-        </template>
-      </v-data-table>
+          <template v-slot:item.status="{ item }: { item: Langganan }">
+            <v-chip
+              size="small"
+              :color="getStatusColor(item.status)"
+              class="font-weight-bold"
+            >
+              {{ item.status }}
+            </v-chip>
+          </template>
+          
+          <template v-slot:item.tgl_jatuh_tempo="{ item }: { item: Langganan }">
+              {{ formatDate(item.tgl_jatuh_tempo) }}
+          </template>
+
+          <template v-slot:item.actions="{ item }: { item: Langganan }">
+            <div class="d-flex justify-center ga-2">
+              <v-btn size="small" variant="tonal" color="primary" @click="openDialog(item)">
+                <v-icon start size="16">mdi-pencil</v-icon> Edit
+              </v-btn>
+              <v-btn size="small" variant="tonal" color="error" @click="openDeleteDialog(item)">
+                <v-icon start size="16">mdi-delete</v-icon> Hapus
+              </v-btn>
+            </div>
+          </template>
+        </v-data-table>
+      </div>
     </v-card>
 
     <!-- Enhanced Dialog Form -->
@@ -318,7 +340,7 @@
                         item-title="nama_paket" 
                         item-value="id"
                         label="Pilih Paket Layanan"
-                        :disabled="!editedItem.pelanggan_id" 
+                        :disabled="!editedItem.pelanggan_id || isPaketLocked" 
                         placeholder="Pilih pelanggan terlebih dahulu"
                         variant="solo-filled"
                         prepend-inner-icon="mdi-wifi-star"
@@ -550,7 +572,13 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
 import apiClient from '@/services/api';
+import { useDisplay } from 'vuetify';
 import { debounce } from 'lodash-es';
+
+
+// --- Responsive State ---
+const { mobile } = useDisplay();
+const fieldDensity = computed(() => mobile.value ? 'compact' : 'comfortable');
 
 // --- Interfaces ---
 interface Langganan {
@@ -588,6 +616,7 @@ const filteredPaketLayanan = ref<PaketLayananSelectItem[]>([]);
 
 const loading = ref(true);
 const paketLoading = ref(true);
+const isPaketLocked = ref(false);
 const saving = ref(false);
 const deleting = ref(false);
 const dialog = ref(false);
@@ -667,30 +696,52 @@ onMounted(() => {
   fetchPaketLayananForSelect();
 });
 
-watch(() => editedItem.value.pelanggan_id, (newPelangganId) => {
-  // 1. Reset pilihan paket layanan setiap kali pelanggan diganti
+watch(() => editedItem.value.pelanggan_id, async (newPelangganId) => {
+  // Reset HANYA pilihan paket layanan
   editedItem.value.paket_layanan_id = undefined;
+  isPaketLocked.value = false;
+  
+  // Baris yang menyebabkan error ('hargaAwal.value = 0;') sudah dihapus.
 
-  // 2. Jika tidak ada pelanggan yang dipilih, kosongkan daftar paket
   if (!newPelangganId) {
     filteredPaketLayanan.value = [];
     return;
   }
 
-  // 3. Cari data pelanggan yang dipilih untuk mendapatkan ID Brand-nya
-  const selectedPelanggan = pelangganSelectList.value.find(p => p.id === newPelangganId);
-  if (!selectedPelanggan || !selectedPelanggan.id_brand) {
-    // Jika data brand tidak ditemukan, kosongkan juga daftarnya
-    filteredPaketLayanan.value = [];
-    return;
-  }
-  
-  const customerBrandId = selectedPelanggan.id_brand;
+  try {
+    // 1. Panggil API untuk mendapatkan detail lengkap pelanggan
+    const response = await apiClient.get(`/pelanggan/${newPelangganId}`);
+    const pelangganDetail = response.data;
 
-  // 4. Saring daftar paket layanan master berdasarkan ID Brand pelanggan
-  filteredPaketLayanan.value = paketLayananSelectList.value.filter(
-    paket => paket.id_brand === customerBrandId
-  );
+    if (!pelangganDetail || !pelangganDetail.id_brand || !pelangganDetail.layanan) {
+      filteredPaketLayanan.value = [];
+      return;
+    }
+
+    const customerBrandId = pelangganDetail.id_brand;
+    const customerLayananName = pelangganDetail.layanan;
+
+    // 2. Saring daftar paket berdasarkan brand pelanggan
+    filteredPaketLayanan.value = paketLayananSelectList.value.filter(
+      paket => paket.id_brand === customerBrandId
+    );
+
+    // 3. Cari dan pilih paket yang namanya cocok dengan layanan pelanggan
+    const matchedPaket = filteredPaketLayanan.value.find(
+      paket => paket.nama_paket === customerLayananName
+    );
+
+    if (matchedPaket) {
+      // Jika paket cocok, langsung pilih paket tersebut.
+      // Perubahan ini akan otomatis memicu watch lain yang menghitung harga.
+      editedItem.value.paket_layanan_id = matchedPaket.id;
+      isPaketLocked.value = true;
+    }
+
+  } catch (error) {
+    console.error("Gagal mengambil detail pelanggan:", error);
+    filteredPaketLayanan.value = [];
+  }
 }, { immediate: true });
 
 // --- Logic Watcher ---
@@ -1662,6 +1713,9 @@ async function importFromCsv() {
   
   .enhanced-form-header {
     padding: 24px !important;
+    height: auto; 
+  display: flex;
+  align-items: center;
   }
   
   .enhanced-section-card {
@@ -1737,6 +1791,38 @@ async function importFromCsv() {
   }
 }
 
+/* ============================================
+   TYPOGRAPHY CONSISTENCY
+   ============================================ */
+
+/* Ensure consistent font family */
+.add-subscription-btn .v-btn__content,
+.enhanced-save-btn .v-btn__content,
+.enhanced-form-header .form-title,
+.enhanced-form-header .form-subtitle,
+.enhanced-section-header .section-title,
+.step-badge {
+  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* Text selection styling */
+.enhanced-form-header .form-title::selection,
+.enhanced-form-header .form-subtitle::selection,
+.enhanced-section-header .section-title::selection {
+  background: rgba(255, 255, 255, 0.3);
+  color: inherit;
+}
+
+/* Prevent text selection on buttons */
+.add-subscription-btn,
+.enhanced-save-btn,
+.step-badge {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -1746,6 +1832,39 @@ async function importFromCsv() {
   }
 }
 
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .add-subscription-btn,
+  .enhanced-save-btn,
+  .step-badge {
+    border: 2px solid rgba(255, 255, 255, 0.5) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .enhanced-section-header .section-title {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Focus visible states for keyboard navigation */
+.add-subscription-btn:focus-visible,
+.enhanced-save-btn:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .add-subscription-btn .v-icon,
+  .enhanced-save-btn .v-icon {
+    transition: none !important;
+  }
+
+  .add-subscription-btn:hover .v-icon {
+    transform: none !important;
+  }
+}
 
 /* ============================================
    ENHANCED IMPORT/EXPORT BUTTONS STYLING
@@ -1837,6 +1956,7 @@ async function importFromCsv() {
 }
 
 /* Enhanced Add Button */
+/* Add Subscription Button - Enhanced */
 .add-subscription-btn {
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
   color: white !important;
@@ -1846,12 +1966,14 @@ async function importFromCsv() {
   font-weight: 700 !important;
   text-transform: none !important;
   font-size: 1rem !important;
+  letter-spacing: 0.3px !important;
   box-shadow: 
     0 6px 20px rgba(99, 102, 241, 0.3),
     0 3px 10px rgba(99, 102, 241, 0.2) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
+  min-height: 48px !important;
 }
 
 .add-subscription-btn:hover {
@@ -1899,7 +2021,19 @@ async function importFromCsv() {
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  white-space: nowrap;
+}
+
+.add-subscription-btn .v-icon {
+  font-size: 1.2rem !important;
+  transition: transform 0.3s ease;
+}
+
+.add-subscription-btn:hover .v-icon {
+  transform: scale(1.1) rotate(90deg);
 }
 
 /* ============================================
@@ -2175,12 +2309,19 @@ async function importFromCsv() {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Form Title di Dialog Header */
 .enhanced-form-header .form-title {
   color: white;
   font-size: 2rem !important;
   font-weight: 800 !important;
   margin-bottom: 8px !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px !important;
+  line-height: 1.2 !important;
+}
+
+.enhanced-form-header .form-subtitle {
+  line-height: 1.4; /* Perbaiki juga line-height untuk subjudul */
 }
 
 .enhanced-form-header .form-subtitle {
@@ -2189,6 +2330,8 @@ async function importFromCsv() {
   font-weight: 400 !important;
   margin: 0 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 1.4 !important;
+  letter-spacing: 0.2px !important;
 }
 
 /* Enhanced step indicator */
@@ -2220,13 +2363,127 @@ async function importFromCsv() {
   padding: 12px 24px !important;
   border-radius: 50px !important;
   font-weight: 700 !important;
-  font-size: 0.9rem !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.5px !important;
+  text-transform: none !important;
   border: 3px solid white !important;
   box-shadow: 
     0 6px 20px rgba(99, 102, 241, 0.3),
     0 0 0 4px rgba(99, 102, 241, 0.1) !important;
   position: relative;
   z-index: 2;
+}
+
+
+/* Tablet and small desktop */
+@media (max-width: 960px) {
+  .add-subscription-btn {
+    font-size: 0.95rem !important;
+    padding: 12px 24px !important;
+    min-height: 44px !important;
+  }
+
+  .enhanced-form-header .form-title {
+    font-size: 1.75rem !important;
+  }
+
+  .enhanced-form-header .form-subtitle {
+    font-size: 1rem !important;
+  }
+
+  .enhanced-section-header .section-title {
+    font-size: 1.1rem !important;
+    letter-spacing: 0.6px !important;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 600px) {
+  .add-subscription-btn {
+    font-size: 0.9rem !important;
+    padding: 12px 20px !important;
+    min-height: 42px !important;
+    letter-spacing: 0.2px !important;
+  }
+
+  .enhanced-form-header .form-title {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    word-break: break-word;
+    text-align: center;
+  }
+
+  .enhanced-form-header .form-subtitle {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    text-align: center;
+  }
+
+  .enhanced-section-header .section-title {
+    font-size: 1rem !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  .enhanced-save-btn {
+    font-size: 0.95rem !important;
+    padding: 12px 24px !important;
+    min-height: 44px !important;
+  }
+
+  .step-badge {
+    font-size: 0.85rem !important;
+    padding: 10px 20px !important;
+    letter-spacing: 0.3px !important;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  .add-subscription-btn {
+    font-size: 0.85rem !important;
+    padding: 10px 16px !important;
+    min-height: 40px !important;
+  }
+
+  .enhanced-form-header .form-title {
+    font-size: 1.3rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .enhanced-form-header .form-subtitle {
+    font-size: 0.9rem !important;
+  }
+
+  .enhanced-save-btn {
+    font-size: 0.9rem !important;
+    padding: 10px 20px !important;
+    min-height: 42px !important;
+  }
+}
+
+/* ============================================
+   TEXT CONTRAST AND READABILITY ENHANCEMENTS
+   ============================================ */
+
+/* Ensure proper contrast for all text */
+.add-subscription-btn,
+.enhanced-save-btn,
+.step-badge {
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Loading state text visibility */
+.add-subscription-btn[loading="true"] .v-btn__content,
+.enhanced-save-btn[loading="true"] .v-btn__content {
+  opacity: 0.8;
+}
+
+/* Disabled state text */
+.add-subscription-btn:disabled .v-btn__content,
+.enhanced-save-btn:disabled .v-btn__content {
+  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /* Enhanced form sections */
@@ -2258,12 +2515,18 @@ async function importFromCsv() {
   );
 }
 
-.enhanced-section-header .section-icon {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  color: white;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+/* Dark mode section title */
+.v-theme--dark .enhanced-section-header .section-title {
+  color: #e5e7eb !important;
+}
+
+.enhanced-section-header .section-title {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.8px !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .enhanced-section-header .section-title {
@@ -2422,12 +2685,14 @@ async function importFromCsv() {
   text-transform: none !important;
   padding: 14px 32px !important;
   font-size: 1rem !important;
+  letter-spacing: 0.3px !important;
   box-shadow: 
     0 6px 20px rgba(99, 102, 241, 0.3),
     0 3px 10px rgba(99, 102, 241, 0.2) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
+  min-height: 48px !important;
 }
 
 .enhanced-save-btn:hover {
@@ -2465,6 +2730,11 @@ async function importFromCsv() {
 .enhanced-save-btn .v-btn__content {
   position: relative;
   z-index: 1;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* ============================================
@@ -2496,7 +2766,9 @@ async function importFromCsv() {
   }
   
   .enhanced-form-header .form-title {
-    font-size: 1.5rem !important;
+  font-size: 1.4rem !important;  /* Sedikit kita kecilkan lagi agar pas */
+  line-height: 1.3 !important; /* Kita rapatkan jarak antar baris */
+  word-break: break-word;     /* Memastikan kata panjang tidak akan keluar dari container */
   }
   
   .enhanced-section-card {
@@ -2538,6 +2810,139 @@ async function importFromCsv() {
   .import-upload-btn,
   .import-cancel-btn {
     width: 100%;
+  }
+}
+
+/* Page Header Adjustments */
+.page-header {
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Filter Card Layout */
+/* Filter Card Layout */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.filter-item {
+  flex-grow: 1;
+  flex-basis: 200px;
+}
+
+/* Data Table Wrapper */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.v-data-table {
+  min-width: 1200px;
+}
+
+/* --- MOBILE OVERRIDES (Following DefaultLayout.vue pattern) --- */
+
+/* Medium screens and down (tablets, large phones) */
+@media (max-width: 960px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .header-actions > .v-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* FIX: Refined filter container for mobile */
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    gap: 12px; /* Reduced gap for a tighter look */
+  }
+
+  /* FIX: Specific styling for the reset button on mobile */
+  .reset-filter-btn {
+    align-self: center; /* Center the button */
+    margin-top: 8px; /* Add some space above it */
+    flex-grow: 0; /* Prevent it from growing */
+    width: auto; /* Let it size to its content */
+    padding: 0 24px !important;
+  }
+
+  .enhanced-form-header {
+    padding: 24px !important;
+  }
+
+  .enhanced-form-header .form-title {
+    font-size: 1.75rem !important;
+  }
+  
+  /* FIX: Reduced margin between form sections on mobile */
+  .enhanced-form-section {
+    margin-bottom: 24px !important;
+  }
+}
+
+/* Small screens (standard mobile phones) */
+@media (max-width: 600px) {
+  .text-h4 {
+    font-size: 1.5rem !important;
+  }
+
+  .v-dialog .v-card {
+    margin: 16px !important;
+    max-width: calc(100vw - 32px) !important;
+  }
+
+  .subscription-form-dialog .v-card-text {
+    padding: 0 !important;
+  }
+  
+  .subscription-form-dialog .v-container {
+    padding: 24px 16px !important;
+  }
+
+  .enhanced-section-card {
+    padding: 16px !important;
+  }
+
+  .enhanced-action-footer {
+    padding: 16px !important;
+  }
+  
+  .enhanced-action-footer .action-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  
+  .enhanced-cancel-btn,
+  .enhanced-save-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .delete-header {
+    padding: 24px 16px !important;
   }
 }
 

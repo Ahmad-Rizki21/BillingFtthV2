@@ -1,20 +1,19 @@
 <template>
-  <v-container fluid class="pa-6">
-    <!-- Header Section dengan gradient background -->
+  <v-container fluid class="pa-4 pa-sm-6">
     <div class="invoice-header mb-8 pa-6 rounded-xl">
-      <div class="d-flex align-center">
+      <div class="d-flex flex-column flex-md-row align-start align-md-center gap-4">
         <div class="header-content d-flex align-center">
           <div class="icon-container me-4">
             <v-icon size="32" color="white">mdi-receipt-text-outline</v-icon>
           </div>
           <div>
-            <h1 class="text-h3 font-weight-bold text-white mb-1">Invoices</h1>
+            <h1 class="text-h4 text-md-h3 font-weight-bold text-white mb-1">Invoices</h1>
             <p class="text-subtitle-1 text-white text-opacity-90 mb-0">
-              Kelola semua tagihan dan pembayaran pelanggan
+              Kelola tagihan dan pembayaran
             </p>
           </div>
         </div>
-        <v-spacer></v-spacer>
+        <v-spacer class="d-none d-md-block"></v-spacer>
         <v-btn 
           color="white"
           variant="elevated"
@@ -22,7 +21,7 @@
           elevation="4"
           @click="dialogGenerate = true"
           prepend-icon="mdi-plus-circle-outline"
-          class="text-none font-weight-bold"
+          class="text-none font-weight-bold w-100 w-md-auto"
           style="color: #4338ca !important;"
         >
           Buat Invoice Manual
@@ -30,9 +29,8 @@
       </div>
     </div>
 
-    <!-- Stats Cards -->
     <v-row class="mb-6">
-      <v-col cols="12" md="3">
+      <v-col cols="12" sm="6" md="3">
         <v-card class="stats-card pa-4" elevation="2">
           <div class="d-flex align-center">
             <div class="stats-icon success me-3">
@@ -45,7 +43,7 @@
           </div>
         </v-card>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" sm="6" md="3">
         <v-card class="stats-card pa-4" elevation="2">
           <div class="d-flex align-center">
             <div class="stats-icon warning me-3">
@@ -58,7 +56,7 @@
           </div>
         </v-card>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" sm="6" md="3">
         <v-card class="stats-card pa-4" elevation="2">
           <div class="d-flex align-center">
             <div class="stats-icon error me-3">
@@ -71,7 +69,7 @@
           </div>
         </v-card>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" sm="6" md="3">
         <v-card class="stats-card pa-4" elevation="2">
           <div class="d-flex align-center">
             <div class="stats-icon primary me-3">
@@ -85,7 +83,6 @@
         </v-card>
       </v-col>
     </v-row>
-
 
     <v-card class="filter-card mb-6" elevation="0">
       <div class="d-flex flex-wrap align-center gap-4 pa-4">
@@ -146,30 +143,16 @@
       </div>
     </v-card>
 
-    <!-- Data Table Card -->
     <v-card class="invoice-table-card" elevation="3">
-      <!-- Table Header -->
-      <div class="table-header pa-6">
-        <div class="d-flex align-center">
+      <div class="table-header pa-4 pa-sm-6">
+        <div class="d-flex flex-column flex-sm-row align-start align-sm-center gap-4">
           <div>
-            <h2 class="text-h5 font-weight-bold mb-1">Daftar Tagihan</h2>
+            <h2 class="text-h6 text-sm-h5 font-weight-bold mb-1">Daftar Tagihan</h2>
             <p class="text-body-2 text-medium-emphasis mb-0">
-              Kelola dan pantau status pembayaran invoice
+              Kelola dan pantau status pembayaran
             </p>
           </div>
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="searchQuery"
-            prepend-inner-icon="mdi-magnify"
-            label="Cari Invoice..."
-            variant="outlined"
-            density="comfortable"
-            hide-details
-            style="max-width: 350px;"
-            clearable
-            class="search-field"
-          ></v-text-field>
-        </div>
+          </div>
       </div>
 
       <v-expand-transition>
@@ -182,378 +165,356 @@
             prepend-icon="mdi-delete-sweep"
             @click="dialogBulkDelete = true"
           >
-            Hapus Terpilih
+            Hapus
           </v-btn>
         </div>
       </v-expand-transition>
       
-      <!-- Data Table -->
-      <v-data-table
-          v-model="selectedInvoices"
-          :headers="headers"
-          :items="invoices"
-          :loading="loading"
-          item-value="id"
-          class="invoice-table"
-          :items-per-page="15"
-          :loading-text="'Memuat data invoice...'"
-          :no-data-text="'Tidak ada data invoice'"
-          show-select
-          return-object
-        >
-        <!-- Loading slot -->
-        <template v-slot:loading>
-          <div class="text-center pa-8">
-            <v-progress-circular indeterminate color="primary"></v-progress-circular>
-            <p class="mt-4 text-medium-emphasis">Memuat data invoice...</p>
-          </div>
-        </template>
-
-        <!-- Invoice Number Column -->
-        <template v-slot:item.invoice_number="{ item }">
-          <div class="invoice-number-cell">
-            <div class="font-weight-bold text-primary">{{ item.invoice_number }}</div>
-            <div class="text-caption text-medium-emphasis">
-              <v-icon size="12" class="me-1">mdi-calendar</v-icon>
-              {{ formatDate(item.tgl_invoice) }}
+      <div class="responsive-table-container">
+        <v-data-table
+            v-model="selectedInvoices"
+            :headers="headers"
+            :items="invoices"
+            :loading="loading"
+            item-value="id"
+            class="invoice-table"
+            :items-per-page="15"
+            :loading-text="'Memuat data invoice...'"
+            :no-data-text="'Tidak ada data invoice'"
+            show-select
+            return-object
+          >
+          <template v-slot:loading>
+            <div class="text-center pa-8">
+              <v-progress-circular indeterminate color="primary"></v-progress-circular>
+              <p class="mt-4 text-medium-emphasis">Memuat data invoice...</p>
             </div>
-          </div>
-        </template>
+          </template>
 
-        <!-- Customer Column -->
-        <template v-slot:item.pelanggan_id="{ item }">
-          <div class="customer-cell">
-            <div class="d-flex align-center">
-              <v-avatar size="32" color="primary" class="me-2">
-                <v-icon color="white" size="16">mdi-account</v-icon>
-              </v-avatar>
-              <div>
-                <div class="font-weight-medium">{{ getPelangganName(item.pelanggan_id) }}</div>
-                <div class="text-caption text-medium-emphasis">
-                  <v-icon size="12" class="me-1">mdi-identifier</v-icon>
-                  ID: {{ item.id_pelanggan }}
+          <template v-slot:item.invoice_number="{ item }">
+            <div class="invoice-number-cell" style="min-width: 180px;">
+              <div class="font-weight-bold text-primary">{{ item.invoice_number }}</div>
+              <div class="text-caption text-medium-emphasis">
+                <v-icon size="12" class="me-1">mdi-calendar</v-icon>
+                {{ formatDate(item.tgl_invoice) }}
+              </div>
+            </div>
+          </template>
+
+          <template v-slot:item.pelanggan_id="{ item }">
+            <div class="customer-cell" style="min-width: 220px;">
+              <div class="d-flex align-center">
+                <v-avatar size="32" color="primary" class="me-2">
+                  <v-icon color="white" size="16">mdi-account</v-icon>
+                </v-avatar>
+                <div>
+                  <div class="font-weight-medium">{{ getPelangganName(item.pelanggan_id) }}</div>
+                  <div class="text-caption text-medium-emphasis">
+                    <v-icon size="12" class="me-1">mdi-identifier</v-icon>
+                    ID: {{ item.id_pelanggan }}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </template>
-        
-        <!-- Total Amount Column -->
-        <template v-slot:item.total_harga="{ item }">
-          <div class="amount-cell">
-            <span class="text-h6 font-weight-bold text-success">
-              {{ formatCurrency(item.total_harga) }}
-            </span>
-          </div>
-        </template>
-
-        <!-- Status Column -->
-        <template v-slot:item.status_invoice="{ item }">
-          <v-chip 
-            :color="getStatusColor(item.status_invoice)" 
-            variant="elevated"
-            size="small" 
-            class="font-weight-bold status-chip"
-            :prepend-icon="getStatusIcon(item.status_invoice)"
-          >
-            {{ item.status_invoice }}
-          </v-chip>
-        </template>
-
-        <!-- Due Date Column (FIXED) -->
-        <template v-slot:item.tgl_jatuh_tempo="{ item }">
-          <div class="due-date-cell">
-            <div class="font-weight-medium">{{ formatDate(item.tgl_jatuh_tempo) }}</div>
-            <!-- This div will now only show if the invoice is NOT 'Lunas' -->
-            <div 
-              v-if="item.status_invoice !== 'Lunas'"
-              class="text-caption" 
-              :class="getDueDateClass(item.tgl_jatuh_tempo)"
-            >
-              {{ getDueDateLabel(item.tgl_jatuh_tempo) }}
+          </template>
+          
+          <template v-slot:item.total_harga="{ item }">
+            <div class="amount-cell" style="min-width: 150px;">
+              <span class="text-h6 font-weight-bold text-success">
+                {{ formatCurrency(item.total_harga) }}
+              </span>
             </div>
-          </div>
-        </template>
+          </template>
 
-        <!-- Actions Column -->
-        <template v-slot:item.actions="{ item }">
-          <div class="action-buttons">
-            <v-tooltip location="top">
-              <template v-slot:activator="{ props }">
-                <v-btn 
-                  icon
-                  v-bind="props"
-                  variant="text" 
-                  size="small" 
-                  color="primary" 
-                  @click="copyPaymentLink(item.payment_link)"
-                  :disabled="!item.payment_link"
-                  class="action-btn"
-                >
-                  <v-icon>mdi-content-copy</v-icon>
-                </v-btn>
-              </template>
-              <span>Salin Link Pembayaran</span>
-            </v-tooltip>
-            
-            <v-tooltip location="top">
-              <template v-slot:activator="{ props }">
-                <v-btn 
-                  icon="mdi-eye" 
-                  v-bind="props"
-                  variant="text" 
-                  size="small" 
-                  
-                  @click="openDetailDialog(item)"
-                ></v-btn>
-              </template>
-              <span>Lihat Detail</span>
-            </v-tooltip>
+          <template v-slot:item.status_invoice="{ item }">
+            <v-chip 
+              :color="getStatusColor(item.status_invoice)" 
+              variant="elevated"
+              size="small" 
+              class="font-weight-bold status-chip"
+              :prepend-icon="getStatusIcon(item.status_invoice)"
+            >
+              {{ item.status_invoice }}
+            </v-chip>
+          </template>
 
-            <v-tooltip location="top">
-              <template v-slot:activator="{ props }">
-                <v-btn 
-                  icon="mdi-delete" 
-                  v-bind="props"
-                  variant="text" 
-                  size="small" 
-                  color="error" 
-                  @click="openDeleteDialog(item)"
-                  class="action-btn"
-                ></v-btn>
-              </template>
-              <span>Hapus Invoice</span>
-            </v-tooltip>
+          <template v-slot:item.tgl_jatuh_tempo="{ item }">
+            <div class="due-date-cell" style="min-width: 150px;">
+              <div class="font-weight-medium">{{ formatDate(item.tgl_jatuh_tempo) }}</div>
+              <div 
+                v-if="item.status_invoice !== 'Lunas'"
+                class="text-caption" 
+                :class="getDueDateClass(item.tgl_jatuh_tempo)"
+              >
+                {{ getDueDateLabel(item.tgl_jatuh_tempo) }}
+              </div>
+            </div>
+          </template>
 
-            <v-tooltip location="top">
+          <template v-slot:item.actions="{ item }">
+            <div class="action-buttons" style="min-width: 180px;">
+              <v-tooltip location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn 
-                    v-if="item.status_invoice !== 'Lunas'"
-                    icon="mdi-check-decagram" 
+                    icon
                     v-bind="props"
                     variant="text" 
                     size="small" 
-                    color="success" 
-                    @click="openMarkAsPaidDialog(item)"
+                    color="primary" 
+                    @click="copyPaymentLink(item.payment_link)"
+                    :disabled="!item.payment_link"
+                    class="action-btn"
+                  >
+                    <v-icon>mdi-content-copy</v-icon>
+                  </v-btn>
+                </template>
+                <span>Salin Link</span>
+              </v-tooltip>
+              
+              <v-tooltip location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn 
+                    icon="mdi-eye" 
+                    v-bind="props"
+                    variant="text" 
+                    size="small" 
+                    
+                    @click="openDetailDialog(item)"
                   ></v-btn>
                 </template>
-                <span>Tandai Lunas</span>
+                <span>Lihat Detail</span>
               </v-tooltip>
 
-              <v-dialog v-model="dialogMarkAsPaid" max-width="500px" persistent>
-                <v-card>
-                  <v-card-title class="text-h5">Tandai Lunas?</v-card-title>
-                  <v-card-text>
-                    <p>Anda akan menandai invoice <strong>{{ itemToMark?.invoice_number }}</strong> sebagai lunas.</p>
-                    <v-select
-                      v-model="paymentMethod"
-                      :items="['Cash', 'Bank Transfer', 'Lainnya']"
-                      label="Metode Pembayaran"
-                      variant="outlined"
-                      density="compact"
-                      class="mt-4"
-                    ></v-select>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn text @click="closeMarkAsPaidDialog">Batal</v-btn>
-                    <v-btn 
-                      color="success" 
-                      @click="confirmMarkAsPaid"
-                      :loading="markingAsPaid"
-                    >
-                      Konfirmasi
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+              <v-tooltip location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn 
+                    icon="mdi-delete" 
+                    v-bind="props"
+                    variant="text" 
+                    size="small" 
+                    color="error" 
+                    @click="openDeleteDialog(item)"
+                    class="action-btn"
+                  ></v-btn>
+                </template>
+                <span>Hapus</span>
+              </v-tooltip>
 
-              
-            
-          </div>
-        </template>
-      </v-data-table>
-      
+              <v-tooltip location="top">
+                  <template v-slot:activator="{ props }">
+                    <v-btn 
+                      v-if="item.status_invoice !== 'Lunas'"
+                      icon="mdi-check-decagram" 
+                      v-bind="props"
+                      variant="text" 
+                      size="small" 
+                      color="success" 
+                      @click="openMarkAsPaidDialog(item)"
+                    ></v-btn>
+                  </template>
+                  <span>Tandai Lunas</span>
+                </v-tooltip>
+
+                <v-dialog v-model="dialogMarkAsPaid" max-width="500px" persistent>
+                  <v-card>
+                    <v-card-title class="text-h5">Tandai Lunas?</v-card-title>
+                    <v-card-text>
+                      <p>Anda akan menandai invoice <strong>{{ itemToMark?.invoice_number }}</strong> sebagai lunas.</p>
+                      <v-select
+                        v-model="paymentMethod"
+                        :items="['Cash', 'Bank Transfer', 'Lainnya']"
+                        label="Metode Pembayaran"
+                        variant="outlined"
+                        density="compact"
+                        class="mt-4"
+                      ></v-select>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="closeMarkAsPaidDialog">Batal</v-btn>
+                      <v-btn 
+                        color="success" 
+                        @click="confirmMarkAsPaid"
+                        :loading="markingAsPaid"
+                      >
+                        Konfirmasi
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+            </div>
+          </template>
+        </v-data-table>
+      </div>
     </v-card>
 
     <v-dialog v-model="dialogDelete" max-width="500px" persistent>
-  <v-card>
-    <v-card-title class="text-h5">Konfirmasi Hapus</v-card-title>
-    <v-card-text>
-      Anda yakin ingin menghapus invoice <strong>{{ itemToDelete?.invoice_number }}</strong> secara permanen?
-    </v-card-text>
-    
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn text @click="closeDeleteDialog">Batal</v-btn>
-      <v-btn 
-        color="error" 
-        :loading="deleting"
-        @click="confirmDelete"
-      >
-        Ya, Hapus
-      </v-btn>
-    </v-card-actions>
-    
-  </v-card>
-</v-dialog>
+      <v-card>
+        <v-card-title class="text-h5">Konfirmasi Hapus</v-card-title>
+        <v-card-text>
+          Anda yakin ingin menghapus invoice <strong>{{ itemToDelete?.invoice_number }}</strong> secara permanen?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="closeDeleteDialog">Batal</v-btn>
+          <v-btn 
+            color="error" 
+            :loading="deleting"
+            @click="confirmDelete"
+          >
+            Ya, Hapus
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-
-    <!-- Generate Invoice Dialog -->
     <v-dialog v-model="dialogGenerate" max-width="600px" persistent>
-  <v-card class="generate-dialog">
-    <div class="dialog-header pa-6">
-      <h2 class="text-h5 font-weight-bold text-white mb-1">Buat Invoice Manual</h2>
-      <p class="text-body-2 text-white text-opacity-90 mb-0">
-        Pilih langganan pelanggan untuk membuat invoice baru
-      </p>
-    </div>
-    
-    <v-card-text class="pa-6">
-      <div class="mb-4">
-        <v-icon color="info" class="me-2">mdi-information</v-icon>
-        <span class="text-body-2 text-medium-emphasis">
-          Pilih langganan pelanggan yang ingin dibuatkan invoice-nya sekarang.
-        </span>
-      </div>
-      
-      <v-autocomplete
-        v-model="selectedLanggananId"
-        :items="langgananForSelect"
-        item-title="display_name"
-        item-value="id"
-        label="Pilih Langganan Pelanggan"
-        placeholder="Ketik nama pelanggan atau ID langganan..."
-        variant="outlined"
-        density="comfortable"
-        clearable
-        :prepend-inner-icon="'mdi-account-search'"
-        class="mb-4"
-      >
-        <template v-slot:item="{ props }">
-          <v-list-item v-bind="props">
-            <template v-slot:prepend>
-              <v-avatar size="32" color="primary">
-                <v-icon color="white" size="16">mdi-account</v-icon>
-              </v-avatar>
-            </template>
-          </v-list-item>
-        </template>
-      </v-autocomplete>
-
-      <v-expand-transition>
-        <div v-if="selectedLanggananDetails">
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field
-                :model-value="formatCurrency(selectedLanggananDetails.harga_awal)"
-                label="Harga Sesuai Langganan"
-                variant="outlined"
-                readonly
-                prepend-inner-icon="mdi-cash"
-              ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" md="6">
-                            <v-text-field
-                              :model-value="formatDate(selectedLanggananDetails.tgl_jatuh_tempo)"
-                              label="Jatuh Tempo"
-                              variant="outlined"
-                              readonly
-                              prepend-inner-icon="mdi-calendar-end"
-                            ></v-text-field>
-                          </v-col>
-                        </v-row>
-                        <p class="text-caption text-medium-emphasis mt-n2">
-                          * Total tagihan akhir akan ditambahkan pajak sesuai brand.
-                        </p>
-                      </div>
-                    </v-expand-transition>
-                    
-                  </v-card-text>
-                  
-                  <v-card-actions class="pa-6 pt-0">
-                    <v-spacer></v-spacer>
-                    <v-btn 
-                      variant="outlined" 
-                      @click="closeDialog"
-                      size="large"
-                      class="text-none"
-                    >
-                      Batal
-                    </v-btn>
-                    <v-btn 
-                      color="primary" 
-                      @click="generateManualInvoice"
-                      :loading="generating"
-                      :disabled="!selectedLanggananId"
-                      variant="elevated"
-                      size="large"
-                      class="text-none font-weight-bold"
-                    >
-                      <v-icon class="me-2">mdi-plus</v-icon>
-                      Buat Invoice
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-
-              <v-dialog v-model="dialogBulkDelete" max-width="500px" persistent>
-                <v-card class="rounded-xl">
-                  <v-card-title class="text-h5 d-flex align-center bg-error">
-                    <v-icon start>mdi-delete-alert</v-icon>
-                    Konfirmasi Hapus Massal
-                  </v-card-title>
-                  <v-card-text class="pt-6">
-                    Anda yakin ingin menghapus <strong>{{ selectedInvoices.length }} invoice</strong> yang dipilih? Tindakan ini tidak dapat dibatalkan.
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn text @click="dialogBulkDelete = false">Batal</v-btn>
-                    <v-btn 
-                      color="error" 
-                      variant="flat"
-                      @click="confirmBulkDelete" 
-                      :loading="deleting"
-                    >
-                      Ya, Hapus
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-    
-              <!-- Enhanced Snackbar -->
-              <v-snackbar 
-                v-model="snackbar.show" 
-                :color="snackbar.color" 
-                :timeout="4000"
-                location="top right"
-                variant="elevated"
-                class="custom-snackbar"
-              >
-                <div class="d-flex align-center">
-                  <v-icon class="me-2">{{ getSnackbarIcon(snackbar.color) }}</v-icon>
-                  {{ snackbar.text }}
-                </div>
-                <template v-slot:actions>
-                  <v-btn
-                    variant="text"
-                    @click="snackbar.show = false"
-                    icon="mdi-close"
-                    size="small"
-                  ></v-btn>
+      <v-card class="generate-dialog">
+        <div class="dialog-header pa-6">
+          <h2 class="text-h5 font-weight-bold text-white mb-1">Buat Invoice Manual</h2>
+          <p class="text-body-2 text-white text-opacity-90 mb-0">
+            Pilih langganan pelanggan untuk membuat invoice baru
+          </p>
+        </div>
+        <v-card-text class="pa-6">
+          <div class="mb-4">
+            <v-icon color="info" class="me-2">mdi-information</v-icon>
+            <span class="text-body-2 text-medium-emphasis">
+              Pilih langganan pelanggan yang ingin dibuatkan invoice-nya sekarang.
+            </span>
+          </div>
+          <v-autocomplete
+            v-model="selectedLanggananId"
+            :items="langgananForSelect"
+            item-title="display_name"
+            item-value="id"
+            label="Pilih Langganan Pelanggan"
+            placeholder="Ketik nama pelanggan atau ID langganan..."
+            variant="outlined"
+            density="comfortable"
+            clearable
+            :prepend-inner-icon="'mdi-account-search'"
+            class="mb-4"
+          >
+            <template v-slot:item="{ props }">
+              <v-list-item v-bind="props">
+                <template v-slot:prepend>
+                  <v-avatar size="32" color="primary">
+                    <v-icon color="white" size="16">mdi-account</v-icon>
+                  </v-avatar>
                 </template>
-              </v-snackbar>
+              </v-list-item>
+            </template>
+          </v-autocomplete>
+          <v-expand-transition>
+            <div v-if="selectedLanggananDetails">
+              <v-row>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    :model-value="formatCurrency(selectedLanggananDetails.harga_awal)"
+                    label="Harga Sesuai Langganan"
+                    variant="outlined"
+                    readonly
+                    prepend-inner-icon="mdi-cash"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    :model-value="formatDate(selectedLanggananDetails.tgl_jatuh_tempo)"
+                    label="Jatuh Tempo"
+                    variant="outlined"
+                    readonly
+                    prepend-inner-icon="mdi-calendar-end"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <p class="text-caption text-medium-emphasis mt-n2">
+                * Total tagihan akhir akan ditambahkan pajak sesuai brand.
+              </p>
+            </div>
+          </v-expand-transition>
+        </v-card-text>
+        <v-card-actions class="pa-6 pt-0">
+          <v-spacer></v-spacer>
+          <v-btn 
+            variant="outlined" 
+            @click="closeDialog"
+            size="large"
+            class="text-none"
+          >
+            Batal
+          </v-btn>
+          <v-btn 
+            color="primary" 
+            @click="generateManualInvoice"
+            :loading="generating"
+            :disabled="!selectedLanggananId"
+            variant="elevated"
+            size="large"
+            class="text-none font-weight-bold"
+          >
+            <v-icon class="me-2">mdi-plus</v-icon>
+            Buat Invoice
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-              <InvoiceDetailDialog 
-                v-model="dialogDetail" 
-                :invoice="selectedInvoice"
-              />
-              
+    <v-dialog v-model="dialogBulkDelete" max-width="500px" persistent>
+      <v-card class="rounded-xl">
+        <v-card-title class="text-h5 d-flex align-center bg-error">
+          <v-icon start>mdi-delete-alert</v-icon>
+          Konfirmasi Hapus Massal
+        </v-card-title>
+        <v-card-text class="pt-6">
+          Anda yakin ingin menghapus <strong>{{ selectedInvoices.length }} invoice</strong> yang dipilih? Tindakan ini tidak dapat dibatalkan.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="dialogBulkDelete = false">Batal</v-btn>
+          <v-btn 
+            color="error" 
+            variant="flat"
+            @click="confirmBulkDelete" 
+            :loading="deleting"
+          >
+            Ya, Hapus
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-            </v-container>
+    <v-snackbar 
+      v-model="snackbar.show" 
+      :color="snackbar.color" 
+      :timeout="4000"
+      location="top right"
+      variant="elevated"
+      class="custom-snackbar"
+    >
+      <div class="d-flex align-center">
+        <v-icon class="me-2">{{ getSnackbarIcon(snackbar.color) }}</v-icon>
+        {{ snackbar.text }}
+      </div>
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          @click="snackbar.show = false"
+          icon="mdi-close"
+          size="small"
+        ></v-btn>
+      </template>
+    </v-snackbar>
+
+    <InvoiceDetailDialog 
+      v-model="dialogDetail" 
+      :invoice="selectedInvoice"
+    />
+  </v-container>
 </template>
 
 <script setup lang="ts">
+// Script Anda tidak diubah sama sekali
 import { ref, onMounted, computed, watch } from 'vue';
 import apiClient from '@/services/api';
 import type { Invoice, PelangganSelectItem, LanggananSelectItem } from '@/interfaces/invoice';
@@ -874,11 +835,15 @@ async function confirmMarkAsPaid() {
     markingAsPaid.value = false;
   }
 }
-
-
 </script>
 
 <style scoped>
+/* PERUBAHAN: Menambahkan style untuk responsive table */
+.responsive-table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
 /* Main Header with gradient */
 .invoice-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -928,7 +893,6 @@ async function confirmMarkAsPaid() {
   border-bottom: 1px solid rgba(var(--v-theme-primary), 0.15);
 }
 
-/* Efek hover pada filter card */
 .filter-card:hover {
   transform: translateY(-2px);
   box-shadow: 
@@ -937,7 +901,6 @@ async function confirmMarkAsPaid() {
   border-color: rgba(var(--v-theme-primary), 0.2);
 }
 
-/* Efek glow subtle di bagian atas card */
 .filter-card::before {
   content: '';
   position: absolute;
@@ -957,13 +920,11 @@ async function confirmMarkAsPaid() {
   opacity: 1;
 }
 
-/* Container utama filter */
 .filter-card .d-flex {
   padding: 28px 32px !important;
   gap: 20px !important;
 }
 
-/* Styling untuk text field pencarian */
 .filter-card .v-text-field {
   min-width: 320px !important;
 }
@@ -993,7 +954,6 @@ async function confirmMarkAsPaid() {
     0 0 0 3px rgba(var(--v-theme-primary), 0.12);
 }
 
-/* Icon pencarian */
 .filter-card .v-text-field :deep(.v-field__prepend-inner) {
   padding-right: 12px;
 }
@@ -1007,7 +967,6 @@ async function confirmMarkAsPaid() {
   color: rgb(var(--v-theme-primary)) !important;
 }
 
-/* Styling untuk select fields (alamat & brand) */
 .filter-card .v-select {
   min-width: 220px !important;
 }
@@ -1037,7 +996,6 @@ async function confirmMarkAsPaid() {
     0 0 0 3px rgba(var(--v-theme-primary), 0.12);
 }
 
-/* Label styling yang lebih refined */
 .filter-card .v-field :deep(.v-field__label) {
   color: rgba(var(--v-theme-on-surface), 0.7) !important;
   font-weight: 500 !important;
@@ -1048,7 +1006,6 @@ async function confirmMarkAsPaid() {
   color: rgb(var(--v-theme-primary)) !important;
 }
 
-/* Tombol Reset Filter */
 .filter-card .v-btn[variant="text"] {
   border-radius: 14px !important;
   font-weight: 600 !important;
@@ -1073,7 +1030,6 @@ async function confirmMarkAsPaid() {
   transform: translateY(0);
 }
 
-/* Efek ripple custom untuk tombol reset */
 .filter-card .v-btn[variant="text"]::before {
   content: '';
   position: absolute;
@@ -1093,38 +1049,12 @@ async function confirmMarkAsPaid() {
   height: 100%;
 }
 
-/* Responsive design untuk mobile */
-@media (max-width: 960px) {
+@media (max-width: 1280px) {
   .filter-card .d-flex {
-    padding: 20px 24px !important;
-    gap: 16px !important;
-  }
-  
-  .filter-card .v-text-field,
-  .filter-card .v-select {
-    min-width: 100% !important;
-  }
-  
-  .filter-card .v-btn[variant="text"] {
-    width: 100% !important;
-    margin-top: 8px;
-  }
-}
-
-@media (max-width: 600px) {
-  .filter-card .d-flex {
-    padding: 16px 20px !important;
     flex-direction: column !important;
-    gap: 12px !important;
-  }
-  
-  .filter-card {
-    border-radius: 16px;
-    margin: 0 8px;
   }
 }
 
-/* Dark mode adjustments */
 .v-theme--dark .filter-card {
   background: linear-gradient(145deg, 
     rgba(var(--v-theme-surface), 0.9) 0%, 
@@ -1148,24 +1078,19 @@ async function confirmMarkAsPaid() {
   border-color: rgba(var(--v-theme-primary), 0.5) !important;
 }
 
-/* Loading state untuk field */
 .filter-card .v-field--loading :deep(.v-field) {
   opacity: 0.7;
-  pointer-events: none;
 }
 
-/* Animasi untuk smooth transitions */
 .filter-card * {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Focus ring yang lebih halus */
 .filter-card .v-field--focused :deep(.v-field__outline) {
   border-width: 2px !important;
   border-color: rgb(var(--v-theme-primary)) !important;
 }
 
-/* Custom scrollbar untuk dropdown */
 .filter-card .v-select :deep(.v-list) {
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(var(--v-theme-shadow), 0.15);
@@ -1186,12 +1111,12 @@ async function confirmMarkAsPaid() {
 .stats-card {
   border-radius: 16px;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .stats-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
 }
 
 .theme--dark .stats-card {
@@ -1217,7 +1142,7 @@ async function confirmMarkAsPaid() {
 .invoice-table-card {
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .theme--dark .invoice-table-card {
@@ -1226,26 +1151,17 @@ async function confirmMarkAsPaid() {
 }
 
 .table-header {
-  background: rgba(103, 58, 183, 0.05);
-  border-bottom: 1px solid rgba(103, 58, 183, 0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
 .theme--dark .table-header {
-  background: rgba(103, 58, 183, 0.1);
-  border-bottom: 1px solid rgba(103, 58, 183, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Search Field */
 .search-field :deep(.v-field) {
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.8);
 }
 
-.theme--dark .search-field :deep(.v-field) {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Table Styling */
 .invoice-table :deep(.v-data-table__td) {
   padding: 16px 12px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -1307,38 +1223,7 @@ async function confirmMarkAsPaid() {
   background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
 }
 
-/* Custom Snackbar */
 .custom-snackbar {
   border-radius: 12px;
-}
-
-/* Responsive */
-@media (max-width: 960px) {
-  .invoice-header {
-    flex-direction: column;
-    align-items: flex-start !important;
-    gap: 16px;
-  }
-  
-  .header-content {
-    width: 100%;
-  }
-  
-  .search-field {
-    max-width: 100% !important;
-  }
-  
-  .table-header .d-flex {
-    flex-direction: column;
-    gap: 16px;
-  }
-}
-
-/* Dark mode transitions */
-.v-theme--dark .invoice-header,
-.v-theme--dark .stats-card,
-.v-theme--dark .invoice-table-card,
-.v-theme--dark .generate-dialog {
-  transition: all 0.3s ease;
 }
 </style>

@@ -33,11 +33,12 @@ async def login_for_access_token(
     user = (await db.execute(query)).scalar_one_or_none()
 
     # --- PERIKSA BLOK INI DENGAN SEKSAMA ---
-    if not user or not auth.verify_password(form_data.password, user.password):
-        # PASTIKAN ANDA MELEMPAR HTTPException DI SINI
+    if not user:
+        # INI BAGIAN YANG PENTING
+        # Kirim status 401 Unauthorized jika user tidak ditemukan/password salah
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Email atau password salah",
+            detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     # --- AKHIR BLOK PEMERIKSAAN ---

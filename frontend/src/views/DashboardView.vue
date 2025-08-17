@@ -12,7 +12,7 @@
         </div>
         <div class="header-actions">
           <v-chip class="status-chip" color="success" size="small">
-            <v-icon start>mdi-circle</v-icon>
+            <v-icon start size="12">mdi-circle</v-icon>
             System Active
           </v-chip>
         </div>
@@ -396,7 +396,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
 </script>
 
 <style scoped>
-/* Styling tetap sama, tidak perlu diubah */
+/* Base Styling */
 .dashboard-container {
   padding: 1.5rem;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.02) 0%, rgba(34, 197, 94, 0.02) 100%);
@@ -404,6 +404,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   animation: fadeIn 0.6s ease-out;
 }
 
+/* Header Section - Improved Responsive Layout */
 .dashboard-header {
   margin-bottom: 1.5rem;
   background: rgba(255, 255, 255, 0.85);
@@ -417,11 +418,13 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
 .header-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .title-section {
   flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
 }
 
 .dashboard-title {
@@ -436,6 +439,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.2;
 }
 
 .title-icon {
@@ -443,19 +447,39 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  flex-shrink: 0;
 }
 
 .dashboard-subtitle {
   color: rgba(var(--v-theme-on-surface), 0.7);
   font-size: 0.95rem;
   font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Header Actions - Improved Layout */
+.header-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
 }
 
 .status-chip {
   font-weight: 600;
   font-size: 0.75rem;
+  height: 32px;
+  white-space: nowrap;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+  transition: all 0.2s ease;
 }
 
+.status-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+/* Stats Grid */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -468,6 +492,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   }
 }
 
+/* Stat Cards */
 .stat-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -576,6 +601,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
 .progress-fill.progress-2 { background: linear-gradient(90deg, #f59e0b, #f97316); }
 .progress-fill.progress-3 { background: linear-gradient(90deg, #ef4444, #ec4899); }
 
+/* Charts Section */
 .charts-section {
   display: flex;
   flex-direction: column;
@@ -659,6 +685,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   height: 350px;
 }
 
+/* Animations */
 @keyframes fadeIn {
   from { 
     opacity: 0; 
@@ -675,6 +702,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   to { width: 75%; }
 }
 
+/* Dark Theme */
 .v-theme--dark .dashboard-header,
 .v-theme--dark .stat-card,
 .v-theme--dark .chart-card {
@@ -686,11 +714,127 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
 }
 
+.v-theme--dark .status-chip {
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+}
+
 .stat-card-skeleton {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   padding: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .dashboard-header {
+    padding: 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .header-actions {
+    align-self: flex-end;
+  }
+  
+  .dashboard-title {
+    font-size: 1.75rem;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.875rem;
+  }
+  
+  .charts-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 0.75rem;
+  }
+  
+  .dashboard-header {
+    padding: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard-title {
+    font-size: 1.5rem;
+    gap: 0.5rem;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .stat-card-content {
+    padding: 1rem;
+  }
+  
+  .chart-card {
+    padding: 1rem;
+  }
+  
+  .status-chip {
+    font-size: 0.7rem;
+    height: 28px;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-content {
+    gap: 0.75rem;
+  }
+  
+  .dashboard-title {
+    font-size: 1.375rem;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .status-chip {
+    font-size: 0.65rem;
+    height: 26px;
+  }
+}
+
+/* Improved Mobile Layout for System Active */
+@media (max-width: 640px) {
+  .header-content {
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    margin-top: 0.5rem;
+    justify-content: flex-end;
+  }
+  
+  .status-chip {
+    align-self: flex-start;
+  }
 }
 </style>

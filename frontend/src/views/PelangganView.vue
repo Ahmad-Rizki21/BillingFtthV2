@@ -1,8 +1,9 @@
 <template>
   <v-container fluid class="pa-4 pa-md-6">
-    <div class="header-card mb-6">
-      <div class="d-flex flex-column flex-md-row align-center gap-4">
-        <div class="d-flex align-center">
+    <!-- Header Card - Mobile Optimized -->
+    <div class="header-card mb-4 mb-md-6">
+      <div class="d-flex flex-column align-center gap-4">
+        <div class="d-flex align-center header-info">
           <div class="header-avatar-wrapper">
             <v-avatar class="header-avatar" color="transparent" size="50">
               <v-icon color="white" size="28">mdi-account-group</v-icon>
@@ -13,14 +14,16 @@
             <p class="header-subtitle">Kelola semua data pelanggan Anda dengan mudah</p>
           </div>
         </div>
-        <v-spacer class="d-none d-md-block"></v-spacer>
-        <div class="d-flex flex-column flex-sm-row gap-3">
+        
+        <!-- Mobile Action Buttons -->
+        <div class="action-buttons-container">
           <v-btn
             color="success"
             @click="dialogImport = true"
             prepend-icon="mdi-file-upload-outline"
-            class="action-btn text-none"
-            size="large"
+            class="action-btn text-none mobile-btn"
+            size="default"
+            block
           >
             Import Data
           </v-btn>
@@ -29,8 +32,9 @@
             @click="exportToCsv"
             :loading="exporting"
             prepend-icon="mdi-file-download-outline"
-            class="action-btn text-none"
-            size="large"
+            class="action-btn text-none mobile-btn"
+            size="default"
+            block
           >
             Export Data
           </v-btn>
@@ -38,8 +42,9 @@
             color="primary" 
             @click="openDialog()" 
             prepend-icon="mdi-account-plus" 
-            class="primary-btn text-none" 
-            size="large" 
+            class="primary-btn text-none mobile-btn" 
+            size="default"
+            block
             elevation="3"
           >
             Tambah Pelanggan
@@ -48,8 +53,10 @@
       </div>
     </div>
 
-    <v-card class="filter-card mb-6" elevation="0">
-      <div class="d-flex flex-wrap align-center gap-4 pa-4">
+    <!-- Filter Card - Mobile Optimized -->
+    <v-card class="filter-card mb-4 mb-md-6" elevation="0">
+      <div class="pa-4">
+        <!-- Search Field -->
         <v-text-field
           v-model="searchQuery"
           label="Cari Pelanggan (Nama, Email, No. Telp)"
@@ -57,46 +64,49 @@
           variant="outlined"
           density="comfortable"
           hide-details
-          class="flex-grow-1"
-          style="min-width: 300px;"
+          class="mb-3"
         ></v-text-field>
 
-        <v-select
-          v-model="selectedAlamat"
-          :items="alamatOptions"
-          label="Filter Alamat"
-          variant="outlined"
-          density="comfortable"
-          hide-details
-          clearable
-          class="flex-grow-1"
-          style="min-width: 200px;"
-        ></v-select>
+        <!-- Filter Row -->
+        <div class="d-flex flex-column flex-sm-row gap-3 mb-3">
+          <v-select
+            v-model="selectedAlamat"
+            :items="alamatOptions"
+            label="Filter Alamat"
+            variant="outlined"
+            density="comfortable"
+            hide-details
+            clearable
+            class="flex-grow-1"
+          ></v-select>
 
-        <v-select
-          v-model="selectedBrand"
-          :items="hargaLayananList"
-          item-title="brand"
-          item-value="id_brand"
-          label="Filter Brand"
-          variant="outlined"
-          density="comfortable"
-          hide-details
-          clearable
-          class="flex-grow-1"
-          style="min-width: 200px;"
-        ></v-select>
+          <v-select
+            v-model="selectedBrand"
+            :items="hargaLayananList"
+            item-title="brand"
+            item-value="id_brand"
+            label="Filter Brand"
+            variant="outlined"
+            density="comfortable"
+            hide-details
+            clearable
+            class="flex-grow-1"
+          ></v-select>
+        </div>
         
+        <!-- Reset Button -->
         <v-btn
-            variant="text"
-            @click="resetFilters"
-            class="text-none"
+          variant="text"
+          @click="resetFilters"
+          class="text-none"
+          block
         >
           Reset Filter
         </v-btn>
       </div>
     </v-card>
 
+    <!-- Data Table Card -->
     <v-card class="data-table-card" elevation="0">
       <div class="card-header">
         <div class="d-flex align-center">
@@ -105,40 +115,158 @@
           </div>
           <span class="card-title ml-3">Daftar Pelanggan</span>
         </div>
-        <v-chip color="primary" variant="tonal" size="default" class="count-chip">
+        <v-chip color="primary" variant="tonal" size="small" class="count-chip">
           <v-icon start size="small">mdi-account-multiple</v-icon>
-          {{ pelangganList.length }} pelanggan
+          {{ pelangganList.length }}
         </v-chip>
       </div>
+      
+      <!-- Selection Toolbar -->
       <v-expand-transition>
         <div v-if="selectedPelanggan.length > 0" class="selection-toolbar">
           <span class="font-weight-bold text-primary">{{ selectedPelanggan.length }} pelanggan terpilih</span>
           <v-spacer></v-spacer>
-         <v-btn 
+          <v-btn 
             color="error" 
             variant="tonal" 
             prepend-icon="mdi-delete-sweep"
             @click="deleteSelectedPelanggan"
+            size="small"
           >
-            Hapus Terpilih
+            <span class="d-none d-sm-inline">Hapus Terpilih</span>
+            <span class="d-inline d-sm-none">Hapus</span>
           </v-btn>
         </div>
       </v-expand-transition>
-      <div class="table-container">
-        <v-data-table
-  v-model="selectedPelanggan"
-  :headers="headers"
-  :items="pelangganList"
-  :loading="loading"
-  item-value="id"
-  class="elegant-table"
-  :items-per-page="10"
-  :items-per-page-options="[5, 10, 25, 50]"
-  hover
-  show-select
-  return-object
->
+
+      <!-- Mobile-First Data Display -->
+      <div class="d-block d-md-none">
+        <!-- Mobile Card List -->
+        <div v-if="loading" class="text-center py-12">
+          <v-progress-circular color="primary" indeterminate size="48"></v-progress-circular>
+          <p class="mt-4 text-medium-emphasis">Memuat data pelanggan...</p>
+        </div>
         
+        <div v-else-if="pelangganList.length === 0" class="no-data-wrapper">
+          <v-icon size="64" color="surface-variant">mdi-account-off</v-icon>
+          <div class="no-data-text">Belum ada data pelanggan</div>
+          <p class="text-medium-emphasis mt-2">Mulai dengan menambahkan pelanggan pertama Anda</p>
+          <v-btn 
+            color="primary" 
+            variant="elevated" 
+            @click="openDialog()" 
+            class="mt-6 text-none"
+            prepend-icon="mdi-account-plus"
+          >
+            Tambah Pelanggan
+          </v-btn>
+        </div>
+
+        <div v-else class="mobile-cards-container">
+          <v-card
+            v-for="item in pelangganList"
+            :key="item.id"
+            class="mobile-customer-card mb-3"
+            elevation="2"
+          >
+            <v-card-text class="pa-4">
+              <!-- Customer Header -->
+              <div class="d-flex align-center mb-3">
+                <v-checkbox
+                  v-model="selectedPelanggan"
+                  :value="item"
+                  hide-details
+                  class="me-3"
+                ></v-checkbox>
+                <div class="flex-grow-1">
+                  <h3 class="mobile-customer-name">{{ item.nama }}</h3>
+                  <p class="mobile-customer-email text-medium-emphasis">{{ item.email }}</p>
+                </div>
+              </div>
+
+              <!-- Customer Details -->
+              <div class="mobile-details">
+                <div class="detail-row">
+                  <v-icon size="small" class="me-2 text-medium-emphasis">mdi-map-marker</v-icon>
+                  <span class="detail-label">Alamat:</span>
+                  <span class="detail-value">{{ item.alamat }}</span>
+                </div>
+                
+                <div class="detail-row">
+                  <v-icon size="small" class="me-2 text-medium-emphasis">mdi-phone</v-icon>
+                  <span class="detail-label">Telepon:</span>
+                  <span class="detail-value">{{ item.no_telp }}</span>
+                </div>
+                
+                <div class="detail-row">
+                  <v-icon size="small" class="me-2 text-medium-emphasis">mdi-wifi</v-icon>
+                  <span class="detail-label">Layanan:</span>
+                  <span class="detail-value">{{ item.layanan }}</span>
+                </div>
+                
+                <div class="detail-row">
+                  <v-icon size="small" class="me-2 text-medium-emphasis">mdi-domain</v-icon>
+                  <span class="detail-label">Brand:</span>
+                  <v-chip 
+                    size="small" 
+                    :color="getBrandChipColor(getBrandName(item.id_brand))" 
+                    variant="tonal"
+                    class="ml-2"
+                  >
+                    {{ getBrandName(item.id_brand) }}
+                  </v-chip>
+                </div>
+                
+                <div class="detail-row">
+                  <v-icon size="small" class="me-2 text-medium-emphasis">mdi-calendar</v-icon>
+                  <span class="detail-label">Instalasi:</span>
+                  <span class="detail-value">{{ formatDate(item.tgl_instalasi) }}</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="d-flex gap-2 mt-4">
+                <v-btn 
+                  size="small" 
+                  variant="tonal" 
+                  color="primary" 
+                  @click="openDialog(item)" 
+                  prepend-icon="mdi-pencil"
+                  class="flex-grow-1"
+                >
+                  Edit
+                </v-btn>
+                <v-btn 
+                  size="small" 
+                  variant="tonal" 
+                  color="error" 
+                  @click="openDeleteDialog(item)" 
+                  prepend-icon="mdi-delete"
+                  class="flex-grow-1"
+                >
+                  Hapus
+                </v-btn>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
+
+      <!-- Desktop Table -->
+      <div class="d-none d-md-block table-container">
+        <v-data-table
+          v-model="selectedPelanggan"
+          :headers="headers"
+          :items="pelangganList"
+          :loading="loading"
+          item-value="id"
+          class="elegant-table"
+          :items-per-page="10"
+          :items-per-page-options="[5, 10, 25, 50]"
+          hover
+          show-select
+          return-object
+        >
           <template v-slot:loading>
             <div class="d-flex justify-center align-center py-12">
               <div class="text-center">
@@ -215,18 +343,28 @@
       </div>
     </v-card>
 
-    <v-dialog v-model="dialog" max-width="1000px" persistent class="form-dialog">
+    <!-- Dialogs (unchanged) -->
+    <v-dialog v-model="dialog" max-width="1000px" :fullscreen="$vuetify.display.mobile" persistent class="form-dialog">
       <v-card class="form-card">
         <div class="form-header">
           <div class="form-header-content">
             <v-icon class="mr-3" size="24">mdi-account-edit</v-icon>
             <span class="form-title">{{ formTitle }}</span>
           </div>
+          <v-btn 
+            v-if="$vuetify.display.mobile"
+            icon 
+            variant="text" 
+            @click="closeDialog"
+            class="mobile-close-btn"
+          >
+            <v-icon color="white">mdi-close</v-icon>
+          </v-btn>
         </div>
         
         <v-card-text class="form-content">
           <v-form ref="form" v-model="isFormValid">
-            <v-stepper v-model="currentStep" flat class="elegant-stepper">
+            <v-stepper v-model="currentStep" flat class="elegant-stepper" :mobile="$vuetify.display.mobile">
               <v-stepper-header class="stepper-header">
                 <v-stepper-item 
                   title="Info Pribadi" 
@@ -448,6 +586,7 @@
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn 
+            v-if="!$vuetify.display.mobile"
             @click="closeDialog" 
             variant="text" 
             class="nav-btn"
@@ -479,6 +618,7 @@
       </v-card>
     </v-dialog>
 
+    <!-- Delete Dialog -->
     <v-dialog v-model="dialogDelete" max-width="500px" class="delete-dialog">
       <v-card class="delete-card">
         <div class="delete-header">
@@ -520,7 +660,7 @@
       </v-card>
     </v-dialog>
 
-
+    <!-- Bulk Delete Dialog -->
     <v-dialog v-model="dialogBulkDelete" max-width="500px" class="delete-dialog">
       <v-card class="delete-card">
         <div class="delete-header">
@@ -562,7 +702,8 @@
         </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialogImport" max-width="800px" persistent class="import-dialog">
+    <!-- Import Dialog -->
+    <v-dialog v-model="dialogImport" max-width="800px" :fullscreen="$vuetify.display.mobile" persistent class="import-dialog">
       <v-card class="import-card">
         <div class="import-header">
           <v-icon class="mr-3">mdi-upload</v-icon>
@@ -585,11 +726,11 @@
             class="template-card pa-4 mb-6"
             color="surface-variant"
           >
-            <div class="d-flex align-center">
+            <div class="d-flex flex-column flex-sm-row align-center gap-4">
               <div class="template-icon">
                 <v-icon color="success" size="32">mdi-file-document-outline</v-icon>
               </div>
-              <div class="ml-4 flex-grow-1">
+              <div class="flex-grow-1 text-center text-sm-left">
                 <div class="template-title">Gunakan Template Kami</div>
                 <p class="template-subtitle">
                   Unduh template CSV untuk memastikan format data sesuai dengan sistem.
@@ -602,6 +743,7 @@
                 :loading="downloadingTemplate" 
                 prepend-icon="mdi-download" 
                 class="template-btn"
+                :block="$vuetify.display.mobile"
               >
                 Unduh Template
               </v-btn>
@@ -692,6 +834,7 @@
       </v-card>
     </v-dialog>
 
+    <!-- Snackbar -->
     <v-snackbar 
       v-model="snackbar.show" 
       :color="snackbar.color" 
@@ -751,7 +894,6 @@ const searchQuery = ref('');
 const selectedAlamat = ref<string | null>(null);
 const selectedBrand = ref<string | null>(null);
 
-
 const defaultItem: Partial<Pelanggan> = { 
   id: undefined, 
   nama: '', 
@@ -762,7 +904,7 @@ const defaultItem: Partial<Pelanggan> = {
   alamat: '', 
   blok: '', 
   unit: '', 
-  tgl_instalasi: new Date().toISOString().split('T')[0], // Format to YYYY-MM-DD
+  tgl_instalasi: new Date().toISOString().split('T')[0], 
   alamat_2: '',
   id_brand: null
 };
@@ -770,7 +912,6 @@ const editedItem = ref<Partial<Pelanggan>>({ ...defaultItem });
 const itemToDelete = ref<Pelanggan | null>(null);
 const snackbar = ref({ show: false, text: '', color: 'success' as 'success' | 'error' | 'warning' });
 
-// MODIFIKASI DIMULAI DI SINI
 const alamatOptions = ref([
   'Tambun',
   'Rusun Pinus Elok',
@@ -783,7 +924,6 @@ const alamatOptions = ref([
   'Waringin',
   'Parama'
 ]);
-// MODIFIKASI SELESAI
 
 const layananOptions = ref([
   'Internet 10 Mbps',
@@ -792,7 +932,7 @@ const layananOptions = ref([
   'Internet 50 Mbps'
 ]);
 
-// --- ATURAN VALIDASI ---
+// --- VALIDATION RULES ---
 const rules = {
   required: (value: any) => !!value || 'Field ini wajib diisi',
   email: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Format email tidak valid',
@@ -800,7 +940,7 @@ const rules = {
   ktp: (value: string) => (value && value.length === 16 && /^[0-9]+$/.test(value)) || 'Nomor KTP harus 16 digit angka',
 };
 
-// --- HEADER TABEL ---
+// --- TABLE HEADERS ---
 const headers = [
   { title: 'Pelanggan', key: 'nama', sortable: true },
   { title: 'Alamat', key: 'alamat', sortable: false },
@@ -820,20 +960,18 @@ onMounted(() => {
   fetchHargaLayanan();
 });
 
-
-//Buat hapus data
+// --- DELETE FUNCTIONS ---
 function deleteSelectedPelanggan() {
   if (selectedPelanggan.value.length === 0) {
     showSnackbar('Tidak ada pelanggan yang dipilih.', 'warning');
     return;
   }
-  // Tugasnya sekarang hanya membuka dialog
   dialogBulkDelete.value = true;
 }
 
 async function confirmBulkDelete() {
   const itemsToDelete = [...selectedPelanggan.value];
-  deleting.value = true; // Menggunakan state 'deleting' yang sudah ada
+  deleting.value = true;
 
   try {
     const deletePromises = itemsToDelete.map(pelanggan =>
@@ -841,22 +979,20 @@ async function confirmBulkDelete() {
     );
 
     await Promise.all(deletePromises);
-
     showSnackbar(`${itemsToDelete.length} pelanggan berhasil dihapus.`, 'success');
-
     await fetchPelanggan();
-    selectedPelanggan.value = []; // Kosongkan pilihan
+    selectedPelanggan.value = [];
 
   } catch (error) {
     console.error("Gagal melakukan hapus massal:", error);
     showSnackbar('Terjadi kesalahan saat menghapus data.', 'error');
   } finally {
     deleting.value = false;
-    dialogBulkDelete.value = false; // Tutup dialog setelah selesai
+    dialogBulkDelete.value = false;
   }
 }
 
-// --- METODE CRUD ---
+// --- CRUD METHODS ---
 async function fetchPelanggan() {
   loading.value = true;
   try {
@@ -881,44 +1017,31 @@ async function fetchPelanggan() {
   }
 }
 
-// Fungsi yang di-debounce untuk menerapkan filter
-// Ini mencegah API dipanggil pada setiap ketikan, lebih efisien!
 const applyFilters = debounce(() => {
   fetchPelanggan();
-}, 500); // Tunda 500ms setelah user berhenti mengetik/memilih
+}, 500);
 
-// Perhatikan perubahan pada filter dan panggil fungsi applyFilters
 watch([searchQuery, selectedAlamat, selectedBrand], () => {
   applyFilters();
 });
 
-// Fungsi untuk mereset semua filter
 function resetFilters() {
   searchQuery.value = '';
   selectedAlamat.value = null;
   selectedBrand.value = null;
-  // Watch akan otomatis terpanggil dan me-refresh data
 }
-// ============================================
 
 function handleFileSelection(newFiles: File | File[]) {
-  importErrors.value = []; // Bersihkan error lama
+  importErrors.value = [];
 
-  // Cek apakah data yang masuk adalah sebuah array
   if (Array.isArray(newFiles)) {
-    // Jika ya, langsung gunakan
     fileToImport.value = newFiles;
   } else if (newFiles) {
-    // Jika bukan array (artinya hanya 1 file), bungkus menjadi array
     fileToImport.value = [newFiles];
   } else {
-    // Jika kosong (null atau undefined, misal saat file dihapus), jadikan array kosong
     fileToImport.value = [];
   }
-  
-  console.log('File state diperbarui:', fileToImport.value);
 }
-
 
 async function fetchHargaLayanan() {
   try {
@@ -932,7 +1055,6 @@ async function fetchHargaLayanan() {
 function openDialog(item?: Pelanggan) {
   editedIndex.value = item ? pelangganList.value.findIndex(p => p.id === item.id) : -1;
   const targetItem = item ? { ...item } : { ...defaultItem };
-  // Ensure date is in YYYY-MM-DD format for the input
   if (targetItem.tgl_instalasi) {
     targetItem.tgl_instalasi = new Date(targetItem.tgl_instalasi).toISOString().split('T')[0];
   }
@@ -995,7 +1117,7 @@ async function confirmDelete() {
   }
 }
 
-// --- METODE IMPORT / EXPORT ---
+// --- IMPORT/EXPORT METHODS ---
 function closeImportDialog() {
   dialogImport.value = false;
   importing.value = false;
@@ -1031,20 +1153,17 @@ async function exportToCsv() {
 }
 
 async function importFromCsv() {
-  // 1. Ambil file dari array terlebih dahulu
   const file = fileToImport.value[0]; 
 
-  // 2. Lakukan pengecekan yang lebih kuat pada file itu sendiri
   if (!file) {
     showSnackbar('Silakan pilih file CSV terlebih dahulu.', 'warning');
-    return; // Langsung hentikan fungsi jika tidak ada file
+    return;
   }
 
   importing.value = true;
   importErrors.value = [];
   
   const formData = new FormData();
-  // 3. Sekarang aman untuk menambahkan file ke FormData
   formData.append('file', file); 
   
   try {
@@ -1057,23 +1176,19 @@ async function importFromCsv() {
     console.error("Gagal mengimpor data:", error);
     if (error.response?.data) {
       const errors = error.response.data.errors;
-      // Cek jika ada array 'errors', jika tidak, buat array dari pesan 'detail'
       if (Array.isArray(errors) && errors.length > 0) {
         importErrors.value = errors;
       } else {
-        // Jika tidak ada array 'errors', tampilkan pesan utama sebagai satu-satunya error
         const detailMsg = error.response.data.detail;
         if (typeof detailMsg === 'string') {
           importErrors.value = [detailMsg];
         } else if (Array.isArray(detailMsg)) {
-          // Menangani kasus jika 'detail' adalah array objek seperti pada error Anda
           importErrors.value = detailMsg.map(err => err.msg || 'Error tidak diketahui');
         } else {
           importErrors.value = ["Terjadi kesalahan yang tidak diketahui."];
         }
       }
     } else {
-      // Fallback untuk error jaringan atau error tak terduga lainnya
       importErrors.value = ["Tidak dapat terhubung ke server atau terjadi error."];
     }
   } finally {
@@ -1081,7 +1196,7 @@ async function importFromCsv() {
   }
 }
 
-// --- FUNGSI BANTU (HELPERS) ---
+// --- HELPER FUNCTIONS ---
 function downloadFile(blobData: any, filename: string) {
   const url = window.URL.createObjectURL(new Blob([blobData]));
   const link = document.createElement('a');
@@ -1100,8 +1215,9 @@ function getBrandName(id_brand: string | null | undefined): string {
 }
 
 function getBrandChipColor(brandName: string): string {
-  if (brandName.includes('Jakinet')) return 'blue';
-  if (brandName.includes('Jelantik')) return 'purple';
+  if (brandName.includes('JAKINET')) return 'blue';
+  if (brandName.includes('JELANTIK')) return 'purple';
+  if (brandName.includes('JELANTIK NAGRAK')) return 'emerald';
   return 'grey';
 }
 
@@ -1109,7 +1225,6 @@ function formatDate(date: string | Date | null): string {
   if (!date) return '-';
   const d = new Date(date);
   if (isNaN(d.getTime())) return '-';
-  // Add timezone offset to prevent date from shifting
   const offset = d.getTimezoneOffset();
   const correctedDate = new Date(d.getTime() + (offset * 60 * 1000));
   return correctedDate.toLocaleDateString('id-ID', {
@@ -1126,17 +1241,37 @@ function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
 
 <style scoped>
 /* ============================================
-   REVISI TOTAL GAYA TEMA - LEBIH STABIL
+   MOBILE-FIRST RESPONSIVE DESIGN
    ============================================ */
 
-/* Header Utama */
+/* ============================================
+   MOBILE-FIRST RESPONSIVE DESIGN - FIXED POSITIONING
+   ============================================ */
+
+/* Base Styles */
+.modern-app {
+  background-color: rgb(var(--v-theme-background));
+  transition: background-color 0.3s ease;
+}
+
+/* Header Card - Mobile Optimized with Fixed Positioning */
 .header-card {
   background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
-  border-radius: 24px;
-  padding: 32px;
+  border-radius: 20px;
+  padding: 24px;
   color: rgb(var(--v-theme-on-primary));
-  box-shadow: 0 12px 40px rgba(var(--v-theme-primary), 0.25);
+  box-shadow: 0 8px 32px rgba(var(--v-theme-primary), 0.25);
   position: relative;
+}
+
+.header-card .d-flex.flex-column {
+  align-items: stretch !important; /* Changed from align-center to stretch */
+}
+
+.header-info {
+  width: 100%;
+  justify-content: flex-start;
+  margin-bottom: 0; /* Reset margin */
 }
 
 .header-avatar-wrapper {
@@ -1144,415 +1279,73 @@ function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
   border-radius: 50%;
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
 }
 
 .header-title {
-  font-size: 2.25rem;
+  font-size: 1.75rem;
   font-weight: 800;
   line-height: 1.2;
+  margin-bottom: 4px;
 }
 
 .header-subtitle {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   opacity: 0.85;
-  margin-top: 8px;
+  line-height: 1.3;
 }
 
-/* Tombol Header (di luar primary-btn) */
-.action-btn {
-  border-radius: 16px;
+/* Action Buttons Container - Fixed Positioning */
+.action-buttons-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: flex-end; /* Align to the right on desktop */
+}
+
+.mobile-btn {
+  border-radius: 14px;
   font-weight: 600;
-  height: 52px;
-  /* Gaya "kaca" tembus pandang yang konsisten */
+  height: 48px;
+  transition: all 0.3s ease;
+}
+
+.action-btn {
   background-color: rgba(255, 255, 255, 0.15) !important;
   color: white !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   backdrop-filter: blur(5px);
-  transition: background-color 0.3s ease;
-  margin-left: 12px;
 }
 
 .action-btn:hover {
-    background-color: rgba(255, 255, 255, 0.25) !important;
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-1px);
 }
 
-/* Tombol Primary di Header (Tambah Pelanggan) */
 .primary-btn {
-  border-radius: 16px;
-  font-weight: 700;
-  height: 52px;
-  background: white !important; /* Latar belakang solid putih */
+  background: white !important;
   color: rgb(var(--v-theme-primary)) !important;
-  border: 1px solid transparent;
-  margin-left: 12px;
 }
 
-/* ============================================
-   ENHANCED FILTER CARD STYLING
-   ============================================ */
-
+/* Filter Card - Mobile Optimized */
 .filter-card {
-  border-radius: 20px;
+  border-radius: 16px;
   border: 1px solid rgba(var(--v-theme-primary), 0.12);
-  background: linear-gradient(145deg, 
-    rgba(var(--v-theme-surface), 0.95) 0%, 
-    rgba(var(--v-theme-background), 0.98) 100%);
-  backdrop-filter: blur(10px);
-  box-shadow: 
-    0 4px 20px rgba(var(--v-theme-shadow), 0.08),
-    0 1px 3px rgba(var(--v-theme-shadow), 0.12);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Efek hover pada filter card */
-.filter-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 30px rgba(var(--v-theme-shadow), 0.12),
-    0 2px 6px rgba(var(--v-theme-shadow), 0.16);
-  border-color: rgba(var(--v-theme-primary), 0.2);
-}
-
-/* Efek glow subtle di bagian atas card */
-.filter-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(var(--v-theme-primary), 0.6) 50%, 
-    transparent 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.filter-card:hover::before {
-  opacity: 1;
-}
-
-/* Container utama filter */
-.filter-card .d-flex {
-  padding: 28px 32px !important;
-  gap: 20px !important;
-}
-
-/* Styling untuk text field pencarian */
-.filter-card .v-text-field {
-  min-width: 320px !important;
-}
-
-.filter-card .v-text-field :deep(.v-field) {
-  background: rgba(var(--v-theme-surface), 0.8) !important;
-  border: 2px solid rgba(var(--v-theme-outline-variant), 0.3) !important;
-  border-radius: 16px !important;
-  box-shadow: inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.filter-card .v-text-field :deep(.v-field:hover) {
-  border-color: rgba(var(--v-theme-primary), 0.4) !important;
-  background: rgba(var(--v-theme-surface), 1) !important;
-  transform: translateY(-1px);
-  box-shadow: 
-    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
-    0 4px 12px rgba(var(--v-theme-primary), 0.1);
-}
-
-.filter-card .v-text-field :deep(.v-field--focused) {
-  border-color: rgb(var(--v-theme-primary)) !important;
-  background: rgba(var(--v-theme-surface), 1) !important;
-  box-shadow: 
-    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
-    0 0 0 3px rgba(var(--v-theme-primary), 0.12);
-}
-
-/* Icon pencarian */
-.filter-card .v-text-field :deep(.v-field__prepend-inner) {
-  padding-right: 12px;
-}
-
-.filter-card .v-text-field :deep(.v-field__prepend-inner .v-icon) {
-  color: rgba(var(--v-theme-primary), 0.7) !important;
-  transition: color 0.2s ease;
-}
-
-.filter-card .v-text-field:hover :deep(.v-field__prepend-inner .v-icon) {
-  color: rgb(var(--v-theme-primary)) !important;
-}
-
-/* Styling untuk select fields (alamat & brand) */
-.filter-card .v-select {
-  min-width: 220px !important;
-}
-
-.filter-card .v-select :deep(.v-field) {
-  background: rgba(var(--v-theme-surface), 0.8) !important;
-  border: 2px solid rgba(var(--v-theme-outline-variant), 0.3) !important;
-  border-radius: 16px !important;
-  box-shadow: inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.filter-card .v-select :deep(.v-field:hover) {
-  border-color: rgba(var(--v-theme-primary), 0.4) !important;
-  background: rgba(var(--v-theme-surface), 1) !important;
-  transform: translateY(-1px);
-  box-shadow: 
-    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
-    0 4px 12px rgba(var(--v-theme-primary), 0.1);
-}
-
-.filter-card .v-select :deep(.v-field--focused) {
-  border-color: rgb(var(--v-theme-primary)) !important;
-  background: rgba(var(--v-theme-surface), 1) !important;
-  box-shadow: 
-    inset 0 2px 4px rgba(var(--v-theme-shadow), 0.06),
-    0 0 0 3px rgba(var(--v-theme-primary), 0.12);
-}
-
-/* Label styling yang lebih refined */
-.filter-card .v-field :deep(.v-field__label) {
-  color: rgba(var(--v-theme-on-surface), 0.7) !important;
-  font-weight: 500 !important;
-  font-size: 0.875rem !important;
-}
-
-.filter-card .v-field--focused :deep(.v-field__label) {
-  color: rgb(var(--v-theme-primary)) !important;
-}
-
-/* Tombol Reset Filter */
-.filter-card .v-btn[variant="text"] {
-  border-radius: 14px !important;
-  font-weight: 600 !important;
-  height: 48px !important;
-  min-width: 120px !important;
-  color: rgba(var(--v-theme-primary), 0.8) !important;
-  background: rgba(var(--v-theme-primary), 0.08) !important;
-  border: 1px solid rgba(var(--v-theme-primary), 0.2) !important;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.filter-card .v-btn[variant="text"]:hover {
-  background: rgba(var(--v-theme-primary), 0.12) !important;
-  color: rgb(var(--v-theme-primary)) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.2);
-}
-
-.filter-card .v-btn[variant="text"]:active {
-  transform: translateY(0);
-}
-
-/* Efek ripple custom untuk tombol reset */
-.filter-card .v-btn[variant="text"]::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(var(--v-theme-primary), 0.3);
-  transition: width 0.3s ease, height 0.3s ease;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-}
-
-.filter-card .v-btn[variant="text"]:hover::before {
-  width: 100%;
-  height: 100%;
-}
-
-/* Responsive design untuk mobile */
-@media (max-width: 960px) {
-  .filter-card .d-flex {
-    padding: 20px 24px !important;
-    gap: 16px !important;
-  }
-  
-  .filter-card .v-text-field,
-  .filter-card .v-select {
-    min-width: 100% !important;
-  }
-  
-  .filter-card .v-btn[variant="text"] {
-    width: 100% !important;
-    margin-top: 8px;
-  }
-}
-
-@media (max-width: 600px) {
-  .filter-card .d-flex {
-    padding: 16px 20px !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-  }
-  
-  .filter-card {
-    border-radius: 16px;
-    margin: 0 8px;
-  }
-}
-
-/* Dark mode adjustments */
-.v-theme--dark .filter-card {
-  background: linear-gradient(145deg, 
-    rgba(var(--v-theme-surface), 0.9) 0%, 
-    rgba(var(--v-theme-background), 0.95) 100%);
-  border-color: rgba(var(--v-theme-primary), 0.2);
-}
-
-.v-theme--dark .filter-card:hover {
-  border-color: rgba(var(--v-theme-primary), 0.3);
-}
-
-.v-theme--dark .filter-card .v-text-field :deep(.v-field),
-.v-theme--dark .filter-card .v-select :deep(.v-field) {
-  background: rgba(var(--v-theme-surface), 0.6) !important;
-  border-color: rgba(var(--v-theme-outline), 0.3) !important;
-}
-
-.v-theme--dark .filter-card .v-text-field :deep(.v-field:hover),
-.v-theme--dark .filter-card .v-select :deep(.v-field:hover) {
-  background: rgba(var(--v-theme-surface), 0.8) !important;
-  border-color: rgba(var(--v-theme-primary), 0.5) !important;
-}
-
-/* Loading state untuk field */
-.filter-card .v-field--loading :deep(.v-field) {
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-/* Animasi untuk smooth transitions */
-.filter-card * {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Focus ring yang lebih halus */
-.filter-card .v-field--focused :deep(.v-field__outline) {
-  border-width: 2px !important;
-  border-color: rgb(var(--v-theme-primary)) !important;
-}
-
-/* Custom scrollbar untuk dropdown */
-.filter-card .v-select :deep(.v-list) {
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(var(--v-theme-shadow), 0.15);
-}
-
-.filter-card .v-select :deep(.v-list-item) {
-  border-radius: 8px;
-  margin: 2px 8px;
-  transition: all 0.2s ease;
-}
-
-.filter-card .v-select :deep(.v-list-item:hover) {
-  background: rgba(var(--v-theme-primary), 0.08) !important;
-  transform: translateX(4px);
-}
-
-/* --- Gaya Komprehensif untuk Dialog Impor --- */
-.import-dialog .v-card {
-  border-radius: 20px;
-  overflow: hidden;
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgba(var(--v-theme-success), 0.2);
+  box-shadow: 0 2px 12px rgba(var(--v-theme-shadow), 0.08);
 }
 
-.import-header {
-  background: linear-gradient(135deg, rgb(var(--v-theme-success)) 0%, rgb(var(--v-theme-success-darken-1)) 100%);
-  padding: 24px 28px;
-  color: rgb(var(--v-theme-on-success));
-  display: flex;
-  align-items: center;
-}
-
-.import-header .import-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
-.import-content {
-  padding: 32px !important;
-  background: rgb(var(--v-theme-background));
-}
-
-.template-card {
-  border: 2px dashed rgba(var(--v-theme-success), 0.3);
-  background: rgba(var(--v-theme-success), 0.05);
-  border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.template-card:hover {
-  border-color: rgb(var(--v-theme-success));
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(var(--v-theme-success), 0.15);
-}
-
-.template-title, .upload-title {
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 6px;
-}
-
-.template-subtitle {
-  color: rgb(var(--v-theme-on-surface-variant));
-  line-height: 1.4;
-}
-
-.file-input :deep(.v-field) {
-  border: 2px dashed rgb(var(--v-theme-outline-variant)) !important;
-  background: rgb(var(--v-theme-surface)) !important;
-  border-radius: 16px;
-  transition: all 0.2s ease-in-out;
-}
-
-.file-input :deep(.v-field:hover) {
-  border-color: rgb(var(--v-theme-success)) !important;
-  background: rgba(var(--v-theme-success), 0.05) !important;
-}
-
-.import-actions {
-  padding: 16px 24px !important;
-  background: rgb(var(--v-theme-surface));
-  border-top: 1px solid rgb(var(--v-theme-outline-variant));
-}
-
-.import-btn {
-  background: rgb(var(--v-theme-success)) !important;
-  color: rgb(var(--v-theme-on-success)) !important;
-  border-radius: 10px;
-  font-weight: 600;
-  text-transform: none;
-}
-
-/* Penyesuaian Tombol Header untuk Dark Mode */
-.v-theme--dark .action-btn {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: white !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Kartu Tabel Data */
+/* Data Table Card */
 .data-table-card {
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgb(var(--v-theme-outline-variant));
   background: rgb(var(--v-theme-surface));
 }
 
-.data-table-card .card-header {
-  padding: 24px 28px;
+.card-header {
+  padding: 20px 24px;
   border-bottom: 1px solid rgb(var(--v-theme-outline-variant));
   display: flex;
   justify-content: space-between;
@@ -1560,13 +1353,81 @@ function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
   background-color: rgba(var(--v-theme-primary), 0.03);
 }
 
-.data-table-card .card-title {
-  font-size: 1.5rem;
+.card-title {
+  font-size: 1.25rem;
   font-weight: 700;
   color: rgb(var(--v-theme-on-surface));
 }
 
-/* Tabel */
+.count-chip {
+  font-size: 0.8rem;
+}
+
+/* Selection Toolbar */
+.selection-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: rgba(var(--v-theme-primary), 0.08);
+  border-bottom: 1px solid rgba(var(--v-theme-primary), 0.15);
+}
+
+/* Mobile Cards Container */
+.mobile-cards-container {
+  padding: 16px;
+}
+
+.mobile-customer-card {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.5);
+}
+
+.mobile-customer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(var(--v-theme-shadow), 0.15);
+}
+
+.mobile-customer-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 2px;
+}
+
+.mobile-customer-email {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Mobile Details */
+.mobile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+  margin-left: 8px;
+  margin-right: 8px;
+  min-width: 70px;
+}
+
+.detail-value {
+  color: rgba(var(--v-theme-on-surface), 0.8);
+  flex: 1;
+}
+
+/* Desktop Table Styles */
 .elegant-table {
   background: transparent !important;
 }
@@ -1594,17 +1455,31 @@ function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
   opacity: 0.7;
 }
 
-.selection-toolbar {
+.action-buttons {
   display: flex;
-  align-items: center;
-  padding: 12px 28px;
-  background-color: rgba(var(--v-theme-primary), 0.08);
-  border-bottom: 1px solid rgba(var(--v-theme-primary), 0.15);
+  gap: 8px;
 }
 
-/* Dialog Form */
+.action-btn-small {
+  min-width: 32px;
+}
+
+/* No Data State */
+.no-data-wrapper {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.no-data-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+  margin-top: 16px;
+}
+
+/* Form Dialog - Mobile Optimized */
 .form-card {
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
   background: rgb(var(--v-theme-background));
   border: 1px solid rgb(var(--v-theme-outline-variant));
@@ -1612,50 +1487,63 @@ function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
 
 .form-header {
   background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
-  padding: 28px 32px;
+  padding: 24px 28px;
   color: rgb(var(--v-theme-on-primary));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-header-content {
+  display: flex;
+  align-items: center;
 }
 
 .form-title {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
+.mobile-close-btn {
+  color: white !important;
+}
+
 .form-content {
-  padding: 36px !important;
+  padding: 28px !important;
   background: rgb(var(--v-theme-background));
 }
 
 .stepper-header, .stepper-content {
   background: rgb(var(--v-theme-surface));
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid rgb(var(--v-theme-outline-variant));
 }
 
 .stepper-header {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   padding: 12px;
 }
 
 .stepper-content {
-  padding: 32px;
+  padding: 24px;
 }
 
 .step-header {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   text-align: center;
 }
 
 .step-title {
   color: rgb(var(--v-theme-on-surface));
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
 }
 
 .step-subtitle {
-  color: rgb(var(--v-theme-on-surface));
-  opacity: 0.7;
-  font-size: 1rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 .input-label {
@@ -1663,63 +1551,612 @@ function showSnackbar(text: string, color: 'success' | 'error' | 'warning') {
   align-items: center;
   font-weight: 600;
   color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
 }
 
 .elegant-input :deep(.v-field) {
-  border-radius: 16px;
+  border-radius: 12px;
   background: rgb(var(--v-theme-background));
 }
 
 .form-actions {
-  padding: 24px 36px !important;
+  padding: 20px 28px !important;
   border-top: 1px solid rgb(var(--v-theme-outline-variant));
   background: rgb(var(--v-theme-surface));
 }
 
-/* Tombol Navigasi Form */
 .nav-btn, .save-btn {
-  border-radius: 14px;
+  border-radius: 12px;
   font-weight: 600;
-  height: 48px;
+  height: 44px;
+  text-transform: none;
 }
 
-/* Dialog Hapus & Import (Disederhanakan) */
+/* Delete Dialog */
 .delete-card, .import-card {
-  border-radius: 20px;
+  border-radius: 16px;
   background: rgb(var(--v-theme-surface));
 }
 
 .delete-header {
   background: rgb(var(--v-theme-error));
   color: rgb(var(--v-theme-on-error));
-  padding: 24px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
 }
 
-.import-header {
-  background: rgb(var(--v-theme-success));
-  color: rgb(var(--v-theme-on-success));
-  padding: 24px;
+.delete-title {
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
-.delete-content, .import-content {
-  padding: 32px !important;
+.delete-content {
+  padding: 28px !important;
+  text-align: center;
 }
 
-.delete-actions, .import-actions {
+.delete-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-text {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.delete-warning {
+  font-size: 0.9rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  font-style: italic;
+}
+
+.customer-name-delete {
+  color: rgb(var(--v-theme-error));
+}
+
+.delete-actions {
   padding: 16px 24px !important;
   border-top: 1px solid rgb(var(--v-theme-outline-variant));
 }
 
-/* Penyesuaian lainnya */
-:deep(.v-snackbar__wrapper) {
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+.cancel-btn, .delete-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
 }
 
+/* Import Dialog */
+.import-header {
+  background: rgb(var(--v-theme-success));
+  color: rgb(var(--v-theme-on-success));
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+}
 
-@media (max-width: 768px) {
-  .header-card, .card-header, .form-content, .stepper-content { padding: 16px; }
-  .header-title { font-size: 1.5rem; }
+.import-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.import-content {
+  padding: 28px !important;
+}
+
+.template-card {
+  border: 2px dashed rgba(var(--v-theme-success), 0.3);
+  background: rgba(var(--v-theme-success), 0.05);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.template-card:hover {
+  border-color: rgb(var(--v-theme-success));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(var(--v-theme-success), 0.15);
+}
+
+.template-title, .upload-title {
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.template-subtitle {
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  line-height: 1.4;
+  font-size: 0.9rem;
+}
+
+.file-input :deep(.v-field) {
+  border: 2px dashed rgb(var(--v-theme-outline-variant)) !important;
+  background: rgb(var(--v-theme-surface)) !important;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.file-input :deep(.v-field:hover) {
+  border-color: rgb(var(--v-theme-success)) !important;
+  background: rgba(var(--v-theme-success), 0.05) !important;
+}
+
+.error-alert {
+  border-radius: 12px;
+}
+
+.error-item {
+  background: rgba(var(--v-theme-error), 0.05);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.import-actions {
+  padding: 16px 24px !important;
+  background: rgb(var(--v-theme-surface));
+  border-top: 1px solid rgb(var(--v-theme-outline-variant));
+}
+
+.import-btn {
+  background: rgb(var(--v-theme-success)) !important;
+  color: rgb(var(--v-theme-on-success)) !important;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.template-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* Snackbar */
+.enhanced-snackbar {
+  border-radius: 12px;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS - FIXED POSITIONING
+   ============================================ */
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+  .header-card {
+    padding: 32px;
+    border-radius: 24px;
+  }
+
+  /* FIXED: Header layout for desktop */
+  .header-card .d-flex.flex-column {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .header-info {
+    flex: 1;
+    margin-right: 24px;
+  }
+  
+  .header-title {
+    font-size: 2.25rem;
+  }
+  
+  .header-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .action-buttons-container {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 16px;
+    width: auto;
+    flex-shrink: 0;
+    align-self: center; /* Center vertically with header info */
+  }
+  
+  .mobile-btn {
+    width: auto;
+    min-width: 140px;
+  }
+  
+  .card-header {
+    padding: 24px 28px;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+  }
+  
+  .form-content {
+    padding: 36px !important;
+  }
+  
+  .stepper-content {
+    padding: 32px;
+  }
+  
+  .step-title {
+    font-size: 1.5rem;
+  }
+  
+  .step-subtitle {
+    font-size: 1rem;
+  }
+  
+  .template-card .d-flex {
+    align-items: center;
+  }
+  
+  .template-btn {
+    width: auto;
+  }
+}
+
+/* Large Desktop (1024px and up) */
+@media (min-width: 1024px) {
+  .filter-card {
+    border-radius: 20px;
+  }
+  
+  .filter-card .d-flex {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .data-table-card {
+    border-radius: 20px;
+  }
+
+  /* Enhanced button sizing for larger screens */
+  .action-buttons-container {
+    gap: 20px;
+  }
+
+  .mobile-btn {
+    min-width: 160px;
+    height: 52px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Specific Adjustments */
+@media (max-width: 767px) {
+  .v-container {
+    padding: 12px !important;
+  }
+
+  /* FIXED: Mobile header remains column layout */
+  .header-card .d-flex.flex-column {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 20px;
+  }
+
+  .header-info {
+    margin-right: 0;
+  }
+  
+  .header-card {
+    margin-bottom: 16px;
+  }
+  
+  .filter-card {
+    margin-bottom: 16px;
+  }
+  
+  .card-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+  }
+  
+  .count-chip {
+    align-self: flex-end;
+  }
+  
+  .selection-toolbar {
+    padding: 12px 20px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .selection-toolbar .v-btn {
+    width: 100%;
+  }
+  
+  .mobile-cards-container {
+    padding: 12px;
+  }
+  
+  .mobile-customer-card {
+    margin-bottom: 12px;
+  }
+  
+  .mobile-customer-card .v-card-text {
+    padding: 16px !important;
+  }
+  
+  .mobile-customer-name {
+    font-size: 1rem;
+  }
+  
+  .detail-row {
+    font-size: 0.8rem;
+  }
+  
+  .detail-label {
+    min-width: 60px;
+    font-size: 0.8rem;
+  }
+  
+  .form-header {
+    padding: 20px 24px;
+  }
+  
+  .form-title {
+    font-size: 1.2rem;
+  }
+  
+  .form-content {
+    padding: 20px !important;
+  }
+  
+  .stepper-content {
+    padding: 20px;
+  }
+  
+  .step-title {
+    font-size: 1.2rem;
+  }
+  
+  .step-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .input-label {
+    font-size: 0.85rem;
+  }
+  
+  .form-actions {
+    padding: 16px 20px !important;
+    flex-wrap: wrap;
+  }
+  
+  .nav-btn, .save-btn {
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  .delete-content, .import-content {
+    padding: 20px !important;
+  }
+  
+  .delete-text {
+    font-size: 0.9rem;
+  }
+  
+  .delete-warning {
+    font-size: 0.8rem;
+  }
+  
+  .template-card .d-flex {
+    text-align: center;
+  }
+  
+  .template-title {
+    font-size: 0.95rem;
+  }
+  
+  .template-subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+/* Extra Small Mobile (480px and below) */
+@media (max-width: 480px) {
+  .header-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  
+  .header-title {
+    font-size: 1.4rem;
+  }
+  
+  .header-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .header-avatar-wrapper {
+    padding: 10px;
+  }
+  
+  .header-avatar {
+    size: 40px;
+  }
+  
+  .mobile-btn {
+    height: 44px;
+    font-size: 0.9rem;
+  }
+  
+  .filter-card, .data-table-card {
+    border-radius: 12px;
+  }
+  
+  .mobile-customer-name {
+    font-size: 0.95rem;
+  }
+  
+  .mobile-customer-email {
+    font-size: 0.8rem;
+  }
+  
+  .detail-row {
+    font-size: 0.75rem;
+  }
+  
+  .detail-label {
+    min-width: 55px;
+  }
+  
+  .no-data-text {
+    font-size: 1rem;
+  }
+  
+  .form-title {
+    font-size: 1.1rem;
+  }
+  
+  .step-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* Dark Theme Adjustments */
+.v-theme--dark .header-card {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.v-theme--dark .filter-card,
+.v-theme--dark .data-table-card,
+.v-theme--dark .form-card,
+.v-theme--dark .delete-card,
+.v-theme--dark .import-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.v-theme--dark .mobile-customer-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.v-theme--dark .mobile-customer-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.v-theme--dark .card-header {
+  background-color: rgba(var(--v-theme-primary), 0.1);
+  border-color: #334155;
+}
+
+.v-theme--dark .selection-toolbar {
+  background-color: rgba(var(--v-theme-primary), 0.15);
+  border-color: rgba(var(--v-theme-primary), 0.3);
+}
+
+.v-theme--dark .stepper-header,
+.v-theme--dark .stepper-content {
+  background: #0f1629;
+  border-color: #334155;
+}
+
+.v-theme--dark .template-card {
+  background: rgba(var(--v-theme-success), 0.1);
+  border-color: rgba(var(--v-theme-success), 0.3);
+}
+
+.v-theme--dark .error-item {
+  background: rgba(var(--v-theme-error), 0.1);
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Focus States */
+.mobile-customer-card:focus-within {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: 2px;
+}
+
+.action-btn:focus-visible,
+.primary-btn:focus-visible,
+.mobile-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.mobile-customer-card.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Animation Classes */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-up-enter-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-up-enter-from {
+  transform: translateY(20px);
+}
+
+/* Print Styles */
+@media print {
+  .header-card,
+  .filter-card,
+  .v-btn,
+  .selection-toolbar {
+    display: none !important;
+  }
+  
+  .mobile-customer-card {
+    break-inside: avoid;
+    border: 1px solid #000;
+    margin-bottom: 16px;
+  }
+  
+  .mobile-customer-name {
+    color: #000 !important;
+  }
+  
+  .detail-value {
+    color: #000 !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .mobile-customer-card {
+    border: 2px solid;
+  }
+  
+  .detail-label {
+    font-weight: 700;
+  }
+  
+  .mobile-customer-name {
+    font-weight: 800;
+  }
 }
 </style>

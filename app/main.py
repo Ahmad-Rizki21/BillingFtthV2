@@ -43,6 +43,7 @@ origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "tauri://localhost"
+    # "http://tauri.localhost" 
 ]
 
 app.add_middleware(

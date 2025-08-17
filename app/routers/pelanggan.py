@@ -120,6 +120,17 @@ async def read_all_pelanggan(
     return pelanggan_list
 
 
+# ========== SEARCH OTOMATIS PAKET SESUAI =============#
+@router.get("/{pelanggan_id}", response_model=PelangganSchema)
+async def read_pelanggan_by_id(pelanggan_id: int, db: AsyncSession = Depends(get_db)):
+    """
+    Mengambil satu data pelanggan spesifik berdasarkan ID-nya.
+    """
+    db_pelanggan = await db.get(PelangganModel, pelanggan_id)
+    if not db_pelanggan:
+        raise HTTPException(status_code=404, detail="Pelanggan tidak ditemukan")
+    return db_pelanggan
+
 @router.patch("/{pelanggan_id}", response_model=PelangganSchema)
 async def update_pelanggan(
     pelanggan_id: int,

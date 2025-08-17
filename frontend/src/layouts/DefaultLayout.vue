@@ -2,30 +2,39 @@
   <v-app class="modern-app">
     <v-navigation-drawer
       v-model="drawer"
-      :rail="rail"
-      permanent
+      :rail="rail && !isMobile"
+      :temporary="isMobile"
+      :permanent="!isMobile"
       class="modern-drawer"
-      width="280"
+      :width="isMobile ? '280' : '280'"
     >
-      <v-list-item class="sidebar-header" :class="{'px-0': rail}" :ripple="false">
+      <v-list-item class="sidebar-header" :class="{'px-0': rail && !isMobile}" :ripple="false">
         <div class="header-flex-container">
-          <img v-if="!rail" :src="logoSrc" alt="Jelantik Logo" class="sidebar-logo-full"/>
+          <img v-if="!rail || isMobile" :src="logoSrc" alt="Jelantik Logo" class="sidebar-logo-full"/>
           
-          <v-icon v-if="rail" color="primary" size="large">mdi-alpha-j</v-icon>
+          <v-icon v-if="rail && !isMobile" color="primary" size="large">mdi-alpha-j</v-icon>
 
-          <div v-if="!rail" class="sidebar-title-wrapper">
+          <div v-if="!rail || isMobile" class="sidebar-title-wrapper">
             <h1 class="sidebar-title">Artacom Ftth</h1>
             <span class="sidebar-subtitle">BILLING SYSTEM V2.0</span>
           </div>
 
-          <v-spacer v-if="!rail"></v-spacer>
+          <v-spacer v-if="!rail || isMobile"></v-spacer>
 
           <v-btn
-            v-if="!rail"
+            v-if="!isMobile"
             icon="mdi-chevron-left"
             variant="text"
             size="small"
             @click.stop="rail = !rail"
+          ></v-btn>
+          
+          <v-btn
+            v-if="isMobile"
+            icon="mdi-close"
+            variant="text"
+            size="small"
+            @click.stop="drawer = false"
           ></v-btn>
         </div>
       </v-list-item>
@@ -35,17 +44,56 @@
       <div class="navigation-wrapper">
         <v-list nav class="navigation-menu">
           <template v-for="group in filteredMenuGroups" :key="group.title">
-            <v-list-subheader v-if="!rail" class="menu-subheader">{{ group.title }}</v-list-subheader>
+            <v-list-subheader v-if="!rail || isMobile" class="menu-subheader">{{ group.title }}</v-list-subheader>
             <v-list-item
-              v-for="item in group.items"
-              :key="item.title"
-              :prepend-icon="item.icon"
-              :title="item.title"
-              :value="item.value"
-              :to="item.to"
-              class="nav-item"
-              :active-class="'v-list-item--active'"
-            >
+                v-for="item in group.items"
+                :key="item.title"
+                :prepend-icon="item.icon"
+                :title="item.title"
+                :value="item.value"
+                :to="item.to"
+                class="nav-item"
+              >
+                <template v-slot:append>
+                  <v-tooltip location="end">
+                    <template v-slot:activator="{ props }">
+                      <v-badge
+                        v-if="item.value === 'langganan' && suspendedCount > 0"
+                        color="error"
+                        :content="suspendedCount"
+                        inline
+                        v-bind="props"
+                      ></v-badge>
+                    </template>
+                    <span>{{ suspendedCount }} langganan berstatus "Suspended"</span>
+                  </v-tooltip>
+
+                  <v-tooltip location="end">
+                    <template v-slot:activator="{ props }">
+                      <v-badge
+                        v-if="item.value === 'langganan' && stoppedCount > 0"
+                        :content="stoppedCount"
+                        inline
+                        v-bind="props"
+                        class="ml-2"
+                      ></v-badge>
+                    </template>
+                    <span>{{ stoppedCount }} langganan telah berhenti</span>
+                  </v-tooltip>
+                  
+                  <v-tooltip location="end">
+                    <template v-slot:activator="{ props }">
+                      <v-badge
+                        v-if="item.value === 'invoices' && unpaidInvoiceCount > 0"
+                        color="warning"
+                        :content="unpaidInvoiceCount"
+                        inline
+                        v-bind="props"
+                      ></v-badge>
+                    </template>
+                    <span>{{ unpaidInvoiceCount }} invoice belum dibayar</span>
+                  </v-tooltip>
+                </template>
               </v-list-item>
           </template>
         </v-list>
@@ -54,15 +102,15 @@
       <template v-slot:append>
         <div class="logout-section pa-4">
           <v-btn
-            :block="!rail"
+            :block="!rail || isMobile"
             variant="tonal"
             color="grey-darken-1"
             class="logout-btn"
-            :icon="rail"
+            :icon="rail && !isMobile"
             @click="handleLogout"
           >
-            <v-icon v-if="rail">mdi-logout</v-icon>
-            <span v-if="!rail" class="d-flex align-center"><v-icon left>mdi-logout</v-icon>Logout</span>
+            <v-icon v-if="rail && !isMobile">mdi-logout</v-icon>
+            <span v-if="!rail || isMobile" class="d-flex align-center"><v-icon left>mdi-logout</v-icon>Logout</span>
           </v-btn>
         </div>
       </template>
@@ -72,7 +120,7 @@
       <v-btn
         icon="mdi-menu"
         variant="text"
-        @click.stop="rail = !rail"
+        @click.stop="toggleDrawer"
       ></v-btn>
       <v-spacer></v-spacer>
       
@@ -88,7 +136,7 @@
             </v-badge>
           </v-btn>
         </template>
-        <v-list class="pa-0" width="300">
+        <v-list class="pa-0" :width="isMobile ? '90vw' : '300'">
           <v-list-item class="font-weight-bold bg-grey-lighten-4">
               Notifikasi
               <template v-slot:append v-if="notifications.length > 0">
@@ -133,8 +181,8 @@
       <router-view></router-view>
     </v-main>
     
-    <v-footer app height="69px" class="d-flex align-center justify-center text-medium-emphasis" style="border-top: 1px solid rgba(0,0,0,0.08);">
-      <div>
+    <v-footer app height="69px" class="d-flex align-center justify-center text-medium-emphasis footer-responsive" style="border-top: 1px solid rgba(0,0,0,0.08);">
+      <div class="footer-content">
         &copy; {{ new Date().getFullYear() }} <strong>Artacom Billing System</strong>. All Rights Design Reserved by 
         <a 
           href="https://www.instagram.com/amad.dyk/" 
@@ -156,22 +204,49 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import logoLight from '@/assets/images/Jelantik-Light.webp';
 import logoDark from '@/assets/images/Jelantik-Dark.webp';
 import { useTheme } from 'vuetify';
+import { useDisplay } from 'vuetify';
 import apiClient from '@/services/api';
 import { useAuthStore } from '@/stores/auth';
 
 // --- State ---
 const theme = useTheme();
+const { mobile } = useDisplay();
 const drawer = ref(true);
 const rail = ref(false);
 const router = useRouter();
 const notifications = ref<any[]>([]);
 const suspendedCount = ref(0);
+const unpaidInvoiceCount = ref(0);
+const stoppedCount = ref(0);
 const userCount = ref(0);
 const roleCount = ref(0);
 const userPermissions = ref<string[]>([]);
 const authStore = useAuthStore();
 let socket: WebSocket | null = null;
 let reconnectInterval: NodeJS.Timeout | null = null;
+
+// Computed untuk mobile detection
+const isMobile = computed(() => mobile.value);
+
+// Toggle drawer function untuk mobile/desktop
+function toggleDrawer() {
+  if (isMobile.value) {
+    drawer.value = !drawer.value;
+  } else {
+    rail.value = !rail.value;
+  }
+}
+
+async function fetchSidebarBadges() {
+  try {
+    const response = await apiClient.get('/dashboard/sidebar-badges');
+    suspendedCount.value = response.data.suspended_count;
+    unpaidInvoiceCount.value = response.data.unpaid_invoice_count;
+    stoppedCount.value = response.data.stopped_count; // <-- Ambil data baru
+  } catch (error) {
+    console.error("Gagal mengambil data badge sidebar:", error);
+  }
+}
 
 // --- Fungsi WebSocket yang Diperbaiki ---
 function connectWebSocket() {
@@ -305,6 +380,12 @@ onMounted(async () => {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) theme.global.name.value = savedTheme;
 
+  // Set drawer behavior based on screen size
+  if (isMobile.value) {
+    drawer.value = false;
+    rail.value = false;
+  }
+
   const enableAudioContext = () => {
     // Fungsi ini akan dijalankan sekali saat user mengklik
     // dan setelah itu listener-nya akan dihapus.
@@ -324,7 +405,8 @@ onMounted(async () => {
     }
     fetchRoleCount();
     fetchUserCount();
-    fetchSuspendedCount();
+    // fetchSuspendedCount();
+    fetchSidebarBadges();
     connectWebSocket(); // Memulai WebSocket setelah user terverifikasi
   }
 });
@@ -360,14 +442,14 @@ function getNotificationLink(notification: any) {
   return undefined;
 }
 
-async function fetchSuspendedCount() {
-  try {
-    const response = await apiClient.get('/langganan?status=Ditangguhkan');
-    suspendedCount.value = response.data.length;
-  } catch (error) {
-    console.error("Gagal mengambil jumlah langganan yang ditangguhkan:", error);
-  }
-}
+// async function fetchSuspendedCount() {
+//   try {
+//     const response = await apiClient.get('/langganan?status=Ditangguhkan');
+//     suspendedCount.value = response.data.length;
+//   } catch (error) {
+//     console.error("Gagal mengambil jumlah langganan yang ditangguhkan:", error);
+//   }
+// }
 
 async function fetchRoleCount() {
   try {
@@ -601,6 +683,17 @@ function handleLogout() {
   transition: background-color 0.3s ease;
 }
 
+/* Footer responsive */
+.footer-responsive {
+  padding: 0 1rem;
+}
+
+.footer-content {
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
 /* DARK THEME SPECIFIC STYLES */
 .v-theme--dark .modern-app {
   background-color: #0f172a;
@@ -633,11 +726,15 @@ function handleLogout() {
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .modern-drawer {
-    width: 260px !important;
+    width: 280px !important;
   }
   
   .sidebar-title {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+  }
+  
+  .sidebar-subtitle {
+    font-size: 0.7rem;
   }
   
   .nav-item {
@@ -645,13 +742,72 @@ function handleLogout() {
   }
   
   .nav-item .v-list-item-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+  }
+  
+  .menu-subheader {
+    font-size: 0.68rem;
+  }
+  
+  .footer-content {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
   .modern-drawer {
+    width: 260px !important;
+  }
+  
+  .sidebar-logo-full {
+    height: 40px;
+  }
+  
+  .sidebar-title {
+    font-size: 1.1rem;
+  }
+  
+  .sidebar-subtitle {
+    font-size: 0.65rem;
+  }
+  
+  .nav-item .v-list-item-title {
+    font-size: 0.85rem;
+  }
+  
+  .menu-subheader {
+    font-size: 0.65rem;
+  }
+  
+  .footer-content {
+    font-size: 0.75rem;
+    padding: 0.5rem 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .modern-drawer {
     width: 240px !important;
+  }
+  
+  .sidebar-logo-full {
+    height: 35px;
+  }
+  
+  .sidebar-title {
+    font-size: 1rem;
+  }
+  
+  .sidebar-subtitle {
+    font-size: 0.6rem;
+  }
+  
+  .nav-item .v-list-item-title {
+    font-size: 0.8rem;
+  }
+  
+  .footer-content {
+    font-size: 0.7rem;
   }
 }
 </style>

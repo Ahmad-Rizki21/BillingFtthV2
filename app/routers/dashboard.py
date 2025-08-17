@@ -6,6 +6,9 @@ from datetime import datetime, timedelta
 import asyncio
 from pydantic import BaseModel
 
+from ..models.langganan import Langganan as LanggananModel
+from ..models.invoice import Invoice as InvoiceModel
+
 from ..database import get_db
 from ..schemas.dashboard import DashboardData, StatCard, ChartData, InvoiceSummary
 from ..models import Pelanggan, Langganan, Invoice, PaketLayanan, HargaLayanan, MikrotikServer
@@ -138,3 +141,35 @@ async def get_mikrotik_status(db: AsyncSession = Depends(get_db)):
     offline_servers = total_servers - online_servers
     
     return MikrotikStatus(online=online_servers, offline=offline_servers)
+
+# Skema untuk respons data badge
+class SidebarBadgeResponse(BaseModel):
+    suspended_count: int
+    unpaid_invoice_count: int
+    stopped_count: int
+
+@router.get("/sidebar-badges", response_model=SidebarBadgeResponse)
+async def get_sidebar_badges(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint untuk mengambil data angka yang akan ditampilkan sebagai badge di sidebar.
+    """
+    # Hitung jumlah langganan yang statusnya "Suspended"
+    suspended_query = select(func.count(LanggananModel.id)).where(LanggananModel.status == "Suspended")
+    suspended_result = await db.execute(suspended_query)
+    suspended_count = suspended_result.scalar_one_or_none() or 0
+
+    # Hitung jumlah invoice yang statusnya "Belum Dibayar"
+    unpaid_query = select(func.count(InvoiceModel.id)).where(InvoiceModel.status_invoice == "Belum Dibayar")
+    unpaid_result = await db.execute(unpaid_query)
+    unpaid_count = unpaid_result.scalar_one_or_none() or 0
+
+    stopped_query = select(func.count(LanggananModel.id)).where(LanggananModel.status == "Berhenti")
+    stopped_result = await db.execute(stopped_query)
+    stopped_count = stopped_result.scalar_one_or_none() or 0
+
+    return SidebarBadgeResponse(
+        suspended_count=suspended_count,
+        unpaid_invoice_count=unpaid_count,
+        stopped_count=stopped_count
+    )
+# ============================================
