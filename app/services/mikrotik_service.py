@@ -178,3 +178,16 @@ async def trigger_mikrotik_create(db: AsyncSession, data_teknis: DataTeknisModel
         if connection:
             logger.info("Menutup koneksi Mikrotik.")
             connection.disconnect()
+
+def get_all_ppp_profiles(api):
+    """Mengambil semua nama PPPoE Profile dari Mikrotik."""
+    try:
+        ppp_profiles = api.get_resource('/ppp/profile')
+        profiles = ppp_profiles.get()
+        # Ekstrak hanya kolom 'name' dari setiap profile
+        profile_names = [p['name'] for p in profiles]
+        logger.info(f"Ditemukan {len(profile_names)} profile di Mikrotik.")
+        return profile_names
+    except Exception as e:
+        logger.error(f"Gagal mengambil daftar PPPoE profile: {e}")
+        raise e

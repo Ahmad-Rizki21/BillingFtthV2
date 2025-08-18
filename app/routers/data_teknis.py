@@ -21,6 +21,7 @@ from typing import Optional
 from ..models.pelanggan import Pelanggan as PelangganModel 
 from ..database import AsyncSessionLocal
 from ..models.mikrotik_server import MikrotikServer as MikrotikServerModel
+from ..models.paket_layanan import PaketLayanan as PaketLayananModel
 
 from ..services import mikrotik_service
 
@@ -360,3 +361,72 @@ async def import_from_csv_teknis(file: UploadFile = File(...), db: AsyncSession 
 # ==========================================================
 # FUNGSI DOWNLOAD DAN IMPORT, EXPORT CSV FILE
 # ==========================================================
+
+
+
+@router.get("/available-profiles/{paket_layanan_id}", response_model=List[str])
+async def get_available_profiles(paket_layanan_id: int, db: AsyncSession = Depends(get_db)):
+    """
+    Menyediakan daftar PPPoE profile yang tersedia (kurang dari 5 pengguna)
+    berdasarkan paket layanan yang dipilih.
+    """
+    # 1. Dapatkan info paket untuk mengetahui kecepatan
+    paket = await db.get(PaketLayananModel, paket_layanan_id)
+    if not paket:
+        raise HTTPException(status_code=404, detail="Paket Layanan tidak ditemukan")
+    
+    # Asumsi kecepatan ada di nama paket, e.g., "Internet 30 Mbps" -> "30Mbps"
+    # Anda mungkin perlu menyesuaikan logika ini jika format nama paket berbeda
+    kecepatan_str = f"{paket.kecepatan}Mbps"
+
+    # 2. Ambil SEMUA server Mikrotik yang aktif
+    server_result = await db.execute(select(MikrotikServerModel).where(MikrotikServerModel.is_active == True))
+    servers = server_result.scalars().all()
+    if not servers:
+        raise HTTPException(status_code=404, detail="Tidak ada server Mikrotik aktif")
+        
+    # Untuk saat ini kita asumsikan semua profile ada di server pertama,
+    # atau Anda bisa sesuaikan logikanya untuk loop semua server.
+    server_to_check = servers[0]
+    
+    api, connection = mikrotik_service.get_api_connection(server_to_check)
+    if not api:
+        raise HTTPException(status_code=503, detail=f"Tidak dapat terhubung ke server Mikrotik {server_to_check.name}")
+
+    try:
+        # 3. Ambil semua profile dari Mikrotik
+        all_profiles = mikrotik_service.get_all_ppp_profiles(api)
+        
+        # Saring profile yang relevan berdasarkan kecepatan
+        relevant_profiles = [p for p in all_profiles if kecepatan_str in p]
+        
+        if not relevant_profiles:
+            return [] # Tidak ada profile yang cocok
+
+        # 4. Hitung penggunaan setiap profile dari database
+        usage_query = select(
+            DataTeknisModel.profile_pppoe, 
+            func.count(DataTeknisModel.id)
+        ).where(
+            DataTeknisModel.profile_pppoe.in_(relevant_profiles)
+        ).group_by(
+            DataTeknisModel.profile_pppoe
+        )
+        
+        usage_result = await db.execute(usage_query)
+        profile_usage = {profile: count for profile, count in usage_result.all()}
+
+        # 5. Saring profile yang penggunanya masih di bawah 5
+        available_profiles = []
+        for profile in relevant_profiles:
+            if profile_usage.get(profile, 0) < 5:
+                available_profiles.append(profile)
+        
+        # Urutkan secara alfabetis agar lebih rapi (misal: 10Mbps-a, 10Mbps-b, dst.)
+        available_profiles.sort()
+        
+        return available_profiles
+
+    finally:
+        if connection:
+            connection.disconnect()

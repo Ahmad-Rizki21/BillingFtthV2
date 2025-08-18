@@ -29,6 +29,7 @@ from app.models.pelanggan import Pelanggan
 from app.models.role import Role, role_has_permissions
 from app.models.permission import Permission
 from app.models.user import User
+from app.models.sk import SK
 
 # ====================================================================
 

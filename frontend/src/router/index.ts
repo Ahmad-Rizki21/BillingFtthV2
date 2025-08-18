@@ -68,6 +68,17 @@ const router = createRouter({
           name: 'permissions',
           component: () => import('../views/PermissionsView.vue')
         },
+        {
+          path: 'syarat-ketentuan',
+          name: 'syarat-ketentuan',
+          component: () => import('../views/SKView.vue')
+        },
+        {
+          path: 'management/sk',
+          name: 'sk-management',
+          component: () => import('../views/SKManagementView.vue'),
+          meta: { permission: 'manage_sk' } // Lindungi dengan permission
+        },
       ],
     },
 

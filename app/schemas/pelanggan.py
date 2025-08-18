@@ -190,6 +190,14 @@ class PelangganCreate(BaseModel):
 class Pelanggan(PelangganCreate):
     id: int
 
+class PelangganInLangganan(BaseModel):
+    id: int
+    nama: str
+    alamat: str
+
+    class Config:
+        from_attributes = True
+
 # Skema untuk pembaruan parsial (semua field opsional)
 class PelangganUpdate(BaseModel):
     no_ktp: Optional[str] = None

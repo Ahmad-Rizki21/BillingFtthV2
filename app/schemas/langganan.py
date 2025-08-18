@@ -2,6 +2,9 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import date
 from .paket_layanan import PaketLayanan
+
+from .pelanggan import PelangganInLangganan 
+
 class LanggananBase(BaseModel):
     id: int
     pelanggan_id: int
@@ -44,3 +47,13 @@ class LanggananImport(BaseModel):
     status: str = 'Aktif'
     metode_pembayaran: str = 'Otomatis'
     tgl_jatuh_tempo: Optional[date] = None
+
+class Langganan(LanggananBase):
+    id: int
+    paket_layanan: PaketLayanan
+    
+    # UBAH baris ini
+    pelanggan: PelangganInLangganan
+
+    class Config:
+        from_attributes = True

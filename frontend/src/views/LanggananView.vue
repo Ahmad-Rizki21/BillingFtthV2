@@ -196,6 +196,12 @@
             <div class="text-caption text-medium-emphasis">ID: {{ item.pelanggan_id }}</div>
           </template>
 
+          <template v-slot:item.pelanggan.alamat="{ item }: { item: Langganan }">
+            <div class="text-caption" style="max-width: 200px; white-space: normal;">
+              {{ item.pelanggan.alamat }}
+            </div>
+          </template>
+
           <template v-slot:item.paket_layanan_id="{ item }: { item: Langganan }">
             <div class="font-weight-medium">{{ getPaketName(item.paket_layanan_id) }}</div>
           </template>
@@ -584,6 +590,7 @@ interface Langganan {
   pelanggan_id: number;
   paket_layanan_id: number;
   status: string;
+  pelanggan: PelangganData;
   tgl_jatuh_tempo: string | null;
   tgl_invoice_terakhir: string | null;
   metode_pembayaran: string;
@@ -591,6 +598,11 @@ interface Langganan {
   tgl_mulai_langganan?: string | null; 
 }
 
+interface PelangganData {
+  id: number;
+  nama: string;
+  alamat: string;
+}
 
 interface PelangganSelectItem {
   id: number;
@@ -673,14 +685,17 @@ const rules = {
 
 // --- Headers ---
 const headers = [
-  { title: 'No', key: 'nomor', sortable: false, width: '10px' }, 
-  { title: 'Nama Pelanggan', key: 'pelanggan_id', sortable: true, width: '20%' },
-  { title: 'Paket Layanan', key: 'paket_layanan_id' },
-  { title: 'Metode Bayar', key: 'metode_pembayaran', align: 'center' },
-  { title: 'Harga', key: 'harga_awal', align: 'end' },
-  { title: 'Status', key: 'status', align: 'center' },
-  { title: 'Jatuh Tempo', key: 'tgl_jatuh_tempo', align: 'center' },
-  { title: 'Actions', key: 'actions', sortable: false, align: 'center', width: '180px' },
+  { title: 'No', key: 'nomor', sortable: false, width: '5%' }, // Beri lebar sangat kecil
+  // ATUR LEBAR NAMA DAN ALAMAT SECARA EKSPLISIT
+  { title: 'Nama Pelanggan', key: 'pelanggan.nama', sortable: true, width: '15%' }, 
+  { title: 'Alamat', key: 'pelanggan.alamat', sortable: false, width: '15%' },
+  // Beri juga lebar pada kolom lain agar lebih seimbang
+  { title: 'Paket Layanan', key: 'paket_layanan_id', width: '15%' },
+  { title: 'Metode Bayar', key: 'metode_pembayaran', align: 'center', width: '15%' },
+  { title: 'Harga', key: 'harga_awal', align: 'end', width: '7%' },
+  { title: 'Status', key: 'status', align: 'center', width: '20%' },
+  { title: 'Jatuh Tempo', key: 'tgl_jatuh_tempo', align: 'center', width: '20%' },
+  { title: 'Actions', key: 'actions', sortable: false, align: 'center', width: '20%' },
 ] as const;
 
 // --- Computed Properties ---
@@ -1271,6 +1286,13 @@ async function importFromCsv() {
 
 .filter-card:hover::before {
   opacity: 1;
+}
+
+
+.v-data-table :deep(td),
+.v-data-table :deep(th) {
+  /* Kurangi padding horizontal dari default 16px menjadi 8px */
+  padding: 0 8px !important; 
 }
 
 /* ============================================

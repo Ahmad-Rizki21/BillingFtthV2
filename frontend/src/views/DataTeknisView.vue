@@ -504,12 +504,15 @@
                       <v-text-field v-model="editedItem.ip_pelanggan" label="IP Pelanggan" variant="outlined"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6">
-                      <v-combobox
+                      <v-select
                         v-model="editedItem.profile_pppoe"
-                        :items="pppoeProfiles"
+                        :items="availablePppoeProfiles"
+                        :loading="profilesLoading"
                         label="Profile PPPoE"
                         variant="outlined"
-                      ></v-combobox>
+                        placeholder="Pilih profile yang tersedia..."
+                        no-data-text="Tidak ada profile tersedia untuk paket ini"
+                      ></v-select>
                     </v-col>
                     <v-col cols="12" sm="6">
                       <v-text-field v-model="editedItem.id_vlan" label="ID VLAN" variant="outlined"></v-text-field>
@@ -536,10 +539,10 @@
                     <v-col cols="12" sm="6">
                       <v-text-field v-model="editedItem.olt_custom" label="OLT Custom (Opsional)" variant="outlined"></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.pon" label="PON" type="number" variant="outlined"></v-text-field></v-col>
-                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.otb" label="OTB" type="number" variant="outlined"></v-text-field></v-col>
-                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.odc" label="ODC" type="number" variant="outlined"></v-text-field></v-col>
-                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.odp" label="ODP" type="number" variant="outlined"></v-text-field></v-col>
+                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.pon" label="PON" type="number" variant="outlined" :readonly="isNocUser"></v-text-field></v-col>
+                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.otb" label="OTB" type="number" variant="outlined" :readonly="isNocUser"></v-text-field></v-col>
+                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.odc" label="ODC" type="number" variant="outlined" :readonly="isNocUser"></v-text-field></v-col>
+                    <v-col cols="12" sm="3"><v-text-field v-model.number="editedItem.odp" label="ODP" type="number" variant="outlined" :readonly="isNocUser"></v-text-field></v-col>
                   </v-row>
                 </div>
               </v-stepper-window-item>
@@ -666,6 +669,7 @@
 import { ref, onMounted, computed, watch } from 'vue';
 import apiClient from '@/services/api';
 import { debounce } from 'lodash-es';
+import { useAuthStore } from '@/stores/auth';
 
 // --- Interfaces ---
 interface DataTeknis {
@@ -698,6 +702,11 @@ interface MikrotikServer {
   name: string;
 }
 
+interface PaketLayananSelectItem {
+  id: number;
+  nama_paket: string;
+}
+
 // --- State ---
 const dataTeknisList = ref<DataTeknis[]>([]);
 const pelangganList = ref<Pelanggan[]>([]);
@@ -712,6 +721,9 @@ const editedItem = ref<Partial<DataTeknis>>({});
 const itemToDeleteId = ref<number | null>(null);
 const searchQuery = ref('');
 const mikrotikServers = ref<MikrotikServer[]>([]);
+const availablePppoeProfiles = ref<string[]>([]);
+const profilesLoading = ref(false);
+const paketLayananSelectList = ref<PaketLayananSelectItem[]>([]);
 
 const selectedDataTeknis = ref<DataTeknis[]>([]);
 const dialogBulkDelete = ref(false);
@@ -723,6 +735,7 @@ const snackbar = ref({ show: false, text: '', color: 'success' });
 const importErrors = ref<string[]>([]);
 const selectedOlt = ref<string | null>(null);
 
+const authStore = useAuthStore();
 
 // Ref untuk komponen file input
 const fileInputComponent = ref<any>(null);
@@ -765,18 +778,35 @@ const headers = [
   { title: 'Actions', key: 'actions', sortable: false, align: 'center' as const },
 ];
 
-const pppoeProfiles = (() => {
-  const speeds = ['10Mbps', '20Mbps', '30Mbps', '50Mbps'];
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  const profiles: string[] = [];
+// const pppoeProfiles = (() => {
+//   const speeds = ['10Mbps', '20Mbps', '30Mbps', '50Mbps'];
+//   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+//   const profiles: string[] = [];
 
-  for (const speed of speeds) {
-    for (const letter of alphabet) {
-      profiles.push(`${speed}-${letter}`);
+//   for (const speed of speeds) {
+//     for (const letter of alphabet) {
+//       profiles.push(`${speed}-${letter}`);
+//     }
+//   }
+//   return profiles;
+// })();
+
+
+const isNocUser = computed(() => {
+  if (authStore.user && authStore.user.role) {
+    const role = authStore.user.role;
+    // Cek dulu apakah 'role' adalah objek dan memiliki properti 'name'
+    if (typeof role === 'object' && role !== null && 'name' in role) {
+      // Jika ya, baru akses .name
+      return role.name.toLowerCase() === 'noc';
+    }
+    // Jika 'role' adalah string, lakukan perbandingan langsung
+    if (typeof role === 'string') {
+      return role.toLowerCase() === 'noc';
     }
   }
-  return profiles;
-})();
+  return false;
+});
 
 
 function handleOltSelection(serverId: number) {
@@ -792,6 +822,7 @@ onMounted(() => {
   fetchDataTeknis();
   fetchPelanggan();
   fetchMikrotikServers();
+  fetchPaketLayananForSelect();
 });
 
 async function fetchDataTeknis() {
@@ -1065,6 +1096,64 @@ function showSnackbar(text: string, color: string) {
   snackbar.value.color = color;
   snackbar.value.show = true;
 }
+
+watch(() => editedItem.value.pelanggan_id, async (newPelangganId) => {
+  // Reset pilihan profile setiap kali pelanggan diganti
+  editedItem.value.profile_pppoe = undefined;
+  availablePppoeProfiles.value = [];
+  
+  if (!newPelangganId) return;
+
+  try {
+    // 1. Ambil detail pelanggan yang dipilih (termasuk 'layanan')
+    const pelangganResponse = await apiClient.get(`/pelanggan/${newPelangganId}`);
+    const pelangganDetail = pelangganResponse.data;
+
+    if (pelangganDetail && pelangganDetail.layanan) {
+      // 2. Cari ID paket yang namanya cocok dengan 'layanan' pelanggan
+      const paketTerkait = paketLayananSelectList.value.find(
+        (p: PaketLayananSelectItem) => p.nama_paket === pelangganDetail.layanan
+      );
+
+      if (paketTerkait) {
+        // 3. Jika paket ditemukan, panggil fungsi untuk mengambil profile yang tersedia
+        await fetchAvailableProfiles(paketTerkait.id);
+      }
+    }
+  } catch (error) {
+    console.error("Gagal mengambil data detail pelanggan:", error);
+  }
+});
+
+
+async function fetchPaketLayananForSelect() {
+  try {
+    // Asumsi endpoint ini mengembalikan semua paket layanan
+    const response = await apiClient.get<PaketLayananSelectItem[]>('/paket_layanan/');
+    paketLayananSelectList.value = response.data;
+  } catch (error) {
+    console.error("Gagal mengambil data paket layanan:", error);
+  }
+}
+
+
+async function fetchAvailableProfiles(paketLayananId: number) {
+  if (!paketLayananId) {
+    availablePppoeProfiles.value = [];
+    return;
+  }
+  profilesLoading.value = true;
+  try {
+    const response = await apiClient.get(`/data_teknis/available-profiles/${paketLayananId}`);
+    availablePppoeProfiles.value = response.data;
+  } catch (error) {
+    console.error("Gagal mengambil profile PPPoE yang tersedia:", error);
+    availablePppoeProfiles.value = [];
+  } finally {
+    profilesLoading.value = false;
+  }
+}
+
 </script>
 
 <style scoped>

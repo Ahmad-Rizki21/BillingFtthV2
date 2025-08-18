@@ -1,0 +1,1004 @@
+2025-07-18 22:18:01 | ROUTERS.INVOICE      | [91mERROR   [0m | Unexpected error processing Xendit callback: Could not determine join condition between parent/child tables on relationship HargaLayanan.pelanggan - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2025-07-18 22:33:33 | ROUTERS.INVOICE      | [91mERROR   [0m | Unexpected error processing Xendit callback: Could not determine join condition between parent/child tables on relationship HargaLayanan.paket_layanan - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2025-07-18 22:49:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (pymysql.err.IntegrityError) (1048, "Column 'status_invoice' cannot be null")
+[SQL: INSERT INTO invoices (invoice_number, pelanggan_id, id_pelanggan, brand, total_harga, no_telp, email, tgl_invoice, tgl_jatuh_tempo, status_invoice, payment_link, expiry_date, xendit_id, xendit_external_id, paid_amount, paid_at, is_processing, deleted_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('INV-20250718-78EACF', 1, 'ART-001', 'Jakinet', 388500.0, '08986937819', 'budi@test.com', datetime.date(2025, 7, 18), datetime.date(2025, 7, 23), None, None, None, None, None, None, None, 0, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+2025-07-18 23:48:52 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-18 23:49:52 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-18 23:50:51 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-18 23:53:31 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-18 23:54:30 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:00:16 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:01:15 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:02:15 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:03:35 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:04:35 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:05:35 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:07:04 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:08:03 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:09:03 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:10:03 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:11:03 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:12:03 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:13:48 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:14:48 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:15:48 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat mengambil data dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["statuses"],"location":"query","messages":["\"statuses\" must be an array"],"types":["array.base"]}]}
+2025-07-19 00:18:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
+2025-07-19 00:19:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
+2025-07-19 00:20:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
+2025-07-19 00:21:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
+2025-07-19 00:22:15 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_verify_payments' failed. 'list' object has no attribute 'get'
+2025-07-20 16:38:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-20 16:41:29 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-20 17:53:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:53:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:54:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:54:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:55:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:55:16 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:57:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:57:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:58:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:58:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:59:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 17:59:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:00:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:00:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:01:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:01:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:02:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:02:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:03:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:03:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:04:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:04:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:05:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:05:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:06:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:06:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:07:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:07:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:08:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:08:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:09:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:09:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:10:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:10:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:11:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:11:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:12:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:12:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:13:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:13:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:14:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:14:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:15:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:15:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:16:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:16:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:17:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:17:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:18:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:18:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:19:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:19:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:20:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:20:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:21:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:21:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:22:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:22:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:23:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:23:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:24:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:24:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:25:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:25:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:26:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:26:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:27:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:27:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:28:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:28:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:29:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:29:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:30:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:30:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:31:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:31:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:32:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:32:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:33:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:33:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:34:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:34:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:35:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:35:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:36:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:36:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:37:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:37:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:38:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:38:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:39:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_generate_invoices' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo = %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 25), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-20 18:39:10 | JOBS                 | [91mERROR   [0m | [FAIL] Scheduler 'job_suspend_services' failed. (pymysql.err.OperationalError) (1054, "Unknown column 'langganan.metode_pembayaran' in 'field list'")
+[SQL: SELECT langganan.id, langganan.pelanggan_id, langganan.paket_layanan_id, langganan.tgl_jatuh_tempo, langganan.tgl_invoice_terakhir, langganan.metode_pembayaran, langganan.harga_awal, langganan.status, langganan.created_at, langganan.updated_at 
+FROM langganan 
+WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
+[parameters: (datetime.date(2025, 7, 20), 'Aktif')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-21 19:00:07 | ROUTERS.INVOICE      | [91mERROR   [0m | Unexpected error processing Xendit callback: Object of type Decimal is not JSON serializable
+2025-07-21 19:46:34 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:49:12 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:52:37 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:56:30 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit. Payload yang dikirim: {
+  "external_id": "Jakinet/ftth/Budi/Tambun/INV-Budi-202508-50A7",
+  "description": "Biaya berlangganan internet up to 50 Mbps jatuh tempo pembayaran tanggal 01/08/2025",
+  "invoice_duration": 604800,
+  "customer": {
+    "given_names": "Budi",
+    "email": "budi@test.com",
+    "mobile_number": "08986937819"
+  },
+  "currency": "IDR",
+  "items": [
+    {
+      "name": "Biaya berlangganan internet up to 50 Mbps",
+      "price": 254000.0,
+      "quantity": 1,
+      "description": "Periode Tgl 21-1 August 2025"
+    }
+  ],
+  "fees": [
+    {
+      "type": "Tax",
+      "value": 27940.0
+    }
+  ]
+}
+2025-07-21 19:56:30 | SERVICES.XENDIT      | [91mERROR   [0m | Respons Error dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 19:59:03 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit. Payload yang dikirim: {
+  "external_id": "Jakinet/ftth/Budi/Tambun/INV-Budi-202508-2109",
+  "description": "Biaya berlangganan internet up to 50 Mbps jatuh tempo pembayaran tanggal 01/08/2025",
+  "invoice_duration": 604800,
+  "customer": {
+    "given_names": "Budi",
+    "email": "budi@test.com",
+    "mobile_number": "08986937819"
+  },
+  "currency": "IDR",
+  "items": [
+    {
+      "name": "Biaya berlangganan internet up to 50 Mbps",
+      "price": 254000.0,
+      "quantity": 1,
+      "description": "Periode Tgl 21-1 August 2025"
+    }
+  ],
+  "fees": [
+    {
+      "type": "Tax",
+      "value": 27940.0
+    }
+  ]
+}
+2025-07-21 19:59:03 | SERVICES.XENDIT      | [91mERROR   [0m | Respons Error dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 20:01:58 | SERVICES.XENDIT      | [91mERROR   [0m | Error saat membuat invoice Xendit. Payload yang dikirim: {
+  "external_id": "Jakinet/ftth/Budi/Tambun/INV-Budi-202508-F575",
+  "description": "Biaya berlangganan internet up to 50 Mbps jatuh tempo pembayaran tanggal 01/08/2025",
+  "invoice_duration": 604800,
+  "customer": {
+    "given_names": "Budi",
+    "email": "budi@test.com",
+    "mobile_number": "08986937819"
+  },
+  "currency": "IDR",
+  "items": [
+    {
+      "name": "Biaya berlangganan internet up to 50 Mbps",
+      "price": 254000.0,
+      "quantity": 1,
+      "description": "Periode Tgl 21-1 August 2025"
+    }
+  ],
+  "fees": [
+    {
+      "type": "Tax",
+      "value": 27940.0
+    }
+  ]
+}
+2025-07-21 20:01:58 | SERVICES.XENDIT      | [91mERROR   [0m | Respons Error dari Xendit: {"message":"Invalid input data. Please check your request","error_code":"API_VALIDATION_ERROR","errors":[{"field":["amount"],"location":"body","messages":["\"amount\" is required"],"types":["any.required"]}]}
+2025-07-21 20:24:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:30:11 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:33:56 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:44:52 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:45:07 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:45:22 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:49:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:50:32 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:50:48 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:54:21 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:54:43 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:54:58 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 20:57:19 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:02:16 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:03:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:04:46 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:12:13 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:16:46 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:19:00 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:28:11 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:47:02 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:47:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:52:38 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:54:21 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:54:53 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 21:57:37 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 22:16:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-21 22:20:22 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 13:54:09 | ROUTERS.PELANGGAN    | [91mERROR   [0m | Validation error on row 2: Field wajib kosong: Nama
+2025-07-22 19:00:14 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 20:23:58 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 20:54:12 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 21:25:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-22 21:57:41 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 13:06:17 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 2: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:06:17 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 3: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:06:17 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 4: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:12:41 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 2: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:12:41 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 3: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 13:12:41 | ROUTERS.DATA_TEKNIS  | [91mERROR   [0m | Error on row 4: cannot import name 'PelangganModel' from 'app.models.pelanggan' (D:\laragon\www\ArtacomFTTHBilling_V2\app\models\pelanggan.py)
+2025-07-23 19:17:42 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 19:48:00 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 20:21:27 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 21:04:17 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 21:40:24 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 22:27:15 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 22:56:12 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 23:02:39 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-23 23:41:39 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 19:55:10 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 20:00:58 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 20:36:46 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 21:11:48 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 21:46:16 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 21:49:38 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 21:51:00 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-24 22:21:30 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-25 14:05:53 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 19:15:42 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 19:38:13 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 19:39:37 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 19:39:52 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 19:53:46 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 19:54:02 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 20:06:32 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-27 20:07:20 | ROUTERS.INVOICE      | [91mERROR   [0m | Unexpected error processing Xendit callback: 'ConnectionManager' object has no attribute 'broadcast'
+2025-07-27 20:12:17 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 20:51:54 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 20:52:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 21:58:26 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:00:42 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:04:23 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:07:18 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:07:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:07:49 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:08:48 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:09:54 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:12:15 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:14:24 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:15:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:15:58 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:16:38 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:17:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:17:23 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:18:53 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:19:21 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:19:37 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:19:55 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:36:08 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:43:26 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:43:46 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:44:19 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:47:02 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:48:07 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-07-28 22:48:22 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-01 20:33:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-01 21:08:33 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-01 21:48:06 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-01 22:25:22 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-01 22:59:31 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-01 23:32:25 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-03 11:00:44 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-03 11:22:42 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-03 13:00:28 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-03 13:00:45 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-03 13:38:16 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 13:10:49 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 13:48:25 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 20:11:34 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 20:11:49 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 20:26:12 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 20:26:54 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 20:49:23 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-10 20:49:59 | SERVICES.MIKROTIK_SERVICE | [91mERROR   [0m | Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-11 12:53:43 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 12:53:43 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 12:53:48 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 12:53:53 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 12:53:59 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 17:03:56 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 17:03:56 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 17:04:00 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 17:04:05 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-11 17:04:10 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-13 20:17:01 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-13 20:17:09 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-13 20:17:11 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-13 20:26:50 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-13 20:48:18 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-13 20:48:20 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-13 20:48:59 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-13 20:51:22 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-14 10:48:45 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 10:48:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 10:48:55 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 10:49:00 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 10:49:05 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 10:49:10 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 16:27:38 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 16:27:41 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 20:27:16 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-14 21:50:46 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:50:51 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:50:56 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:51:01 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:51:06 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:51:11 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:51:34 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:52:34 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:04 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:06 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:11 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:16 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:21 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:26 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:31 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:36 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:41 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:47 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:53 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:53:59 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:54:02 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:54:08 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:54:36 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:54:58 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:55:04 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:55:10 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:55:14 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:55:17 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:55:23 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:55:30 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-14 21:55:33 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-15 21:53:24 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 21:53:39 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 21:55:05 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 21:57:20 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 21:57:39 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:18:54 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:26:22 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:26:37 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:26:55 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:28:55 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:33:39 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:36:30 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:42:58 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:43:48 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 22:48:39 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 23:06:28 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 23:06:43 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 23:17:24 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 23:22:18 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 23:27:14 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 23:36:40 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-15 23:36:55 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 07:19:14 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 07:54:41 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 08:26:00 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 08:26:17 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 08:28:43 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 12:21:04 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 12:29:30 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 13:00:38 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-16 17:54:40 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-17 20:23:40 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-17 20:24:05 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-17 20:24:36 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-17 20:46:53 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-17 20:47:27 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 10:00:46 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:00:51 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:00:56 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:01:01 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:01:06 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:01:11 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:01:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:02:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:03:22 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:03:25 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 10:03:31 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:23:15 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:23:17 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:23:21 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:23:26 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:23:31 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:23:36 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:23:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:24:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:25:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:26:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:27:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:28:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:29:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:30:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:31:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:32:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:33:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:34:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:35:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:36:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:37:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:38:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:39:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:40:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:41:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:42:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:43:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:44:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:45:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:46:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:47:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:48:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:49:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:50:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:51:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:52:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:53:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:54:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:55:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:56:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:57:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:58:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 12:59:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:00:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:01:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:02:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:03:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:04:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:05:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:06:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:07:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:08:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:09:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:10:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:11:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:12:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:13:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:14:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:15:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:16:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:17:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:18:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:19:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:20:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:21:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:22:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:23:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:24:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:25:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:26:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:27:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:28:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:29:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:30:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:31:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:32:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:33:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:34:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:35:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:36:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:37:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:38:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:39:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:40:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:41:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:42:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 13:43:08 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 19:03:28 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 20:14:27 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:14:32 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:14:38 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:14:42 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:14:48 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:14:52 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:14:57 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:03 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:07 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:12 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:17 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:22 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:27 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:32 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:38 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:44 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:50 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:54 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:15:59 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:16:07 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:16:08 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:16:14 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:16:19 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-18 20:33:08 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 20:44:17 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 21:20:14 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 21:20:51 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 21:21:06 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 21:21:22 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-18 21:26:42 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out

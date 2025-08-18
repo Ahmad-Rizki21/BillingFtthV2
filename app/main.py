@@ -11,7 +11,7 @@ from .database import Base, engine, get_db
 from .routers import (
     pelanggan, user, role, data_teknis, harga_layanan, 
     paket_layanan, langganan, invoice, mikrotik_server,
-    uploads, notifications, dashboard, permission
+    uploads, notifications, dashboard, permission, sk
 )
 from .jobs import job_generate_invoices, job_suspend_services, job_verify_payments
 from .logging_config import setup_logging
@@ -201,6 +201,7 @@ app.include_router(role.router)
 app.include_router(data_teknis.router)
 app.include_router(harga_layanan.router)
 app.include_router(langganan.router)
+app.include_router(sk.router)
 app.include_router(paket_layanan.router)
 app.include_router(invoice.router)
 app.include_router(mikrotik_server.router)

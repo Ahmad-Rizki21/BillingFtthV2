@@ -1,5 +1,6 @@
 # app/routers/dashboard.py
 from fastapi import APIRouter, Depends, HTTPException
+from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select
 from datetime import datetime, timedelta
@@ -173,3 +174,34 @@ async def get_sidebar_badges(db: AsyncSession = Depends(get_db)):
         stopped_count=stopped_count
     )
 # ============================================
+
+
+# =========================================== Chart untuk menampilkan penambahan User =======================================
+
+class GrowthChartData(BaseModel):
+    labels: List[str]
+    data: List[int]
+
+@router.get("/growth-trend", response_model=GrowthChartData)
+async def get_growth_trend_data(db: AsyncSession = Depends(get_db)):
+    """
+    Menyediakan data untuk grafik tren pertumbuhan pelanggan baru per bulan.
+    """
+    # Query untuk menghitung jumlah pelanggan baru per bulan berdasarkan tgl_instalasi
+    stmt = select(
+        func.date_format(Pelanggan.tgl_instalasi, "%Y-%m").label("bulan"),
+        func.count(Pelanggan.id).label("jumlah")
+    ).where(
+        Pelanggan.tgl_instalasi.isnot(None)
+    ).group_by("bulan").order_by("bulan")
+    
+    result = await db.execute(stmt)
+    growth_data = result.all()
+    
+    # Format data untuk dikirim ke frontend
+    labels = [datetime.strptime(item.bulan, "%Y-%m").strftime("%b %Y") for item in growth_data]
+    data = [item.jumlah for item in growth_data]
+    
+    return GrowthChartData(labels=labels, data=data)
+
+# =========================================== Chart untuk menampilkan penambahan User =======================================

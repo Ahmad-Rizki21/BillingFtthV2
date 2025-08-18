@@ -94,22 +94,42 @@
           </div>
         </div>
       </div>
-
-      <!-- Invoice Chart -->
-      <div class="chart-card invoice-chart">
-        <div class="chart-header">
-          <div class="chart-title-section">
-            <h3 class="chart-title">
-              <div class="chart-icon-wrapper">
-                <v-icon class="chart-icon">mdi-file-document-multiple</v-icon>
-              </div>
-              Invoice Bulanan
-            </h3>
-            <p class="chart-subtitle">Ringkasan status invoice per bulan</p>
+      
+        <div class="charts-row">
+        <!-- Growth Trend Chart -->
+        <div class="chart-card growth-chart">
+          <div class="chart-header">
+            <div class="chart-title-section">
+              <h3 class="chart-title">
+                <div class="chart-icon-wrapper">
+                  <v-icon class="chart-icon">mdi-chart-line</v-icon>
+                </div>
+                Tren Pertumbuhan Pelanggan
+              </h3>
+              <p class="chart-subtitle">Jumlah pelanggan baru per bulan</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <Chart v-if="!loading" type="line" :data="growthChartData" :options="chartOptions" />
           </div>
         </div>
-        <div class="chart-container large-chart">
-          <Chart v-if="!loading" type="bar" :data="invoiceChartData" :options="invoiceChartOptions" />
+
+        <!-- Invoice Chart -->
+        <div class="chart-card invoice-chart">
+          <div class="chart-header">
+            <div class="chart-title-section">
+              <h3 class="chart-title">
+                <div class="chart-icon-wrapper">
+                  <v-icon class="chart-icon">mdi-file-document-multiple</v-icon>
+                </div>
+                Invoice Bulanan
+              </h3>
+              <p class="chart-subtitle">Ringkasan status invoice per bulan</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <Chart v-if="!loading" type="bar" :data="invoiceChartData" :options="invoiceChartOptions" />
+          </div>
         </div>
       </div>
     </div>
@@ -150,6 +170,7 @@ const stats = ref<any[]>([]);
 const lokasiChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
 const paketChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
 const invoiceChartData = ref<any>({ labels: [], datasets: [] });
+const growthChartData = ref<ChartData<'line'>>({ labels: [], datasets: [] });
 
 async function fetchMikrotikStats() {
   try {
@@ -269,7 +290,7 @@ onMounted(async () => {
         },
       ],
     };
-
+    fetchGrowthTrendData();
  } catch (error) {
     console.error("Failed to fetch dashboard data:", error);
   } finally {
@@ -277,6 +298,35 @@ onMounted(async () => {
     fetchMikrotikStats();
   }
 });
+
+
+// Menampilkan pertumbuhan pelanggan
+async function fetchGrowthTrendData() {
+  try {
+    const response = await apiClient.get('/dashboard/growth-trend');
+    const data = response.data;
+    
+    growthChartData.value = {
+      labels: data.labels,
+      datasets: [{
+        label: 'Pelanggan Baru',
+        data: data.data,
+        borderColor: 'rgb(236, 72, 153)',
+        backgroundColor: 'rgba(236, 72, 153, 0.1)',
+        tension: 0.4,
+        borderWidth: 3,
+        pointBackgroundColor: 'rgb(236, 72, 153)',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        fill: true,
+      }]
+    };
+  } catch (error) {
+    console.error("Gagal mengambil data tren pertumbuhan:", error);
+  }
+}
+
 
 function getIconForStat(title: string) {
   if (title.toLowerCase().includes('jakinet')) return 'mdi-account-network';
