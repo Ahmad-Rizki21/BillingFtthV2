@@ -362,6 +362,7 @@
                       </v-select>
                     </v-col>
                     
+                    <!-- Baris untuk Metode Pembayaran dan Total Harga Awal -->
                     <v-col cols="12" md="6">
                       <v-select
                         v-model="editedItem.metode_pembayaran"
@@ -377,22 +378,6 @@
                       ></v-select>
                     </v-col>
 
-                    <v-col 
-                      v-if="editedItem.metode_pembayaran === 'Prorate' && editedIndex === -1" 
-                      cols="12" 
-                      md="6"
-                    >
-                      <v-text-field
-                        v-model="editedItem.tgl_mulai_langganan"
-                        label="Tanggal Mulai Langganan"
-                        type="date"
-                        variant="solo-filled"
-                        prepend-inner-icon="mdi-calendar-start"
-                        class="enhanced-form-field"
-                        hide-details="auto"
-                      ></v-text-field>
-                    </v-col>
-                    
                     <v-col cols="12" md="6">
                       <v-text-field
                         v-model="editedItem.harga_awal"
@@ -402,6 +387,19 @@
                         prefix="Rp"
                         readonly
                         class="enhanced-form-field enhanced-price-field"
+                        hide-details="auto"
+                      ></v-text-field>
+                    </v-col>
+
+                    <!-- Baris untuk Tanggal Mulai Langganan (hanya muncul jika Prorate) -->
+                    <v-col v-if="editedItem.metode_pembayaran === 'Prorate'" cols="12" md="6">
+                      <v-text-field
+                        v-model="editedItem.tgl_mulai_langganan"
+                        label="Tanggal Mulai Langganan"
+                        type="date"
+                        variant="solo-filled"
+                        prepend-inner-icon="mdi-calendar-start"
+                        class="enhanced-form-field"
                         hide-details="auto"
                       ></v-text-field>
                     </v-col>
@@ -897,16 +895,20 @@ async function saveLangganan() {
 
   try {
     if (editedIndex.value > -1) {
-      await apiClient.patch(`/langganan/${dataToSave.id}`, {
-        paket_layanan_id: dataToSave.paket_layanan_id,
-        status: dataToSave.status,
-        tgl_jatuh_tempo: dataToSave.tgl_jatuh_tempo,
-        metode_pembayaran: dataToSave.metode_pembayaran,
-        harga_awal: dataToSave.harga_awal,
-      });
-    } else {
-      await apiClient.post('/langganan/', dataToSave);
-    }
+    // Pastikan payload ini LENGKAP
+    await apiClient.patch(`/langganan/${dataToSave.id}`, {
+      paket_layanan_id: dataToSave.paket_layanan_id,
+      status: dataToSave.status,
+      // ===== PASTIKAN SEMUA FIELD INI ADA =====
+      metode_pembayaran: dataToSave.metode_pembayaran,
+      tgl_jatuh_tempo: dataToSave.tgl_jatuh_tempo,
+      harga_awal: dataToSave.harga_awal
+      // =======================================
+    });
+  } else {
+    // Blok "create" tidak perlu diubah
+    await apiClient.post('/langganan/', dataToSave);
+  }
     fetchLangganan();
     closeDialog();
   } catch (error) { 

@@ -27,7 +27,9 @@ class LanggananCreate(BaseModel):
 class LanggananUpdate(BaseModel):
     paket_layanan_id: Optional[int] = None
     status: Optional[str] = None
-    tgl_jatuh_tempo: Optional[date] = None #
+    tgl_jatuh_tempo: Optional[date] = None 
+    metode_pembayaran: Optional[str] = None
+    harga_awal: Optional[float] = None
 
 class Langganan(LanggananBase):
     id: int
