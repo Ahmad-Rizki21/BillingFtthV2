@@ -137,7 +137,7 @@ def create_pppoe_secret(api, data_teknis: DataTeknisModel):
             'password': data_teknis.password_pppoe,
             'profile': data_teknis.profile_pppoe,
             'service': 'pppoe',
-            'comment': f"Created by Billing API on {datetime.now().strftime('%Y-%m-%d')}"
+            # 'comment': f"Created by Billing API on {datetime.now().strftime('%Y-%m-%d')}"
         }
 
         # Tambahkan IP Address jika ada

@@ -11,9 +11,10 @@ from .database import Base, engine, get_db
 from .routers import (
     pelanggan, user, role, data_teknis, harga_layanan, 
     paket_layanan, langganan, invoice, mikrotik_server,
-    uploads, notifications, dashboard, permission, sk
+    uploads, notifications, dashboard, permission, sk, 
+    calculator
 )
-from .jobs import job_generate_invoices, job_suspend_services, job_verify_payments
+from .jobs import job_generate_invoices, job_suspend_services, job_verify_payments, job_send_payment_reminders
 from .logging_config import setup_logging
 from .auth import get_user_from_token
 from .websocket_manager import manager
@@ -175,6 +176,11 @@ async def startup_event():
     
     
     # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
+    # Job ini akan berjalan setiap hari pukul 08:00 pagi
+    #scheduler.add_job(job_send_payment_reminders, 'cron', hour=8, minute=0, timezone='Asia/Jakarta', id="send_reminders_job")
+    # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
+    
+    # ======================================================== INI UNTUK CRONJOB PRODACION & TEST========================================================
     # job verifikasi Pembayaran setiap jam, di menit ke-15
     # scheduler.add_job(job_verify_payments, 'cron', hour='*', minute=15, timezone='Asia/Jakarta', id="verify_payments_job") #Cek pembayaran setiap jam menit ke-15.
     
@@ -206,6 +212,7 @@ app.include_router(paket_layanan.router)
 app.include_router(invoice.router)
 app.include_router(mikrotik_server.router)
 app.include_router(uploads.router)
+app.include_router(calculator.router)
 # app.include_router(system_log.router)
 # app.include_router(activity_log.router)
 app.include_router(notifications.router)

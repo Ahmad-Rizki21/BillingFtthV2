@@ -270,6 +270,21 @@
                 </template>
                 <span>Salin Link</span>
               </v-tooltip>
+
+              <v-tooltip location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn 
+                    icon="mdi-whatsapp" 
+                    v-bind="props"
+                    variant="text" 
+                    size="small" 
+                    color="green" 
+                    @click="sendWhatsAppReminder(item)"
+                    :disabled="!item.payment_link || !item.no_telp"
+                  ></v-btn>
+                </template>
+                <span>Kirim Pengingat WhatsApp</span>
+              </v-tooltip>
               
               <v-tooltip location="top">
                 <template v-slot:activator="{ props }">
@@ -657,6 +672,29 @@ async function fetchInvoices() {
   } finally {
     loading.value = false;
   }
+}
+
+function sendWhatsAppReminder(invoice: Invoice) {
+  // 1. Ambil nomor telepon dan pastikan formatnya benar (+62)
+  let phone = invoice.no_telp || '';
+  if (phone.startsWith('0')) {
+    phone = '62' + phone.substring(1);
+  }
+  // Hapus karakter non-numerik lainnya jika ada
+  phone = phone.replace(/[^0-9]/g, '');
+
+  // 2. Siapkan template teks pesan
+  const paymentLink = invoice.payment_link;
+  const templateText = `Link Pembayaran Internet dengan Link berikut: ${paymentLink}`;
+
+  // 3. Encode teks agar aman untuk URL
+  const encodedText = encodeURIComponent(templateText);
+
+  // 4. Buat URL "Click to Chat" dari WhatsApp
+  const whatsappUrl = `https://wa.me/${phone}?text=${encodedText}`;
+
+  // 5. Buka URL di tab baru
+  window.open(whatsappUrl, '_blank');
 }
 
 const applyFilters = debounce(() => {

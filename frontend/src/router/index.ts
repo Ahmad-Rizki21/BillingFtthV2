@@ -79,6 +79,12 @@ const router = createRouter({
           component: () => import('../views/SKManagementView.vue'),
           meta: { permission: 'manage_sk' } // Lindungi dengan permission
         },
+        {
+          path: 'kalkulator',
+          name: 'kalkulator',
+          component: () => import('../views/CalculatorView.vue'),
+          meta: { permission: 'use_calculator' } // Beri permission jika perlu
+        },
       ],
     },
 

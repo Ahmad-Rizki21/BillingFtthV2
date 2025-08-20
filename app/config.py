@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     # Pindahkan MENUS ke sini
     MENUS: List[str] = [
         "Pelanggan", "Langganan", "Data Teknis", "Brand & Paket",
-        "Invoices", "Mikrotik Servers", "Users", "Roles", "Permissions"
+        "Invoices", "Mikrotik Servers", "Users", "Roles", "Permissions",
+        "S&K", "Simulasi Harga", "Kelola S&K"
     ]
     # -----------------------------------
     

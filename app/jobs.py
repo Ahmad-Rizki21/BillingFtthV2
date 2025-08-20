@@ -15,6 +15,9 @@ from .models import Langganan as LanggananModel, Invoice as InvoiceModel, Pelang
 from .services import mikrotik_service, xendit_service
 from .logging_config import log_scheduler_event
 from .routers.invoice import _process_successful_payment # Impor fungsi refaktor
+from .models.user import User as UserModel
+from .models.role import Role as RoleModel
+from .websocket_manager import manager
 
 logger = logging.getLogger('app.jobs')
 
@@ -249,3 +252,58 @@ async def job_generate_invoices():
             import traceback
             error_details = traceback.format_exc()
             logger.error(f"[FAIL] Scheduler 'job_generate_invoices' failed. Details:\n{error_details}")
+
+# ===== TAMBAHKAN FUNGSI BARU DI SINI =====
+async def job_send_payment_reminders():
+    """
+    Job untuk mengirim pengingat pembayaran kepada pelanggan.
+    Contoh: Kirim pengingat untuk invoice yang akan jatuh tempo dalam 3 hari (H-3).
+    """
+    log_scheduler_event(logger, 'job_send_payment_reminders', 'started')
+    reminders_sent = 0
+    
+    # Target: cari invoice yang jatuh tempo 3 hari dari sekarang
+    target_due_date = date.today() + timedelta(days=3)
+
+    async with SessionLocal() as db:
+        try:
+            # Ambil semua langganan aktif yang jatuh temponya adalah H-3
+            stmt = (
+                select(LanggananModel)
+                .where(
+                    LanggananModel.tgl_jatuh_tempo == target_due_date,
+                    LanggananModel.status == "Aktif"
+                ).options(
+                    selectinload(LanggananModel.pelanggan) # Load data pelanggan
+                )
+            )
+            subscriptions_for_reminder = (await db.execute(stmt)).scalars().all()
+
+            if not subscriptions_for_reminder:
+                log_scheduler_event(logger, 'job_send_payment_reminders', 'completed', "Tidak ada pelanggan untuk dikirim pengingat hari ini.")
+                return
+
+            for langganan in subscriptions_for_reminder:
+                pelanggan = langganan.pelanggan
+                # Di sini Anda akan menambahkan logika untuk mengirim notifikasi
+                # Misalnya, melalui WhatsApp, Email, atau sistem notifikasi internal
+                
+                logger.info(f"Mengirim pengingat pembayaran untuk pelanggan ID: {pelanggan.id} ({pelanggan.nama})")
+                
+                # CONTOH: (Logika pengiriman notifikasi belum diimplementasikan)
+                # await send_whatsapp_reminder(
+                #     phone_number=pelanggan.no_telp,
+                #     message=f"Halo {pelanggan.nama}, tagihan internet Anda akan jatuh tempo pada {target_due_date.strftime('%d-%m-%Y')}. Mohon segera lakukan pembayaran."
+                # )
+                
+                reminders_sent += 1
+            
+            await db.commit()
+            log_scheduler_event(logger, 'job_send_payment_reminders', 'completed', f"Berhasil mengirim {reminders_sent} pengingat pembayaran.")
+
+        except Exception as e:
+            await db.rollback()
+            error_details = traceback.format_exc()
+            logger.error(f"[FAIL] Scheduler 'job_send_payment_reminders' failed. Details:\n{error_details}")
+
+# ============================================

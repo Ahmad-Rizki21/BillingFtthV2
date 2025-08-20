@@ -47,7 +47,7 @@ async def create_xendit_invoice(invoice: Invoice, pelanggan: Pelanggan, paket: P
         "external_id": invoice.invoice_number,
         "amount": float(invoice.total_harga),
         "description": deskripsi_xendit,
-        "invoice_duration": 86400 * 7,
+        "invoice_duration": 86400 * 10, # Diubah menjadi 10 hari
         "customer": {
             "given_names": pelanggan.nama,
             "email": pelanggan.email,
