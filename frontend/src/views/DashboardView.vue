@@ -114,6 +114,141 @@
           </div>
         </div>
 
+        <v-dialog v-model="dialogPaketDetail" max-width="700px" persistent>
+    <v-card class="package-detail-card elevation-12">
+      <!-- Header dengan gradient background -->
+      <div class="dialog-header">
+        <div class="header-gradient"></div>
+        <div class="header-content">
+          <div class="header-icon">
+            <v-icon size="32" color="white">mdi-package-variant</v-icon>
+          </div>
+          <div class="header-text">
+            <h2 class="dialog-title">{{ selectedPaketTitle }}</h2>
+            <p class="dialog-subtitle">Detail distribusi pelanggan</p>
+          </div>
+        </div>
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          color="white"
+          size="small"
+          class="close-btn"
+          @click="dialogPaketDetail = false"
+        ></v-btn>
+      </div>
+
+      <v-card-text class="dialog-content" v-if="selectedPaketDetail">
+        <!-- Total Pelanggan Section -->
+        <div class="summary-section">
+          <div class="summary-card">
+            <div class="summary-icon">
+              <v-icon color="primary">mdi-account-group</v-icon>
+            </div>
+            <div class="summary-content">
+              <div class="summary-label">Total Pelanggan</div>
+              <div class="summary-value">{{ selectedPaketDetail.total_pelanggan }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div class="content-sections">
+          <!-- Distribusi Lokasi -->
+          <div class="detail-section">
+            <div class="section-header">
+              <div class="section-icon location-icon">
+                <v-icon size="20">mdi-map-marker-radius</v-icon>
+              </div>
+              <h3 class="section-title">Distribusi Lokasi</h3>
+            </div>
+            
+            <div class="items-grid">
+              <div 
+                v-for="item in selectedPaketDetail.breakdown_lokasi" 
+                :key="item.nama"
+                class="detail-item location-item"
+              >
+                <div class="item-content">
+                  <div class="item-icon">
+                    <v-icon size="18" color="info">mdi-map-marker</v-icon>
+                  </div>
+                  <div class="item-info">
+                    <div class="item-name">{{ item.nama }}</div>
+                    <div class="item-subtitle">Lokasi</div>
+                  </div>
+                </div>
+                <div class="item-value">
+                  <v-chip 
+                    color="info" 
+                    variant="flat"
+                    size="small"
+                    class="value-chip"
+                  >
+                    {{ item.jumlah }}
+                  </v-chip>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Distribusi Brand -->
+          <div class="detail-section">
+            <div class="section-header">
+              <div class="section-icon brand-icon">
+                <v-icon size="20">mdi-tag-outline</v-icon>
+              </div>
+              <h3 class="section-title">Distribusi Brand</h3>
+            </div>
+            
+            <div class="items-grid">
+              <div 
+                v-for="item in selectedPaketDetail.breakdown_brand" 
+                :key="item.nama"
+                class="detail-item brand-item"
+              >
+                <div class="item-content">
+                  <div class="item-icon">
+                    <v-icon size="18" color="success">mdi-tag</v-icon>
+                  </div>
+                  <div class="item-info">
+                    <div class="item-name">{{ item.nama }}</div>
+                    <div class="item-subtitle">Brand</div>
+                  </div>
+                </div>
+                <div class="item-value">
+                  <v-chip 
+                    color="success" 
+                    variant="flat"
+                    size="small"
+                    class="value-chip"
+                  >
+                    {{ item.jumlah }}
+                  </v-chip>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </v-card-text>
+
+      <!-- Footer Actions -->
+      <v-card-actions class="dialog-footer">
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          variant="elevated"
+          size="large"
+          class="close-action-btn"
+          @click="dialogPaketDetail = false"
+        >
+          <v-icon start>mdi-check</v-icon>
+          Tutup
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
         <!-- Invoice Chart -->
         <div class="chart-card invoice-chart">
           <div class="chart-header">
@@ -172,6 +307,11 @@ const paketChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
 const invoiceChartData = ref<any>({ labels: [], datasets: [] });
 const growthChartData = ref<ChartData<'line'>>({ labels: [], datasets: [] });
 
+const paketDetailData = ref<any>({}); // Untuk menyimpan hasil dari API details
+const dialogPaketDetail = ref(false); // Mengontrol buka/tutup dialog
+const selectedPaketTitle = ref(''); // Judul dialog, misal: "Rincian 10 Mbps"
+const selectedPaketDetail = ref<any>(null); // Data detail untuk paket yang dipilih
+
 async function fetchMikrotikStats() {
   try {
     // FIX: Menghapus /api/ dari URL karena sudah ada di baseURL
@@ -190,6 +330,17 @@ async function fetchMikrotikStats() {
     if (onlineStat) onlineStat.value = 'N/A';
     const offlineStat = stats.value.find(s => s.title === "Offline Servers");
     if (offlineStat) offlineStat.value = 'N/A';
+  }
+}
+
+
+// Fungsi baru untuk mengambil data detail
+async function fetchPaketDetails() {
+  try {
+    const response = await apiClient.get('/dashboard/paket-details');
+    paketDetailData.value = response.data;
+  } catch (error) {
+    console.error("Gagal mengambil data detail paket:", error);
   }
 }
 
@@ -290,6 +441,7 @@ onMounted(async () => {
         },
       ],
     };
+    fetchPaketDetails();
     fetchGrowthTrendData();
  } catch (error) {
     console.error("Failed to fetch dashboard data:", error);
@@ -298,6 +450,22 @@ onMounted(async () => {
     fetchMikrotikStats();
   }
 });
+
+function handlePaketChartClick(_event: any, elements: any[]) {
+  if (elements.length === 0) return; // Keluar jika klik di area kosong
+
+  const chart = elements[0].element.$context.chart;
+  const index = elements[0].index;
+  const label = chart.data.labels[index]; // Mendapatkan label, misal: "10 Mbps"
+
+  const detail = paketDetailData.value[label];
+
+  if (detail) {
+    selectedPaketTitle.value = `Rincian Paket: ${label}`;
+    selectedPaketDetail.value = detail;
+    dialogPaketDetail.value = true; // Buka dialog
+  }
+}
 
 
 // Menampilkan pertumbuhan pelanggan
@@ -354,6 +522,7 @@ const chartGridColor = computed(() => theme.global.current.value.dark ? 'rgba(25
 const chartOptions = computed((): ChartOptions<'bar'> => ({
   responsive: true,
   maintainAspectRatio: false,
+  onClick: handlePaketChartClick,
   plugins: { 
     legend: { display: false },
     tooltip: {
@@ -887,4 +1056,433 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
     align-self: flex-start;
   }
 }
+
+/* Dialog Card Styling */
+.package-detail-card {
+  border-radius: 20px !important;
+  overflow: hidden;
+  position: relative;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+}
+
+/* Header Section */
+.dialog-header {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+}
+
+.header-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  opacity: 0.95;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  color: white;
+}
+
+.header-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-text {
+  flex: 1;
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+  line-height: 1.2;
+}
+
+.dialog-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0.25rem 0 0 0;
+  font-weight: 500;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Dialog Content */
+.dialog-content {
+  padding: 2rem !important;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.8) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+/* Summary Section */
+.summary-section {
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+}
+
+.summary-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summary-content {
+  flex: 1;
+}
+
+.summary-label {
+  font-size: 0.9rem;
+  color: rgba(99, 102, 241, 0.8);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: rgb(99, 102, 241);
+  line-height: 1;
+}
+
+/* Content Sections */
+.content-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-section {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.detail-section:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.section-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.location-icon {
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(33, 150, 243, 0.08) 100%);
+  color: rgb(33, 150, 243);
+}
+
+.brand-icon {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.08) 100%);
+  color: rgb(76, 175, 80);
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-surface));
+  margin: 0;
+}
+
+/* Items Grid */
+.items-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(248, 250, 252, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+  background: rgba(248, 250, 252, 0.9);
+  transform: translateX(4px);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 0.125rem;
+}
+
+.item-subtitle {
+  font-size: 0.75rem;
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.item-value {
+  flex-shrink: 0;
+}
+
+.value-chip {
+  font-weight: 700;
+  min-width: 48px;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dialog Footer */
+.dialog-footer {
+  padding: 1.5rem 2rem !important;
+  background: rgba(248, 250, 252, 0.6);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.close-action-btn {
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 0 2rem;
+  height: 44px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  text-transform: none;
+  letter-spacing: 0.25px;
+}
+
+.close-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+
+/* Dark Theme Support */
+.v-theme--dark .package-detail-card {
+  background: rgba(30, 30, 30, 0.98);
+}
+
+.v-theme--dark .dialog-content {
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.8) 0%, rgba(30, 30, 30, 0.9) 100%);
+}
+
+.v-theme--dark .summary-card {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.v-theme--dark .detail-section {
+  background: rgba(40, 40, 40, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.v-theme--dark .detail-item {
+  background: rgba(50, 50, 50, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.v-theme--dark .detail-item:hover {
+  background: rgba(50, 50, 50, 0.8);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.v-theme--dark .item-icon {
+  background: rgba(60, 60, 60, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.v-theme--dark .dialog-footer {
+  background: rgba(25, 25, 25, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .package-detail-card {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem) !important;
+  }
+
+  .header-content {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .dialog-content {
+    padding: 1.5rem !important;
+  }
+
+  .content-sections {
+    gap: 1.5rem;
+  }
+
+  .detail-section {
+    padding: 1.25rem;
+  }
+
+  .summary-card {
+    padding: 1.25rem;
+  }
+
+  .dialog-title {
+    font-size: 1.25rem;
+  }
+
+  .summary-value {
+    font-size: 1.75rem;
+  }
+
+  .close-btn {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .dialog-footer {
+    padding: 1.25rem 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem 1.25rem 1.25rem;
+  }
+
+  .header-text {
+    text-align: center;
+  }
+
+  .dialog-content {
+    padding: 1.25rem !important;
+  }
+
+  .summary-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .content-sections {
+    gap: 1.25rem;
+  }
+
+  .detail-section {
+    padding: 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .item-content {
+    width: 100%;
+  }
+
+  .item-value {
+    align-self: flex-end;
+  }
+}
+
 </style>

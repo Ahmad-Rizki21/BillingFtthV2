@@ -645,7 +645,7 @@ const importErrors = ref<string[]>([]);
 const searchQuery = ref('');
 const selectedPaket = ref<number | null>(null);
 const selectedStatus = ref<string | null>(null);
-const statusOptions = ref(['Aktif', 'Suspended', 'Ditangguhkan', 'Berhenti']);
+const statusOptions = ref(['Aktif', 'Suspended', 'Berhenti']);
 
 
 function handleFileSelection(newFiles: File | File[]) {
@@ -974,7 +974,6 @@ function getStatusColor(status: string): string {
   switch (status.toLowerCase()) {
     case 'aktif': return 'green';
     case 'non-aktif': return 'orange';
-    case 'ditangguhkan': return 'amber';
     case 'berhenti': return 'red';
     default: return 'grey';
   }
