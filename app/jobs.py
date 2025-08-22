@@ -60,9 +60,9 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         await db.flush()
 
         deskripsi_xendit = ""
-        jatuh_tempo_str_lengkap = db_invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
+        jatuh_tempo_str_lengkap = db_invoice.tgl_jatuh_tempo.strftime("%d/%m/%Y")
 
-        if langganan.metode_pembayaran == 'Prorate':
+        if langganan.metode_pembayaran == "Prorate":
             # ▼▼▼ LOGIKA BARU DIMULAI DI SINI ▼▼▼
 
             # Hitung harga normal untuk perbandingan
@@ -70,12 +70,14 @@ async def generate_single_invoice(db, langganan: LanggananModel):
 
             # Cek apakah ini invoice gabungan
             if db_invoice.total_harga > (harga_normal_full + 1):
-                 # INI TAGIHAN GABUNGAN
+                # INI TAGIHAN GABUNGAN
                 start_day = db_invoice.tgl_invoice.day
                 end_day = db_invoice.tgl_jatuh_tempo.day
                 periode_prorate_str = db_invoice.tgl_jatuh_tempo.strftime("%B %Y")
-                periode_berikutnya_str = (db_invoice.tgl_jatuh_tempo + relativedelta(months=1)).strftime("%B %Y")
-                
+                periode_berikutnya_str = (
+                    db_invoice.tgl_jatuh_tempo + relativedelta(months=1)
+                ).strftime("%B %Y")
+
                 deskripsi_xendit = (
                     f"Biaya internet up to {paket.kecepatan} Mbps. "
                     f"Periode Prorate {start_day}-{end_day} {periode_prorate_str} + "
@@ -84,14 +86,14 @@ async def generate_single_invoice(db, langganan: LanggananModel):
             else:
                 # INI TAGIHAN PRORATE BIASA
                 start_day = db_invoice.tgl_invoice.day
-                end_day = db_invoice.tgl_jatuh_tempo.day 
-                periode_str = db_invoice.tgl_jatuh_tempo.strftime('%B %Y')
+                end_day = db_invoice.tgl_jatuh_tempo.day
+                periode_str = db_invoice.tgl_jatuh_tempo.strftime("%B %Y")
                 deskripsi_xendit = (
                     f"Biaya berlangganan internet up to {paket.kecepatan} Mbps, "
                     f"Periode Tgl {start_day}-{end_day} {periode_str}"
                 )
-            
-        else: # Otomatis
+
+        else:  # Otomatis
             deskripsi_xendit = (
                 f"Biaya berlangganan internet up to {paket.kecepatan} Mbps "
                 f"jatuh tempo pembayaran tanggal {jatuh_tempo_str_lengkap}"

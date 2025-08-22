@@ -4,6 +4,7 @@ from datetime import date
 from .paket_layanan import PaketLayanan
 from .pelanggan import PelangganInLangganan
 
+
 # -- Base Schema --
 # Berisi field yang sama persis dengan kolom di database
 class LanggananBase(BaseModel):
@@ -16,6 +17,7 @@ class LanggananBase(BaseModel):
     tgl_invoice_terakhir: Optional[date] = None
     tgl_mulai_langganan: Optional[date] = None
 
+
 # -- Schema untuk Membuat Langganan Baru --
 class LanggananCreate(BaseModel):
     pelanggan_id: int
@@ -25,6 +27,7 @@ class LanggananCreate(BaseModel):
     tgl_mulai_langganan: Optional[date] = None
     sertakan_bulan_depan: bool = False
 
+
 # -- Schema untuk Update Langganan --
 class LanggananUpdate(BaseModel):
     paket_layanan_id: Optional[int] = None
@@ -32,6 +35,7 @@ class LanggananUpdate(BaseModel):
     tgl_jatuh_tempo: Optional[date] = None
     metode_pembayaran: Optional[str] = None
     harga_awal: Optional[float] = None
+
 
 # -- Schema untuk Import --
 class LanggananImport(BaseModel):
@@ -41,6 +45,7 @@ class LanggananImport(BaseModel):
     status: str = "Aktif"
     metode_pembayaran: str = "Otomatis"
     tgl_jatuh_tempo: Optional[date] = None
+
 
 # -- Schema Utama untuk Response API (HANYA ADA SATU INI) --
 # Inilah skema yang digunakan untuk menampilkan data ke frontend
