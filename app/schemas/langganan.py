@@ -2,33 +2,30 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import date
 from .paket_layanan import PaketLayanan
-
 from .pelanggan import PelangganInLangganan
 
-
+# -- Base Schema --
+# Berisi field yang sama persis dengan kolom di database
 class LanggananBase(BaseModel):
-    id: int
     pelanggan_id: int
     paket_layanan_id: int
-
     metode_pembayaran: str
-    harga_awal: float | None
-
+    harga_awal: Optional[float] = None
     status: str
-    tgl_jatuh_tempo: date | None = None
-    tgl_invoice_terakhir: date | None = None
+    tgl_jatuh_tempo: Optional[date] = None
+    tgl_invoice_terakhir: Optional[date] = None
+    tgl_mulai_langganan: Optional[date] = None
 
-
+# -- Schema untuk Membuat Langganan Baru --
 class LanggananCreate(BaseModel):
     pelanggan_id: int
     paket_layanan_id: int
     status: str
     metode_pembayaran: str
-    harga_awal: Optional[float] = None
-    tgl_jatuh_tempo: Optional[date] = None
-    tgl_invoice_terakhir: Optional[date] = None
+    tgl_mulai_langganan: Optional[date] = None
+    sertakan_bulan_depan: bool = False
 
-
+# -- Schema untuk Update Langganan --
 class LanggananUpdate(BaseModel):
     paket_layanan_id: Optional[int] = None
     status: Optional[str] = None
@@ -36,15 +33,7 @@ class LanggananUpdate(BaseModel):
     metode_pembayaran: Optional[str] = None
     harga_awal: Optional[float] = None
 
-
-class Langganan(LanggananBase):
-    id: int
-    paket_layanan: PaketLayanan
-
-    class Config:
-        from_attributes = True
-
-
+# -- Schema untuk Import --
 class LanggananImport(BaseModel):
     email_pelanggan: str
     id_brand: str
@@ -53,12 +42,11 @@ class LanggananImport(BaseModel):
     metode_pembayaran: str = "Otomatis"
     tgl_jatuh_tempo: Optional[date] = None
 
-
+# -- Schema Utama untuk Response API (HANYA ADA SATU INI) --
+# Inilah skema yang digunakan untuk menampilkan data ke frontend
 class Langganan(LanggananBase):
     id: int
     paket_layanan: PaketLayanan
-
-    # UBAH baris ini
     pelanggan: PelangganInLangganan
 
     class Config:

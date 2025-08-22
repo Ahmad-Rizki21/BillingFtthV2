@@ -38,7 +38,7 @@ async def create_langganan(
 ):
     """
     Membuat langganan baru dengan perhitungan harga otomatis di backend.
-    Mendukung metode pembayaran 'Otomatis' dan 'Prorate'.
+    Mendukung metode pembayaran 'Otomatis' dan 'Prorate' (biasa atau gabungan).
     """
     pelanggan = await db.get(
         PelangganModel,
@@ -54,7 +54,8 @@ async def create_langganan(
     if not paket:
         raise HTTPException(status_code=404, detail="Paket Layanan tidak ditemukan.")
 
-    today = date.today()
+    start_date = langganan_data.tgl_mulai_langganan or date.today()
+    
     harga_paket = float(paket.harga)
     pajak_persen = float(pelanggan.harga_layanan.pajak)
     harga_awal_final = 0.0
@@ -62,23 +63,38 @@ async def create_langganan(
 
     if langganan_data.metode_pembayaran == "Otomatis":
         harga_awal_final = harga_paket * (1 + (pajak_persen / 100))
-        tgl_jatuh_tempo_final = (today + relativedelta(months=1)).replace(day=1)
+        tgl_jatuh_tempo_final = (start_date + relativedelta(months=1)).replace(day=1)
 
     elif langganan_data.metode_pembayaran == "Prorate":
-        _, last_day_of_month = monthrange(today.year, today.month)
-        remaining_days = last_day_of_month - today.day + 1
+        _, last_day_of_month = monthrange(start_date.year, start_date.month)
+        remaining_days = last_day_of_month - start_date.day + 1
+        if remaining_days < 0:
+            remaining_days = 0
+
         harga_per_hari = harga_paket / last_day_of_month
         prorated_price_before_tax = harga_per_hari * remaining_days
-        harga_awal_final = prorated_price_before_tax * (1 + (pajak_persen / 100))
-        tgl_jatuh_tempo_final = date(today.year, today.month, last_day_of_month)
+        harga_prorate_final = prorated_price_before_tax * (1 + (pajak_persen / 100))
 
+        # ▼▼▼ LOGIKA BARU YANG MEMPERBAIKI MASALAH ANDA ▼▼▼
+        if langganan_data.sertakan_bulan_depan:
+            # Jika switch aktif, hitung harga gabungan
+            harga_normal_full = harga_paket * (1 + (pajak_persen / 100))
+            harga_awal_final = harga_prorate_final + harga_normal_full
+        else:
+            # Jika tidak, gunakan harga prorate saja
+            harga_awal_final = harga_prorate_final
+        
+        tgl_jatuh_tempo_final = date(start_date.year, start_date.month, last_day_of_month)
+
+    # Buat objek langganan dengan data yang sudah benar
     db_langganan = LanggananModel(
         pelanggan_id=langganan_data.pelanggan_id,
         paket_layanan_id=langganan_data.paket_layanan_id,
         status=langganan_data.status,
         metode_pembayaran=langganan_data.metode_pembayaran,
-        harga_awal=round(harga_awal_final, 0),
+        harga_awal=round(harga_awal_final, 0), # Menyimpan total harga yang benar
         tgl_jatuh_tempo=tgl_jatuh_tempo_final,
+        tgl_mulai_langganan=start_date
     )
 
     db.add(db_langganan)
@@ -446,3 +462,62 @@ async def import_from_csv_langganan(
         raise HTTPException(status_code=500, detail=f"Gagal menyimpan ke database: {e}")
 
     return {"message": f"Berhasil mengimpor {len(langganan_to_create)} langganan baru."}
+
+
+
+# INVOICE GABUNGAN PRORATE + HARGA PAKET BUAT 2 BULAN
+
+class LanggananCalculateProratePlusFullResponse(BaseModel):
+    harga_prorate: float
+    harga_normal: float
+    harga_total_awal: float # Total yang akan ditagihkan
+    tgl_jatuh_tempo: date
+
+
+@router.post("/calculate-prorate-plus-full", response_model=LanggananCalculateProratePlusFullResponse)
+async def calculate_langganan_price_plus_full(
+    request_data: LanggananCalculateRequest, db: AsyncSession = Depends(get_db)
+):
+    """
+    Menghitung harga gabungan: prorate bulan ini + harga penuh bulan depan.
+    """
+    pelanggan = await db.get(
+        PelangganModel,
+        request_data.pelanggan_id,
+        options=[selectinload(PelangganModel.harga_layanan)],
+    )
+    if not pelanggan or not pelanggan.harga_layanan:
+        raise HTTPException(status_code=404, detail="Data Brand pelanggan tidak ditemukan.")
+
+    paket = await db.get(PaketLayananModel, request_data.paket_layanan_id)
+    if not paket:
+        raise HTTPException(status_code=404, detail="Paket Layanan tidak ditemukan.")
+
+    start_date = request_data.tgl_mulai
+    harga_paket = float(paket.harga)
+    pajak_persen = float(pelanggan.harga_layanan.pajak)
+
+    # Hitung harga normal penuh untuk bulan depan
+    harga_normal_full = harga_paket * (1 + (pajak_persen / 100))
+
+    # Hitung harga prorate untuk sisa bulan ini
+    _, last_day_of_month = monthrange(start_date.year, start_date.month)
+    remaining_days = last_day_of_month - start_date.day + 1
+    if remaining_days < 0: remaining_days = 0
+    
+    harga_per_hari = harga_paket / last_day_of_month
+    prorated_price_before_tax = harga_per_hari * remaining_days
+    harga_prorate_final = prorated_price_before_tax * (1 + (pajak_persen / 100))
+
+    # Hitung total gabungan
+    harga_total_final = harga_prorate_final + harga_normal_full
+    
+    # Jatuh tempo pembayaran pertama adalah di akhir bulan ini
+    tgl_jatuh_tempo_final = date(start_date.year, start_date.month, last_day_of_month)
+    
+    return LanggananCalculateProratePlusFullResponse(
+        harga_prorate=round(harga_prorate_final, 0),
+        harga_normal=round(harga_normal_full, 0),
+        harga_total_awal=round(harga_total_final, 0),
+        tgl_jatuh_tempo=tgl_jatuh_tempo_final,
+    )

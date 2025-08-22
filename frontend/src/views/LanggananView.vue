@@ -329,90 +329,135 @@
 
                 <!-- Paket Layanan Section -->
                 <v-col cols="12">
-              <div class="enhanced-form-section">
-                <div class="enhanced-section-header">
-                  <div class="section-icon">
-                    <v-icon>mdi-wifi</v-icon>
-                  </div>
-                  <span class="section-title">Paket & Pembayaran</span>
-                </div>
-                <v-card class="enhanced-section-card">
-                  <v-row>
-                    <v-col cols="12">
-                      <v-select
-                        v-model="editedItem.paket_layanan_id"
-                        :items="filteredPaketLayanan"  
-                        :loading="paketLoading"
-                        item-title="nama_paket" 
-                        item-value="id"
-                        label="Pilih Paket Layanan"
-                        :disabled="!editedItem.pelanggan_id || isPaketLocked" 
-                        placeholder="Pilih pelanggan terlebih dahulu"
-                        variant="solo-filled"
-                        prepend-inner-icon="mdi-wifi-star"
-                        :rules="[rules.required]"
-                        class="enhanced-form-field"
-                        hide-details="auto"
-                      >
-                        <template v-slot:item="{ props, item }">
-                          <v-list-item v-bind="props" class="px-4">
-                            <template v-slot:prepend>
-                              <v-avatar color="indigo" size="32">
-                                <v-icon color="white" size="16">mdi-wifi</v-icon>
-                              </v-avatar>
-                            </template>
-                            <v-list-item-title class="font-weight-medium">{{ item.raw.nama_paket }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ item.raw.kecepatan }} Mbps - {{ formatCurrency(item.raw.harga) }}</v-list-item-subtitle>
-                          </v-list-item>
-                        </template>
-                      </v-select>
-                    </v-col>
-                    
-                    <!-- Baris untuk Metode Pembayaran dan Total Harga Awal -->
-                    <v-col cols="12" md="6">
-                      <v-select
-                        v-model="editedItem.metode_pembayaran"
-                        :items="[
-                          { title: 'Otomatis (Bulanan)', value: 'Otomatis' },
-                          { title: 'Prorate (Proporsional)', value: 'Prorate' }
-                        ]"
-                        label="Metode Pembayaran"
-                        variant="solo-filled"
-                        prepend-inner-icon="mdi-cash-multiple"
-                        class="enhanced-form-field"
-                        hide-details="auto"
-                      ></v-select>
-                    </v-col>
+  <div class="enhanced-form-section">
+    <div class="enhanced-section-header">
+      <div class="section-icon"><v-icon>mdi-wifi</v-icon></div>
+      <span class="section-title">Paket & Pembayaran</span>
+    </div>
+    <v-card class="enhanced-section-card">
+      <v-row>
+        <v-col cols="12">
+          <v-select
+            v-model="editedItem.paket_layanan_id"
+            :items="filteredPaketLayanan"
+            :loading="paketLoading"
+            item-title="nama_paket"
+            item-value="id"
+            label="Pilih Paket Layanan"
+            :disabled="!editedItem.pelanggan_id || isPaketLocked"
+            placeholder="Pilih pelanggan terlebih dahulu"
+            variant="solo-filled"
+            prepend-inner-icon="mdi-wifi-star"
+            :rules="[rules.required]"
+            class="enhanced-form-field"
+            hide-details="auto"
+          >
+            <template v-slot:item="{ props, item }">
+              <v-list-item v-bind="props" class="px-4">
+                <template v-slot:prepend>
+                  <v-avatar color="indigo" size="32">
+                    <v-icon color="white" size="16">mdi-wifi</v-icon>
+                  </v-avatar>
+                </template>
+                <v-list-item-title class="font-weight-medium">{{ item.raw.nama_paket }}</v-list-item-title>
+                <v-list-item-subtitle>{{ item.raw.kecepatan }} Mbps - {{ formatCurrency(item.raw.harga) }}</v-list-item-subtitle>
+              </v-list-item>
+            </template>
+          </v-select>
+        </v-col>
+        
+        <v-col cols="12" md="6">
+          <v-select
+            v-model="editedItem.metode_pembayaran"
+            :items="[{ title: 'Otomatis (Bulanan)', value: 'Otomatis' }, { title: 'Prorate (Proporsional)', value: 'Prorate' }]"
+            label="Metode Pembayaran"
+            variant="solo-filled"
+            prepend-inner-icon="mdi-cash-multiple"
+            class="enhanced-form-field"
+            hide-details="auto"
+          ></v-select>
+        </v-col>
 
-                    <v-col cols="12" md="6">
-                      <v-text-field
-                        v-model="editedItem.harga_awal"
-                        label="Total Harga Awal"
-                        variant="solo-filled"
-                        prepend-inner-icon="mdi-currency-usd"
-                        prefix="Rp"
-                        readonly
-                        class="enhanced-form-field enhanced-price-field"
-                        hide-details="auto"
-                      ></v-text-field>
-                    </v-col>
+        <v-col v-if="editedItem.metode_pembayaran === 'Otomatis'" cols="12" md="6">
+          <v-text-field
+            :model-value="editedItem.harga_awal"
+            label="Total Harga Bulanan"
+            variant="solo-filled"
+            prepend-inner-icon="mdi-currency-usd"
+            prefix="Rp"
+            readonly
+            class="enhanced-form-field enhanced-price-field"
+          ></v-text-field>
+        </v-col>
 
-                    <!-- Baris untuk Tanggal Mulai Langganan (hanya muncul jika Prorate) -->
-                    <v-col v-if="editedItem.metode_pembayaran === 'Prorate'" cols="12" md="6">
-                      <v-text-field
-                        v-model="editedItem.tgl_mulai_langganan"
-                        label="Tanggal Mulai Langganan"
-                        type="date"
-                        variant="solo-filled"
-                        prepend-inner-icon="mdi-calendar-start"
-                        class="enhanced-form-field"
-                        hide-details="auto"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </div>
+        <template v-if="editedItem.metode_pembayaran === 'Prorate'">
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="editedItem.tgl_mulai_langganan"
+              label="Tanggal Mulai Langganan"
+              type="date"
+              variant="solo-filled"
+              prepend-inner-icon="mdi-calendar-start"
+              class="enhanced-form-field"
+              hide-details="auto"
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="12">
+            <v-switch
+              v-model="isProratePlusFull"
+              color="primary"
+              label="Sertakan tagihan penuh untuk bulan depan"
+              inset
+              hide-details
+            ></v-switch>
+          </v-col>
+
+          <v-col v-if="!isProratePlusFull" cols="12">
+            <v-text-field
+              :model-value="editedItem.harga_awal"
+              label="Total Harga Prorate (sisa bulan ini)"
+              variant="solo-filled"
+              prepend-inner-icon="mdi-currency-usd"
+              prefix="Rp"
+              readonly
+              class="enhanced-form-field enhanced-price-field"
+            ></v-text-field>
+          </v-col>
+
+          <template v-if="isProratePlusFull">
+            <v-col v-if="hargaProrate > 0" cols="12">
+              <v-alert
+                variant="tonal"
+                color="primary"
+                icon="mdi-information-outline"
+                density="compact"
+              >
+                <p class="font-weight-bold">Rincian Tagihan Pertama:</p>
+                <ul class="ms-4 text-body-2">
+                  <li>Biaya Prorate (sisa bulan ini): <strong>{{ formatCurrency(hargaProrate) }}</strong></li>
+                  <li>Biaya Penuh (bulan depan): <strong>{{ formatCurrency(hargaNormal) }}</strong></li>
+                </ul>
+              </v-alert>
             </v-col>
+            <v-col cols="12">
+              <v-text-field
+                :model-value="editedItem.harga_awal"
+                label="Total Tagihan Pertama (Prorate + Bulan Depan)"
+                variant="solo-filled"
+                prepend-inner-icon="mdi-currency-usd-circle"
+                prefix="Rp"
+                readonly
+                class="enhanced-form-field enhanced-price-field"
+              ></v-text-field>
+            </v-col>
+          </template>
+        </template>
+        
+      </v-row>
+    </v-card>
+  </div>
+</v-col>
 
                 <!-- Status & Tanggal Section -->
                 <v-col cols="12">
@@ -647,6 +692,10 @@ const selectedPaket = ref<number | null>(null);
 const selectedStatus = ref<string | null>(null);
 const statusOptions = ref(['Aktif', 'Suspended', 'Berhenti']);
 
+const isProratePlusFull = ref<boolean>(false);
+const hargaProrate = ref<number>(0);
+const hargaNormal = ref<number>(0);
+
 
 function handleFileSelection(newFiles: File | File[]) {
   importErrors.value = [];
@@ -758,11 +807,65 @@ watch(() => editedItem.value.pelanggan_id, async (newPelangganId) => {
 }, { immediate: true });
 
 // --- Logic Watcher ---
-watch(
-  () => [editedItem.value.metode_pembayaran, editedItem.value.paket_layanan_id, editedItem.value.pelanggan_id, editedItem.value.tgl_mulai_langganan],
-  async ([metode, paketId, pelangganId, tglMulai]) => {
+// watch(
+//   () => [editedItem.value.metode_pembayaran, editedItem.value.paket_layanan_id, editedItem.value.pelanggan_id, editedItem.value.tgl_mulai_langganan],
+//   async ([metode, paketId, pelangganId, tglMulai]) => {
     
-    // Jangan lakukan apa-apa jika metode bukan Prorate dan tanggal mulai belum diisi
+//     // Jangan lakukan apa-apa jika metode bukan Prorate dan tanggal mulai belum diisi
+//     if (metode === 'Prorate' && !tglMulai && editedIndex.value === -1) {
+//       return; 
+//     }
+    
+//     if (!dialog.value || !paketId || !pelangganId) {
+//       if(editedIndex.value === -1) {
+//         editedItem.value.harga_awal = 0;
+//       }
+//       return;
+//     }
+
+//     // Gunakan API calculate-price untuk perhitungan yang akurat
+//     try {
+//       // --- PERUBAHAN PAYLOAD API ---
+//       const payload = {
+//         paket_layanan_id: paketId,
+//         metode_pembayaran: metode,
+//         pelanggan_id: pelangganId,
+//         // Kirim tgl_mulai jika metode Prorate, jika tidak, biarkan backend menggunakan default (today)
+//         ...(metode === 'Prorate' && { tgl_mulai: tglMulai }) 
+//       };
+      
+//       const response = await apiClient.post('/langganan/calculate-price', payload);
+      
+//       editedItem.value.harga_awal = response.data.harga_awal;
+//       editedItem.value.tgl_jatuh_tempo = response.data.tgl_jatuh_tempo;
+      
+//     } catch (error: unknown) {
+//       // ... (fallback logic tetap sama, bisa juga di-update untuk menggunakan tglMulai)
+//       console.error('Error memanggil API calculate-price:', error);
+//     }
+//   },
+//   { deep: true } // Gunakan deep watch untuk memantau properti objek
+// );
+
+watch(
+  () => [
+    editedItem.value.metode_pembayaran, 
+    editedItem.value.paket_layanan_id, 
+    editedItem.value.pelanggan_id, 
+    editedItem.value.tgl_mulai_langganan,
+    isProratePlusFull.value // Pantau juga switch
+  ],
+  async ([metode, paketId, pelangganId, tglMulai, proratePlus]) => {
+    
+    // Reset rincian harga setiap kali ada perubahan
+    hargaProrate.value = 0;
+    hargaNormal.value = 0;
+
+    // Jika beralih ke Otomatis, matikan switch
+    if (metode === 'Otomatis') {
+      isProratePlusFull.value = false;
+    }
+
     if (metode === 'Prorate' && !tglMulai && editedIndex.value === -1) {
       return; 
     }
@@ -774,29 +877,42 @@ watch(
       return;
     }
 
-    // Gunakan API calculate-price untuk perhitungan yang akurat
+    let endpoint = '/langganan/calculate-price';
+    // Pilih endpoint yang benar
+    if (metode === 'Prorate' && proratePlus) {
+      endpoint = '/langganan/calculate-prorate-plus-full';
+    }
+
     try {
-      // --- PERUBAHAN PAYLOAD API ---
       const payload = {
         paket_layanan_id: paketId,
         metode_pembayaran: metode,
         pelanggan_id: pelangganId,
-        // Kirim tgl_mulai jika metode Prorate, jika tidak, biarkan backend menggunakan default (today)
-        ...(metode === 'Prorate' && { tgl_mulai: tglMulai }) 
+        ...(metode !== 'Otomatis' && { tgl_mulai: tglMulai })
       };
       
-      const response = await apiClient.post('/langganan/calculate-price', payload);
+      const response = await apiClient.post(endpoint, payload);
       
-      editedItem.value.harga_awal = response.data.harga_awal;
+      // Tangani dua jenis response
+      if (metode === 'Prorate' && proratePlus) {
+        editedItem.value.harga_awal = response.data.harga_total_awal;
+        hargaProrate.value = response.data.harga_prorate || 0;
+        hargaNormal.value = response.data.harga_normal || 0;
+      } else {
+        editedItem.value.harga_awal = response.data.harga_awal;
+      }
+      
       editedItem.value.tgl_jatuh_tempo = response.data.tgl_jatuh_tempo;
       
     } catch (error: unknown) {
-      // ... (fallback logic tetap sama, bisa juga di-update untuk menggunakan tglMulai)
-      console.error('Error memanggil API calculate-price:', error);
+      console.error(`Error memanggil API ${endpoint}:`, error);
+      editedItem.value.harga_awal = 0;
     }
   },
-  { deep: true } // Gunakan deep watch untuk memantau properti objek
+  { deep: true }
 );
+
+
 
 // --- API Methods ---
 async function fetchLangganan() {
@@ -903,27 +1019,39 @@ function closeDialog() {
 }
 
 async function saveLangganan() {
+  // Validasi form (tidak berubah)
   if (!isFormValid.value) return;
   
   saving.value = true;
-  const dataToSave = { ...editedItem.value };
+  
+  // Siapkan payload yang akan dikirim ke backend
+  const dataToSave = {
+    pelanggan_id: editedItem.value.pelanggan_id,
+    paket_layanan_id: editedItem.value.paket_layanan_id,
+    status: editedItem.value.status,
+    metode_pembayaran: editedItem.value.metode_pembayaran,
+    tgl_mulai_langganan: editedItem.value.tgl_mulai_langganan,
+
+    // Kirim status switch ke backend
+    sertakan_bulan_depan: isProratePlusFull.value 
+  };
 
   try {
     if (editedIndex.value > -1) {
-    // Pastikan payload ini LENGKAP
-    await apiClient.patch(`/langganan/${dataToSave.id}`, {
-      paket_layanan_id: dataToSave.paket_layanan_id,
-      status: dataToSave.status,
-      // ===== PASTIKAN SEMUA FIELD INI ADA =====
-      metode_pembayaran: dataToSave.metode_pembayaran,
-      tgl_jatuh_tempo: dataToSave.tgl_jatuh_tempo,
-      harga_awal: dataToSave.harga_awal
-      // =======================================
-    });
-  } else {
-    // Blok "create" tidak perlu diubah
-    await apiClient.post('/langganan/', dataToSave);
-  }
+      // Logika update tidak perlu mengirim 'sertakan_bulan_depan'
+      // jadi kita bisa gunakan payload yang lebih sederhana
+      const updatePayload = {
+        paket_layanan_id: editedItem.value.paket_layanan_id,
+        status: editedItem.value.status,
+        metode_pembayaran: editedItem.value.metode_pembayaran,
+        tgl_jatuh_tempo: editedItem.value.tgl_jatuh_tempo,
+        harga_awal: editedItem.value.harga_awal
+      };
+      await apiClient.patch(`/langganan/${editedItem.value.id}`, updatePayload);
+    } else {
+      // Saat membuat baru, kirim payload yang sudah kita siapkan
+      await apiClient.post('/langganan/', dataToSave);
+    }
     fetchLangganan();
     closeDialog();
   } catch (error) { 

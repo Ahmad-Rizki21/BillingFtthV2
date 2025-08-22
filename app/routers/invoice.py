@@ -121,6 +121,7 @@ async def _process_successful_payment(
 
     langganan = pelanggan.langganan[0]
 
+    # Update status invoice (tidak berubah)
     invoice.status_invoice = "Lunas"
     if payload:
         invoice.paid_amount = float(payload.get("paid_amount", invoice.total_harga))
@@ -133,38 +134,42 @@ async def _process_successful_payment(
 
     next_due_date = None
 
+    # ▼▼▼ BLOK LOGIKA YANG DIPERBAIKI ▼▼▼
     if langganan.metode_pembayaran == "Prorate":
         paket = langganan.paket_layanan
         brand = pelanggan.harga_layanan
-
         langganan.metode_pembayaran = "Otomatis"
-
         current_due_date = invoice.tgl_jatuh_tempo
-        next_due_date = (current_due_date + relativedelta(days=1)).replace(day=1)
 
-        if paket and brand:
+        if not paket or not brand:
+            logger.error(f"Data paket/brand tidak lengkap untuk langganan ID {langganan.id}")
+            # Set fallback jika data tidak ada, agar tidak crash
+            next_due_date = (current_due_date + relativedelta(months=1)).replace(day=1)
+        else:
+            # Hitung harga normal penuh sebagai pembanding
             harga_paket = float(paket.harga)
             pajak_persen = float(brand.pajak)
-            harga_baru_otomatis = harga_paket * (1 + (pajak_persen / 100))
+            harga_normal_full = harga_paket * (1 + (pajak_persen / 100))
 
-            langganan.harga_awal = round(harga_baru_otomatis, 0)
-
-            logger.info(
-                f"Harga langganan ID {langganan.id} diupdate ke harga Otomatis: {langganan.harga_awal}"
-            )
-        else:
-            logger.error(
-                f"Data paket atau brand tidak lengkap untuk langganan ID {langganan.id}. Harga tidak diupdate."
-            )
-
-        logger.info(
-            f"Langganan ID {langganan.id} diubah ke Otomatis. Jatuh tempo berikutnya: {next_due_date}"
-        )
-
-    else:  # Jika sudah Otomatis
+            # Logika Pembeda: Apakah ini tagihan prorate biasa atau gabungan?
+            if invoice.total_harga > (harga_normal_full + 1):
+                # Skenario 1: INI ADALAH TAGIHAN GABUNGAN
+                next_due_date = (current_due_date + relativedelta(months=2)).replace(day=1)
+                logger.info(f"Tagihan gabungan terdeteksi. Jatuh tempo berikutnya diatur ke {next_due_date}")
+            else:
+                # Skenario 2: INI ADALAH TAGIHAN PRORATE BIASA
+                next_due_date = (current_due_date + relativedelta(months=1)).replace(day=1)
+                logger.info(f"Tagihan prorate biasa terdeteksi. Jatuh tempo berikutnya diatur ke {next_due_date}")
+            
+            # Reset harga langganan ke harga normal untuk bulan-bulan berikutnya
+            langganan.harga_awal = round(harga_normal_full, 0)
+    
+    else:  # Skenario 3: Jika sudah Otomatis (PEMBAYARAN BULANAN NORMAL)
         current_due_date = langganan.tgl_jatuh_tempo or date.today()
+        # Jatuh tempo berikutnya adalah 1 bulan dari sekarang
         next_due_date = (current_due_date + relativedelta(months=1)).replace(day=1)
-
+    
+    # Update langganan (tidak berubah)
     langganan.status = "Aktif"
     langganan.tgl_jatuh_tempo = next_due_date
     langganan.tgl_invoice_terakhir = date.today()
@@ -388,22 +393,38 @@ async def generate_manual_invoice(
     await db.flush()
 
     try:
-        # --- PERUBAHAN DIMULAI DI SINI ---
         deskripsi_xendit = ""
         jatuh_tempo_str_lengkap = db_invoice.tgl_jatuh_tempo.strftime("%d/%m/%Y")
 
-        # Cek metode pembayaran dari data langganan
         if langganan.metode_pembayaran == "Prorate":
-            # Jika Prorate, buat deskripsi dengan periode
-            start_day = db_invoice.tgl_invoice.day
-            end_day = db_invoice.tgl_jatuh_tempo.day
-            periode_str = db_invoice.tgl_jatuh_tempo.strftime("%B %Y")
-            deskripsi_xendit = (
-                f"Biaya berlangganan internet up to {paket.kecepatan} Mbps, "
-                f"Periode Tgl {start_day}-{end_day} {periode_str}"
-            )
+            
+            # Hitung harga normal untuk perbandingan
+            harga_normal_full = float(paket.harga) * (1 + (float(brand.pajak) / 100))
+
+            # Cek apakah ini invoice gabungan
+            if db_invoice.total_harga > (harga_normal_full + 1):
+                # INI TAGIHAN GABUNGAN
+                start_day = db_invoice.tgl_invoice.day
+                end_day = db_invoice.tgl_jatuh_tempo.day
+                periode_prorate_str = db_invoice.tgl_jatuh_tempo.strftime("%B %Y")
+                periode_berikutnya_str = (db_invoice.tgl_jatuh_tempo + relativedelta(months=1)).strftime("%B %Y")
+                
+                deskripsi_xendit = (
+                    f"Biaya internet up to {paket.kecepatan} Mbps. "
+                    f"Periode Prorate {start_day}-{end_day} {periode_prorate_str} + "
+                    f"Periode {periode_berikutnya_str}"
+                )
+            else:
+                # INI TAGIHAN PRORATE BIASA
+                start_day = db_invoice.tgl_invoice.day
+                end_day = db_invoice.tgl_jatuh_tempo.day
+                periode_str = db_invoice.tgl_jatuh_tempo.strftime("%B %Y")
+                deskripsi_xendit = (
+                    f"Biaya berlangganan internet up to {paket.kecepatan} Mbps, "
+                    f"Periode Tgl {start_day}-{end_day} {periode_str}"
+                )
+            
         else:  # Otomatis
-            # Jika Otomatis, gunakan format deskripsi yang lama
             deskripsi_xendit = (
                 f"Biaya berlangganan internet up to {paket.kecepatan} Mbps "
                 f"jatuh tempo pembayaran tanggal {jatuh_tempo_str_lengkap}"

@@ -2,6 +2,7 @@
 
 import logging
 from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
 from sqlalchemy.future import select
 from sqlalchemy import update
 from sqlalchemy.orm import selectinload
@@ -59,20 +60,38 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         await db.flush()
 
         deskripsi_xendit = ""
-        jatuh_tempo_str_lengkap = db_invoice.tgl_jatuh_tempo.strftime("%d/%m/%Y")
+        jatuh_tempo_str_lengkap = db_invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
 
-        if langganan.metode_pembayaran == "Prorate":
-            # Variabel didefinisikan di sini
-            start_day = db_invoice.tgl_invoice.day
-            end_day = db_invoice.tgl_jatuh_tempo.day  # Variabel yang benar
-            periode_str = db_invoice.tgl_jatuh_tempo.strftime("%B %Y")
+        if langganan.metode_pembayaran == 'Prorate':
+            # ▼▼▼ LOGIKA BARU DIMULAI DI SINI ▼▼▼
 
-            # --- PERBAIKAN DI SINI ---
-            deskripsi_xendit = (
-                f"Biaya berlangganan internet up to {paket.kecepatan} Mbps, "
-                f"Periode Tgl {start_day}-{end_day} {periode_str}"  # Menggunakan variabel 'end_day' yang benar
-            )
-        else:
+            # Hitung harga normal untuk perbandingan
+            harga_normal_full = float(paket.harga) * (1 + (float(brand.pajak) / 100))
+
+            # Cek apakah ini invoice gabungan
+            if db_invoice.total_harga > (harga_normal_full + 1):
+                 # INI TAGIHAN GABUNGAN
+                start_day = db_invoice.tgl_invoice.day
+                end_day = db_invoice.tgl_jatuh_tempo.day
+                periode_prorate_str = db_invoice.tgl_jatuh_tempo.strftime("%B %Y")
+                periode_berikutnya_str = (db_invoice.tgl_jatuh_tempo + relativedelta(months=1)).strftime("%B %Y")
+                
+                deskripsi_xendit = (
+                    f"Biaya internet up to {paket.kecepatan} Mbps. "
+                    f"Periode Prorate {start_day}-{end_day} {periode_prorate_str} + "
+                    f"Periode {periode_berikutnya_str}"
+                )
+            else:
+                # INI TAGIHAN PRORATE BIASA
+                start_day = db_invoice.tgl_invoice.day
+                end_day = db_invoice.tgl_jatuh_tempo.day 
+                periode_str = db_invoice.tgl_jatuh_tempo.strftime('%B %Y')
+                deskripsi_xendit = (
+                    f"Biaya berlangganan internet up to {paket.kecepatan} Mbps, "
+                    f"Periode Tgl {start_day}-{end_day} {periode_str}"
+                )
+            
+        else: # Otomatis
             deskripsi_xendit = (
                 f"Biaya berlangganan internet up to {paket.kecepatan} Mbps "
                 f"jatuh tempo pembayaran tanggal {jatuh_tempo_str_lengkap}"

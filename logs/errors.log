@@ -1082,3 +1082,41 @@ WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
 2025-08-21 21:16:36 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
 2025-08-21 21:16:51 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
 2025-08-22 09:39:50 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-22 14:54:12 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:54:17 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:54:22 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:54:27 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:54:32 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:54:37 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:55:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:56:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:57:21 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 14:57:22 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:08 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:12 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:17 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:22 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:27 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:32 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:37 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:42 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:47 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:52 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:32:57 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:33:03 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:33:08 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:33:13 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:33:19 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:33:24 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:33:32 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:33:34 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:34:32 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:35:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:36:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:37:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:38:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 16:39:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 17:45:11 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 17:45:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 17:46:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-22 17:47:12 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
