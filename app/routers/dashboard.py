@@ -6,6 +6,9 @@ from sqlalchemy import func, select
 from datetime import datetime, timedelta
 import asyncio
 from pydantic import BaseModel
+from typing import Dict
+from collections import defaultdict
+
 
 from ..models.langganan import Langganan as LanggananModel
 from ..models.invoice import Invoice as InvoiceModel
@@ -205,3 +208,87 @@ async def get_growth_trend_data(db: AsyncSession = Depends(get_db)):
     return GrowthChartData(labels=labels, data=data)
 
 # =========================================== Chart untuk menampilkan penambahan User =======================================
+
+
+# --- 1. Definisikan Skema Pydantic Baru untuk Respons ---
+# Ini akan mendefinisikan struktur data yang rapi untuk frontend
+
+class BreakdownItem(BaseModel):
+    """Mewakili satu item dalam rincian (misal: satu lokasi atau satu brand)."""
+    nama: str
+    jumlah: int
+
+class PaketDetail(BaseModel):
+    """Mewakili rincian lengkap untuk satu jenis paket."""
+    total_pelanggan: int
+    breakdown_lokasi: List[BreakdownItem]
+    breakdown_brand: List[BreakdownItem]
+
+
+# --- 2. Buat Endpoint API Baru ---
+
+@router.get("/paket-details", response_model=Dict[str, PaketDetail])
+async def get_paket_details(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint baru untuk memberikan rincian pelanggan per paket,
+    dipecah berdasarkan lokasi dan brand.
+    """
+    # Query ini akan menggabungkan 4 tabel: 
+    # PaketLayanan -> Langganan -> Pelanggan -> HargaLayanan (untuk brand)
+    stmt = select(
+        PaketLayanan.kecepatan,
+        Pelanggan.alamat,
+        HargaLayanan.brand,
+        func.count(Pelanggan.id).label("jumlah")
+    ).select_from(
+        PaketLayanan
+    ).join(
+        Langganan, PaketLayanan.id == Langganan.paket_layanan_id
+    ).join(
+        Pelanggan, Langganan.pelanggan_id == Pelanggan.id
+    ).join(
+        HargaLayanan, Pelanggan.id_brand == HargaLayanan.id_brand
+    ).group_by(
+        PaketLayanan.kecepatan,
+        Pelanggan.alamat,
+        HargaLayanan.brand
+    ).order_by(
+        PaketLayanan.kecepatan,
+        func.count(Pelanggan.id).desc()
+    )
+
+    result = await db.execute(stmt)
+    raw_data = result.all()
+
+    # Proses data mentah dari database menjadi struktur JSON yang kita inginkan
+    paket_details = defaultdict(lambda: {
+        "total_pelanggan": 0,
+        "lokasi": defaultdict(int),
+        "brand": defaultdict(int)
+    })
+
+    for kecepatan, alamat, brand, jumlah in raw_data:
+        if not alamat or not brand: # Lewati data yang tidak lengkap
+            continue
+            
+        paket_key = f"{kecepatan} Mbps"
+        details = paket_details[paket_key]
+        
+        details["total_pelanggan"] += jumlah
+        details["lokasi"][alamat] += jumlah
+        details["brand"][brand] += jumlah
+
+    # Format akhir agar sesuai dengan skema Pydantic
+    final_response = {}
+    for paket_key, details in paket_details.items():
+        # Urutkan lokasi dan brand berdasarkan jumlah terbanyak
+        sorted_lokasi = sorted(details["lokasi"].items(), key=lambda item: item[1], reverse=True)
+        sorted_brand = sorted(details["brand"].items(), key=lambda item: item[1], reverse=True)
+
+        final_response[paket_key] = PaketDetail(
+            total_pelanggan=details["total_pelanggan"],
+            breakdown_lokasi=[BreakdownItem(nama=nama, jumlah=jml) for nama, jml in sorted_lokasi],
+            breakdown_brand=[BreakdownItem(nama=nama, jumlah=jml) for nama, jml in sorted_brand]
+        )
+        
+    return final_response

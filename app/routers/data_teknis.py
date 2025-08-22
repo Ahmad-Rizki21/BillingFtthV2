@@ -87,8 +87,7 @@ async def create_data_teknis(
 @router.get("/", response_model=List[DataTeknisSchema])
 async def read_all_data_teknis(
     skip: int = 0, 
-    limit: int = 100,
-    # Tambahkan parameter filter
+    limit: Optional[int] = None, # <-- 1. Diubah menjadi Optional[int] = None
     search: Optional[str] = None,
     olt: Optional[str] = None,
     db: AsyncSession = Depends(get_db)
@@ -98,12 +97,10 @@ async def read_all_data_teknis(
     """
     query = (
         select(DataTeknisModel)
-        # JOIN dengan tabel Pelanggan agar bisa mencari berdasarkan nama
         .join(DataTeknisModel.pelanggan)
-        .options(selectinload(DataTeknisModel.pelanggan)) # Eager load data pelanggan
+        .options(selectinload(DataTeknisModel.pelanggan))
     )
 
-    # Filter pencarian umum (Nama Pelanggan, ID PPPoE, IP)
     if search:
         search_term = f"%{search}%"
         query = query.where(
@@ -115,11 +112,13 @@ async def read_all_data_teknis(
             )
         )
 
-    # Filter berdasarkan OLT
     if olt:
         query = query.where(DataTeknisModel.olt == olt)
 
-    query = query.offset(skip).limit(limit)
+    # <-- 2. Limit hanya diterapkan jika nilainya bukan None
+    if limit is not None:
+        query = query.offset(skip).limit(limit)
+
     result = await db.execute(query)
     data_teknis_list = result.scalars().all()
     return data_teknis_list

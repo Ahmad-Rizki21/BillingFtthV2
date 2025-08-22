@@ -1,0 +1,41 @@
+name: Python Linter & Security Scan
+
+# Kapan workflow ini akan berjalan
+on:
+  push:
+    branches: [ main, develop ] # Berjalan saat push ke branch main atau develop
+  pull_request:
+    branches: [ main ] # Berjalan saat ada pull request ke branch main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Menggunakan server Linux dari GitHub
+
+    steps:
+    # Langkah 1: Checkout kode dari repositori Anda
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Langkah 2: Setup Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13.6' # Sesuaikan dengan versi Python Anda
+
+    # Langkah 3: Install dependensi yang dibutuhkan untuk pengecekan
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 bandit black mypy
+
+    # Langkah 4: Jalankan Black untuk mengecek format (tanpa mengubah)
+    - name: Check code format with Black
+      run: black . --check
+
+    # Langkah 5: Jalankan Flake8 untuk mengecek style dan error
+    - name: Lint with Flake8
+      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    # Langkah 6: Jalankan Bandit untuk mengecek keamanan
+    - name: Security scan with Bandit
+      run: bandit -r .

@@ -43,6 +43,8 @@ async def get_all_invoices(
     status_invoice: Optional[str] = None,
     start_date: Optional[date] = None,
     end_date: Optional[date] = None,
+    skip: int = 0, # <-- TAMBAHKAN INI
+    limit: Optional[int] = None, # <-- TAMBAHKAN INI
 ):
     """Mengambil semua data invoice dengan filter."""
     query = (
@@ -68,6 +70,11 @@ async def get_all_invoices(
         query = query.where(InvoiceModel.tgl_jatuh_tempo >= start_date)
     if end_date:
         query = query.where(InvoiceModel.tgl_jatuh_tempo <= end_date)
+
+    # Terapkan paginasi setelah semua filter
+    if limit is not None:
+        query = query.offset(skip).limit(limit)
+    # ---------------------------
 
     result = await db.execute(query)
     return result.scalars().all()

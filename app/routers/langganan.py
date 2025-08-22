@@ -99,7 +99,7 @@ async def get_all_langganan(
     status: Optional[str] = None,
     for_invoice_selection: bool = False,
     skip: int = 0,
-    limit: int = 100,
+    limit: Optional[int] = None,
     db: AsyncSession = Depends(get_db)
 ):
     """Mengambil semua langganan dengan opsi filter dan paginasi."""
@@ -119,7 +119,11 @@ async def get_all_langganan(
     if status:
         query = query.where(LanggananModel.status == status)
 
-    result = await db.execute(query.offset(skip).limit(limit))
+    final_query = query.offset(skip)
+    if limit is not None:
+        final_query = final_query.limit(limit)
+        
+    result = await db.execute(final_query)
     return result.scalars().all()
 
 

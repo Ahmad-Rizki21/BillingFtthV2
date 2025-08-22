@@ -14,13 +14,11 @@ from .database import AsyncSessionLocal as SessionLocal
 from .models import Langganan as LanggananModel, Invoice as InvoiceModel, Pelanggan as PelangganModel
 from .services import mikrotik_service, xendit_service
 from .logging_config import log_scheduler_event
-from .routers.invoice import _process_successful_payment # Impor fungsi refaktor
-from .models.user import User as UserModel
-from .models.role import Role as RoleModel
-from .websocket_manager import manager
+from .routers.invoice import _process_successful_payment
 
 logger = logging.getLogger('app.jobs')
 
+# Fungsi generate_single_invoice tetap sama, tidak perlu diubah
 async def generate_single_invoice(db, langganan: LanggananModel):
     try:
         pelanggan = langganan.pelanggan
@@ -32,28 +30,18 @@ async def generate_single_invoice(db, langganan: LanggananModel):
             logger.error(f"Data tidak lengkap untuk langganan ID {langganan.id}. Skip.")
             return
 
-        # --- PERBAIKAN FINAL ---
-        
-        # 1. Hitung harga dan pajak
         harga_dasar = float(paket.harga)
         pajak_persen = float(brand.pajak)
-
-        # Hitung nilai pajak mentah
         pajak_mentah = harga_dasar * (pajak_persen / 100)
-
-        # Lakukan pembulatan matematis standar (round half up) sesuai aturan finance
         pajak = math.floor(pajak_mentah + 0.5)
-
-        # Total harga adalah harga dasar ditambah pajak yang sudah dibulatkan.
         total_harga = harga_dasar + pajak
         
-        # --- PERBAIKAN PADA new_invoice_data ---
         new_invoice_data = {
             "invoice_number": f"INV-{date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}",
             "pelanggan_id": pelanggan.id,
             "id_pelanggan": data_teknis.id_pelanggan,
             "brand": brand.brand,
-            "total_harga": total_harga, # Menggunakan total_harga yang sudah dihitung dengan benar
+            "total_harga": total_harga,
             "no_telp": pelanggan.no_telp,
             "email": pelanggan.email,
             "tgl_invoice": date.today(),
@@ -65,22 +53,21 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         db.add(db_invoice)
         await db.flush()
 
-        # --- PERUBAHAN DIMULAI DI SINI ---
         deskripsi_xendit = ""
         jatuh_tempo_str_lengkap = db_invoice.tgl_jatuh_tempo.strftime('%d/%m/%Y')
 
-        # Cek metode pembayaran dari data langganan
         if langganan.metode_pembayaran == 'Prorate':
-            # Jika Prorate, buat deskripsi dengan periode
+            # Variabel didefinisikan di sini
             start_day = db_invoice.tgl_invoice.day
-            end_day = db_invoice.tgl_jatuh_tempo.day
+            end_day = db_invoice.tgl_jatuh_tempo.day # Variabel yang benar
             periode_str = db_invoice.tgl_jatuh_tempo.strftime('%B %Y')
+            
+            # --- PERBAIKAN DI SINI ---
             deskripsi_xendit = (
                 f"Biaya berlangganan internet up to {paket.kecepatan} Mbps, "
-                f"Periode Tgl {start_day}-{end_day} {periode_str}"
+                f"Periode Tgl {start_day}-{end_day} {periode_str}" # Menggunakan variabel 'end_day' yang benar
             )
-        else: # Otomatis
-            # Jika Otomatis, gunakan format deskripsi yang lama
+        else:
             deskripsi_xendit = (
                 f"Biaya berlangganan internet up to {paket.kecepatan} Mbps "
                 f"jatuh tempo pembayaran tanggal {jatuh_tempo_str_lengkap}"
@@ -88,14 +75,8 @@ async def generate_single_invoice(db, langganan: LanggananModel):
             
         no_telp_xendit = f"+62{pelanggan.no_telp.lstrip('0')}" if pelanggan.no_telp else None
         
-        # 3. Panggil service Xendit dengan deskripsi yang sudah dinamis
         xendit_response = await xendit_service.create_xendit_invoice(
-            db_invoice, 
-            pelanggan, 
-            paket, 
-            deskripsi_xendit,
-            pajak,
-            no_telp_xendit
+            db_invoice, pelanggan, paket, deskripsi_xendit, pajak, no_telp_xendit
         )
 
         db_invoice.payment_link = xendit_response.get("short_url", xendit_response.get("invoice_url"))
@@ -106,47 +87,156 @@ async def generate_single_invoice(db, langganan: LanggananModel):
         logger.info(f"Invoice {db_invoice.invoice_number} berhasil dibuat untuk Langganan ID {langganan.id}")
 
     except Exception as e:
-        import traceback
         logger.error(f"Gagal membuat invoice untuk Langganan ID {langganan.id}: {e}\n{traceback.format_exc()}")
+
+
+
+# ==========================================================
+# --- JOB SCHEDULER YANG SUDAH DIOPTIMALKAN ---
+# ==========================================================
+
+async def job_generate_invoices():
+    log_scheduler_event(logger, 'job_generate_invoices', 'started')
+    target_due_date = date.today() + timedelta(days=5)
+    total_invoices_created = 0
+    BATCH_SIZE = 100
+    offset = 0
+
+    async with SessionLocal() as db:
+        while True:
+            try:
+                base_stmt = (
+                    select(LanggananModel)
+                    .where(
+                        LanggananModel.tgl_jatuh_tempo == target_due_date,
+                        LanggananModel.status == "Aktif"
+                    ).options(
+                        selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.harga_layanan),
+                        selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.data_teknis),
+                        selectinload(LanggananModel.paket_layanan)
+                    )
+                )
+                
+                batch_stmt = base_stmt.offset(offset).limit(BATCH_SIZE)
+                subscriptions_batch = (await db.execute(batch_stmt)).scalars().unique().all()
+
+                if not subscriptions_batch:
+                    break
+
+                for langganan in subscriptions_batch:
+                    existing_invoice_stmt = select(InvoiceModel.id).where(
+                        InvoiceModel.pelanggan_id == langganan.pelanggan_id,
+                        InvoiceModel.tgl_jatuh_tempo == langganan.tgl_jatuh_tempo
+                    ).limit(1)
+                    if not (await db.execute(existing_invoice_stmt)).scalar_one_or_none():
+                        await generate_single_invoice(db, langganan)
+                        total_invoices_created += 1
+
+                await db.commit()
+                offset += BATCH_SIZE
+
+            except Exception as e:
+                await db.rollback()
+                error_details = traceback.format_exc()
+                logger.error(f"[FAIL] Scheduler 'job_generate_invoices' failed at offset {offset}. Details:\n{error_details}")
+                break
+
+    if total_invoices_created > 0:
+        log_scheduler_event(logger, 'job_generate_invoices', 'completed', f"Berhasil membuat {total_invoices_created} invoice baru.")
+    else:
+        log_scheduler_event(logger, 'job_generate_invoices', 'completed', "Tidak ada invoice baru yang perlu dibuat.")
 
 async def job_suspend_services():
     log_scheduler_event(logger, 'job_suspend_services', 'started')
-    services_suspended = 0
+    total_services_suspended = 0
     current_date = date.today()
+    BATCH_SIZE = 50
+    offset = 0
 
     async with SessionLocal() as db:
-        try:
-            stmt = (
-                select(LanggananModel)
-                .join(InvoiceModel, LanggananModel.pelanggan_id == InvoiceModel.pelanggan_id)
-                .where(
-                    # LanggananModel.tgl_jatuh_tempo < current_date, #ini Logic Suspend di tanggal 2
-                    LanggananModel.tgl_jatuh_tempo <= current_date - timedelta(days=4), # ini Logic Suspend di tanggal 5
-                    LanggananModel.status == "Aktif",
-                    InvoiceModel.status_invoice == "Belum Dibayar"
-                ).options(
-                    selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.data_teknis)
+        while True:
+            try:
+                base_stmt = (
+                    select(LanggananModel)
+                    .join(InvoiceModel, LanggananModel.pelanggan_id == InvoiceModel.pelanggan_id)
+                    .where(
+                        LanggananModel.tgl_jatuh_tempo <= current_date - timedelta(days=4),
+                        LanggananModel.status == "Aktif",
+                        InvoiceModel.status_invoice == "Belum Dibayar"
+                    ).options(
+                        selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.data_teknis)
+                    )
                 )
-            )
-            overdue_subscriptions = (await db.execute(stmt)).scalars().all()
 
-            if not overdue_subscriptions:
-                log_scheduler_event(logger, 'job_suspend_services', 'completed', "Tidak ada layanan untuk di-suspend.")
-                return
+                batch_stmt = base_stmt.offset(offset).limit(BATCH_SIZE)
+                overdue_batch = (await db.execute(batch_stmt)).scalars().unique().all()
 
-            for langganan in overdue_subscriptions:
-                logger.info(f"LOOP SAAT INI UNTUK: Langganan ID {langganan.id}, User PPPoE: {langganan.pelanggan.data_teknis.id_pelanggan}")
-                logger.warning(f"Melakukan suspend layanan untuk Langganan ID: {langganan.id} karena terlambat pada {current_date}.")
-                langganan.status = "Suspended"
-                db.add(langganan)
-                await mikrotik_service.trigger_mikrotik_update(db, langganan)
-                services_suspended += 1
-            
-            await db.commit()
-            log_scheduler_event(logger, 'job_suspend_services', 'completed', f"Berhasil suspend {services_suspended} layanan.")
-        except Exception as e:
-            await db.rollback()
-            log_scheduler_event(logger, 'job_suspend_services', 'failed', str(e))
+                if not overdue_batch:
+                    break
+
+                for langganan in overdue_batch:
+                    logger.warning(f"Melakukan suspend layanan untuk Langganan ID: {langganan.id}...")
+                    langganan.status = "Suspended"
+                    db.add(langganan)
+                    await mikrotik_service.trigger_mikrotik_update(db, langganan)
+                
+                await db.commit()
+                total_services_suspended += len(overdue_batch)
+                offset += BATCH_SIZE
+
+            except Exception as e:
+                await db.rollback()
+                logger.error(f"[FAIL] Scheduler 'job_suspend_services' failed at offset {offset}. Details: {traceback.format_exc()}")
+                break 
+    
+    if total_services_suspended > 0:
+        log_scheduler_event(logger, 'job_suspend_services', 'completed', f"Berhasil suspend {total_services_suspended} layanan.")
+    else:
+        log_scheduler_event(logger, 'job_suspend_services', 'completed', "Tidak ada layanan baru untuk di-suspend.")
+
+async def job_send_payment_reminders():
+    log_scheduler_event(logger, 'job_send_payment_reminders', 'started')
+    total_reminders_sent = 0
+    target_due_date = date.today() + timedelta(days=3)
+    BATCH_SIZE = 100
+    offset = 0
+
+    async with SessionLocal() as db:
+        while True:
+            try:
+                base_stmt = (
+                    select(LanggananModel)
+                    .where(
+                        LanggananModel.tgl_jatuh_tempo == target_due_date,
+                        LanggananModel.status == "Aktif"
+                    ).options(
+                        selectinload(LanggananModel.pelanggan)
+                    )
+                )
+
+                batch_stmt = base_stmt.offset(offset).limit(BATCH_SIZE)
+                reminder_batch = (await db.execute(batch_stmt)).scalars().unique().all()
+
+                if not reminder_batch:
+                    break
+
+                for langganan in reminder_batch:
+                    pelanggan = langganan.pelanggan
+                    logger.info(f"Mengirim pengingat pembayaran untuk pelanggan ID: {pelanggan.id} ({pelanggan.nama})")
+                    # Di sini Anda bisa menambahkan logika pengiriman notifikasi (WA, Email, dll)
+                    total_reminders_sent += 1
+                
+                # Tidak ada db.commit() karena kita hanya membaca data
+                offset += BATCH_SIZE
+
+            except Exception as e:
+                logger.error(f"[FAIL] Scheduler 'job_send_payment_reminders' failed at offset {offset}. Details: {traceback.format_exc()}")
+                break
+
+    if total_reminders_sent > 0:
+        log_scheduler_event(logger, 'job_send_payment_reminders', 'completed', f"Berhasil mengirim {total_reminders_sent} pengingat pembayaran.")
+    else:
+        log_scheduler_event(logger, 'job_send_payment_reminders', 'completed', "Tidak ada pelanggan untuk dikirim pengingat hari ini.")
 
 async def job_verify_payments():
     """Job untuk rekonsiliasi pembayaran dan menandai invoice kedaluwarsa."""
@@ -154,7 +244,7 @@ async def job_verify_payments():
     
     async with SessionLocal() as db:
         try:
-            # Bagian 1: Tandai Invoice Kedaluwarsa (Batch Update)
+            # Bagian 1: Tandai Invoice Kedaluwarsa (Batch Update) - Ini sudah efisien
             expired_stmt = (
                 update(InvoiceModel)
                 .where(
@@ -167,7 +257,7 @@ async def job_verify_payments():
             if result.rowcount > 0:
                 logger.info(f"[VERIFY] Menandai {result.rowcount} invoice sebagai kedaluwarsa.")
 
-            # Bagian 2: Rekonsiliasi Pembayaran Terlewat (Batch API & SELECT)
+            # Bagian 2: Rekonsiliasi Pembayaran Terlewat - Ini sudah efisien
             paid_invoice_ids = await xendit_service.get_paid_invoice_ids_since(days=3)
 
             if not paid_invoice_ids:
@@ -198,112 +288,3 @@ async def job_verify_payments():
             await db.rollback()
             error_details = traceback.format_exc()
             logger.error(f"[FAIL] Scheduler 'job_verify_payments' failed. Details:\n{error_details}")
-
-async def job_generate_invoices():
-    log_scheduler_event(logger, 'job_generate_invoices', 'started')
-    # Penyesuaian: Job ini seharusnya berjalan setiap hari untuk H-5,
-    # jadi kita gunakan tanggal hari ini untuk kalkulasi.
-    target_due_date = date.today() + timedelta(days=5)
-    invoices_created = 0
-
-    async with SessionLocal() as db:
-        try:
-            stmt = (
-                select(LanggananModel)
-                .where(
-                    LanggananModel.tgl_jatuh_tempo == target_due_date,
-                    LanggananModel.status == "Aktif"
-                ).options(
-                    selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.harga_layanan),
-                    selectinload(LanggananModel.pelanggan).selectinload(PelangganModel.data_teknis),
-                    selectinload(LanggananModel.paket_layanan)
-                )
-            )
-            subscriptions_to_invoice = (await db.execute(stmt)).scalars().unique().all()
-
-            if not subscriptions_to_invoice:
-                log_scheduler_event(logger, 'job_generate_invoices', 'completed', "Tidak ada invoice untuk dibuat hari ini.")
-                return
-
-            for langganan in subscriptions_to_invoice:
-                # Cek apakah invoice untuk periode ini sudah ada
-                existing_invoice_stmt = (
-                    select(InvoiceModel.id).where(
-                        InvoiceModel.pelanggan_id == langganan.pelanggan_id,
-                        InvoiceModel.tgl_jatuh_tempo == langganan.tgl_jatuh_tempo
-                    ).limit(1)
-                )
-                existing_invoice = (await db.execute(existing_invoice_stmt)).scalar_one_or_none()
-
-                if not existing_invoice:
-                    await generate_single_invoice(db, langganan)
-                    invoices_created += 1
-                else:
-                    logger.debug(f"Invoice untuk langganan ID {langganan.id} dengan jatuh tempo {langganan.tgl_jatuh_tempo} sudah ada, dilewati.")
-            
-            await db.commit()
-            if invoices_created > 0:
-                log_scheduler_event(logger, 'job_generate_invoices', 'completed', f"Berhasil membuat {invoices_created} invoice baru.")
-            else:
-                log_scheduler_event(logger, 'job_generate_invoices', 'completed', "Tidak ada invoice baru yang perlu dibuat (semua sudah ada).")
-
-        except Exception as e:
-            await db.rollback()
-            import traceback
-            error_details = traceback.format_exc()
-            logger.error(f"[FAIL] Scheduler 'job_generate_invoices' failed. Details:\n{error_details}")
-
-# ===== TAMBAHKAN FUNGSI BARU DI SINI =====
-async def job_send_payment_reminders():
-    """
-    Job untuk mengirim pengingat pembayaran kepada pelanggan.
-    Contoh: Kirim pengingat untuk invoice yang akan jatuh tempo dalam 3 hari (H-3).
-    """
-    log_scheduler_event(logger, 'job_send_payment_reminders', 'started')
-    reminders_sent = 0
-    
-    # Target: cari invoice yang jatuh tempo 3 hari dari sekarang
-    target_due_date = date.today() + timedelta(days=3)
-
-    async with SessionLocal() as db:
-        try:
-            # Ambil semua langganan aktif yang jatuh temponya adalah H-3
-            stmt = (
-                select(LanggananModel)
-                .where(
-                    LanggananModel.tgl_jatuh_tempo == target_due_date,
-                    LanggananModel.status == "Aktif"
-                ).options(
-                    selectinload(LanggananModel.pelanggan) # Load data pelanggan
-                )
-            )
-            subscriptions_for_reminder = (await db.execute(stmt)).scalars().all()
-
-            if not subscriptions_for_reminder:
-                log_scheduler_event(logger, 'job_send_payment_reminders', 'completed', "Tidak ada pelanggan untuk dikirim pengingat hari ini.")
-                return
-
-            for langganan in subscriptions_for_reminder:
-                pelanggan = langganan.pelanggan
-                # Di sini Anda akan menambahkan logika untuk mengirim notifikasi
-                # Misalnya, melalui WhatsApp, Email, atau sistem notifikasi internal
-                
-                logger.info(f"Mengirim pengingat pembayaran untuk pelanggan ID: {pelanggan.id} ({pelanggan.nama})")
-                
-                # CONTOH: (Logika pengiriman notifikasi belum diimplementasikan)
-                # await send_whatsapp_reminder(
-                #     phone_number=pelanggan.no_telp,
-                #     message=f"Halo {pelanggan.nama}, tagihan internet Anda akan jatuh tempo pada {target_due_date.strftime('%d-%m-%Y')}. Mohon segera lakukan pembayaran."
-                # )
-                
-                reminders_sent += 1
-            
-            await db.commit()
-            log_scheduler_event(logger, 'job_send_payment_reminders', 'completed', f"Berhasil mengirim {reminders_sent} pengingat pembayaran.")
-
-        except Exception as e:
-            await db.rollback()
-            error_details = traceback.format_exc()
-            logger.error(f"[FAIL] Scheduler 'job_send_payment_reminders' failed. Details:\n{error_details}")
-
-# ============================================

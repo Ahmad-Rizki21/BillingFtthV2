@@ -81,7 +81,7 @@ async def create_pelanggan(
 @router.get("/", response_model=List[PelangganSchema])
 async def read_all_pelanggan(
     skip: int = 0, 
-    limit: int = 100, 
+    limit: Optional[int] = None,
     # Tambahkan parameter filter opsional di sini
     search: Optional[str] = None,
     alamat: Optional[str] = None,
@@ -113,7 +113,8 @@ async def read_all_pelanggan(
         query = query.where(PelangganModel.id_brand == id_brand)
 
     # Terapkan paginasi setelah semua filter
-    query = query.offset(skip).limit(limit)
+    if limit is not None:
+        query = query.offset(skip).limit(limit)
     
     result = await db.execute(query)
     pelanggan_list = result.scalars().all()
