@@ -8,10 +8,13 @@ if TYPE_CHECKING:
     from .harga_layanan import HargaLayanan
     from .langganan import Langganan
 
+
 class PaketLayanan(Base):
-    __tablename__ = 'paket_layanan'
+    __tablename__ = "paket_layanan"
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    id_brand: Mapped[str] = mapped_column(ForeignKey('harga_layanan.id_brand'), nullable=False)
+    id_brand: Mapped[str] = mapped_column(
+        ForeignKey("harga_layanan.id_brand"), nullable=False
+    )
     nama_paket: Mapped[str] = mapped_column(String(191), nullable=False)
     kecepatan: Mapped[int] = mapped_column(nullable=False)
     harga: Mapped[float] = mapped_column(Numeric(15, 2), nullable=False)

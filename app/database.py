@@ -19,19 +19,18 @@ engine = create_async_engine(
     DATABASE_URL,
     echo=False,  # echo=False di production untuk log yang lebih bersih
     pool_recycle=1800,  # Daur ulang koneksi setiap 30 menit
-    pool_pre_ping=True,   # Cek koneksi sebelum digunakan
-    pool_size=10,         # Jumlah koneksi minimum di pool
-    max_overflow=20       # Jumlah koneksi maksimum yang bisa dibuat
+    pool_pre_ping=True,  # Cek koneksi sebelum digunakan
+    pool_size=10,  # Jumlah koneksi minimum di pool
+    max_overflow=20,  # Jumlah koneksi maksimum yang bisa dibuat
 )
 # ------------------------------------------
 
 # Membuat session factory
-AsyncSessionLocal = sessionmaker(
-    engine, class_=AsyncSession, expire_on_commit=False
-)
+AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 # Base class untuk semua model SQLAlchemy
 Base = declarative_base()
+
 
 # Dependency untuk mendapatkan sesi database di setiap endpoint
 async def get_db():

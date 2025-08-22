@@ -12,10 +12,10 @@ from ..schemas.calculator import ProrateCalculationRequest, ProrateCalculationRe
 
 router = APIRouter(prefix="/calculator", tags=["Calculator"])
 
+
 @router.post("/prorate", response_model=ProrateCalculationResponse)
 async def calculate_prorate_price(
-    request: ProrateCalculationRequest, 
-    db: AsyncSession = Depends(get_db)
+    request: ProrateCalculationRequest, db: AsyncSession = Depends(get_db)
 ):
     # 1. Ambil data paket dan brand dari database
     paket = await db.get(PaketLayananModel, request.paket_layanan_id)
@@ -30,24 +30,24 @@ async def calculate_prorate_price(
     start_date = request.tgl_mulai
     harga_paket = float(paket.harga)
     pajak_persen = float(brand.pajak)
-    
+
     _, last_day_of_month = monthrange(start_date.year, start_date.month)
     remaining_days = last_day_of_month - start_date.day + 1
-    
+
     if remaining_days < 0:
         remaining_days = 0
 
     harga_per_hari = harga_paket / last_day_of_month
     harga_dasar_prorate = harga_per_hari * remaining_days
-    
+
     pajak_mentah = harga_dasar_prorate * (pajak_persen / 100)
-    pajak = math.floor(pajak_mentah + 0.5) # Pembulatan standar
-    
+    pajak = math.floor(pajak_mentah + 0.5)  # Pembulatan standar
+
     total_harga_prorate = round(harga_dasar_prorate + pajak, 0)
-    
+
     return ProrateCalculationResponse(
         harga_dasar_prorate=round(harga_dasar_prorate, 0),
         pajak=pajak,
         total_harga_prorate=total_harga_prorate,
-        periode_hari=remaining_days
+        periode_hari=remaining_days,
     )

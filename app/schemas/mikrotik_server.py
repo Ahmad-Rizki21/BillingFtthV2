@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 
+
 class MikrotikServerBase(BaseModel):
     name: str
     host_ip: str
@@ -9,16 +10,19 @@ class MikrotikServerBase(BaseModel):
     port: int = 8728
     is_active: bool = True
 
+
 class MikrotikServerCreate(MikrotikServerBase):
-    password: str # Wajib ada saat membuat
+    password: str  # Wajib ada saat membuat
+
 
 class MikrotikServerUpdate(BaseModel):
     name: Optional[str] = None
     host_ip: Optional[str] = None
     username: Optional[str] = None
-    password: Optional[str] = None # Opsional saat update
+    password: Optional[str] = None  # Opsional saat update
     port: Optional[int] = None
     is_active: Optional[bool] = None
+
 
 class MikrotikServer(MikrotikServerBase):
     id: int

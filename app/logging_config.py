@@ -34,6 +34,7 @@ STARTUP_BANNER = """
 +-------------------------------------------------------------+
 """
 
+
 # Detect if we can use Unicode characters
 def can_use_unicode():
     """Check if terminal supports Unicode characters"""
@@ -41,39 +42,41 @@ def can_use_unicode():
         # Check if we're in Windows cmd
         if platform.system() == "Windows":
             # Try to detect if we're in a modern terminal
-            if os.environ.get('WT_SESSION') or os.environ.get('TERM_PROGRAM'):
+            if os.environ.get("WT_SESSION") or os.environ.get("TERM_PROGRAM"):
                 return True
             return False
         return True
     except:
         return False
 
+
 USE_UNICODE = can_use_unicode()
 
 # --- Enhanced Helper Functions for Structured Logging ---
+
 
 def log_scheduler_event(logger, job_name: str, status: str, details: str = ""):
     """Enhanced scheduler logging with better formatting"""
     if USE_UNICODE:
         status_icons = {
-            "started": "🟢 [START]", 
-            "completed": "✅ [DONE]", 
+            "started": "🟢 [START]",
+            "completed": "✅ [DONE]",
             "failed": "🔴 [FAIL]",
-            "skipped": "⚠️  [SKIP]"
+            "skipped": "⚠️  [SKIP]",
         }
     else:
         status_icons = {
-            "started": "[START]", 
-            "completed": "[DONE]", 
+            "started": "[START]",
+            "completed": "[DONE]",
             "failed": "[FAIL]",
-            "skipped": "[SKIP]"
+            "skipped": "[SKIP]",
         }
-    
+
     icon = status_icons.get(status, "[INFO]")
     message = f"{icon} Scheduler '{job_name}' {status}"
     if details:
         message += f" | Details: {details}"
-    
+
     if status == "failed":
         logger.error(message)
     elif status == "completed":
@@ -81,30 +84,33 @@ def log_scheduler_event(logger, job_name: str, status: str, details: str = ""):
     else:
         logger.info(message)
 
-def log_mikrotik_operation(logger, operation: str, customer_id: str, status: str, details: str = ""):
+
+def log_mikrotik_operation(
+    logger, operation: str, customer_id: str, status: str, details: str = ""
+):
     """Enhanced MikroTik operation logging"""
     if USE_UNICODE:
         status_icons = {
-            "success": "✅ [OK]", 
-            "failed": "❌ [FAIL]", 
+            "success": "✅ [OK]",
+            "failed": "❌ [FAIL]",
             "info": "ℹ️  [INFO]",
             "connecting": "🔄 [CONN]",
-            "timeout": "⏰ [TIMEOUT]"
+            "timeout": "⏰ [TIMEOUT]",
         }
     else:
         status_icons = {
-            "success": "[OK]", 
-            "failed": "[FAIL]", 
+            "success": "[OK]",
+            "failed": "[FAIL]",
             "info": "[INFO]",
             "connecting": "[CONN]",
-            "timeout": "[TIMEOUT]"
+            "timeout": "[TIMEOUT]",
         }
-    
+
     icon = status_icons.get(status, "[OP]")
     message = f"{icon} MikroTik | {operation} for Customer: '{customer_id}'"
     if details:
         message += f" | {details}"
-    
+
     if status == "failed" or status == "timeout":
         logger.error(message)
     elif status == "success":
@@ -112,7 +118,10 @@ def log_mikrotik_operation(logger, operation: str, customer_id: str, status: str
     else:
         logger.info(message)
 
-def log_payment_event(logger, event: str, invoice_id: str, amount: str = "", details: str = ""):
+
+def log_payment_event(
+    logger, event: str, invoice_id: str, amount: str = "", details: str = ""
+):
     """Enhanced payment event logging"""
     if USE_UNICODE:
         event_icons = {
@@ -121,7 +130,7 @@ def log_payment_event(logger, event: str, invoice_id: str, amount: str = "", det
             "failed": "❌ [FAILED]",
             "pending": "⏳ [PENDING]",
             "cancelled": "🚫 [CANCELLED]",
-            "refunded": "↩️  [REFUND]"
+            "refunded": "↩️  [REFUND]",
         }
     else:
         event_icons = {
@@ -130,77 +139,94 @@ def log_payment_event(logger, event: str, invoice_id: str, amount: str = "", det
             "failed": "[FAILED]",
             "pending": "[PENDING]",
             "cancelled": "[CANCELLED]",
-            "refunded": "[REFUND]"
+            "refunded": "[REFUND]",
         }
-    
+
     icon = event_icons.get(event.lower(), "[PAYMENT]")
     message = f"{icon} Invoice: {invoice_id}"
     if amount:
         message += f" | Amount: {amount}"
     if details:
         message += f" | {details}"
-    
+
     if event.lower() in ["failed", "cancelled"]:
         logger.error(message)
     else:
         logger.info(message)
 
-def log_database_event(logger, operation: str, table: str, status: str, details: str = ""):
+
+def log_database_event(
+    logger, operation: str, table: str, status: str, details: str = ""
+):
     """Database operation logging"""
     if USE_UNICODE:
         status_icons = {
             "success": "✅ [OK]",
             "failed": "❌ [FAIL]",
             "connecting": "🔄 [CONN]",
-            "migrating": "🔄 [MIGRATE]"
+            "migrating": "🔄 [MIGRATE]",
         }
     else:
         status_icons = {
             "success": "[OK]",
             "failed": "[FAIL]",
             "connecting": "[CONN]",
-            "migrating": "[MIGRATE]"
+            "migrating": "[MIGRATE]",
         }
-    
+
     icon = status_icons.get(status, "[DB]")
     message = f"{icon} Database | {operation} on '{table}'"
     if details:
         message += f" | {details}"
-    
+
     if status == "failed":
         logger.error(message)
     else:
         logger.info(message)
 
-def log_api_request(logger, method: str, endpoint: str, status_code: int, duration: float = None):
+
+def log_api_request(
+    logger, method: str, endpoint: str, status_code: int, duration: float = None
+):
     """API request logging"""
     if USE_UNICODE:
-        status_icon = "✅" if 200 <= status_code < 300 else "⚠️" if 300 <= status_code < 400 else "❌"
+        status_icon = (
+            "✅"
+            if 200 <= status_code < 300
+            else "⚠️" if 300 <= status_code < 400 else "❌"
+        )
     else:
-        status_icon = "[OK]" if 200 <= status_code < 300 else "[WARN]" if 300 <= status_code < 400 else "[ERR]"
-    
+        status_icon = (
+            "[OK]"
+            if 200 <= status_code < 300
+            else "[WARN]" if 300 <= status_code < 400 else "[ERR]"
+        )
+
     message = f"{status_icon} [{method}] {endpoint} -> {status_code}"
     if duration:
         message += f" | {duration:.2f}ms"
-    
+
     if status_code >= 400:
         logger.warning(message)
     else:
         logger.info(message)
 
+
 # --- Enhanced Colored Formatter ---
+
 
 class EnhancedColoredFormatter(logging.Formatter):
     """Enhanced formatter with better colors and compatibility"""
+
     COLORS = {
-        'DEBUG': '\033[36m',      # Cyan
-        'INFO': '\033[92m',       # Bright Green
-        'WARNING': '\033[93m',    # Bright Yellow
-        'ERROR': '\033[91m',      # Bright Red
-        'CRITICAL': '\033[95m',   # Bright Magenta
-        'RESET': '\033[0m'
+        "DEBUG": "\033[36m",  # Cyan
+        "INFO": "\033[92m",  # Bright Green
+        "WARNING": "\033[93m",  # Bright Yellow
+        "ERROR": "\033[91m",  # Bright Red
+        "CRITICAL": "\033[95m",  # Bright Magenta
+        "RESET": "\033[0m",
     }
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Disable colors on Windows cmd if not supported
@@ -208,152 +234,152 @@ class EnhancedColoredFormatter(logging.Formatter):
             self.use_colors = False
         else:
             self.use_colors = True
-    
+
     def format(self, record):
         if self.use_colors:
-            color = self.COLORS.get(record.levelname, self.COLORS['RESET'])
-            reset = self.COLORS['RESET']
+            color = self.COLORS.get(record.levelname, self.COLORS["RESET"])
+            reset = self.COLORS["RESET"]
             record.levelname = f"{color}{record.levelname:<8}{reset}"
         else:
             record.levelname = f"{record.levelname:<8}"
-        
+
         # Clean module name
-        module_name = record.name.replace('app.', '').upper()
+        module_name = record.name.replace("app.", "").upper()
         if len(module_name) > 12:
             module_name = module_name[:9] + "..."
         record.name = f"{module_name:<12}"
-        
+
         return super().format(record)
+
 
 class FileFormatter(logging.Formatter):
     """Clean formatter for file output without colors"""
+
     def format(self, record):
-        record.name = record.name.replace('app.', '').upper()
+        record.name = record.name.replace("app.", "").upper()
         return super().format(record)
+
 
 # --- Core Logging Setup ---
 
+
 def setup_logging():
     """Enhanced logging setup with beautiful banner"""
-    
+
     # Create log directory
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
-    
+
     # Print ASCII Art Banner (safe for all terminals)
     print(ARTACOM_ASCII)
-    
+
     # Determine separator character
     separator = "|" if not USE_UNICODE else "│"
-    
+
     # Configuration dictionary
     logging_config = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'formatters': {
-            'colored': {
-                '()': EnhancedColoredFormatter,
-                'format': f'%(asctime)s {separator} %(name)s {separator} %(levelname)s {separator} %(message)s',
-                'datefmt': '%H:%M:%S'
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "colored": {
+                "()": EnhancedColoredFormatter,
+                "format": f"%(asctime)s {separator} %(name)s {separator} %(levelname)s {separator} %(message)s",
+                "datefmt": "%H:%M:%S",
             },
-            'detailed': {
-                '()': FileFormatter,
-                'format': f'%(asctime)s {separator} %(name)-15s {separator} %(levelname)-8s {separator} %(funcName)-20s {separator} %(message)s',
-                'datefmt': '%Y-%m-%d %H:%M:%S'
+            "detailed": {
+                "()": FileFormatter,
+                "format": f"%(asctime)s {separator} %(name)-15s {separator} %(levelname)-8s {separator} %(funcName)-20s {separator} %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
             },
-            'simple': {
-                '()': FileFormatter,
-                'format': f'%(asctime)s {separator} %(levelname)-8s {separator} %(message)s',
-                'datefmt': '%Y-%m-%d %H:%M:%S'
-            }
+            "simple": {
+                "()": FileFormatter,
+                "format": f"%(asctime)s {separator} %(levelname)-8s {separator} %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+            },
         },
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-                'level': 'INFO',
-                'formatter': 'colored',
-                'stream': sys.stdout,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "level": "INFO",
+                "formatter": "colored",
+                "stream": sys.stdout,
             },
-            'file_app': {
-                'class': 'logging.handlers.RotatingFileHandler',
-                'level': 'DEBUG',
-                'formatter': 'detailed',
-                'filename': log_dir / 'app.log',
-                'maxBytes': 10 * 1024 * 1024,  # 10MB
-                'backupCount': 5,
-                'encoding': 'utf-8'
+            "file_app": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "level": "DEBUG",
+                "formatter": "detailed",
+                "filename": log_dir / "app.log",
+                "maxBytes": 10 * 1024 * 1024,  # 10MB
+                "backupCount": 5,
+                "encoding": "utf-8",
             },
-            'file_error': {
-                'class': 'logging.handlers.RotatingFileHandler',
-                'level': 'ERROR',
-                'formatter': 'detailed',
-                'filename': log_dir / 'errors.log',
-                'maxBytes': 5 * 1024 * 1024,   # 5MB
-                'backupCount': 3,
-                'encoding': 'utf-8'
+            "file_error": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "level": "ERROR",
+                "formatter": "detailed",
+                "filename": log_dir / "errors.log",
+                "maxBytes": 5 * 1024 * 1024,  # 5MB
+                "backupCount": 3,
+                "encoding": "utf-8",
             },
-            'file_access': {
-                'class': 'logging.handlers.RotatingFileHandler',
-                'level': 'INFO',
-                'formatter': 'simple',
-                'filename': log_dir / 'access.log',
-                'maxBytes': 10 * 1024 * 1024,  # 10MB
-                'backupCount': 5,
-                'encoding': 'utf-8'
-            }
+            "file_access": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "level": "INFO",
+                "formatter": "simple",
+                "filename": log_dir / "access.log",
+                "maxBytes": 10 * 1024 * 1024,  # 10MB
+                "backupCount": 5,
+                "encoding": "utf-8",
+            },
         },
-        'loggers': {
-            'app': {
-                'handlers': ['console', 'file_app', 'file_error'], 
-                'level': 'INFO', 
-                'propagate': False
+        "loggers": {
+            "app": {
+                "handlers": ["console", "file_app", "file_error"],
+                "level": "INFO",
+                "propagate": False,
             },
-            'app.api': {
-                'handlers': ['console', 'file_access'], 
-                'level': 'INFO', 
-                'propagate': False
+            "app.api": {
+                "handlers": ["console", "file_access"],
+                "level": "INFO",
+                "propagate": False,
             },
-            'sqlalchemy.engine': {
-                'handlers': ['file_app'], 
-                'level': 'WARNING', 
-                'propagate': False
+            "sqlalchemy.engine": {
+                "handlers": ["file_app"],
+                "level": "WARNING",
+                "propagate": False,
             },
-            'apscheduler': {
-                'handlers': ['console', 'file_app'], 
-                'level': 'INFO', 
-                'propagate': False
+            "apscheduler": {
+                "handlers": ["console", "file_app"],
+                "level": "INFO",
+                "propagate": False,
             },
-            'uvicorn': {
-                'handlers': ['console', 'file_app'], 
-                'level': 'INFO', 
-                'propagate': False
+            "uvicorn": {
+                "handlers": ["console", "file_app"],
+                "level": "INFO",
+                "propagate": False,
             },
-            'uvicorn.access': {
-                'handlers': ['file_access'], 
-                'level': 'INFO', 
-                'propagate': False
-            }
+            "uvicorn.access": {
+                "handlers": ["file_access"],
+                "level": "INFO",
+                "propagate": False,
+            },
         },
-        'root': {
-            'level': 'INFO', 
-            'handlers': ['console', 'file_app', 'file_error']
-        }
+        "root": {"level": "INFO", "handlers": ["console", "file_app", "file_error"]},
     }
-    
+
     # Apply logging configuration
     logging.config.dictConfig(logging_config)
-    
+
     # Get main logger
-    logger = logging.getLogger('app.main')
-    
+    logger = logging.getLogger("app.main")
+
     # Print startup banner with dynamic info (safe characters only)
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     startup_info = STARTUP_BANNER.format(
-        timestamp=current_time,
-        log_path=str(log_dir.absolute())[:45] + "..."
+        timestamp=current_time, log_path=str(log_dir.absolute())[:45] + "..."
     )
     print(startup_info)
-    
+
     # Log startup messages (safe characters only)
     logger.info("=" * 60)
     logger.info(">> SISTEM LOGGING BERHASIL DIINISIALISASI!")
@@ -361,10 +387,12 @@ def setup_logging():
     logger.info(f">> Waktu startup: {current_time}")
     logger.info(">> Semua handler logging aktif dan siap digunakan")
     logger.info("=" * 60)
-    
+
     return logger
 
+
 # --- Example Usage Functions ---
+
 
 def log_system_health(logger):
     """Log system health check"""
@@ -373,6 +401,7 @@ def log_system_health(logger):
     else:
         logger.info("[HEALTH] System Health Check - All services running normally")
 
+
 def log_startup_complete(logger):
     """Log application startup completion"""
     if USE_UNICODE:
@@ -380,26 +409,40 @@ def log_startup_complete(logger):
     else:
         logger.info(">> APPLICATION STARTUP COMPLETE - Ready to serve requests!")
 
+
 def log_shutdown(logger):
     """Log application shutdown"""
     logger.info(">> Application shutting down gracefully...")
     logger.info(">> ARTACOM API SYSTEM - Goodbye!")
 
+
 # --- Quick Test Function ---
 if __name__ == "__main__":
     # Test the logging setup
     test_logger = setup_logging()
-    
+
     # Test different log types
-    log_scheduler_event(test_logger, "daily_billing", "started", "Processing 150 customers")
-    log_mikrotik_operation(test_logger, "disconnect_user", "CUST001", "success", "User disconnected successfully")
-    log_payment_event(test_logger, "paid", "INV-2024-001", "Rp 150,000", "Payment via bank transfer")
-    log_database_event(test_logger, "backup", "customers", "success", "1,250 records backed up")
+    log_scheduler_event(
+        test_logger, "daily_billing", "started", "Processing 150 customers"
+    )
+    log_mikrotik_operation(
+        test_logger,
+        "disconnect_user",
+        "CUST001",
+        "success",
+        "User disconnected successfully",
+    )
+    log_payment_event(
+        test_logger, "paid", "INV-2024-001", "Rp 150,000", "Payment via bank transfer"
+    )
+    log_database_event(
+        test_logger, "backup", "customers", "success", "1,250 records backed up"
+    )
     log_api_request(test_logger, "POST", "/api/v1/customers", 201, 145.5)
-    
+
     test_logger.debug("Debug message test")
     test_logger.info("Info message test")
     test_logger.warning("Warning message test")
     test_logger.error("Error message test")
-    
+
     log_startup_complete(test_logger)

@@ -2258,3 +2258,10 @@
 2025-08-21 21:16:33 │ INFO     │ 127.0.0.1:53637 - "GET /dashboard/growth-trend HTTP/1.1" 200
 2025-08-21 21:16:36 │ INFO     │ 127.0.0.1:53497 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
 2025-08-21 21:16:51 │ INFO     │ 127.0.0.1:53497 - "GET /dashboard/mikrotik-status HTTP/1.1" 200
+2025-08-22 09:39:34 │ INFO     │ 127.0.0.1:56003 - "OPTIONS /dashboard/ HTTP/1.1" 200
+2025-08-22 09:39:35 │ INFO     │ 127.0.0.1:56005 - "OPTIONS /users/me HTTP/1.1" 200
+2025-08-22 09:39:35 │ INFO     │ 127.0.0.1:56005 - "GET /users/me HTTP/1.1" 401
+2025-08-22 09:39:35 │ INFO     │ 127.0.0.1:56003 - "GET /dashboard/ HTTP/1.1" 200
+2025-08-22 09:39:35 │ INFO     │ 127.0.0.1:56003 - "GET /dashboard/paket-details HTTP/1.1" 200
+2025-08-22 09:39:35 │ INFO     │ 127.0.0.1:56005 - "GET /dashboard/growth-trend HTTP/1.1" 200
+2025-08-22 09:39:50 │ INFO     │ 127.0.0.1:56011 - "GET /dashboard/mikrotik-status HTTP/1.1" 200

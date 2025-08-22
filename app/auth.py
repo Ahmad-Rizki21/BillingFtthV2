@@ -18,13 +18,16 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verifikasi password."""
     return pwd_context.verify(plain_password, hashed_password)
 
+
 def get_password_hash(password: str) -> str:
     """Hash password."""
     return pwd_context.hash(password)
+
 
 def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None):
     """Membuat JWT access token."""
@@ -33,10 +36,11 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
         expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
-    
+
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 def verify_access_token(token: str) -> dict:
     """Verifikasi JWT access token dan return payload."""
@@ -46,9 +50,9 @@ def verify_access_token(token: str) -> dict:
     except JWTError:
         raise JWTError("Invalid token")
 
+
 async def get_current_active_user(
-    token: str = Depends(oauth2_scheme),
-    db: AsyncSession = Depends(get_db)
+    token: str = Depends(oauth2_scheme), db: AsyncSession = Depends(get_db)
 ) -> User:
     """Mengambil pengguna aktif berdasarkan token JWT untuk rute HTTP."""
     credentials_exception = HTTPException(
@@ -67,9 +71,7 @@ async def get_current_active_user(
     query = (
         select(User)
         .where(User.id == int(user_id))
-        .options(
-            selectinload(User.role).selectinload(Role.permissions)
-        )
+        .options(selectinload(User.role).selectinload(Role.permissions))
     )
     result = await db.execute(query)
     user = result.scalar_one_or_none()
@@ -77,6 +79,7 @@ async def get_current_active_user(
     if user is None:
         raise credentials_exception
     return user
+
 
 # --- FUNGSI BARU UNTUK OTENTIKASI WEBSOCKET ---
 async def get_user_from_token(token: str, db: AsyncSession) -> User | None:
@@ -95,7 +98,7 @@ async def get_user_from_token(token: str, db: AsyncSession) -> User | None:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    
+
     # Ambil user dari database
     query = (
         select(User)
@@ -103,7 +106,7 @@ async def get_user_from_token(token: str, db: AsyncSession) -> User | None:
         .options(selectinload(User.role).selectinload(Role.permissions))
     )
     user = (await db.execute(query)).scalar_one_or_none()
-    
+
     if user is None:
         raise credentials_exception
     return user

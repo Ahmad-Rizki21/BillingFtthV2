@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
+
 # Skema dasar untuk data teknis
 class DataTeknisBase(BaseModel):
     pelanggan_id: int
@@ -18,6 +19,7 @@ class DataTeknisBase(BaseModel):
     speedtest_proof: Optional[str] = None
     onu_power: int
 
+
 # Skema untuk membuat data teknis baru
 class DataTeknisCreate(BaseModel):
     # Field yang WAJIB diisi oleh tim NOC
@@ -26,13 +28,13 @@ class DataTeknisCreate(BaseModel):
     password_pppoe: str
     mikrotik_server_id: int
     olt: str
-    
+
     # Field yang OPSIONAL saat pembuatan
     id_vlan: Optional[str] = None
     ip_pelanggan: Optional[str] = None
     profile_pppoe: Optional[str] = "default-profile"
     olt_custom: Optional[str] = None
-    
+
     # Field yang akan diisi teknisi, diberi nilai default 0
     # Penggunaan Field() sudah benar setelah di-impor
     pon: int = Field(default=0)
@@ -41,6 +43,7 @@ class DataTeknisCreate(BaseModel):
     odp: int = Field(default=0)
     onu_power: float = Field(default=0.0)
     sn: Optional[str] = None
+
 
 # Skema untuk membaca data (response)
 class DataTeknis(BaseModel):
@@ -64,6 +67,7 @@ class DataTeknis(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 # Skema untuk pembaruan parsial (semua field opsional)
 class DataTeknisUpdate(BaseModel):
@@ -103,7 +107,7 @@ class DataTeknisImport(BaseModel):
     odp: Optional[int] = None
     sn: Optional[str] = None
     onu_power: Optional[int] = None
-    
+
     # --- INI BAGIAN YANG PERLU DIPASTIKAN ---
     # Pastikan mikrotik_server_id juga Optional
     mikrotik_server_id: Optional[int] = None

@@ -2,14 +2,17 @@
 from pydantic import BaseModel
 from typing import List, Dict
 
+
 class StatCard(BaseModel):
     title: str
     value: int | str
     description: str
 
+
 class ChartData(BaseModel):
     labels: List[str]
     data: List[int]
+
 
 class InvoiceSummary(BaseModel):
     labels: List[str]
@@ -17,6 +20,7 @@ class InvoiceSummary(BaseModel):
     lunas: List[int]
     menunggu: List[int]
     kadaluarsa: List[int]
+
 
 class DashboardData(BaseModel):
     stat_cards: List[StatCard]

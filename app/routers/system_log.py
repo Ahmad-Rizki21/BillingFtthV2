@@ -9,9 +9,17 @@ from ..database import get_db
 
 router = APIRouter(prefix="/logs/system", tags=["System Logs"])
 
+
 @router.get("/", response_model=List[SystemLogSchema])
-async def get_system_logs(skip: int = 0, limit: int = 200, db: AsyncSession = Depends(get_db)):
+async def get_system_logs(
+    skip: int = 0, limit: int = 200, db: AsyncSession = Depends(get_db)
+):
     """Mengambil daftar log sistem, diurutkan dari yang terbaru."""
-    query = select(SystemLogModel).order_by(SystemLogModel.id.desc()).offset(skip).limit(limit)
+    query = (
+        select(SystemLogModel)
+        .order_by(SystemLogModel.id.desc())
+        .offset(skip)
+        .limit(limit)
+    )
     result = await db.execute(query)
     return result.scalars().all()
