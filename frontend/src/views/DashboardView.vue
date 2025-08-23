@@ -113,6 +113,134 @@
       </div>
     </div>
   </div>
+    <v-dialog v-model="dialogPaketDetail" max-width="700px" persistent>
+    <v-card class="package-detail-card elevation-12">
+      <div class="dialog-header">
+        <div class="header-gradient"></div>
+        <div class="header-content">
+          <div class="header-icon">
+            <v-icon size="32" color="white">mdi-package-variant</v-icon>
+          </div>
+          <div class="header-text">
+            <h2 class="dialog-title">{{ selectedPaketTitle }}</h2>
+            <p class="dialog-subtitle">Detail distribusi pelanggan</p>
+          </div>
+        </div>
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          color="white"
+          size="small"
+          class="close-btn"
+          @click="dialogPaketDetail = false"
+        ></v-btn>
+      </div>
+
+      <v-card-text class="dialog-content" v-if="selectedPaketDetail">
+        <div class="summary-section">
+          <div class="summary-card">
+            <div class="summary-icon">
+              <v-icon color="primary">mdi-account-group</v-icon>
+            </div>
+            <div class="summary-content">
+              <div class="summary-label">Total Pelanggan</div>
+              <div class="summary-value">{{ selectedPaketDetail.total_pelanggan }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-sections">
+          <div class="detail-section">
+            <div class="section-header">
+              <div class="section-icon location-icon">
+                <v-icon size="20">mdi-map-marker-radius</v-icon>
+              </div>
+              <h3 class="section-title">Distribusi Lokasi</h3>
+            </div>
+            
+            <div class="items-grid">
+              <div 
+                v-for="item in selectedPaketDetail.breakdown_lokasi" 
+                :key="item.nama"
+                class="detail-item location-item"
+              >
+                <div class="item-content">
+                  <div class="item-icon">
+                    <v-icon size="18" color="info">mdi-map-marker</v-icon>
+                  </div>
+                  <div class="item-info">
+                    <div class="item-name">{{ item.nama }}</div>
+                    <div class="item-subtitle">Lokasi</div>
+                  </div>
+                </div>
+                <div class="item-value">
+                  <v-chip 
+                    color="info" 
+                    variant="flat"
+                    size="small"
+                    class="value-chip"
+                  >
+                    {{ item.jumlah }}
+                  </v-chip>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <div class="section-header">
+              <div class="section-icon brand-icon">
+                <v-icon size="20">mdi-tag-outline</v-icon>
+              </div>
+              <h3 class="section-title">Distribusi Brand</h3>
+            </div>
+            
+            <div class="items-grid">
+              <div 
+                v-for="item in selectedPaketDetail.breakdown_brand" 
+                :key="item.nama"
+                class="detail-item brand-item"
+              >
+                <div class="item-content">
+                  <div class="item-icon">
+                    <v-icon size="18" color="success">mdi-tag</v-icon>
+                  </div>
+                  <div class="item-info">
+                    <div class="item-name">{{ item.nama }}</div>
+                    <div class="item-subtitle">Brand</div>
+                  </div>
+                </div>
+                <div class="item-value">
+                  <v-chip 
+                    color="success" 
+                    variant="flat"
+                    size="small"
+                    class="value-chip"
+                  >
+                    {{ item.jumlah }}
+                  </v-chip>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </v-card-text>
+
+      <v-card-actions class="dialog-footer">
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          variant="elevated"
+          size="large"
+          class="close-action-btn"
+          @click="dialogPaketDetail = false"
+        >
+          <v-icon start>mdi-check</v-icon>
+          Tutup
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">

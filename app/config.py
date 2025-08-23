@@ -15,6 +15,7 @@ class Settings(BaseSettings):
         "Data Teknis",
         "Brand & Paket",
         "Invoices",
+        "Laporan Pendapatan",
         "Mikrotik Servers",
         "Users",
         "Roles",

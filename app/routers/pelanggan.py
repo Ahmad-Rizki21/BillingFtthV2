@@ -428,3 +428,14 @@ async def import_from_csv(
 
 
 # ========================================================== IMPORT DAN EXPORT ==========================================================
+
+@router.get("/lokasi/unik", response_model=List[str])
+async def get_unique_lokasi(db: AsyncSession = Depends(get_db)):
+    """
+    Mengambil daftar semua alamat/lokasi pelanggan yang unik dari database.
+    """
+    query = select(PelangganModel.alamat).distinct().order_by(PelangganModel.alamat)
+    result = await db.execute(query)
+    lokasi_list = result.scalars().all()
+    # Filter None atau string kosong jika ada
+    return [lokasi for lokasi in lokasi_list if lokasi]

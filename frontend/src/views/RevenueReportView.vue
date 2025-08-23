@@ -1,0 +1,765 @@
+<template>
+  <v-container fluid class="pa-4 pa-md-6">
+    <!-- Header Section -->
+    <div class="d-flex flex-column flex-sm-row align-start align-sm-center mb-6 mb-md-8">
+      <div class="d-flex align-center mb-4 mb-sm-0">
+        <v-avatar class="me-3 modern-avatar" color="deep-purple" size="48">
+          <v-icon color="white" size="28">mdi-chart-line</v-icon>
+        </v-avatar>
+        <div>
+          <h1 class="text-h4 text-sm-h3 font-weight-bold text-deep-purple mb-1">Laporan Pendapatan</h1>
+          <p class="text-subtitle-1 text-body-2 text-medium-emphasis mb-0">Analisis pendapatan berdasarkan rentang tanggal</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Controls Card -->
+    <v-card class="mb-6 mb-md-8 modern-card" elevation="0" rounded="xl">
+      <v-card-text class="pa-4 pa-md-6">
+        <v-row align="center" justify="space-between" class="g-4">
+          <v-col cols="12" sm="6" md="3">
+            <v-menu v-model="menuStart" :close-on-content-click="false" location="bottom start" offset="8">
+              <template v-slot:activator="{ props }">
+                <v-text-field
+                  :model-value="formatDate(startDate)"
+                  label="Tanggal Awal"
+                  prepend-inner-icon="mdi-calendar"
+                  readonly
+                  v-bind="props"
+                  variant="outlined"
+                  density="comfortable"
+                  hide-details
+                  class="modern-input"
+                  color="deep-purple"
+                ></v-text-field>
+              </template>
+              <v-date-picker 
+                v-model="startDate" 
+                @update:model-value="menuStart = false"
+                color="deep-purple"
+                header-color="deep-purple"
+              ></v-date-picker>
+            </v-menu>
+          </v-col>
+          
+          <v-col cols="12" sm="6" md="3">
+            <v-menu v-model="menuEnd" :close-on-content-click="false" location="bottom start" offset="8">
+              <template v-slot:activator="{ props }">
+                <v-text-field
+                  :model-value="formatDate(endDate)"
+                  label="Tanggal Akhir"
+                  prepend-inner-icon="mdi-calendar"
+                  readonly
+                  v-bind="props"
+                  variant="outlined"
+                  density="comfortable"
+                  hide-details
+                  class="modern-input"
+                  color="deep-purple"
+                ></v-text-field>
+              </template>
+              <v-date-picker 
+                v-model="endDate" 
+                @update:model-value="menuEnd = false"
+                color="deep-purple"
+                header-color="deep-purple"
+              ></v-date-picker>
+            </v-menu>
+          </v-col>
+          
+          <v-col cols="12" sm="6" md="3">
+            <v-select
+              v-model="selectedLocation"
+              :items="locations"
+              label="Filter Berdasarkan Lokasi"
+              prepend-inner-icon="mdi-map-marker"
+              variant="outlined"
+              density="comfortable"
+              hide-details
+              clearable
+              class="modern-input"
+              color="deep-purple"
+            ></v-select>
+          </v-col>
+          
+          <v-col cols="12" md="3">
+            <div class="d-flex flex-column flex-sm-row ga-3">
+              <v-btn
+                color="deep-purple"
+                @click="fetchReport"
+                :loading="loading"
+                size="large"
+                class="text-none modern-btn flex-grow-1"
+                prepend-icon="mdi-magnify"
+                rounded="lg"
+                block
+              >
+                Tampilkan
+              </v-btn>
+              
+              <v-btn
+                color="green-darken-1"
+                @click="exportToExcel"
+                :disabled="!reportData || reportData.rincian_invoice.length === 0"
+                size="large"
+                class="text-none modern-btn flex-grow-1"
+                prepend-icon="mdi-microsoft-excel"
+                rounded="lg"
+                variant="tonal"
+                block
+              >
+                Ekspor
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+
+    <!-- Loading State -->
+    <div v-if="loading" class="text-center pa-10 pa-md-16">
+      <div class="loading-container">
+        <v-progress-circular 
+          indeterminate 
+          color="deep-purple" 
+          size="80" 
+          width="4"
+          class="mb-4"
+        ></v-progress-circular>
+        <h3 class="text-h6 text-medium-emphasis mb-2">Memuat data laporan...</h3>
+        <p class="text-body-2 text-medium-emphasis">Harap tunggu sebentar</p>
+      </div>
+    </div>
+    
+    <!-- Report Data -->
+    <div v-else-if="reportData" class="report-content">
+      <!-- Revenue Summary Card -->
+      <v-card class="mb-6 mb-md-8 revenue-card" elevation="0" rounded="xl">
+        <div class="revenue-gradient pa-6 pa-md-8">
+          <div class="d-flex flex-column flex-sm-row align-start align-sm-center">
+            <div class="revenue-icon-container mb-4 mb-sm-0 me-sm-6">
+              <v-icon color="white" size="48" class="revenue-icon">mdi-cash-multiple</v-icon>
+            </div>
+            <div class="revenue-content">
+              <div class="text-caption text-white-50 mb-2 font-weight-medium text-uppercase tracking-wide">
+                Total Pendapatan
+              </div>
+              <div class="text-subtitle-2 text-white-75 mb-3">
+                {{ formatDate(startDate) }} - {{ formatDate(endDate) }}
+              </div>
+              <div class="revenue-amount text-white">
+                {{ formatCurrency(reportData.total_pendapatan) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </v-card>
+
+      <!-- Invoice Details Table -->
+      <v-card elevation="0" rounded="xl" class="modern-card">
+        <v-card-title class="pa-4 pa-md-6 table-header">
+          <div class="d-flex align-center">
+            <v-icon start color="deep-purple" size="24">mdi-receipt-text-check</v-icon> 
+            <span class="text-h6 font-weight-bold">Rincian Invoice Lunas</span>
+          </div>
+        </v-card-title>
+        
+        <v-divider class="mx-4 mx-md-6"></v-divider>
+        
+        <!-- Mobile Card View -->
+        <div class="d-md-none">
+          <div v-if="reportData.rincian_invoice.length === 0" class="text-center pa-8">
+            <v-icon size="48" color="grey-lighten-1" class="mb-4">mdi-receipt-text-off</v-icon>
+            <p class="text-body-1 text-medium-emphasis">Tidak ada data invoice untuk periode ini</p>
+          </div>
+          
+          <div v-else class="pa-2">
+            <v-card
+              v-for="item in paginatedInvoices"
+              :key="item.invoice_number"
+              class="mb-3 mobile-invoice-card"
+              elevation="1"
+              rounded="lg"
+            >
+              <v-card-text class="pa-4">
+                <div class="d-flex justify-space-between align-start mb-3">
+                  <div>
+                    <div class="text-subtitle-2 font-weight-bold text-deep-purple mb-1">
+                      {{ item.invoice_number }}
+                    </div>
+                    <div class="text-body-2 text-medium-emphasis">
+                      {{ item.pelanggan_nama }}
+                    </div>
+                  </div>
+                  <v-chip 
+                    color="success" 
+                    variant="tonal" 
+                    size="small"
+                    class="font-weight-bold"
+                  >
+                    {{ formatCurrency(item.total_harga) }}
+                  </v-chip>
+                </div>
+                
+                <v-divider class="mb-3"></v-divider>
+                
+                <div class="invoice-details">
+                  <div class="detail-row">
+                    <v-icon size="16" color="grey-darken-1" class="me-2">mdi-map-marker</v-icon>
+                    <span class="text-body-2">{{ item.alamat || 'Tidak ada alamat' }}</span>
+                  </div>
+                  
+                  <div class="detail-row">
+                    <v-icon size="16" color="grey-darken-1" class="me-2">mdi-tag</v-icon>
+                    <span class="text-body-2">{{ item.id_brand || 'Tidak ada brand' }}</span>
+                  </div>
+                  
+                  <div class="detail-row">
+                    <v-icon size="16" color="grey-darken-1" class="me-2">mdi-calendar</v-icon>
+                    <span class="text-body-2">{{ new Date(item.paid_at).toLocaleString('id-ID') }}</span>
+                  </div>
+                  
+                  <div class="detail-row">
+                    <v-icon size="16" color="grey-darken-1" class="me-2">mdi-credit-card</v-icon>
+                    <span class="text-body-2">{{ item.metode_pembayaran || 'Tidak tercatat' }}</span>
+                  </div>
+                </div>
+              </v-card-text>
+            </v-card>
+          </div>
+          
+          <!-- Mobile Pagination -->
+          <div v-if="reportData.rincian_invoice.length > 0" class="d-flex justify-center align-center pa-4">
+            <v-btn
+              icon="mdi-chevron-left"
+              variant="text"
+              :disabled="currentPage === 1"
+              @click="currentPage--"
+              size="small"
+            ></v-btn>
+            
+            <span class="mx-4 text-body-2">
+              {{ currentPage }} dari {{ totalPages }}
+            </span>
+            
+            <v-btn
+              icon="mdi-chevron-right"
+              variant="text"
+              :disabled="currentPage === totalPages"
+              @click="currentPage++"
+              size="small"
+            ></v-btn>
+          </div>
+        </div>
+
+        <!-- Desktop Table View -->
+        <div class="d-none d-md-block">
+          <v-data-table
+            :headers="headers"
+            :items="reportData.rincian_invoice"
+            item-value="invoice_number"
+            :items-per-page="10"
+            class="modern-table"
+            :no-data-text="'Tidak ada data invoice untuk periode ini'"
+          >
+            <template v-slot:item.invoice_number="{ item }">
+              <div class="font-weight-bold text-deep-purple">
+                {{ (item as InvoiceReportItem).invoice_number }}
+              </div>
+            </template>
+            
+            <template v-slot:item.pelanggan_nama="{ item }">
+              <div class="font-weight-medium">
+                {{ (item as InvoiceReportItem).pelanggan_nama }}
+              </div>
+            </template>
+            
+            <template v-slot:item.alamat="{ item }">
+              <div class="text-body-2 text-truncate" style="max-width: 200px;">
+                {{ (item as InvoiceReportItem).alamat || 'Tidak ada alamat' }}
+              </div>
+            </template>
+            
+            <template v-slot:item.id_brand="{ item }">
+              <v-chip 
+                variant="tonal" 
+                color="primary" 
+                size="small"
+                class="font-weight-medium"
+              >
+                {{ (item as InvoiceReportItem).id_brand || 'No Brand' }}
+              </v-chip>
+            </template>
+            
+            <template v-slot:item.total_harga="{ item }">
+              <div class="font-weight-bold text-success">
+                {{ formatCurrency((item as InvoiceReportItem).total_harga) }}
+              </div>
+            </template>
+            
+            <template v-slot:item.paid_at="{ item }">
+              <div class="text-body-2">
+                {{ new Date((item as InvoiceReportItem).paid_at).toLocaleString('id-ID') }}
+              </div>
+            </template>
+            
+            <template v-slot:item.metode_pembayaran="{ item }">
+              <v-chip 
+                variant="outlined" 
+                size="small"
+                :color="getPaymentMethodColor((item as InvoiceReportItem).metode_pembayaran)"
+              >
+                {{ (item as InvoiceReportItem).metode_pembayaran || 'Tidak tercatat' }}
+              </v-chip>
+            </template>
+          </v-data-table>
+        </div>
+      </v-card>
+    </div>
+
+    <!-- Empty State -->
+    <div v-else class="empty-state text-center pa-10 pa-md-16">
+      <div class="empty-state-content">
+        <v-icon size="80" color="grey-lighten-2" class="mb-6">mdi-chart-line-variant</v-icon>
+        <h3 class="text-h6 mb-4 text-medium-emphasis">Belum ada data laporan</h3>
+        <p class="text-body-1 text-medium-emphasis mb-6">
+          Silakan pilih rentang tanggal dan klik "Tampilkan Laporan" untuk melihat data pendapatan.
+        </p>
+        <v-btn
+          color="deep-purple"
+          variant="tonal"
+          size="large"
+          rounded="lg"
+          @click="fetchReport"
+          class="text-none"
+        >
+          Mulai Analisis
+        </v-btn>
+      </div>
+    </div>
+  </v-container>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, computed} from 'vue';
+import apiClient from '@/services/api';
+import * as XLSX from 'xlsx';
+
+// --- Interface Definition ---
+interface InvoiceReportItem {
+  invoice_number: string;
+  pelanggan_nama: string;
+  paid_at: string;
+  total_harga: number;
+  metode_pembayaran?: string;
+  alamat?: string;           
+  id_brand?: string;
+}
+
+// --- Reactive Data ---
+const startDate = ref(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
+const endDate = ref(new Date());
+const menuStart = ref(false);
+const menuEnd = ref(false);
+const loading = ref(false);
+const reportData = ref<{
+  total_pendapatan: number;
+  rincian_invoice: InvoiceReportItem[];
+} | null>(null);
+
+// Mobile pagination
+const currentPage = ref(1);
+const itemsPerPage = 5;
+
+const selectedLocation = ref<string | null>(null);
+const locations = ref<string[]>([]);
+
+// --- Computed Properties ---
+const paginatedInvoices = computed(() => {
+  if (!reportData.value) return [];
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return reportData.value.rincian_invoice.slice(start, end);
+});
+
+
+async function fetchLocations() {
+  try {
+    const response = await apiClient.get('/pelanggan/lokasi/unik');
+    locations.value = response.data;
+  } catch (error) {
+    console.error("Gagal mengambil daftar lokasi:", error);
+  }
+}
+
+
+const totalPages = computed(() => {
+  if (!reportData.value) return 0;
+  return Math.ceil(reportData.value.rincian_invoice.length / itemsPerPage);
+});
+
+// --- Table Headers ---
+const headers = [
+  { title: 'No. Invoice', key: 'invoice_number', width: '200px', sortable: true },
+  { title: 'Nama Pelanggan', key: 'pelanggan_nama', sortable: true },
+  { title: 'Alamat', key: 'alamat', sortable: false }, 
+  { title: 'Brand', key: 'id_brand', sortable: true },
+  { title: 'Tanggal Bayar', key: 'paid_at', sortable: true },
+  { title: 'Metode Bayar', key: 'metode_pembayaran', sortable: true }, 
+  { title: 'Jumlah', key: 'total_harga', align: 'end', sortable: true },
+] as const; 
+
+// --- Methods ---
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('id-ID', {
+    day: '2-digit', month: 'long', year: 'numeric'
+  });
+}
+
+function getPaymentMethodColor(method?: string): string {
+  if (!method) return 'grey';
+  const lowerMethod = method.toLowerCase();
+  if (lowerMethod.includes('cash')) return 'success';
+  if (lowerMethod.includes('transfer')) return 'info';
+  if (lowerMethod.includes('kredit')) return 'warning';
+  return 'primary';
+}
+
+function exportToExcel() {
+  if (!reportData.value || reportData.value.rincian_invoice.length === 0) {
+    alert("Tidak ada data untuk diekspor!");
+    return;
+  }
+
+  const dataToExport = reportData.value.rincian_invoice.map(item => ({
+    "Nomor Invoice": item.invoice_number,
+    "Nama Pelanggan": item.pelanggan_nama,
+    "Alamat": item.alamat || "",
+    "Nama Brand": item.id_brand || "",
+    "Tanggal Bayar": new Date(item.paid_at),
+    "Metode Pembayaran": item.metode_pembayaran || "",
+    "Jumlah (Rp)": item.total_harga
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Pendapatan");
+  
+  // Atur lebar kolom
+  worksheet["!cols"] = [
+      { wch: 25 }, { wch: 30 }, { wch: 40 }, { wch: 15 }, 
+      { wch: 20 }, { wch: 15 }, { wch: 15 }
+  ];
+
+  // --- PERBAIKAN DI SINI: Tambahkan pengecekan 'if' ---
+  // Hanya jalankan format jika worksheet tidak kosong (memiliki '!ref')
+  if (worksheet['!ref']) {
+    const range = XLSX.utils.decode_range(worksheet['!ref']); // Sekarang ini aman
+    const amountColumnIndex = 6;
+    for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+      const cellAddress = XLSX.utils.encode_cell({ r: rowNum, c: amountColumnIndex });
+      const cell = worksheet[cellAddress];
+      if (cell && cell.t === 'n') {
+        cell.z = '"Rp" #,##0'; 
+      }
+    }
+  }
+  // --------------------------------------------------------
+
+  const start = toISODateString(startDate.value);
+  const end = toISODateString(endDate.value);
+  const fileName = `Laporan_Pendapatan_${start}_sampai_${end}.xlsx`;
+
+  XLSX.writeFile(workbook, fileName);
+}
+
+function toISODateString(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+async function fetchReport() {
+  loading.value = true;
+  reportData.value = null;
+  try {
+    const params: any = { // Siapkan object params
+      start_date: toISODateString(startDate.value),
+      end_date: toISODateString(endDate.value),
+    };
+
+    // Tambahkan parameter alamat jika dipilih
+    if (selectedLocation.value) {
+      params.alamat = selectedLocation.value;
+    }
+
+    const response = await apiClient.get('/reports/revenue', { params });
+    reportData.value = response.data;
+  } catch (error) {
+    console.error("Gagal mengambil data laporan:", error);
+  } finally {
+    loading.value = false;
+  }
+}
+
+const formatCurrency = (value: number) => {
+  if (typeof value !== 'number') return 'Rp 0';
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(value);
+};
+
+// --- Lifecycle ---
+onMounted(() => {
+  fetchReport();
+  fetchLocations();
+});
+</script>
+
+<style scoped>
+/* Modern Design System */
+.modern-avatar {
+  background: linear-gradient(135deg, rgb(var(--v-theme-deep-purple)) 0%, rgb(var(--v-theme-purple)) 100%);
+  box-shadow: 0 4px 16px rgba(var(--v-theme-deep-purple), 0.3);
+}
+
+.modern-card {
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  background: rgb(var(--v-theme-surface));
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.modern-input {
+  transition: all 0.3s ease;
+}
+
+.modern-input :deep(.v-field__outline) {
+  --v-field-border-width: 1px;
+  transition: all 0.3s ease;
+}
+
+.modern-input :deep(.v-field--focused .v-field__outline) {
+  --v-field-border-width: 2px;
+}
+
+.modern-btn {
+  box-shadow: 0 2px 8px rgba(var(--v-theme-deep-purple), 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: none;
+  font-weight: 600;
+}
+
+.modern-btn:hover {
+  box-shadow: 0 4px 16px rgba(var(--v-theme-deep-purple), 0.3);
+  transform: translateY(-1px);
+}
+
+/* Revenue Card Styles */
+.revenue-card {
+  overflow: hidden;
+  position: relative;
+}
+
+.revenue-gradient {
+  background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #4caf50 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.revenue-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  opacity: 0.3;
+}
+
+.revenue-icon-container {
+  position: relative;
+  z-index: 1;
+}
+
+.revenue-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.revenue-content {
+  position: relative;
+  z-index: 1;
+}
+
+.revenue-amount {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tracking-wide {
+  letter-spacing: 0.05em;
+}
+
+.text-white-50 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.text-white-75 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Table Styles */
+.table-header {
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+}
+
+.modern-table :deep(.v-data-table__tr) {
+  transition: all 0.2s ease;
+}
+
+.modern-table :deep(.v-data-table__tr:hover) {
+  background-color: rgba(var(--v-theme-primary), 0.04);
+}
+
+.modern-table :deep(.v-data-table-header) {
+  background-color: rgba(var(--v-theme-surface), 0.8);
+}
+
+.modern-table :deep(.v-data-table-header__content) {
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+/* Mobile Card Styles */
+.mobile-invoice-card {
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  transition: all 0.3s ease;
+}
+
+.mobile-invoice-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.invoice-details {
+  margin-top: 4px;
+}
+
+/* Loading and Empty States */
+.loading-container {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.empty-state-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Dark Theme Adjustments */
+.v-theme--dark .modern-card {
+  background: rgb(var(--v-theme-surface-variant));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.v-theme--dark .table-header {
+  background: rgba(var(--v-theme-surface-variant), 0.8);
+}
+
+.v-theme--dark .modern-table :deep(.v-data-table__tr:hover) {
+  background-color: rgba(var(--v-theme-primary), 0.08);
+}
+
+.v-theme--dark .mobile-invoice-card {
+  background: rgb(var(--v-theme-surface-variant));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+  .revenue-amount {
+    font-size: 2rem;
+  }
+  
+  .revenue-gradient {
+    padding: 1.5rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .revenue-amount {
+    font-size: 1.75rem;
+  }
+  
+  .modern-card {
+    margin-bottom: 1rem !important;
+  }
+  
+  .revenue-gradient {
+    padding: 1rem !important;
+  }
+  
+  .detail-row {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .revenue-amount {
+    font-size: 1.5rem;
+  }
+  
+  .pa-4 {
+    padding: 0.75rem !important;
+  }
+  
+  .mobile-invoice-card .v-card-text {
+    padding: 0.75rem !important;
+  }
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Print styles */
+@media print {
+  .modern-btn, .v-menu, .v-pagination {
+    display: none !important;
+  }
+  
+  .modern-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  .revenue-gradient {
+    background: #4caf50 !important;
+    color: white !important;
+  }
+}
+</style>

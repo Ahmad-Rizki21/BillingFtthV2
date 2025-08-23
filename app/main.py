@@ -24,6 +24,7 @@ from .routers import (
     permission,
     sk,
     calculator,
+    report,
 )
 from .jobs import (
     job_generate_invoices,
@@ -243,6 +244,7 @@ app.include_router(calculator.router)
 app.include_router(notifications.router)
 app.include_router(dashboard.router)
 app.include_router(permission.router)
+app.include_router(report.router)
 
 
 # Endpoint root untuk verifikasi

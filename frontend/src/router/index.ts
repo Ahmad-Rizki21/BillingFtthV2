@@ -85,6 +85,12 @@ const router = createRouter({
           component: () => import('../views/CalculatorView.vue'),
           meta: { permission: 'use_calculator' } // Beri permission jika perlu
         },
+        {
+          path: 'reports/revenue',
+          name: 'revenue-report',
+          component: () => import('../views/RevenueReportView.vue'),
+          meta: { permission: 'view_reports_revenue' } 
+        }
       ],
     },
 
