@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard-container">
-    <!-- Header Section -->
     <div class="dashboard-header">
       <div class="header-content">
         <div class="title-section">
@@ -19,249 +18,94 @@
       </div>
     </div>
 
-    <!-- Stats Cards Section -->
-    <div v-if="loading" class="stats-grid mb-6">
-      <v-skeleton-loader 
-        v-for="n in 6" :key="n" 
-        type="list-item-avatar-two-line" 
-        class="stat-card-skeleton"
-      ></v-skeleton-loader>
-    </div>
-    
-    <div v-else class="stats-grid mb-6">
-      <div 
-        v-for="(stat, index) in stats" 
-        :key="stat.title" 
-        class="stat-card" 
-        :class="`card-${index % 4}`"
-      >
-        <div class="stat-card-content">
-          <div class="stat-header">
-            <div class="stat-icon-container" :class="`icon-${index % 4}`">
-              <v-icon :color="stat.color" size="20">{{ stat.icon }}</v-icon>
+    <div class="top-layout-grid mb-6">
+      <div v-if="revenueData" class="revenue-widget-container">
+        <v-skeleton-loader v-if="loading" type="card-avatar, article" class="fill-height"></v-skeleton-loader>
+        <div v-else class="revenue-card">
+          <div class="revenue-card-content">
+            <div class="revenue-header">
+              <p class="revenue-title">Pendapatan Bulanan</p>
+              <div class="revenue-icon-wrapper">
+                <v-icon color="white">mdi-cash-multiple</v-icon>
+              </div>
+            </div>
+            <div class="revenue-body">
+              <h2 class="revenue-value">{{ formatCurrency(revenueData.total) }}</h2>
+              <p class="revenue-period">Periode {{ revenueData.periode }}</p>
             </div>
           </div>
-          <div class="stat-body">
-            <h3 class="stat-value">{{ stat.value }}</h3>
-            <p class="stat-title">{{ stat.title }}</p>
-            <p class="stat-description">{{ stat.description }}</p>
-          </div>
-          <div class="stat-footer">
-            <div class="progress-bar">
-              <div class="progress-fill" :class="`progress-${index % 4}`"></div>
+          <div class="revenue-card-background"></div>
+        </div>
+      </div>
+
+      <div v-if="customerStats && customerStats.length > 0" class="stats-subgrid">
+        <div v-if="loading" v-for="n in 3" :key="`skel-stat-${n}`">
+            <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
+        </div>
+        <div v-else v-for="(stat, index) in customerStats" :key="stat.title" class="stat-card" :class="`card-${index % 4}`">
+          <div class="stat-card-content">
+            <div class="stat-header">
+              <div class="stat-icon-container" :class="`icon-${index % 4}`">
+                <v-icon :color="stat.color" size="20">{{ stat.icon }}</v-icon>
+              </div>
+            </div>
+            <div class="stat-body">
+              <h3 class="stat-value">{{ stat.value }}</h3>
+              <p class="stat-title">{{ stat.title }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Charts Section -->
-    <div class="charts-section">
-      <div class="charts-row">
-        <!-- Location Chart -->
-        <div class="chart-card location-chart">
-          <div class="chart-header">
-            <div class="chart-title-section">
-              <h3 class="chart-title">
-                <div class="chart-icon-wrapper">
-                  <v-icon class="chart-icon">mdi-map-marker</v-icon>
-                </div>
-                Pelanggan per Lokasi
-              </h3>
-              <p class="chart-subtitle">Distribusi pelanggan berdasarkan lokasi</p>
+    <div v-if="serverStats && serverStats.length > 0" class="stats-grid mb-6">
+      <v-skeleton-loader v-if="loading" v-for="n in 3" :key="`skel-srv-${n}`" type="list-item-avatar-two-line"></v-skeleton-loader>
+      <div v-else v-for="(stat, index) in serverStats" :key="stat.title" class="stat-card" :class="`card-${(index + 3) % 4}`">
+        <div class="stat-card-content">
+          <div class="stat-header">
+            <div class="stat-icon-container" :class="`icon-${(index + 3) % 4}`">
+                <v-icon :color="stat.color" size="20">{{ stat.icon }}</v-icon>
             </div>
           </div>
+          <div class="stat-body">
+            <h3 class="stat-value">{{ stat.value }}</h3>
+            <p class="stat-title">{{ stat.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-section">
+      <div class="charts-row">
+        <div v-if="lokasiChartData" class="chart-card location-chart">
+          <div class="chart-header">
+            </div>
           <div class="chart-container">
             <Chart v-if="!loading" type="bar" :data="lokasiChartData" :options="chartOptions" />
           </div>
         </div>
 
-        <!-- Package Chart -->
-        <div class="chart-card package-chart">
+        <div v-if="paketChartData" class="chart-card package-chart">
           <div class="chart-header">
-            <div class="chart-title-section">
-              <h3 class="chart-title">
-                <div class="chart-icon-wrapper">
-                  <v-icon class="chart-icon">mdi-package-variant</v-icon>
-                </div>
-                Pelanggan per Paket
-              </h3>
-              <p class="chart-subtitle">Distribusi pelanggan berdasarkan paket</p>
-            </div>
-          </div>
+             </div>
           <div class="chart-container">
             <Chart v-if="!loading" type="bar" :data="paketChartData" :options="chartOptions" />
           </div>
         </div>
       </div>
       
-        <div class="charts-row">
-        <!-- Growth Trend Chart -->
-        <div class="chart-card growth-chart">
+      <div class="charts-row">
+        <div v-if="growthChartData" class="chart-card growth-chart">
           <div class="chart-header">
-            <div class="chart-title-section">
-              <h3 class="chart-title">
-                <div class="chart-icon-wrapper">
-                  <v-icon class="chart-icon">mdi-chart-line</v-icon>
-                </div>
-                Tren Pertumbuhan Pelanggan
-              </h3>
-              <p class="chart-subtitle">Jumlah pelanggan baru per bulan</p>
             </div>
-          </div>
           <div class="chart-container">
-            <Chart v-if="!loading" type="line" :data="growthChartData" :options="chartOptions" />
+            <Chart v-if="!loading" type="line" :data="growthChartData" :options="growthChartOptions" />
           </div>
         </div>
 
-        <v-dialog v-model="dialogPaketDetail" max-width="700px" persistent>
-    <v-card class="package-detail-card elevation-12">
-      <!-- Header dengan gradient background -->
-      <div class="dialog-header">
-        <div class="header-gradient"></div>
-        <div class="header-content">
-          <div class="header-icon">
-            <v-icon size="32" color="white">mdi-package-variant</v-icon>
-          </div>
-          <div class="header-text">
-            <h2 class="dialog-title">{{ selectedPaketTitle }}</h2>
-            <p class="dialog-subtitle">Detail distribusi pelanggan</p>
-          </div>
-        </div>
-        <v-btn
-          icon="mdi-close"
-          variant="text"
-          color="white"
-          size="small"
-          class="close-btn"
-          @click="dialogPaketDetail = false"
-        ></v-btn>
-      </div>
-
-      <v-card-text class="dialog-content" v-if="selectedPaketDetail">
-        <!-- Total Pelanggan Section -->
-        <div class="summary-section">
-          <div class="summary-card">
-            <div class="summary-icon">
-              <v-icon color="primary">mdi-account-group</v-icon>
-            </div>
-            <div class="summary-content">
-              <div class="summary-label">Total Pelanggan</div>
-              <div class="summary-value">{{ selectedPaketDetail.total_pelanggan }}</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Content Sections -->
-        <div class="content-sections">
-          <!-- Distribusi Lokasi -->
-          <div class="detail-section">
-            <div class="section-header">
-              <div class="section-icon location-icon">
-                <v-icon size="20">mdi-map-marker-radius</v-icon>
-              </div>
-              <h3 class="section-title">Distribusi Lokasi</h3>
-            </div>
-            
-            <div class="items-grid">
-              <div 
-                v-for="item in selectedPaketDetail.breakdown_lokasi" 
-                :key="item.nama"
-                class="detail-item location-item"
-              >
-                <div class="item-content">
-                  <div class="item-icon">
-                    <v-icon size="18" color="info">mdi-map-marker</v-icon>
-                  </div>
-                  <div class="item-info">
-                    <div class="item-name">{{ item.nama }}</div>
-                    <div class="item-subtitle">Lokasi</div>
-                  </div>
-                </div>
-                <div class="item-value">
-                  <v-chip 
-                    color="info" 
-                    variant="flat"
-                    size="small"
-                    class="value-chip"
-                  >
-                    {{ item.jumlah }}
-                  </v-chip>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Distribusi Brand -->
-          <div class="detail-section">
-            <div class="section-header">
-              <div class="section-icon brand-icon">
-                <v-icon size="20">mdi-tag-outline</v-icon>
-              </div>
-              <h3 class="section-title">Distribusi Brand</h3>
-            </div>
-            
-            <div class="items-grid">
-              <div 
-                v-for="item in selectedPaketDetail.breakdown_brand" 
-                :key="item.nama"
-                class="detail-item brand-item"
-              >
-                <div class="item-content">
-                  <div class="item-icon">
-                    <v-icon size="18" color="success">mdi-tag</v-icon>
-                  </div>
-                  <div class="item-info">
-                    <div class="item-name">{{ item.nama }}</div>
-                    <div class="item-subtitle">Brand</div>
-                  </div>
-                </div>
-                <div class="item-value">
-                  <v-chip 
-                    color="success" 
-                    variant="flat"
-                    size="small"
-                    class="value-chip"
-                  >
-                    {{ item.jumlah }}
-                  </v-chip>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </v-card-text>
-
-      <!-- Footer Actions -->
-      <v-card-actions class="dialog-footer">
-        <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          variant="elevated"
-          size="large"
-          class="close-action-btn"
-          @click="dialogPaketDetail = false"
-        >
-          <v-icon start>mdi-check</v-icon>
-          Tutup
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-
-        <!-- Invoice Chart -->
-        <div class="chart-card invoice-chart">
+        <div v-if="invoiceChartData" class="chart-card invoice-chart">
           <div class="chart-header">
-            <div class="chart-title-section">
-              <h3 class="chart-title">
-                <div class="chart-icon-wrapper">
-                  <v-icon class="chart-icon">mdi-file-document-multiple</v-icon>
-                </div>
-                Invoice Bulanan
-              </h3>
-              <p class="chart-subtitle">Ringkasan status invoice per bulan</p>
-            </div>
-          </div>
+             </div>
           <div class="chart-container">
             <Chart v-if="!loading" type="bar" :data="invoiceChartData" :options="invoiceChartOptions" />
           </div>
@@ -287,7 +131,6 @@ import {
   CategoryScale, 
   LinearScale, 
   Filler,
-  ChartData,
   ChartOptions
 } from 'chart.js';
 import { useTheme } from 'vuetify';
@@ -301,40 +144,56 @@ ChartJS.register(
 const theme = useTheme();
 const loading = ref(true);
 
-const stats = ref<any[]>([]);
-const lokasiChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
-const paketChartData = ref<ChartData<'bar'>>({ labels: [], datasets: [] });
-const invoiceChartData = ref<any>({ labels: [], datasets: [] });
-const growthChartData = ref<ChartData<'line'>>({ labels: [], datasets: [] });
+// --- Inisialisasi state menjadi null atau array kosong ---
+const revenueData = ref<any>(null);
+const allStats = ref<any[]>([]);
+const lokasiChartData = ref<any>(null);
+const paketChartData = ref<any>(null);
+const growthChartData = ref<any>(null);
+const invoiceChartData = ref<any>(null);
 
-const paketDetailData = ref<any>({}); // Untuk menyimpan hasil dari API details
-const dialogPaketDetail = ref(false); // Mengontrol buka/tutup dialog
-const selectedPaketTitle = ref(''); // Judul dialog, misal: "Rincian 10 Mbps"
-const selectedPaketDetail = ref<any>(null); // Data detail untuk paket yang dipilih
+// --- State untuk dialog detail paket (yang sebelumnya hilang) ---
+const paketDetailData = ref<any>({});
+const dialogPaketDetail = ref(false);
+const selectedPaketTitle = ref('');
+const selectedPaketDetail = ref<any>(null);
 
-async function fetchMikrotikStats() {
-  try {
-    // FIX: Menghapus /api/ dari URL karena sudah ada di baseURL
-    const response = await apiClient.get('/dashboard/mikrotik-status');
-    const { online, offline } = response.data;
 
-    const onlineStat = stats.value.find(s => s.title === "Online Servers");
-    if (onlineStat) onlineStat.value = online;
+// Pisahkan stat pelanggan dan server menggunakan computed property
+const customerStats = computed(() => 
+  allStats.value.filter(s => s.title.toLowerCase().includes('pelanggan'))
+);
+const serverStats = computed(() => 
+  allStats.value.filter(s => s.title.toLowerCase().includes('server'))
+);
 
-    const offlineStat = stats.value.find(s => s.title === "Offline Servers");
-    if (offlineStat) offlineStat.value = offline;
+const formatCurrency = (value: number) => {
+  if (typeof value !== 'number') return 'Rp 0';
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+};
 
-  } catch (error) {
-    console.error("Failed to fetch Mikrotik server status:", error);
-    const onlineStat = stats.value.find(s => s.title === "Online Servers");
-    if (onlineStat) onlineStat.value = 'N/A';
-    const offlineStat = stats.value.find(s => s.title === "Offline Servers");
-    if (offlineStat) offlineStat.value = 'N/A';
+// Fungsi yang dipanggil saat chart diklik (yang sebelumnya hilang)
+function handlePaketChartClick(_event: any, elements: any[]) {
+  if (elements.length === 0) return;
+
+  const chart = elements[0].element.$context.chart;
+  const index = elements[0].index;
+  const label = chart.data.labels[index];
+
+  const detail = paketDetailData.value[label];
+
+  if (detail) {
+    selectedPaketTitle.value = `Rincian Paket: ${label}`;
+    selectedPaketDetail.value = detail;
+    dialogPaketDetail.value = true;
   }
 }
 
-
-// Fungsi baru untuk mengambil data detail
 async function fetchPaketDetails() {
   try {
     const response = await apiClient.get('/dashboard/paket-details');
@@ -344,157 +203,106 @@ async function fetchPaketDetails() {
   }
 }
 
-onMounted(async () => {
+async function fetchMikrotikStats() {
   try {
-    // FIX: Menghapus /api/ dari URL karena sudah ada di baseURL
+    const response = await apiClient.get('/dashboard/mikrotik-status');
+    const { online, offline } = response.data;
+    const onlineStat = allStats.value.find(s => s.title === "Online Servers");
+    if (onlineStat) onlineStat.value = online;
+    const offlineStat = allStats.value.find(s => s.title === "Offline Servers");
+    if (offlineStat) offlineStat.value = offline;
+  } catch (error) {
+    console.error("Failed to fetch Mikrotik server status:", error);
+  }
+}
+
+onMounted(async () => {
+  loading.value = true;
+  try {
     const response = await apiClient.get('/dashboard/');
     const data = response.data;
 
-    stats.value = data.stat_cards.map((card: any) => ({
+    // --- Assign data dari backend dengan format yang benar ---
+    
+    // 1. Data Revenue
+    revenueData.value = data.revenue_summary;
+    
+    // 2. Data Stat Cards
+    allStats.value = (data.stat_cards || []).map((card: any) => ({
       ...card,
       icon: getIconForStat(card.title),
       color: getColorForStat(card.title)
     }));
-
-    lokasiChartData.value = {
-      labels: data.lokasi_chart.labels,
-      datasets: [{
-        label: 'Jumlah Pelanggan',
-        data: data.lokasi_chart.data,
-        backgroundColor: 'rgba(99, 102, 241, 0.8)',
-        borderColor: 'rgb(99, 102, 241)',
-        borderWidth: 2,
-        borderRadius: 8,
-        borderSkipped: false,
-      }],
-    };
-
-    paketChartData.value = {
-      labels: data.paket_chart.labels,
-      datasets: [{
-        label: 'Jumlah Pelanggan',
-        data: data.paket_chart.data,
-        backgroundColor: [
-          'rgba(99, 102, 241, 0.8)',
-          'rgba(34, 197, 94, 0.8)',
-          'rgba(251, 191, 36, 0.8)',
-          'rgba(239, 68, 68, 0.8)'
-        ],
-        borderColor: [
-          'rgb(99, 102, 241)',
-          'rgb(34, 197, 94)',
-          'rgb(251, 191, 36)',
-          'rgb(239, 68, 68)'
-        ],
-        borderWidth: 2,
-        borderRadius: 8,
-        borderSkipped: false,
-      }],
-    };
     
-    invoiceChartData.value = {
-      labels: data.invoice_summary_chart.labels,
-      datasets: [
-        { 
-          type: 'line' as const, 
-          label: 'Total Invoice', 
-          data: data.invoice_summary_chart.total, 
-          borderColor: 'rgb(168, 85, 247)', 
-          backgroundColor: 'rgba(168, 85, 247, 0.1)', 
-          tension: 0.4,
-          borderWidth: 3,
-          pointBackgroundColor: 'rgb(168, 85, 247)',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          pointRadius: 6,
-          fill: true
-        },
-        { 
-          type: 'bar' as const, 
-          label: 'Lunas', 
-          data: data.invoice_summary_chart.lunas, 
-          backgroundColor: 'rgba(34, 197, 94, 0.8)', 
+    // 3. Data Chart Lokasi
+    if (data.lokasi_chart) {
+      lokasiChartData.value = {
+        labels: data.lokasi_chart.labels,
+        datasets: [{
+          label: 'Jumlah Pelanggan',
+          data: data.lokasi_chart.data,
+          backgroundColor: 'rgba(99, 102, 241, 0.8)',
+          borderColor: 'rgb(99, 102, 241)',
+          borderWidth: 2,
+          borderRadius: 8,
+        }]
+      };
+    }
+
+    // 4. Data Chart Paket
+    if (data.paket_chart) {
+      paketChartData.value = {
+        labels: data.paket_chart.labels,
+        datasets: [{
+          label: 'Jumlah Pelanggan',
+          data: data.paket_chart.data,
+          backgroundColor: 'rgba(34, 197, 94, 0.8)',
           borderColor: 'rgb(34, 197, 94)',
           borderWidth: 2,
-          borderRadius: 6,
-          stack: 'Stack 0' 
-        },
-        { 
-          type: 'bar' as const, 
-          label: 'Menunggu', 
-          data: data.invoice_summary_chart.menunggu, 
-          backgroundColor: 'rgba(251, 191, 36, 0.8)', 
-          borderColor: 'rgb(251, 191, 36)',
-          borderWidth: 2,
-          borderRadius: 6,
-          stack: 'Stack 0' 
-        },
-        { 
-          type: 'bar' as const, 
-          label: 'Kadaluarsa', 
-          data: data.invoice_summary_chart.kadaluarsa, 
-          backgroundColor: 'rgba(239, 68, 68, 0.8)', 
-          borderColor: 'rgb(239, 68, 68)',
-          borderWidth: 2,
-          borderRadius: 6,
-          stack: 'Stack 0' 
-        },
-      ],
-    };
+          borderRadius: 8,
+        }]
+      };
+    }
+
+    // 5. Data Chart Pertumbuhan
+    if (data.growth_chart) {
+      growthChartData.value = {
+        labels: data.growth_chart.labels,
+        datasets: [{
+          label: 'Pelanggan Baru',
+          data: data.growth_chart.data,
+          borderColor: 'rgb(236, 72, 153)',
+          backgroundColor: 'rgba(236, 72, 153, 0.1)',
+          tension: 0.4,
+          fill: true,
+        }]
+      };
+    }
+    
+    // 6. Data Chart Invoice
+    if (data.invoice_summary_chart) {
+        invoiceChartData.value = {
+            labels: data.invoice_summary_chart.labels,
+            datasets: [
+                { type: 'line', label: 'Total Invoice', data: data.invoice_summary_chart.total, borderColor: 'rgb(168, 85, 247)', tension: 0.4, fill: true },
+                { type: 'bar', label: 'Lunas', data: data.invoice_summary_chart.lunas, backgroundColor: 'rgba(34, 197, 94, 0.8)', stack: 'Stack 0' },
+                { type: 'bar', label: 'Menunggu', data: data.invoice_summary_chart.menunggu, backgroundColor: 'rgba(251, 191, 36, 0.8)', stack: 'Stack 0' },
+                { type: 'bar', label: 'Kadaluarsa', data: data.invoice_summary_chart.kadaluarsa, backgroundColor: 'rgba(239, 68, 68, 0.8)', stack: 'Stack 0' },
+            ]
+        };
+    }
+
+    // Panggil juga fungsi untuk mengambil detail paket untuk fungsionalitas klik
     fetchPaketDetails();
-    fetchGrowthTrendData();
- } catch (error) {
+
+  } catch (error) {
     console.error("Failed to fetch dashboard data:", error);
   } finally {
     loading.value = false;
+    // Panggil status mikrotik secara terpisah agar tidak memblokir UI
     fetchMikrotikStats();
   }
 });
-
-function handlePaketChartClick(_event: any, elements: any[]) {
-  if (elements.length === 0) return; // Keluar jika klik di area kosong
-
-  const chart = elements[0].element.$context.chart;
-  const index = elements[0].index;
-  const label = chart.data.labels[index]; // Mendapatkan label, misal: "10 Mbps"
-
-  const detail = paketDetailData.value[label];
-
-  if (detail) {
-    selectedPaketTitle.value = `Rincian Paket: ${label}`;
-    selectedPaketDetail.value = detail;
-    dialogPaketDetail.value = true; // Buka dialog
-  }
-}
-
-
-// Menampilkan pertumbuhan pelanggan
-async function fetchGrowthTrendData() {
-  try {
-    const response = await apiClient.get('/dashboard/growth-trend');
-    const data = response.data;
-    
-    growthChartData.value = {
-      labels: data.labels,
-      datasets: [{
-        label: 'Pelanggan Baru',
-        data: data.data,
-        borderColor: 'rgb(236, 72, 153)',
-        backgroundColor: 'rgba(236, 72, 153, 0.1)',
-        tension: 0.4,
-        borderWidth: 3,
-        pointBackgroundColor: 'rgb(236, 72, 153)',
-        pointBorderColor: '#fff',
-        pointBorderWidth: 2,
-        pointRadius: 6,
-        fill: true,
-      }]
-    };
-  } catch (error) {
-    console.error("Gagal mengambil data tren pertumbuhan:", error);
-  }
-}
-
 
 function getIconForStat(title: string) {
   if (title.toLowerCase().includes('jakinet')) return 'mdi-account-network';
@@ -522,7 +330,7 @@ const chartGridColor = computed(() => theme.global.current.value.dark ? 'rgba(25
 const chartOptions = computed((): ChartOptions<'bar'> => ({
   responsive: true,
   maintainAspectRatio: false,
-  onClick: handlePaketChartClick,
+  onClick: handlePaketChartClick, // <-- Fungsi ini sekarang sudah terdefinisi
   plugins: { 
     legend: { display: false },
     tooltip: {
@@ -539,23 +347,51 @@ const chartOptions = computed((): ChartOptions<'bar'> => ({
     y: { 
       beginAtZero: true, 
       grid: { color: chartGridColor.value },
-      ticks: { 
-        color: chartAxisColor.value,
-        font: { 
-          size: 12, 
-          weight: 'normal' as const
-        }
-      }
+      ticks: { color: chartAxisColor.value, font: { size: 12, weight: 'normal' as const } }
     },
     x: { 
       grid: { display: false },
-      ticks: { 
-        color: chartAxisColor.value,
-        font: { 
-          size: 12, 
-          weight: 'normal' as const
-        }
-      }
+      ticks: { color: chartAxisColor.value, font: { size: 12, weight: 'normal' as const } }
+    },
+  },
+}));
+
+const growthChartOptions = computed((): ChartOptions<'line'> => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  interaction: { intersect: false, mode: 'index' as const },
+  plugins: { 
+    legend: { 
+      display: true, position: 'top' as const,
+      labels: { color: chartAxisColor.value, usePointStyle: true, pointStyle: 'circle' as const, font: { size: 12, weight: 'bold' as const } }
+    },
+    tooltip: {
+      backgroundColor: theme.global.current.value.dark ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.95)',
+      titleColor: chartAxisColor.value,
+      bodyColor: chartAxisColor.value,
+      borderColor: 'rgb(236, 72, 153)',
+      borderWidth: 2,
+      cornerRadius: 8,
+      displayColors: true,
+      mode: 'index' as const,
+      intersect: false,
+    }
+  },
+  scales: {
+    y: { 
+      beginAtZero: true, 
+      grid: { color: chartGridColor.value, },
+      border: { display: false, },
+      ticks: { color: chartAxisColor.value, font: { size: 12, weight: 'normal' as const },
+        callback: function(value) { return value + ' orang'; }
+      },
+      title: { display: true, text: 'Jumlah Pelanggan Baru', color: chartAxisColor.value, font: { size: 13, weight: 'bold' as const } }
+    },
+    x: { 
+      grid: { display: false, },
+      border: { display: false, },
+      ticks: { color: chartAxisColor.value, font: { size: 12, weight: 'normal' as const } },
+      title: { display: true, text: 'Periode', color: chartAxisColor.value, font: { size: 13, weight: 'bold' as const } }
     },
   },
 }));
@@ -566,15 +402,7 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   plugins: { 
     legend: { 
       position: 'top' as const, 
-      labels: { 
-        color: chartAxisColor.value,
-        usePointStyle: true,
-        pointStyle: 'circle' as const,
-        font: { 
-          size: 12, 
-          weight: 'bold' as const
-        }
-      } 
+      labels: { color: chartAxisColor.value, usePointStyle: true, pointStyle: 'circle' as const, font: { size: 12, weight: 'bold' as const } }
     },
     tooltip: {
       backgroundColor: theme.global.current.value.dark ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.95)',
@@ -591,24 +419,12 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
       stacked: true, 
       beginAtZero: true, 
       grid: { color: chartGridColor.value },
-      ticks: { 
-        color: chartAxisColor.value,
-        font: { 
-          size: 12, 
-          weight: 'normal' as const
-        }
-      }
+      ticks: { color: chartAxisColor.value, font: { size: 12, weight: 'normal' as const } }
     },
     x: { 
       stacked: true, 
       grid: { display: false },
-      ticks: { 
-        color: chartAxisColor.value,
-        font: { 
-          size: 12, 
-          weight: 'normal' as const
-        }
-      }
+      ticks: { color: chartAxisColor.value, font: { size: 12, weight: 'normal' as const } }
     },
   },
 }));
@@ -622,6 +438,51 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
   min-height: 100vh;
   animation: fadeIn 0.6s ease-out;
 }
+
+/* === STYLING BARU UNTUK LAYOUT ATAS === */
+.top-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .top-layout-grid {
+    grid-template-columns: 1.5fr 2fr; /* Widget pendapatan lebih besar */
+  }
+}
+
+.revenue-widget-container { min-height: 220px; }
+.revenue-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  color: white;
+  padding: 1.75rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.revenue-card:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(59, 130, 246, 0.3); }
+.revenue-card-content { z-index: 2; position: relative; }
+.revenue-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.revenue-title { font-size: 1rem; font-weight: 600; opacity: 0.9; }
+.revenue-icon-wrapper { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); }
+.revenue-body { text-align: left; }
+.revenue-value { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin: 0 0 0.25rem 0; }
+.revenue-period { font-size: 0.875rem; font-weight: 500; opacity: 0.8; }
+
+.stats-subgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+
 
 /* Header Section - Improved Responsive Layout */
 .dashboard-header {
@@ -1484,5 +1345,4 @@ const invoiceChartOptions = computed((): ChartOptions<'bar'> => ({
     align-self: flex-end;
   }
 }
-
 </style>

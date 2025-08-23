@@ -8,8 +8,7 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
-    # --- PERPINDAHAN VARIABEL MENUS ---
-    # Pindahkan MENUS ke sini
+    # Variabel MENUS yang sudah ada
     MENUS: List[str] = [
         "Pelanggan",
         "Langganan",
@@ -24,7 +23,19 @@ class Settings(BaseSettings):
         "Simulasi Harga",
         "Kelola S&K",
     ]
-    # -----------------------------------
+    
+    # --- TAMBAHKAN INI ---
+    # Daftar widget yang ada di dashboard Anda
+    DASHBOARD_WIDGETS: List[str] = [
+        "pendapatan_bulanan",
+        "statistik_pelanggan",
+        "statistik_server",
+        "pelanggan_per_lokasi",
+        "pelanggan_per_paket",
+        "tren_pertumbuhan",
+        "invoice_bulanan"
+    ]
+    # ---------------------
 
     DATABASE_URL: str
     XENDIT_CALLBACK_TOKEN_ARTACOMINDO: str

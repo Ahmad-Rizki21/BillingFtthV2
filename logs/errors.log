@@ -1120,3 +1120,37 @@ WHERE langganan.tgl_jatuh_tempo < %s AND langganan.status = %s]
 2025-08-22 17:45:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
 2025-08-22 17:46:28 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
 2025-08-22 17:47:12 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 13:22:19 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 13:22:34 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:26:54 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:27:09 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:47:58 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:48:22 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:51:29 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:51:50 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:53:03 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:53:08 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:53:28 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:54:11 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:54:41 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:55:43 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:56:42 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:57:41 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:57:53 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:57:59 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 16:58:29 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 17:00:55 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 17:02:03 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out
+2025-08-23 17:56:49 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:56:49 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:56:54 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:56:59 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:57:04 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:57:09 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:57:25 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:58:02 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 17:58:04 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 20:41:48 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 20:41:52 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 20:41:55 │ WEBSOCKET       │ [91mERROR   [0m │ websocket_notifications │ WebSocket connection error: 401: Could not validate credentials
+2025-08-23 20:42:12 │ SERVICES....    │ [91mERROR   [0m │ get_api_connection   │ Gagal terhubung ke Mikrotik Tambun: timed out

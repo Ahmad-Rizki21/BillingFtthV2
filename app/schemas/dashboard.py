@@ -1,6 +1,6 @@
 # app/schemas/dashboard.py
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 
 class StatCard(BaseModel):
@@ -21,9 +21,17 @@ class InvoiceSummary(BaseModel):
     menunggu: List[int]
     kadaluarsa: List[int]
 
+# ===== TAMBAHKAN SKEMA BARU DI SINI =====
+class RevenueSummary(BaseModel):
+    """Skema untuk data ringkasan pendapatan bulanan."""
+    total: float
+    periode: str
 
+# ===== PERBARUI DashboardData UNTUK MENYERTAKAN PENDAPATAN =====
 class DashboardData(BaseModel):
-    stat_cards: List[StatCard]
-    lokasi_chart: ChartData
-    paket_chart: ChartData
-    invoice_summary_chart: InvoiceSummary
+    revenue_summary: Optional[RevenueSummary] = None
+    stat_cards: Optional[List[StatCard]] = None
+    lokasi_chart: Optional[ChartData] = None
+    paket_chart: Optional[ChartData] = None
+    invoice_summary_chart: Optional[InvoiceSummary] = None
+    growth_chart: Optional[ChartData] = None
