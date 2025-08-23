@@ -21,11 +21,14 @@ class InvoiceSummary(BaseModel):
     menunggu: List[int]
     kadaluarsa: List[int]
 
+
 # ===== TAMBAHKAN SKEMA BARU DI SINI =====
 class RevenueSummary(BaseModel):
     """Skema untuk data ringkasan pendapatan bulanan."""
+
     total: float
     periode: str
+
 
 # ===== PERBARUI DashboardData UNTUK MENYERTAKAN PENDAPATAN =====
 class DashboardData(BaseModel):

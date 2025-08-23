@@ -24,7 +24,7 @@ class Settings(BaseSettings):
         "Simulasi Harga",
         "Kelola S&K",
     ]
-    
+
     # --- TAMBAHKAN INI ---
     # Daftar widget yang ada di dashboard Anda
     DASHBOARD_WIDGETS: List[str] = [
@@ -34,7 +34,7 @@ class Settings(BaseSettings):
         "pelanggan_per_lokasi",
         "pelanggan_per_paket",
         "tren_pertumbuhan",
-        "invoice_bulanan"
+        "invoice_bulanan",
     ]
     # ---------------------
 

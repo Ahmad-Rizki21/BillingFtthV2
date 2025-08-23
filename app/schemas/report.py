@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import date, datetime
 
+
 # Skema sederhana untuk setiap baris invoice dalam tabel laporan
 class InvoiceReportItem(BaseModel):
     invoice_number: str
@@ -14,6 +15,7 @@ class InvoiceReportItem(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 # Skema utama untuk respons dari API laporan pendapatan
 class RevenueReportResponse(BaseModel):

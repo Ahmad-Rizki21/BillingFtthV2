@@ -12,7 +12,12 @@ import locale
 
 from ..models.langganan import Langganan as LanggananModel
 from ..models.invoice import Invoice as InvoiceModel
-from ..models import Invoice, Pelanggan, HargaLayanan, MikrotikServer # dan model lain yang relevan
+from ..models import (
+    Invoice,
+    Pelanggan,
+    HargaLayanan,
+    MikrotikServer,
+)  # dan model lain yang relevan
 
 from sqlalchemy.orm import selectinload
 from ..models.user import User as UserModel
@@ -20,7 +25,13 @@ from ..models.role import Role as RoleModel
 from ..auth import get_current_active_user
 
 from ..database import get_db
-from ..schemas.dashboard import DashboardData, RevenueSummary, StatCard, ChartData, InvoiceSummary
+from ..schemas.dashboard import (
+    DashboardData,
+    RevenueSummary,
+    StatCard,
+    ChartData,
+    InvoiceSummary,
+)
 
 from ..models import (
     Pelanggan,
@@ -36,18 +47,20 @@ from ..services import mikrotik_service
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
 
-#Bahasa indonesia
+# Bahasa indonesia
 try:
     # 1. Mencoba locale standar untuk Linux
-    locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
+    locale.setlocale(locale.LC_TIME, "id_ID.UTF-8")
 except locale.Error:
     try:
         # 2. Jika gagal, mencoba locale standar untuk Windows
-        locale.setlocale(locale.LC_TIME, 'Indonesian')
+        locale.setlocale(locale.LC_TIME, "Indonesian")
     except locale.Error:
         # 3. Jika keduanya gagal, aplikasi tetap berjalan dengan bahasa default (Inggris)
         # Ini mencegah aplikasi crash di lingkungan mana pun.
-        print("Peringatan: Locale Bahasa Indonesia tidak ditemukan. Menggunakan locale default.")
+        print(
+            "Peringatan: Locale Bahasa Indonesia tidak ditemukan. Menggunakan locale default."
+        )
         pass
 
 
@@ -60,7 +73,7 @@ class MikrotikStatus(BaseModel):
 @router.get("/", response_model=DashboardData)
 async def get_dashboard_data(
     db: AsyncSession = Depends(get_db),
-    current_user: UserModel = Depends(get_current_active_user)
+    current_user: UserModel = Depends(get_current_active_user),
 ):
     """
     Mengambil data dashboard berdasarkan permission yang dimiliki oleh pengguna.
@@ -86,12 +99,14 @@ async def get_dashboard_data(
         now = datetime.now()
         revenue_stmt = select(func.sum(Invoice.total_harga)).where(
             Invoice.status_invoice == "Lunas",
-            func.extract('year', Invoice.paid_at) == now.year,
-            func.extract('month', Invoice.paid_at) == now.month
+            func.extract("year", Invoice.paid_at) == now.year,
+            func.extract("month", Invoice.paid_at) == now.month,
         )
         total_revenue = (await db.execute(revenue_stmt)).scalar_one_or_none() or 0.0
         periode_str = now.strftime("%B %Y")
-        dashboard_response.revenue_summary = RevenueSummary(total=total_revenue, periode=periode_str)
+        dashboard_response.revenue_summary = RevenueSummary(
+            total=total_revenue, periode=periode_str
+        )
 
     # 2. Widget Statistik (Pelanggan & Server)
     temp_stat_cards = []
@@ -103,32 +118,58 @@ async def get_dashboard_data(
         )
         pelanggan_counts = (await db.execute(pelanggan_count_stmt)).all()
         pelanggan_by_brand = {brand.lower(): count for brand, count in pelanggan_counts}
-        
+
         pelanggan_stats = [
-            StatCard(title="Jumlah Pelanggan Jakinet", value=pelanggan_by_brand.get("jakinet", 0), description="Total Pelanggan Jakinet"),
-            StatCard(title="Jumlah Pelanggan Jelantik", value=pelanggan_by_brand.get("jelantik", 0), description="Total Pelanggan Jelantik"),
-            StatCard(title="Pelanggan Jelantik Nagrak", value=pelanggan_by_brand.get("jelantik nagrak", 0), description="Total Pelanggan Rusun Nagrak"),
+            StatCard(
+                title="Jumlah Pelanggan Jakinet",
+                value=pelanggan_by_brand.get("jakinet", 0),
+                description="Total Pelanggan Jakinet",
+            ),
+            StatCard(
+                title="Jumlah Pelanggan Jelantik",
+                value=pelanggan_by_brand.get("jelantik", 0),
+                description="Total Pelanggan Jelantik",
+            ),
+            StatCard(
+                title="Pelanggan Jelantik Nagrak",
+                value=pelanggan_by_brand.get("jelantik nagrak", 0),
+                description="Total Pelanggan Rusun Nagrak",
+            ),
         ]
         temp_stat_cards.extend(pelanggan_stats)
-        
+
     if "view_widget_statistik_server" in user_permissions:
         total_servers_stmt = select(func.count(MikrotikServer.id))
         total_servers = (await db.execute(total_servers_stmt)).scalar_one_or_none() or 0
         server_stats = [
-            StatCard(title="Total Servers", value=total_servers, description="Total Mikrotik servers"),
-            StatCard(title="Online Servers", value="N/A", description="Servers currently online"),
-            StatCard(title="Offline Servers", value="N/A", description="Servers currently offline"),
+            StatCard(
+                title="Total Servers",
+                value=total_servers,
+                description="Total Mikrotik servers",
+            ),
+            StatCard(
+                title="Online Servers",
+                value="N/A",
+                description="Servers currently online",
+            ),
+            StatCard(
+                title="Offline Servers",
+                value="N/A",
+                description="Servers currently offline",
+            ),
         ]
         temp_stat_cards.extend(server_stats)
-        
+
     if temp_stat_cards:
         dashboard_response.stat_cards = temp_stat_cards
-        
+
     # 3. Widget Chart Pelanggan per Lokasi
     if "view_widget_pelanggan_per_lokasi" in user_permissions:
         lokasi_stmt = (
             select(Pelanggan.alamat, func.count(Pelanggan.id))
-            .group_by(Pelanggan.alamat).order_by(func.count(Pelanggan.id).desc()).limit(5)
+            .group_by(Pelanggan.alamat)
+            .order_by(func.count(Pelanggan.id).desc())
+            .limit(5)
         )
         lokasi_data = (await db.execute(lokasi_stmt)).all()
         dashboard_response.lokasi_chart = ChartData(
@@ -140,8 +181,11 @@ async def get_dashboard_data(
     if "view_widget_pelanggan_per_paket" in user_permissions:
         paket_stmt = (
             select(PaketLayanan.kecepatan, func.count(Langganan.id))
-            .join(Langganan, PaketLayanan.id == Langganan.paket_layanan_id, isouter=True)
-            .group_by(PaketLayanan.kecepatan).order_by(PaketLayanan.kecepatan)
+            .join(
+                Langganan, PaketLayanan.id == Langganan.paket_layanan_id, isouter=True
+            )
+            .group_by(PaketLayanan.kecepatan)
+            .order_by(PaketLayanan.kecepatan)
         )
         paket_data = (await db.execute(paket_stmt)).all()
         dashboard_response.paket_chart = ChartData(
@@ -152,13 +196,21 @@ async def get_dashboard_data(
     # 5. Widget Chart Tren Pertumbuhan Pelanggan
     if "view_widget_tren_pertumbuhan" in user_permissions:
         growth_stmt = (
-            select(func.date_format(Pelanggan.tgl_instalasi, "%Y-%m").label("bulan"), func.count(Pelanggan.id).label("jumlah"))
-            .where(Pelanggan.tgl_instalasi.isnot(None)).group_by("bulan").order_by("bulan")
+            select(
+                func.date_format(Pelanggan.tgl_instalasi, "%Y-%m").label("bulan"),
+                func.count(Pelanggan.id).label("jumlah"),
+            )
+            .where(Pelanggan.tgl_instalasi.isnot(None))
+            .group_by("bulan")
+            .order_by("bulan")
         )
         growth_data = (await db.execute(growth_stmt)).all()
         dashboard_response.growth_chart = ChartData(
-            labels=[datetime.strptime(item.bulan, "%Y-%m").strftime("%b %Y") for item in growth_data],
-            data=[item.jumlah for item in growth_data]
+            labels=[
+                datetime.strptime(item.bulan, "%Y-%m").strftime("%b %Y")
+                for item in growth_data
+            ],
+            data=[item.jumlah for item in growth_data],
         )
 
     # 6. Widget Chart Invoice Bulanan
@@ -168,15 +220,26 @@ async def get_dashboard_data(
             select(
                 func.date_format(Invoice.tgl_invoice, "%Y-%m").label("bulan"),
                 func.count(Invoice.id).label("total"),
-                func.sum(func.if_(Invoice.status_invoice == "Lunas", 1, 0)).label("lunas"),
-                func.sum(func.if_(Invoice.status_invoice == "Belum Dibayar", 1, 0)).label("menunggu"),
-                func.sum(func.if_(Invoice.status_invoice == "Kadaluarsa", 1, 0)).label("kadaluarsa"),
+                func.sum(func.if_(Invoice.status_invoice == "Lunas", 1, 0)).label(
+                    "lunas"
+                ),
+                func.sum(
+                    func.if_(Invoice.status_invoice == "Belum Dibayar", 1, 0)
+                ).label("menunggu"),
+                func.sum(func.if_(Invoice.status_invoice == "Kadaluarsa", 1, 0)).label(
+                    "kadaluarsa"
+                ),
             )
-            .where(Invoice.tgl_invoice >= six_months_ago).group_by("bulan").order_by("bulan")
+            .where(Invoice.tgl_invoice >= six_months_ago)
+            .group_by("bulan")
+            .order_by("bulan")
         )
         invoice_data = (await db.execute(invoice_stmt)).all()
         dashboard_response.invoice_summary_chart = InvoiceSummary(
-            labels=[datetime.strptime(item.bulan, "%Y-%m").strftime("%b") for item in invoice_data],
+            labels=[
+                datetime.strptime(item.bulan, "%Y-%m").strftime("%b")
+                for item in invoice_data
+            ],
             total=[item.total or 0 for item in invoice_data],
             lunas=[item.lunas or 0 for item in invoice_data],
             menunggu=[item.menunggu or 0 for item in invoice_data],
@@ -184,6 +247,7 @@ async def get_dashboard_data(
         )
 
     return dashboard_response
+
 
 # ==========================================================
 # --- ENDPOINT STATUS MIKROTIK YANG DIPERBAIKI ---

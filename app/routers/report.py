@@ -12,7 +12,7 @@ from ..models.invoice import Invoice as InvoiceModel
 from ..models.pelanggan import Pelanggan as PelangganModel
 from ..models.user import User as UserModel
 from ..database import get_db
-from ..auth import get_current_active_user # Sesuaikan path jika berbeda
+from ..auth import get_current_active_user  # Sesuaikan path jika berbeda
 from ..models.harga_layanan import HargaLayanan as HargaLayananMode
 
 router = APIRouter(
@@ -21,13 +21,14 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+
 @router.get("/revenue", response_model=RevenueReportResponse)
 async def get_revenue_report(
     start_date: date,
     end_date: date,
-    alamat: Optional[str] = None, # 1. Tambah parameter 'alamat' (opsional)
+    alamat: Optional[str] = None,  # 1. Tambah parameter 'alamat' (opsional)
     db: AsyncSession = Depends(get_db),
-    current_user: UserModel = Depends(get_current_active_user)
+    current_user: UserModel = Depends(get_current_active_user),
 ):
     start_datetime = datetime.combine(start_date, time.min)
     end_datetime = datetime.combine(end_date, time.max)
@@ -35,35 +36,36 @@ async def get_revenue_report(
     # Query 1: Menghitung total pendapatan
     total_revenue_query = (
         select(func.sum(InvoiceModel.total_harga))
-        .join(InvoiceModel.pelanggan) # 2. Join tabel Pelanggan untuk filter
+        .join(InvoiceModel.pelanggan)  # 2. Join tabel Pelanggan untuk filter
         .where(
             InvoiceModel.status_invoice == "Lunas",
-            InvoiceModel.paid_at.between(start_datetime, end_datetime)
+            InvoiceModel.paid_at.between(start_datetime, end_datetime),
         )
     )
-    if alamat: # 3. Terapkan filter jika 'alamat' diberikan
+    if alamat:  # 3. Terapkan filter jika 'alamat' diberikan
         total_revenue_query = total_revenue_query.where(PelangganModel.alamat == alamat)
-    
+
     total_revenue_result = await db.execute(total_revenue_query)
     total_pendapatan = total_revenue_result.scalar_one_or_none() or 0.0
 
     # Query untuk rincian invoice (tidak ada perubahan)
     invoices_query = (
         select(InvoiceModel)
-        .join(InvoiceModel.pelanggan) # Join sudah ada, bagus!
+        .join(InvoiceModel.pelanggan)  # Join sudah ada, bagus!
         .options(
-            selectinload(InvoiceModel.pelanggan)
-            .selectinload(PelangganModel.harga_layanan)
+            selectinload(InvoiceModel.pelanggan).selectinload(
+                PelangganModel.harga_layanan
+            )
         )
         .where(
             InvoiceModel.status_invoice == "Lunas",
-            InvoiceModel.paid_at.between(start_datetime, end_datetime)
+            InvoiceModel.paid_at.between(start_datetime, end_datetime),
         )
         .order_by(InvoiceModel.paid_at.desc())
     )
-    if alamat: # 3. Terapkan filter jika 'alamat' diberikan
+    if alamat:  # 3. Terapkan filter jika 'alamat' diberikan
         invoices_query = invoices_query.where(PelangganModel.alamat == alamat)
-        
+
     invoices_result = await db.execute(invoices_query)
     invoices = invoices_result.scalars().unique().all()
 
@@ -74,30 +76,29 @@ async def get_revenue_report(
         invoice_type = "Otomatis"
         if inv.tgl_jatuh_tempo and inv.tgl_jatuh_tempo.day > 1:
             invoice_type = "Prorate"
-        
+
         # Tentukan metode pembayaran final
         metode_pembayaran_final = inv.metode_pembayaran
         if not metode_pembayaran_final:
             # Jika kosong (via Xendit), gabungkan dengan tipe invoice
             metode_pembayaran_final = f"Xendit - {invoice_type}"
-        
+
         # Buat item laporan
         report_item = InvoiceReportItem(
             invoice_number=inv.invoice_number,
             pelanggan_nama=inv.pelanggan.nama if inv.pelanggan else "N/A",
             paid_at=inv.paid_at,
             total_harga=inv.total_harga,
-            metode_pembayaran=metode_pembayaran_final, # Gunakan nilai yang sudah diproses
+            metode_pembayaran=metode_pembayaran_final,  # Gunakan nilai yang sudah diproses
             alamat=inv.pelanggan.alamat if inv.pelanggan else "N/A",
             id_brand=(
                 inv.pelanggan.harga_layanan.brand
                 if inv.pelanggan and inv.pelanggan.harga_layanan
                 else "N/A"
-            )
+            ),
         )
         rincian_invoice_list.append(report_item)
 
     return RevenueReportResponse(
-        total_pendapatan=total_pendapatan,
-        rincian_invoice=rincian_invoice_list
+        total_pendapatan=total_pendapatan, rincian_invoice=rincian_invoice_list
     )

@@ -25,7 +25,7 @@ async def generate_permissions(db: AsyncSession = Depends(get_db)):
     jika belum ada di database.
     """
     permissions_created = []
-    
+
     # --- BAGIAN 1: Generate permissions untuk MENU (Kode Asli Anda) ---
     actions = ["create", "view", "edit", "delete"]
     for menu in settings.MENUS:
@@ -61,7 +61,7 @@ async def generate_permissions(db: AsyncSession = Depends(get_db)):
             db.add(new_permission)
             await db.flush()
             permissions_created.append(new_permission)
-    
+
     # --- Sisa fungsi (Kode Asli Anda) ---
     await db.commit()
 
