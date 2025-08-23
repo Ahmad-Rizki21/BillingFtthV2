@@ -96,7 +96,7 @@ Tanpa kode ini, Frontend kamu bakal ditolak mentah-mentah oleh browser karena al
 
 \*\*Intinya:\*\* Kalau ada permintaan data dari salah satu alamat di atas, backend kita akan menerimanya. Kalau dari alamat lain, akan ditolak.
 
-<SwmSnippet path="/app/main.py" line="39">
+<SwmSnippet path="app/main.py" line="59">
 
 ---
 
@@ -104,13 +104,12 @@ Tanpa kode ini, Frontend kamu bakal ditolak mentah-mentah oleh browser karena al
 
 ```python
 origins = [
-    # "https://billingftth.my.id",
-    # "wss://billingftth.my.id",
+    
     # "http://192.168.222.20",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "tauri://localhost"
-    # "http://tauri.localhost" 
+    "tauri://localhost",
+    # "http://tauri.localhost"
 ]
 ```
 
