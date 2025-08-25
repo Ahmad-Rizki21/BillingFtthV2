@@ -18,6 +18,9 @@ class DataTeknisBase(BaseModel):
     odp: int
     speedtest_proof: Optional[str] = None
     onu_power: int
+    sn: Optional[str] = None
+
+
 
 
 # Skema untuk membuat data teknis baru

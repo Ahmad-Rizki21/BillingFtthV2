@@ -97,7 +97,7 @@ async def create_data_teknis(
 @router.get("/", response_model=List[DataTeknisSchema])
 async def read_all_data_teknis(
     skip: int = 0,
-    limit: Optional[int] = None,  # <-- 1. Diubah menjadi Optional[int] = None
+    limit: Optional[int] = None,
     search: Optional[str] = None,
     olt: Optional[str] = None,
     db: AsyncSession = Depends(get_db),
@@ -107,31 +107,38 @@ async def read_all_data_teknis(
     """
     query = (
         select(DataTeknisModel)
-        .join(DataTeknisModel.pelanggan)
         .options(selectinload(DataTeknisModel.pelanggan))
     )
 
     if search:
         search_term = f"%{search}%"
-        query = query.where(
+        query = query.join(PelangganModel, DataTeknisModel.pelanggan_id == PelangganModel.id).where(
             or_(
-                PelangganModel.nama.ilike(search_term),
-                DataTeknisModel.id_pelanggan.ilike(search_term),
-                DataTeknisModel.ip_pelanggan.ilike(search_term),
-                DataTeknisModel.sn.ilike(search_term),
+                func.coalesce(PelangganModel.nama, '').ilike(search_term),
+                func.coalesce(DataTeknisModel.id_pelanggan, '').ilike(search_term),
+                func.coalesce(DataTeknisModel.ip_pelanggan, '').ilike(search_term),
+                func.coalesce(DataTeknisModel.sn, '').ilike(search_term)
             )
         )
+    else:
+        # Jika tidak ada pencarian, tetap gunakan join biasa agar data pelanggan ter-load
+        query = query.join(DataTeknisModel.pelanggan)
+
 
     if olt:
         query = query.where(DataTeknisModel.olt == olt)
 
-    # <-- 2. Limit hanya diterapkan jika nilainya bukan None
     if limit is not None:
         query = query.offset(skip).limit(limit)
 
     result = await db.execute(query)
-    data_teknis_list = result.scalars().all()
+    
+    # --- PERBAIKAN DI SINI ---
+    # Ubah urutan menjadi .unique().scalars().all()
+    data_teknis_list = result.unique().scalars().all()
+    
     return data_teknis_list
+
 
 
 @router.get("/{data_teknis_id}", response_model=DataTeknisSchema)
